@@ -1,150 +1,240 @@
-<!doctype html>
-<html lang="en" style="height:100%; min-height: 780px; min-width: 992px;">
+<!DOCTYPE html>
+<html>
 <head>
-<meta charset="utf-8">
-<title>Tree</title>
+<meta charset="UTF-8">
 
-<!-- 라이브러리 -->
+<title>Insert title here</title>
+<link rel="stylesheet"href="../resources/css/blue.css">
 
-<script src="resources/js/jquery.min.js"></script>
-<script src="resources/js/jquery-ui.min.js"></script>
-<script src="resources/js/go.js"></script>
-<script src="resources/js/bootstrap.min.js"></script>
 
-<link rel="stylesheet" href="resources/css/jquery-ui.min.css">	
-<link rel="stylesheet" href="resources/css/bootstrap.css">
-<link rel="stylesheet" href="resources/css/bootstrap.min.css">
-
-<!-- 개발 부분 -->
-
-<script src="resources/js/goImpl.js"></script>
-<script src="resources/js/jQueryImpl.js"></script>
-<link rel="stylesheet" href="resources/css/tree.css">
-
-<script type="text/javascript">
-
-</script>
-
-<!-- 개발 부분 -->
-
-<!-- <script>
-  $(function() {
-	  jqueryImpl();
-  });
-  
-  </script> -->
 </head>
-<body style="height:100%;">
-	<nav class="navbar navbar-fixed-top" id="navbar"
-		style="display: none; background-color: green;">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed"
-					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-					aria-controls="navbar">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<img id="tree" src="resources/img/tree2.png" width="40px" height="40px"
-					style="margin: 5px;">
-			</div>
-			<div id="navbar" class="navbar-collapse collapse">
-				<form class="navbar-form navbar-right">
-					<div class="navber" style="color: white;" align="center">
-						honggildong@gmail.com</div>
+
+
+<body cz-shortcut-listen="true">
+<div id="wrapper" >
+  <div id="container">
+	<section class="tabs">
+		<input id="tab-1" type="radio" name="radio-set" class="tab-selector-2" checked="checked">
+		<span for="tab-1" class="tab-label-1">Login</span>
+
+
+		<input id="tab-2" type="radio" name="radio-set" class="tab-selector-1" >
+		<span for="tab-2" class="tab-label-2">Signup</span>
+	
+		<div class="clear-shadow"></div>
+		
+		<div id="content">
+			<div class="content-2">
+				<form id="loginaction" action="/user/login" method="post"  >
+				  <p>
+					<input class="field" name="email" required="required" type="text" placeholder="Name or Email">
+				  </p>
+				  <p>
+					<input class="field" name="password" required="required" type="password" placeholder="Password">
+				  </p>
+				  
+				  <p>
+				  	<div id="loginbutton" style="clear:both; opacity: 1;position: relative; float: left; background-color: #449D44; border-radius: 3px; width: 93%;
+				  	text-align: center; font-size:x-large; height: 20px; ">SIGN IN</div>
+				  </p>
 				</form>
 			</div>
-			<!--/.navbar-collapse -->
+			
+			<div class="content-1">
+				<form id="signUpForm" >
+				  <p>
+					<input class="field" name="name" required="required" type="text" placeholder="Your Name">
+				  </p> 
+				  <p>
+					<input class="field" name="email" required="required" type="email" placeholder="Email">
+				  </p>
+				  <p>
+					<input id="passwordprogress" class="field" name="password" required="required" type="password" placeholder="Password">
+					<span class="progress" style="height: 4px; width:100%; position:relative;background-color:white;padding:0px;border-radius:2px;margin-top:2px">
+						<span id="passwordProgressBar" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 0%;height: 4px ;opacity:1;margin:0px;padding:0px;"></span>
+					</span>
+				  </p>
+				  	
+				  <p>
+					<input class="field" name="passwordCheck" required="required" type="password" placeholder="Confirm Password">
+				  </p>
+				  <p class="signin button">
+					<input type="checkbox" required="required"> I agree with terms and conditions 
+				  </p>
+				  <p>
+				  	<div id="signUpButton" style="clear:both; opacity: 1;position: relative; float: left; background-color: #449D44; border-radius: 3px; width: 93%;
+				  	text-align: center; font-size:x-large; height: 20px">SIGN UP</div>
+				  </p>
+				</form>
+			</div>
+			
+			
+			
 		</div>
-	</nav>
-
-
-	
-
-
-
-	<div id="treeContainer"
-		style="display:none; max-width: 992px; width: 100%; height: 100%; border: 1px solid #00FF00; margin: 0 auto; border-radius: 5px;">
-
-		
-		<div id="base" style="position:relative; width: 100%; height: 100%; float: left; padding-top:50px ;display: none;">
-			<div id="myDiagram" style="position:relative; background-color: white; float: left; border: solid 1px black; width: 100%; height: 100%"></div>
-			
-			<div class="timeline-out" id="timeline" style="overflow-x:hidden; overflow-y:visible;">
-				
-				<div id="timelinec"  style=" ">
-					<input type="text" id="search" class="form-control" style="width:180px; margin: 0 auto; " >
-					<div id="keywordTop"style="height:25px;"></div>
-				</div>
-			</div>
-				
-			<div id="content" style="display: none;">
-				
-			</div>
-			
-			<div id="reply" style="display: none;">
-			
-			</div>
-			
-			<div id="mypage" style="display: none;">
-			
-			</div>
-			
-			<div id="userpage" style="display: none;">
-			
-			</div>
-			
-			<div id="treelist" style="display: none;">
-			
-			</div>
-			
-			<div id="friendlist" style="display: none;"></div>
-		</div>
-		
-		<div id="temp">
-			<div id="btn_content">내용</div>
-			<div id="btn_mypage">개인page</div>
-			<div id="btn_userpage">회원page</div>
-			<div id="btn_tree">트리리스트</div>
-			<div id="btn_reply">댓글리스트</div>
-			<div id="btn_friend">친구리스트</div>
-		</div>
-		
-		<!-- style="width: 200px; height: 100%; border: 2px solid #00FF00; background: #efefef; float: right; display: none; -->
-		
-	</div>
-
-<div id="dialog" title="Basic dialog" style="display: none; width:100%;">
-  <p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
+	</section>
+  </div>
 </div>
-	<!-- /container -->
-<input id="inputText" type="text" class="form-control"  style="display:none; width:auto;">
+<script src="../resources/js/jquery.min.js"></script>
+<!-- <script type="text/javascript" src="../resources/js/facebookLogin.js"></script> -->
 
-<div id="keywordTemp">
-	<div id="temp" class="keyword" style="width: 180px; height: 100px; border: 2px solid #00ff00; margin: 0 auto; margin-bottom: 10px; border-radius: 5px; display:none; background:#eee;">
-		<div id="name" style="text-align: left; font-size: 20px; padding: 10px"></div>
-		<span class="btn_copy" style=" font-size: 15px; padding: 2px; width: 40px; height: 20px; border: 2px solid #00ff00; margin-left: 10px; margin-bottom: 10px; border-radius: 5px; background:#ddd;">복사</span>
-		<span class="btn_add" style=" font-size: 15px; padding: 2px; width: 40px; height: 20px; border: 2px solid #00ff00; margin-left: 10px; margin-bottom: 10px; border-radius: 5px; background:#ddd;">추가</span>
-		<input id="data" type="hidden">
-	</div>
-</div>
+
 
 
 <script type="text/javascript">
-	$("#navbar").show("slide", {
-		direction : "up"
-	}, 1000);
-	$("#loginContainer").css("display","none");
-	$('#treeContainer').css('display','block');
-	$("#timeline").delay(1000).show("slide", {
-		direction : "right"
-	}, 500);
-	$("#base").delay(1000).show("fade", 500);
-	setTimeout("goImpl()", 2000);
+	//Ajax form 전송용 함수
+	function getFormData($form){
+	    var unindexed_array = $form.serializeArray();
+	    var indexed_array = {};
+
+	    $.map(unindexed_array, function(n, i){
+	        indexed_array[n["name"]] = n["value"];
+	    });
+
+	    return indexed_array;
+	}
+	
+	
+//로그인 버튼
+$("#loginbutton").click(function() {
+	var str = $('#loginaction')
+	var user = getFormData(str)
+	$.ajax({
+		  type: 'POST',
+		  url: '/user/login',
+		  data: JSON.stringify(user),
+		  contentType : 'application/json; charset=utf-8',
+		  success : function(data){
+			  console.log(data)
+			  console.log(data.success);
+				if(data.boolean){
+						 self.location="/main.html" 
+				}else{
+					alert("입력한 이메일과 비밀번호가 일치하지 않습니다.");
+						$('#exampleInputEmail1').val('');
+						$('#exampleInputPassword1').val('');
+				}
+		  },
+		  dataType: "json"
+		});
+	
+	
+})
+
+
+//회원가입 버튼 
+$("#signUpButton").click(function() {
+	var str = $('#signUpForm')
+	var user = getFormData(str)
+	if($('#signUpForm p input[name=password]').val() !=$('#signUpForm p input[name=passwordCheck]').val()){
+		alert("비밀번호 확인이 일치하지 않습니다.");
+//			document.detailForm.password2.focus();
+		$('#signUpForm p input[name=passwordCheck]').focus();
+	}else{
+		$.ajax({
+			  type: 'POST',
+			  url: '/user/addUser',
+			  data: JSON.stringify(user),
+			  contentType : 'application/json; charset=utf-8',
+			  success : function(data){
+				  console.log(data)
+				  console.log(data.success);
+					if(true){
+						 self.location="/main.html" 
+					}else{
+						
+						$('#exampleInputEmail1').val('');
+						$('#exampleInputPassword1').val('');
+					}
+			  },
+			  dataType: "json"
+			});
+	}
+	
+	
+	
+})
+
+//중복 이메일 체크 
+$('#signUpForm p input[name=email]').on('keyup',function(){
+	var temp = $('#signUpForm p input[name=email]').val().length;
+	if(temp >5){
+		$.ajax({
+			url:'/user/checkDuplication/'+$(this).val()+'.',
+			contentType : 'application/json',
+			dataType : 'json',
+			success : function(data){
+				$('#appendmessage').remove();
+				$('#signUpForm p input[name=email]').after('<p id="appendmessage">'+data.message+'</p>');
+			}
+		})
+	}
+	if(temp==0){
+		$('#appendmessage').remove();
+	}
+	
+
+})
+
 
 
 
 </script>
+<!-- <link rel="stylesheet" href="../resources/css/bootstrap.css"> -->
+<!-- <link rel="stylesheet" href="../resources/css/bootstrap.min.css"> -->
+<script type="text/javascript" src="../resources/js/common-passwords.js"></script>
+<script type="text/javascript">
+	
+	//패스워드 강도 체크
+	$(function(){
+		
+		function isCommon(pass){
+			return ~window.commonPasswords.indexOf(pass);
+		}
+
+		function bruteMagnitude(pass) {
+	        var sets = [
+	            { regex: /\d/g, size: 10 },
+	            { regex: /[a-z]/g, size: 26 },
+	            { regex: /[A-Z]/g, size: 26 },
+	            { regex: /[!-/:-?\[-`{-}]/g, size: 24 },
+	        ];
+	        var passlen = pass.length,
+	            szSet = 0;
+
+	        sets.forEach(function(set) {
+	            if (set.regex.test(pass)) {
+	                szSet += set.size;
+	                pass = pass.replace(set.regex, '');
+	            }
+	        });
+	        // other (unicode) characters
+	        if (pass.length) szSet += 20;
+	        return passlen * Math.log(szSet) / Math.log(10);
+    	}
+
+		var strengths = ['transparent','red', '#fa00ff', '#6a00ff', '#0800ff', '#00a1ff', '#00ffa5','#00ff48']
+
+		function strength(pass) {
+	        if (isCommon(pass) || !pass.length) return 0;
+	        var str = bruteMagnitude(pass);
+	        return str < 1 ? 0
+	        	 :str < 7  ? 1 // very poor
+	             : str < 9  ? 2 // poor      - 10 million - 1 billion
+	             : str < 11 ? 3 // passing   - 1 billion - 100 billion
+	             : str < 13 ? 4 // fair      - 100 billion - 10 trillion
+	             : str < 15 ? 5 // good      - 10 trillion - 1 quadrillion
+	             : str < 17 ? 6 // very good - 1-100 quadrillion
+	             : 7;           // excellent - over 100 quadrillion
+  		 }
+
+		$('#passwordprogress').on('keyup keypress', function(){
+			var pstrength = strength($(this).val());
+			$('#passwordProgressBar').css('background-color',strengths[pstrength]).attr('aria-valuenow',100*(pstrength)/7).css('width',100*(pstrength)/7+"%")
+			
+		})
+
+	})
+</script>
+
 </body>
 </html>
