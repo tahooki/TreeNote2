@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN" "http://mybatis.org/dtd.mybatis-3-config.dtd">
+
+<mapper namespace="TreeMapper">
+		
+	<resultMap type="tree" id="treeSelectMap">
+  		<result property="treeNo" column="tree_no" jdbcType="NUMERIC"/>
+  		<result property="userNo" column="user_no" jdbcType="NUMERIC"/>
+  		<result property="title" column="Title" jdbcType="VARCHAR"/>
+  		  		
+  			
+  		
+  	</resultMap>	
+	
+		
+	<insert id="addTree" parameterType="tree">
+		INSERT INTO trees values(seq_trees_tree_no.nextval, #{userNo}, #{title})
+	</insert>
+	
+	
+	<update id="updateTitle" parameterType="tree">
+		UPDATE trees
+			<set>
+				Title=#{title}
+			</set>
+			<where>
+				tree_no=#{treeNo}
+			</where>	
+	</update>
+	
+	
+	<select id="getTree" parameterType="tree" resultMap="treeSelectMap">
+		SELECT
+			t.tree_no, t.user_no, t.Title, k.keyword
+			FROM trees t, keywords k
+		<where> t.tree_no=#{treeNo} AND t.tree_no = k.tree_no </where>
+		ORDER BY user_no
+	</select>
+	
+	
+	<select id="listTree" parameterType="int" resultMap="treeSelectMap">
+		SELECT
+			tree_no, user_no, Title
+			FROM trees
+		<where> user_no=#{value} </where>
+	</select>
+	
+	<delete id="removeTree" parameterType="int">
+		DELETE
+		FROM trees
+		WHERE tree_no=#{value}
+	</delete>
+	
+	
+		
+				
+		
+</mapper>
+

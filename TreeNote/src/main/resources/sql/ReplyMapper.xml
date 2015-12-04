@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN" "http://mybatis.org/dtd.mybatis-3-config.dtd">
+
+<mapper namespace="ReplyMapper">
+	<resultMap id="relpySelectMap" type="reply">
+		<result property="replyNo" 			column="reply_no" 			jdbcType="INTEGER"/>
+		<result property="userNo"	column="user_no" 		jdbcType="INTEGER" />
+		<result property="contentNo" 	column="content_no" 		jdbcType="INTEGER" />
+		<result property="reply" 				column="reply" 					jdbcType="VARCHAR" />
+		<result property="regDate" 		column="reg_date" 			jdbcType="DATE" />
+		<result property="parentReplyNo" 			column="par_reply_no" 			jdbcType="INTEGER"/>
+	</resultMap>
+	
+	<!-- SQL : INSERT -->
+	<insert 	id="addReply"		parameterType="reply" >
+	 	INSERT
+		INTO replys( reply_no , user_no , content_no , reply , reg_date, par_reply_no) 
+		VALUES	 (	seq_replys_reply_no.nextval,
+				    #{userNo} , #{contentNo} , 
+				    #{reply}, SYSDATE,
+				    <if test="parentReplyNo == 0">0</if>
+				    <if test="parentReplyNo != 0">#{parentReplyNo}</if>  )
+	 </insert>
+	
+	 <!-- SQL : UPDATE -->
+	 <update	id="updateReply"	parameterType="reply" >
+	   	UPDATE replys
+	   	<set>
+	   		reply 	= #{reply} ,			
+			reg_date				=	SYSDATE
+	   	</set>
+	   	WHERE reply_no = #{replyNo}
+	 </update>
+	 
+	 <!-- SQL : DELETE -->
+	 <delete 	id="deleteRelpy"  parameterType="reply">
+		DELETE
+		FROM replys
+		WHERE
+		reply_no IN (SELECT reply_no FROM replys
+			where 
+			reply_no =#{replyNo}
+			<if test="parentReplyNo !=0 ">			
+			<if test="deleteChildReply == true">
+				OR par_reply_no=#{parentReplyNo}
+			</if>
+		</if>		
+		)
+													
+  	</delete> 
+  	
+  	<!-- SQL : SELECT LIST --> 
+  	<select  id="getRelpyList"  parameterType="page"	resultMap="relpySelectMap">
+	  	SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM		(	SELECT reply_no , user_no , content_no , reply , reg_date, par_reply_no
+										FROM replys 	
+										WHERE content_no = #{replyValueNo}
+										ORDER BY reply_no ) inner_table
+						WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 	  	
+	 </select>
+	 
+	 <!-- SQL : SELECT LIST --> 
+  	<select  id="getRelpyOfReplyList"  parameterType="page"	resultMap="relpySelectMap">
+	  	SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM		(	SELECT reply_no , user_no , content_no , reply , reg_date, par_reply_no
+										FROM replys 	
+										WHERE par_reply_no = #{replyValueNo}
+										ORDER BY reply_no ) inner_table
+						WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 	  	
+	 </select>
+  	
+  	<!-- SQL : SELECT ROW Count -->	 
+	 <select  id="getTotalReply"  parameterType="int"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM(	SELECT reply_no , user_no , content_no , reply , reg_date, par_reply_no
+					   FROM replys		   
+					   WHERE content_no = #{value}
+					   ) countTable						
+	 </select>
+	 
+	 <!-- SQL : SELECT ROW Count -->	 
+	 <select  id="getTotalReplyOfReply"  parameterType="int"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM( SELECT reply_no , user_no , content_no , reply , reg_date, par_reply_no
+					   FROM replys		   
+					   WHERE par_reply_no = #{value}
+					   ) countTable						
+	 </select>
+</mapper>
