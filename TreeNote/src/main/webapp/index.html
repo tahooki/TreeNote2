@@ -122,7 +122,7 @@ $("#loginbutton").click(function() {
 
 
 //회원가입 버튼 
-$("#signUpButton").click(function() {
+$("#signUpForm p input[name=passwordCheck]").on('focusout',function() {
 	var str = $('#signUpForm')
 	var user = getFormData(str)
 	if($('#signUpForm p input[name=password]').val() !=$('#signUpForm p input[name=passwordCheck]').val()){
@@ -155,7 +155,7 @@ $("#signUpButton").click(function() {
 })
 
 //중복 이메일 체크 
-$('#signUpForm p input[name=email]').on('keyup',function(){
+$('#signUpForm p input[name=email]').on('focusout',function(){
 	var temp = $('#signUpForm p input[name=email]').val().length;
 	if(temp >5){
 		$.ajax({
@@ -163,8 +163,14 @@ $('#signUpForm p input[name=email]').on('keyup',function(){
 			contentType : 'application/json',
 			dataType : 'json',
 			success : function(data){
-				$('#appendmessage').remove();
-				$('#signUpForm p input[name=email]').after('<p id="appendmessage">'+data.message+'</p>');
+				
+				if(data.boolean){
+					$('#appendmessage').remove();
+					$('#signUpForm p input[name=email]').after('<p id="appendmessage" class="signin button" style="color:red; ">이미 가입된 이메일 입니다.</p>')
+				}else{
+					$('#appendmessage').remove();
+					$('#signUpForm p input[name=email]').after('<p id="appendmessage" class="signin button" >사용 가능한 이메일 입니다.</p>')
+				}
 			}
 		})
 	}
@@ -174,7 +180,6 @@ $('#signUpForm p input[name=email]').on('keyup',function(){
 	
 
 })
-
 
 
 
