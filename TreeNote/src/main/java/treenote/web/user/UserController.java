@@ -67,9 +67,9 @@ public class UserController {
 		User returnUser = userService.getUser2(email);
 		System.out.println(returnUser);
 		if(returnUser !=null){
-			model.addAttribute("message","사용할수 없는 이메일 입니다.");
+			model.addAttribute("boolean",true);
 		}else{
-			model.addAttribute("message", "사용 가능한 이메일 입니다.");
+			model.addAttribute("boolean", false);
 		}
 		
 	}
