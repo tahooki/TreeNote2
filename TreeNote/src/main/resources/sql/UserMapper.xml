@@ -14,7 +14,7 @@
 		<result property="phone" column="PHONE" jdbcType="VARCHAR"/>
 		<result property="photo" column="PHOTO" jdbcType="VARCHAR"/>
 		<result property="snsUser" column="SNSUSER" jdbcType="VARCHAR"/>
-	
+		<result property="editTreeNo" column="EDIT_TREE_NO" jdbcType="INTEGER"/>
 	</resultMap>
 
 
@@ -53,16 +53,17 @@
 			password,
 			name,
 			phone,
-			photo
+			photo,
+			edit_tree_no
 		)
 		VALUES (
 			SEQ_USERS_USER_NO.nextval,
 			#{email},
 			#{password},
 			#{name},
-			#{phone},
-			#{photo}
-
+			#{phone:VARCHAR},
+			#{photo:VARCHAR},
+			SEQ_TREES_TREE_NO.nextval
 		)
 	</insert>
 
