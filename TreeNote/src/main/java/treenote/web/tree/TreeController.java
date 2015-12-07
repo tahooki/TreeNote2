@@ -64,23 +64,9 @@ public class TreeController {
 	
 	
 	//불러오기
-	@RequestMapping(value = "getTree/{treeNo}", method=RequestMethod.GET )
-	public void getTree(@PathVariable int treeNo, Model model) throws Exception{
+	@RequestMapping(value = "getTree", method=RequestMethod.GET )
+	public void getTree(HttpSession session, Model model) throws Exception{
 		System.out.println("/getTree");
-		model.addAttribute("Tree", treeService.getTree(treeNo));
-	}
-	
-	
-	//트리 리스트를 불러온다.
-	@RequestMapping(value = "listTree/{userNo}")
-	public void listTree(int userNo, Model model) throws Exception{
-		System.out.println("/listTree");
-	}
-	
-	//추가 !! login할때 불러오는 Tree - by.Tahooki
-	@RequestMapping(value = "loginTree")
-	public void loginTree(HttpSession session, Model model) throws Exception{
-		System.out.println("/loginTree");
 		User user = (User)session.getAttribute("user");
 		System.out.println(treeService.getTree(user.getEditTreeNo()));
 		System.out.println(user.getEditTreeNo());
@@ -94,5 +80,18 @@ public class TreeController {
 		}else{
 			model.addAttribute("Tree", treeService.getTree(((User)session.getAttribute("user")).getEditTreeNo()));
 		}
+	}
+	
+	
+	//트리 리스트를 불러온다.
+	@RequestMapping(value = "listTree/{userNo}")
+	public void listTree(int userNo, Model model) throws Exception{
+		System.out.println("/listTree");
+	}
+	
+	//추가 !! login할때 불러오는 Tree - by.Tahooki
+	@RequestMapping(value = "loginTree")
+	public void loginTree() throws Exception{
+		
 	}
 }

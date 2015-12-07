@@ -1,9 +1,9 @@
 var selectKeyword;
-function goImpl(treeNo) {
+function goImpl() {
 	// if (window.goSamples) goSamples();
 	//json data를 서버에서 호출후 map 생성
 
-	var jsondata = jQuery.getJSON('/tree/loginTree',function(success){
+	var jsondata = jQuery.getJSON('/tree/getTree',function(success){
 
 		console.log(success);
 		var gojs = go.GraphObject.make; // for conciseness in defining templates
@@ -11,13 +11,8 @@ function goImpl(treeNo) {
 		myDiagram = // 아직 분석 안됨.
 			gojs(go.Diagram, "myDiagram", // div의 이름이 "myDiagram"인 것을 찾아 설정함.
 			{
-				"toolManager.mouseWheelBehavior" : go.ToolManager.WheelZoom, // 마우스
-				// 속성
-				// 설정.
-				// whellzoom으로
-				// 설정해서
-				// 줌도 되게
-				// 만듬.
+				"toolManager.mouseWheelBehavior" : go.ToolManager.WheelZoom,
+				//마우스 속성 설정. whillzoom으로 설정해서 줌도 되게 만듬.
 				initialAutoScale : go.Diagram.Uniform, // 화면 정렬 타입
 				// contentAlignment: go.Spot.Center, // 화면을 가운데로 적용해서 움직이지 않게 함.
 				initialContentAlignment : go.Spot.Center, // 안에 들어있는 노드를 가운데로 정렬시킴
@@ -336,19 +331,7 @@ function changeKeyword(data) { // 노드를 생성하는 부분.
 			selectedKeyword.data.copyNo = keyword.copyNo;
 			selectedKeyword.data.collapse = 0;
 			selectedKeyword.data.color = keyword.color
-			console.log("뭥미"+selectedKeyword.data);
-			//노드의 keyword 변경.
-			//console.log(JSONData.keyword);
-			//var model = myDiagram.model;
-			//var parent = myDiagram.findNodeForData(selectedKeyword.data);
-			// add to model.nodeDataArray and create a Node
-			//model.addNodeData(JSONData.keyword);
-			// position the new child node close to the parent
-			//var child = myDiagram.findNodeForData(JSONData.keyword);
-			//child.location = parent.location;
 			selectedKeyword.findObject("button2").source = "resources/img/btn_expanded.png";
-			//console.log("panel "+selectedKeyword.findObject("PANEL"));
-			//selectedKeyword.findObject("PANEL").text = keyword.keyword;
 			selectedKeyword.isTreeExpanded = false;
 		}
 	})
