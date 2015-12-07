@@ -9,14 +9,12 @@
   		<result property="treeNo" column="tree_no" jdbcType="NUMERIC"/>
   		<result property="userNo" column="user_no" jdbcType="NUMERIC"/>
   		<result property="title" column="Title" jdbcType="VARCHAR"/>
-  		  		
-  			
-  		
+  		<result property="rootkey" column="ROOT_KEY" jdbcType="VARCHAR"/>  		
   	</resultMap>	
 	
-		
+	<!-- 수정 !! 트리 일련번호 자동생성을 따로 추출함. - by.Tahooki -->		
 	<insert id="addTree" parameterType="tree">
-		INSERT INTO trees values(seq_trees_tree_no.nextval, #{userNo}, #{title})
+		INSERT INTO trees values(#{treeNo}, #{userNo}, #{title}, #{rootkey})
 	</insert>
 	
 	
@@ -54,8 +52,10 @@
 	</delete>
 	
 	
-		
-				
+	<!-- 추가 !! 트리 일련번호 만들어 반환하는 것. - by.Tahooki -->
+	<select id="getTreeNo" resultType="java.lang.Integer">
+		select seq_trees_tree_no.nextval from dual
+	</select>
 		
 </mapper>
 

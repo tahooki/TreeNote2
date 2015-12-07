@@ -1,9 +1,9 @@
 var selectKeyword;
-function goImpl() {
+function goImpl(treeNo) {
 	// if (window.goSamples) goSamples();
 	//json data를 서버에서 호출후 map 생성
 
-	var jsondata = jQuery.getJSON('/tree/getTree/1000000',function(success){
+	var jsondata = jQuery.getJSON('/tree/loginTree',function(success){
 
 		console.log(success);
 		var gojs = go.GraphObject.make; // for conciseness in defining templates
@@ -58,9 +58,14 @@ function goImpl() {
 					if(!part.isSelected){
 						//timeline으로 돌리기 !
 					}
+					jQuery("#content").hide("fade",300);
 				},
 				mouseEnter:function(e,obj){
 					console.log("mouseEnter");
+				},
+				doubleClick:function(e,obj){
+					console.log("doubleClick : "+obj.data);
+					jQuery("#content").show("fade",300);
 				}
 			},
 			new go.Binding("isShadowed", "isSelected").ofObject(),
@@ -214,7 +219,7 @@ function newKeyword(parentdata) { // 노드를 생성하는 부분.
 		dataType : "json" ,
 		data: JSON.stringify({
 			key : 0,
-			treeNo : 1000000,
+			treeNo : parentdata.treeNo,
 			keyword : "키워드",
 			copyNo : 0,
 			parent : parentdata.key,
@@ -428,7 +433,6 @@ function createInput() {
 		customText.style.visibility = "";
 		var startingValue = customText.textEditingTool.textBlock.text;
 		customText.value = startingValue;
-
 		
 		var loc = customText.textEditingTool.textBlock.getDocumentPoint(go.Spot.TopLeft);
 		var loc2 = customText.textEditingTool.textBlock.getDocumentPoint(go.Spot.BottomRight);

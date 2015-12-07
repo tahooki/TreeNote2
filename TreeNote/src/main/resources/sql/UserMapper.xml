@@ -9,35 +9,36 @@
 	<resultMap type="user" id="userMap">
 		<result property="userNo" column="USER_NO" jdbcType="INTEGER"></result>
 		<result property="email" column="EMAIL" jdbcType="VARCHAR"></result>
-		<result property="password" column="PASSWORD" jdbcType="VARCHAR"/>
-		<result property="name" column="NAME" jdbcType="VARCHAR"/>
-		<result property="phone" column="PHONE" jdbcType="VARCHAR"/>
-		<result property="photo" column="PHOTO" jdbcType="VARCHAR"/>
-		<result property="snsUser" column="SNSUSER" jdbcType="VARCHAR"/>
-		<result property="editTreeNo" column="EDIT_TREE_NO" jdbcType="INTEGER"/>
+		<result property="password" column="PASSWORD" jdbcType="VARCHAR" />
+		<result property="name" column="NAME" jdbcType="VARCHAR" />
+		<result property="phone" column="PHONE" jdbcType="VARCHAR" />
+		<result property="photo" column="PHOTO" jdbcType="VARCHAR" />
+		<result property="snsUser" column="SNSUSER" jdbcType="VARCHAR" />
+		<result property="editTreeNo" column="EDIT_TREE_NO" jdbcType="INTEGER" />
 	</resultMap>
 
 
 	<select id="findUser" parameterType="string" resultMap="userMap">
-		SELECT * from USERS 
+		SELECT * from USERS
 		<where>
 			user_id =#{value}
 		</where>
 	</select>
 
 	<select id="getUser" parameterType="int" resultMap="userMap">
-		SELECT user_no, email, password, name, phone, photo, snsuser 
+		SELECT user_no, edit_tree_no, email, password, name, phone, photo,
+		snsuser
 		FROM users
 		<where>
 			user_id = #{value}
 		</where>
-
 	</select>
-	
-	
-	
+
+
+
 	<select id="getLoginUser" parameterType="string" resultMap="userMap">
-		SELECT user_no, email, password, name, phone, photo, snsuser 
+		SELECT user_no, edit_tree_no, email, password, name, phone, photo,
+		snsuser
 		FROM users
 		<where>
 			email = #{value}
@@ -46,89 +47,76 @@
 	</select>
 
 
-	<insert id="addUser" parameterType="user" >
+	<insert id="addUser" parameterType="user">
 		INSERT INTO USERS (
-			user_no,
-			email,
-			password,
-			name,
-			phone,
-			photo,
-			edit_tree_no
+		user_no,
+		email,
+		password,
+		name,
+		phone,
+		photo,
+		edit_tree_no
 		)
 		VALUES (
-			SEQ_USERS_USER_NO.nextval,
-			#{email},
-			#{password},
-			#{name},
-			#{phone:VARCHAR},
-			#{photo:VARCHAR},
-			SEQ_TREES_TREE_NO.nextval
+		SEQ_USERS_USER_NO.nextval,
+		#{email},
+		#{password},
+		#{name},
+		#{phone:VARCHAR},
+		#{photo:VARCHAR},
+		0
 		)
 	</insert>
 
 
-<!-- 
-	<insert id="addUser2" parameterType="user" >
-		INSERT INTO USERS {
-			user_no,
-			email,
-			password,
-			name,
-			phone,
-			photo,
-			snsuser
-		}
-		VALUES {
-			#{userNo},
-			#{email},
-			#{password},
-			#{name},
-			#{phone},
-			#{photo},
-			#{snsUser}
-
-		}
-	</insert>
-
- -->
-	
+	<!-- <insert id="addUser2" parameterType="user" > INSERT INTO USERS { user_no, 
+		email, password, name, phone, photo, snsuser } VALUES { #{userNo}, #{email}, 
+		#{password}, #{name}, #{phone}, #{photo}, #{snsUser} } </insert> -->
 
 
 
 
 
-	<update id="updateUser" parameterType="user" >
+
+	<update id="updateUser" parameterType="user">
 		UPDATE USERS
 		<set>
 			EMAIL = #{email:VARCHAR},
 			<if test="#{password}!=null">PASSWORD=#{password},</if>
 			NAME = #{name:VARCHAR},
 			PHONE = #{phone:VARCHAR},
-			PHOTO = #{photo:VARCHAR},
+			PHOTO =
+			#{photo:VARCHAR},
 			SNSUSER = #{snsUser:VARCHAR}
-		</set> 
+		</set>
 		<where>
 			USER_NO = #{userNo}
 		</where>
 
-
 	</update>
-	
-	
+
+
 	<select id="listFriend" parameterType="int" resultType="list">
 		SELECT name
-  		FROM USERS u
- 		<where>
-	 		u.USER_NO in (SELECT user_no2
-   				         FROM FRIENDS f, USERS uu
-            			WHERE uu.USER_NO = f.USER_NO AND uu.USER_NO=#{value});
- 		</where>
- 	</select>
+		FROM USERS u
+		<where>
+			u.USER_NO in (SELECT user_no2
+			FROM FRIENDS f, USERS uu
+			WHERE uu.USER_NO = f.USER_NO AND uu.USER_NO=#{value});
+		</where>
+	</select>
 
 
-
-
+<!-- 추가 !! 수정중인 트리 일련번호 업데이트 - by.Tahooki -->
+	<update id="updateEditTreeNo" parameterType="user">
+		UPDATE USERS
+		<set>
+			EDIT_TREE_NO = #{editTreeNo}
+		</set>
+		<where>
+			USER_NO = #{userNo}
+		</where>
+	</update>
 
 
 </mapper>

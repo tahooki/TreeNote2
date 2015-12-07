@@ -53,11 +53,11 @@ public class ContentController {
 	}
 	
 	//불러오기
-	@RequestMapping(value = "getContent/{contentNo}")
-	public void getContent(@PathVariable int contentNo, Model model) throws Exception{
+	@RequestMapping(value = "getContent/{keywordNo}")
+	public void getContent(@PathVariable int keywordNo, Model model) throws Exception{
 		System.out.println("/getContent");
 		
-		Content content = contentService.getContent(contentNo);
+		Content content = contentService.getContent(keywordNo);
 		model.addAttribute("conent", content);
 	}
 	

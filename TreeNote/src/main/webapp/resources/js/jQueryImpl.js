@@ -1,6 +1,6 @@
 /*var copyData;
 var isCopy = false;*/
-$(function() {
+/*$(function() {
 	$("#login").click(function() {
 		$("#navbar").show("slide", {
 			direction : "up"
@@ -10,7 +10,7 @@ $(function() {
 		$("#timeline").delay(1000).show("fade", 500);
 		$("#base").delay(1000).show("fade", 500);
 		setTimeout("goImpl()", 2000);
-		/*$.getJSON('/user/login', function(data) {
+		$.getJSON('/user/login', function(data) {
 			if (true) {
 
 				$("#navbar").show("slide", {
@@ -27,14 +27,18 @@ $(function() {
 				$('#exampleInputPassword1').val('');
 
 			}
-		})*/
+		})
 
 	})
 
-})
+})*/
 
 $(function() {
-
+	if (window.sessionStorage) {
+        //sessionStorage.setItem('editTreeNo', data.user.userNo);
+        //var position = sessionStorage.getItem('저장된 이름');
+		//alert(sessionStorage.getItem('editTreeNo'));
+    }
 	/*
 	 * $("#btn_timeline").click(function() { console.log("??");
 	 * $("#timeline").toggleClass("timeline-out", 500, "easeOutSine");
@@ -60,11 +64,6 @@ $(function() {
 		$("#friendlist").toggle("drop");
 	});
 
-	$(".nano").nanoScroller({
-		preventPageScrolling : true
-	});
-	$(".nano").nanoScroller();
-
 	/*
 	 * copyData = { key : 0, treeNo : 0, keyword : "키워드", ownerUserNo : "0",
 	 * parent : 0, collapse : 0, color : "#000000" };
@@ -82,9 +81,7 @@ $(function() {
 	autocom();
 
 })
-function json(data) {
 
-}
 // 페이스북 로그인 버트 클릭시 이벤
 function facebookLogin() {
 
@@ -168,10 +165,18 @@ function autocom() {
 			availableTags = JSONData.autoComplete;
 			console.log(availableTags);
 			$("#inputText").autocomplete({
-				source : availableTags
+				source : availableTags,
+				select : function( event, ui ) {
+					setKeyword(ui.item.value);
+					$(this).blur();
+				}
 			});
 			$("#search").autocomplete({
-				source : availableTags
+				source : availableTags,
+				select: function( event, ui ) {
+					setKeyword(ui.item.value);
+					$(this).blur();
+				}
 			});
 			$("#search").keydown(function(event) {
 				if (event.which == 13) {

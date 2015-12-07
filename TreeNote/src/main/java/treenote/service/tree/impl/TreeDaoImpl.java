@@ -20,13 +20,13 @@ public class TreeDaoImpl implements TreeDao {
 
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
-		
+
 	}
 
 	/// Constructor
 	public TreeDaoImpl() {
 		System.out.println(this.getClass());
-		
+
 	}
 
 	@Override
@@ -41,7 +41,7 @@ public class TreeDaoImpl implements TreeDao {
 	public int updateTitle(Tree tree) throws Exception {
 		// TODO Auto-generated method stub
 		System.out.println("Dao.updateTitle::");
-		
+
 		return sqlSession.update("TreeMapper.updateTitle", tree);
 	}
 
@@ -49,18 +49,22 @@ public class TreeDaoImpl implements TreeDao {
 	public void removeTree(int treeNo) throws Exception {
 		// TODO Auto-generated method stub
 		System.out.println("Dao.removeTree::");
-		
-		sqlSession.delete("TreeMapper.removeTree", treeNo);
 
+		sqlSession.delete("TreeMapper.removeTree", treeNo);
 	}
 
 	@Override
 	public List<Tree> listTree(int userNo) throws Exception {
 		// TODO Auto-generated method stub
 		System.out.println("Dao.listTree::");
-		
-		return sqlSession.selectList("TreeMapper.listTree", userNo);
 
+		return sqlSession.selectList("TreeMapper.listTree", userNo);
+	}
+
+	@Override
+	public int getTreeNo() throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("TreeMapper.getTreeNo");
 	}
 
 }

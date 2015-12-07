@@ -106,8 +106,14 @@ $("#loginbutton").click(function() {
 		  success : function(data){
 			  console.log(data)
 			  console.log(data.success);
+			  //alert(data.user.userNo);
 				if(data.boolean){
 						 self.location="/main.html" 
+						 if (window.sessionStorage) {
+							 sessionStorage.setItem('userNo', data.user.userNo);
+               sessionStorage.setItem('editTreeNo', data.user.editTreeNo);
+               //var position = sessionStorage.getItem('저장된 이름');
+             }
 				}else{
 					alert("입력한 이메일과 비밀번호가 일치하지 않습니다.");
 						$('#exampleInputEmail1').val('');
@@ -139,9 +145,8 @@ $("#signUpForm p input[name=passwordCheck]").on('focusout',function() {
 				  console.log(data)
 				  console.log(data.success);
 					if(true){
-						 self.location="/main.html" 
+						 self.location="/main.html";
 					}else{
-						
 						$('#exampleInputEmail1').val('');
 						$('#exampleInputPassword1').val('');
 					}

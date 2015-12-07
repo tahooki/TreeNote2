@@ -18,4 +18,7 @@ public interface UserDao {
 	public List<User> getFriendList(int userNo) throws Exception;
 	
 	public User getLoginUser(String email) throws Exception;
+	
+	//추가 !! 수정중인 트리 일련번호 업데이트 - by.Tahooki
+	public void updateEditTreeNo(User user) throws Exception;
 }

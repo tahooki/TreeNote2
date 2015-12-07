@@ -44,6 +44,9 @@ public class UserController {
 			session.setAttribute("user", returnUser);
 			System.out.println("success login");
 			model.addAttribute("boolean",true);
+			
+			//추가됨 !! session정보 대신 데이터 가져가는 부분. - by.Tahooki
+			model.addAttribute("user", returnUser);
 		}else{
 			model.addAttribute("boolean",false);
 		}
@@ -84,10 +87,16 @@ public class UserController {
 
 	//유저 가입
 	@RequestMapping(value = "addUser")
-	public void addUser(@RequestBody User user, Model model) throws Exception {
+	public void addUser(@RequestBody User user, Model model, HttpSession session) throws Exception {
 		System.out.println("/addUser");
+		
+		
 		userService.addUser(user);
 		model.addAttribute("user", user);
+		
+		//세션 정보 추가
+		User returnUser = userService.getUser2(user.getEmail());
+		session.setAttribute("user", returnUser);
 		
 	}
 
@@ -103,5 +112,14 @@ public class UserController {
 	@RequestMapping(value = "listFriend/{userNo}")
 	public void listFriend(@PathVariable int userNo, Model model) throws Exception {
 		System.out.println("/listFriend");
+	}
+	
+	//추가 !! 수정중인 트리 일련번호 업데이트 - by.Tahooki
+	@RequestMapping(value = "updateEditTreeNo/{editTreeNo}")
+	public void updateEditTreeNo(@PathVariable int editTreeNo, Model model, HttpSession session) throws Exception {
+		System.out.println("/updateEditTreeNo");
+		User user = (User)session.getAttribute("user");
+		user.setEditTreeNo(editTreeNo);
+		userService.updateEditTreeNo(user);
 	}
 }

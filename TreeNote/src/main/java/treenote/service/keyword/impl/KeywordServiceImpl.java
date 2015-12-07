@@ -46,6 +46,11 @@ public class KeywordServiceImpl implements KeywordService {
 		keyword.setCopyNo(keywordNo);
 		keywordDao.addKeyword(keyword);
 		//content 생성?
+		Content content = new Content();
+		content.setKeywordNo(keywordNo);
+		content.setScrap(0);
+		content.setContent("내용을 입력해주세요 !");
+		contentDao.addContent(content);
 		return keywordDao.getKeyword(keywordNo);
 	}
 	
@@ -64,6 +69,13 @@ public class KeywordServiceImpl implements KeywordService {
 	public int changeKeyword(Keyword keyword) throws Exception {
 		// TODO Auto-generated method stub 
 		// content 복사
+		contentDao.removeContent(contentDao.getContent(keyword.getKey()).getContentNo());
+		Content content = contentDao.getContent(keyword.getCopyNo());
+		if(content != null){
+			content.setKeywordNo(keyword.getKey());
+			content.setScrap(0);
+			contentDao.copyContent(content);
+		}
 		return keywordDao.updateKeyword(keyword);
 	}
 
@@ -90,19 +102,17 @@ public class KeywordServiceImpl implements KeywordService {
 
 		List<Keyword> OnwerList = keywordDao.listChildKeyword(keyword.getCopyNo());
 		for (Keyword onwerKeyword : OnwerList) {
-			System.out.println("????"+onwerKeyword);
 			onwerKeyword.setKey(keywordDao.getKeywrodNo());
 			onwerKeyword.setTreeNo(keyword.getTreeNo());
 			onwerKeyword.setParent(keyword.getKey());
 			keywordDao.addKeyword(onwerKeyword);
-			/*Content content = contentDao.getContentKeywordNo(onwerKeyword.getKey());
+			Content content = contentDao.getContent(onwerKeyword.getKey());
 			if(content != null){
 				content.setKeywordNo(keyword.getKey());
 				content.setScrap(0);
 				contentDao.addContent(content);
-			}*/
+			}
 		}
-		
 		return keywordDao.listChildKeyword(keyword.getKey());
 	}
 

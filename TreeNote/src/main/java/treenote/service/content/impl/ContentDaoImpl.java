@@ -47,8 +47,8 @@ public class ContentDaoImpl implements ContentDao {
 	}
 
 	@Override
-	public Content getContent(int contentNo) throws Exception {
-		return sqlSession.selectOne("ContentMapper.getContent", contentNo);
+	public Content getContent(int keywordNo) throws Exception {
+		return sqlSession.selectOne("ContentMapper.getContent", keywordNo);
 	}
 
 	@Override
@@ -56,12 +56,6 @@ public class ContentDaoImpl implements ContentDao {
 		addContent(content);
 		updateScrapContent(content.getScrap()+1);		
 		
-		return null;
-	}
-
-	@Override
-	public Content getContentKeywordNo(int keywordNo) throws Exception {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	

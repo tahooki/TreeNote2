@@ -81,5 +81,4 @@ public class KeywordController {
 		System.out.println("/autoComplete");
 		model.addAttribute("autoComplete", keywordService.autoComplete());
 	}
-
 }

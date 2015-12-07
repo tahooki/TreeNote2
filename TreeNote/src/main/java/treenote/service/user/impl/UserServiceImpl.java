@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
 	public void addUser(User user) throws Exception {
 		System.out.println("service adduser");
 		userDao.addUser(user);
-		
+
 	}
 
 	@Override
@@ -57,16 +57,22 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
-	public User loginUser(User user) throws Exception{
+
+	public User loginUser(User user) throws Exception {
 		User returnUser = userDao.getLoginUser(user.getEmail());
-		
-		
+
 		return returnUser;
 	}
-	
+
 	@Override
-	public User getUser2(String email) throws Exception{
+	public User getUser2(String email) throws Exception {
 		return userDao.getLoginUser(email);
+	}
+
+	//추가 !! 수정중인 트리 일련번호 업데이트 - by.Tahooki
+	@Override
+	public void updateEditTreeNo(User user) throws Exception {
+		// TODO Auto-generated method stub
+		userDao.updateEditTreeNo(user);
 	}
 }

@@ -1,5 +1,7 @@
 package treenote.web.tree;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -10,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import treenote.domain.Tree;
+import treenote.domain.User;
 import treenote.service.tree.TreeService;
+import treenote.service.user.UserService;
 
 @Controller
 @RequestMapping("/tree/*")
@@ -19,6 +23,10 @@ public class TreeController {
 	@Autowired
 	@Qualifier("treeServiceImpl")
 	private TreeService treeService;
+	
+	@Autowired
+	@Qualifier("userServiceImpl")
+	private UserService userService;
 
 	public TreeController() {
 		System.out.println(this.getClass());
@@ -67,5 +75,24 @@ public class TreeController {
 	@RequestMapping(value = "listTree/{userNo}")
 	public void listTree(int userNo, Model model) throws Exception{
 		System.out.println("/listTree");
+	}
+	
+	//추가 !! login할때 불러오는 Tree - by.Tahooki
+	@RequestMapping(value = "loginTree")
+	public void loginTree(HttpSession session, Model model) throws Exception{
+		System.out.println("/loginTree");
+		User user = (User)session.getAttribute("user");
+		System.out.println(treeService.getTree(user.getEditTreeNo()));
+		System.out.println(user.getEditTreeNo());
+		if(user.getEditTreeNo() == 0){
+			System.out.println("??");
+			Tree tree = new Tree();
+			tree.setUserNo(user.getUserNo());
+			user.setEditTreeNo(treeService.addTree(tree));			
+			userService.updateEditTreeNo(user);
+			model.addAttribute("Tree", treeService.getTree(user.getEditTreeNo()));
+		}else{
+			model.addAttribute("Tree", treeService.getTree(((User)session.getAttribute("user")).getEditTreeNo()));
+		}
 	}
 }

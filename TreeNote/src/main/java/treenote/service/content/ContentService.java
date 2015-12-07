@@ -12,5 +12,5 @@ public interface ContentService {
 	//스크랩 업데이트
 	public int updateScrapContent(int content) throws Exception;
 	//불러오기
-	public Content getContent(int contentNo) throws Exception;
+	public Content getContent(int keywordNo) throws Exception;
 }

@@ -26,13 +26,13 @@
 				 SYSDATE )
 	</insert>
 	
-	
+	<!-- 수정 !! content_no로 검색하는것에서 keyword_no로 수정됨 - by.Tahooki -->
 	<!-- SQL : SELECT ONE -->
 	<select id="getContent" parameterType="int" resultMap="contentSelectMap">
 		SELECT
 		content_no, keyword_no, content, photo, scrap, reg_date
 		FROM contents
-		WHERE content_no = #{value}
+		WHERE keyword_no = #{value}
 	</select>
 	
 	

@@ -66,4 +66,11 @@ public class UserDaoImpl implements UserDao {
 		return user;
 	}
 
+	//추가 !! 수정중인 트리 일련번호 업데이트 - by.Tahooki
+	@Override
+	public void updateEditTreeNo(User user) throws Exception {
+		// TODO Auto-generated method stub
+		sqlSession.update("UserMapper.updateEditTreeNo",user);
+	}
+	
 }

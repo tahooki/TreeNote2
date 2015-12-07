@@ -1,7 +1,6 @@
 package treenote.service.user;
 
 import java.util.List;
-
 import treenote.domain.User;
 
 public interface UserService {
@@ -19,4 +18,7 @@ public interface UserService {
 	public User loginUser(User user) throws Exception;
 	
 	public User getUser2(String email)throws Exception;
+	
+	//추가 !! 수정중인 트리 일련번호 업데이트 - by.Tahooki
+	public void updateEditTreeNo(User user) throws Exception;
 }

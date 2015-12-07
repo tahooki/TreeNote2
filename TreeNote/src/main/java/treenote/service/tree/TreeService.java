@@ -7,7 +7,7 @@ import treenote.domain.Tree;
 public interface TreeService {
 	
 	//생성
-	public void addTree(Tree tree) throws Exception ;
+	public int addTree(Tree tree) throws Exception ;
 	
 	//제목수정
 	public int updateTitle(Tree tree) throws Exception;

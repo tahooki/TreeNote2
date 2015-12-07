@@ -17,6 +17,9 @@ public interface TreeDao {
 	
 	//트리 리스트 불러오기
 	public List<Tree> listTree(int userNo) throws Exception;
+	
+	//트리 일련번호 가지고오기
+	public int getTreeNo() throws Exception;
 }
 
 
