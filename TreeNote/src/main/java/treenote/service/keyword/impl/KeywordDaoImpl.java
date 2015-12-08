@@ -64,9 +64,9 @@ public class KeywordDaoImpl implements KeywordDao {
 	}
 	
 	@Override
-	public List<Keyword> listTimeLineKeyword(String keyword) throws Exception {
+	public List<Keyword> listTimeLineKeyword(int userNo) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return sqlSession.selectList("keywordMapper.listTimelineKeyword", userNo);
 	}
 
 	@Override

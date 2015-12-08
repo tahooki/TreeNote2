@@ -58,6 +58,19 @@
 		rn BETWEEN 0 AND 10
 	</select>
 	
+	<select id="listTimelineKeyword" parameterType="java.lang.Integer" resultMap="keywordSelectMap">
+		SELECT * FROM (SELECT ROWNUM rn, tv.* FROM (
+		SELECT k.* FROM trees t, keywords k, contents c
+		WHERE
+		t.tree_No = k.tree_No AND
+		k.keyword_no = c.keyword_no AND
+		(t.user_no = #{value} OR
+		t.user_no IN(SELECT user_no2 FROM friends WHERE user_no = #{value}))
+		ORDER BY c.reg_date DESC
+		)tv)tv2
+		WHERE rn BETWEEN 0 AND 10
+	</select>
+	
 	<select id="listTreeKeyword" parameterType="java.lang.Integer" resultMap="keywordSelectMap">
 		<include refid="select-keywords"/>
 		WHERE TREE_NO = #{value} 

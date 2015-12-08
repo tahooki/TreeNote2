@@ -2,15 +2,17 @@ package treenote.web.keyword;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import treenote.domain.Keyword;
+import treenote.domain.User;
 import treenote.service.keyword.KeywordService;
 
 @Controller
@@ -63,8 +65,15 @@ public class KeywordController {
 	// 해당 키워드 리스트 불러오기
 	@RequestMapping(value = "listSearchKeyword")
 	public void listSearchKeyword(@RequestBody Keyword keyword, Model model) throws Exception {
-		System.out.println("/listSearchKeyword"+keyword);
+		System.out.println("/listSearchKeyword");
 		model.addAttribute("list", keywordService.listSearchKeyword(keyword.getKeyword()));
+	}
+	
+	// 해당 키워드 리스트 불러오기
+	@RequestMapping(value = "listTimeLineKeyword")
+	public void listTimeLineKeyword(HttpSession session, Model model) throws Exception {
+		System.out.println("/listTimeLineKeyword");
+		model.addAttribute("list", keywordService.listTimeLineKeyword(((User)session.getAttribute("user")).getUserNo()));
 	}
 
 	// 자식 키워드 불러오기

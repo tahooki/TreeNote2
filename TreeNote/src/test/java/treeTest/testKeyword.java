@@ -15,7 +15,6 @@ import treenote.service.keyword.KeywordDao;
 import treenote.service.keyword.KeywordService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-
 @ContextConfiguration(locations = { "classpath:config/context-common.xml", "classpath:config/context-aspect.xml",
 		"classpath:config/context-mybatis.xml", "classpath:config/context-transaction.xml" })
 public class testKeyword {
@@ -31,7 +30,6 @@ public class testKeyword {
 	// 추가
 	//@Test
 	public void testAddKeyword() throws Exception {
-		// Assert.assertEquals("정태또가출햇네", tree.getTitle());
 		Keyword	keyword = new Keyword();
 		keyword.setKey(1000020);
 		keyword.setKeyword("임시데이터");
@@ -84,9 +82,9 @@ public class testKeyword {
 	}
 
 	// 해당 키워드 리스트 불러오기
-	@Test
+	//@Test
 	public void testListTimeLineKeyword() throws Exception {
-		List<Keyword> list = keywordDao.listTimeLineKeyword("키워드");
+		List<Keyword> list = keywordDao.listTimeLineKeyword(1000000);
 		for (Keyword keyword : list) {
 			System.out.println(keyword);
 		}
@@ -112,7 +110,7 @@ public class testKeyword {
 		
 	}
 	
-	@Test
+	//@Test
 	public void autoComplete() throws Exception{
 		List<String> list = keywordService.autoComplete();
 		for (String keyword : list) {

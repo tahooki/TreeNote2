@@ -16,7 +16,7 @@ public interface KeywordService {
 	//삭제
 	public void removeKeyword(Keyword keyword) throws Exception;
 	//해당 유저 타임라인 키워드 리스트 불러오기
-	public List<Keyword> listTimeLineKeyword(String keyword) throws Exception;
+	public List<Keyword> listTimeLineKeyword(int userNo) throws Exception;
 	//해당 검색 키워드 리스트 불러오기
 	public List<Keyword> listSearchKeyword(String keyword) throws Exception;
 	//자식 키워드 불러오기

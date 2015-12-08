@@ -117,9 +117,9 @@ public class KeywordServiceImpl implements KeywordService {
 	}
 
 	@Override
-	public List<Keyword> listTimeLineKeyword(String keyword) throws Exception {
+	public List<Keyword> listTimeLineKeyword(int userNo) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return keywordDao.listTimeLineKeyword(userNo);
 	}
 
 	@Override

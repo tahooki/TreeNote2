@@ -29,6 +29,10 @@ function goImpl() {
 					//잠시 폐쇠
 					//console.log("canvase mouseOver :: "+e);
 					//myDiagram.model.removeNodeData(myDiagram.model.findNodeDataForKey(0));
+				},
+				click:function(e){
+					setListTimeKeyword();
+					setBtnUnVisible();
 				}
 			});
 		
@@ -50,8 +54,8 @@ function goImpl() {
 					part.findObject("button1").visible = part.isSelected;
 					part.findObject("button2").visible = part.isSelected;
 					part.findObject("button3").visible = part.isSelected;
-					if(!part.isSelected){
-						//timeline으로 돌리기 !
+					if(part.isSelected){
+						setBtnVisible();
 					}
 					jQuery("#content").hide("fade",300);
 				},
@@ -440,7 +444,7 @@ function createInput() {
 			tool.acceptText(go.TextEditingTool.Enter);
 			//console.log(tool.diagram.nodeTemplate.findMainElement().data);
 			selectKeyword.data.keyword = customText.value;
-			setKeyword(selectKeyword.data.keyword);
+			setListSearchKeyword(selectKeyword.data.keyword);
 			updateKeyword(selectKeyword.data);
 			e.preventDefault();
 			return false;
@@ -507,6 +511,42 @@ function listOnwerChildKeyword(node){
 			updateKeyword(selectedKeyword.data);*/
 		}
 	})
+}
+
+function setBtnVisible(){
+	var nodes = myDiagram.nodes;
+	var selectedKeyword;
+	console.log(nodes);
+	while(nodes.hasNext()){
+		if(nodes.value.isSelected){
+			selectedKeyword=nodes.value.data.keyword;
+			console.log(selectedKeyword);
+			console.log(selectedKeyword.data);
+		}
+	}
+	
+	var viewList = jQuery(".keyword");
+	//console.log(viewList.length);
+	for(var i = 0; i < viewList.length ; i++){
+		console.log("select : " + selectedKeyword + " keyword : " +jQuery(viewList[i]).find("#name").text());
+		if(selectedKeyword == jQuery(viewList[i]).find("#name").text()){
+			console.log(jQuery(viewList[i]).find(".btn_add").hide());
+			console.log(jQuery(viewList[i]).find(".btn_copy").show());
+		}
+		else{
+			console.log(jQuery(viewList[i]).find(".btn_copy").hide());
+			console.log(jQuery(viewList[i]).find(".btn_add").show());
+		}
+	}
+}
+
+function setBtnUnVisible(){
+	var viewList = jQuery(".keyword");
+	//console.log(viewList.length);
+	for(var i = 0; i < viewList.length ; i++){
+		console.log(jQuery(viewList[i]).find(".btn_add").hide());
+		console.log(jQuery(viewList[i]).find(".btn_copy").hide());
+	}
 }
 
 /*function copyCreate(data){

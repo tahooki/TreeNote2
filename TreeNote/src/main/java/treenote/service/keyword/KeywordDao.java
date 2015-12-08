@@ -14,7 +14,7 @@ public interface KeywordDao {
 	//해당 트리 리스트 불러오기
 	public List<Keyword> listTreeKeyword(int treeNo) throws Exception;
 	//해당 키워드 리스트 불러오기
-	public List<Keyword> listTimeLineKeyword(String keyword) throws Exception;
+	public List<Keyword> listTimeLineKeyword(int userNo) throws Exception;
 	//해당 키워드 리스트 불러오기
 	public List<Keyword> listSearchKeyword(String keyword) throws Exception;
 	//자식 키워드 불러오기
