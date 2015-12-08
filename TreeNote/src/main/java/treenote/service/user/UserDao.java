@@ -6,7 +6,7 @@ import treenote.domain.User;
 
 public interface UserDao {
 
-	public void addUser(User user) throws Exception ;
+	public int addUser(User user) throws Exception ;
 
 	public User getUser(int userNo) throws Exception ;
 

@@ -28,10 +28,10 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public void addUser(User user) throws Exception {
+	public int addUser(User user) throws Exception {
 		// TODO Auto-generated method stub
 		System.out.println("dao addUser");
-		sqlSession.insert("UserMapper.addUser", user);
+		return sqlSession.insert("UserMapper.addUser", user);
 
 	}
 
@@ -62,8 +62,7 @@ public class UserDaoImpl implements UserDao {
 	
 	@Override
 	public User getLoginUser(String email) throws Exception{
-		User user = sqlSession.selectOne("UserMapper.getLoginUser", email);
-		return user;
+		return sqlSession.selectOne("UserMapper.getLoginUser", email);
 	}
 
 	//추가 !! 수정중인 트리 일련번호 업데이트 - by.Tahooki
