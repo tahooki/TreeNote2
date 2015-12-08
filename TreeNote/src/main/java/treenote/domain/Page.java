@@ -54,20 +54,28 @@ public class Page {
 	}
 
 	public int getEndRowNum() {
-		return getCurrentPage()*getPageSize();
+		//return getCurrentPage()*getPageSize();
+		return endRowNum;		
 	}
 	
 	public int getStartRowNum() {
-		return (getCurrentPage()-1)*getPageSize()+1;
+		//return (getCurrentPage()-1)*getPageSize()+1;
+		return startRowNum;
+	}
+
+	public void setEndRowNum(int endRowNum) {
+		this.endRowNum = endRowNum;
+	}
+
+	public void setStartRowNum(int startRowNum) {
+		this.startRowNum = startRowNum;
 	}
 
 	@Override
 	public String toString() {
-		return "Search [currentPage=" + currentPage + ", searchCondition=" + searchCondition + ", searchKeyword="
+		return "Page [currentPage=" + currentPage + ", searchCondition=" + searchCondition + ", searchKeyword="
 				+ searchKeyword + ", replyValueNo=" + replyValueNo + ", pageSize=" + pageSize + ", endRowNum="
 				+ endRowNum + ", startRowNum=" + startRowNum + "]";
 	}
-
-	
 	
 }

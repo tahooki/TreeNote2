@@ -1,15 +1,18 @@
 package treenote.domain;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Reply {
 	private int replyNo;
 	private int userNo;
 	private int contentNo;
+	private int parentReplyNo;
 	private String reply;
 	private Date regDate;
-	private int parentReplyNo;
+	private Timestamp regTime; 	
 	private boolean deleteChildReply;
+	
 	
 	public int getReplyNo() {
 		return replyNo;
@@ -67,10 +70,19 @@ public class Reply {
 		this.deleteChildReply = deleteChildReply;
 	}
 
+	public Timestamp getRegTime() {
+		return regTime;
+	}
+
+	public void setRegTime(Timestamp regTime) {
+		this.regTime = regTime;
+	}
+
 	@Override
 	public String toString() {
-		return "Reply [replyNo=" + replyNo + ", userNo=" + userNo + ", contentNo=" + contentNo + ", reply=" + reply
-				+ ", regDate=" + regDate + ", parentReplyNo=" + parentReplyNo + "]";
-	}	
+		return "Reply [replyNo=" + replyNo + ", userNo=" + userNo + ", contentNo=" + contentNo + ", parentReplyNo="
+				+ parentReplyNo + ", reply=" + reply + ", regDate=" + regDate + ", regTime=" + regTime
+				+ ", deleteChildReply=" + deleteChildReply + "]";
+	}
 
 }
