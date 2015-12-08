@@ -11,6 +11,13 @@
 <script src="resources/js/go.js"></script>
 <script src="resources/js/bootstrap.min.js"></script>
 
+<!-- 트리 리스트 -->
+<script src="resources/js/jquery.mCustomScrollbar.concat.min.js"></script>
+
+<link rel="stylesheet" href="resources/css/jquery.mCustomScrollbar.css">
+<link rel="stylesheet" href="resources/css/style.css">
+<link rel="stylesheet" href="resources/css/treeList.css">
+
 <link rel="stylesheet" href="resources/css/jquery-ui.min.css">	
 <link rel="stylesheet" href="resources/css/bootstrap.css">
 <link rel="stylesheet" href="resources/css/bootstrap.min.css">
@@ -96,7 +103,19 @@
 			</div>
 			
 			<div id="treelist" style="display: none;">
-			
+				<div id="demo" class="showcase">
+					<section id="examples">
+					<!-- content -->
+						<h3 id="userNo">TreeTitle </h3>
+						<h3 id="treeTitle"></h3>
+							<div id="content-9" class="content vertical-images">
+								<ul id="treeList">
+									<h2 id="count">TreeList:</h2>
+									<li id="list"></li>
+								</ul>
+							</div>		
+					</section>
+				</div>
 			</div>
 			
 			<div id="friendlist" style="display: none;"></div>
@@ -142,8 +161,17 @@
 	}, 500);
 	$("#base").delay(1000).show("fade", 500);
 	setTimeout("goImpl()", 2000);
-
-
+	
+	(function($){
+		$(window).load(function(){
+			$("#content-9").mCustomScrollbar({
+				scrollButtons:{enable:true,scrollType:"stepped"},
+				theme:"rounded-dark",
+				scrollbarPosition:"outside"
+			});
+			
+		});
+	})(jQuery);
 
 </script>
 </body>

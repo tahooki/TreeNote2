@@ -104,11 +104,11 @@
 
 #treelist{
 	position: absolute;
-	padding-top:70px;
+	margin-top:1%;
 	left:0px;
   width:200px;
   height: 300px;
-  background-color: #ddd;
+  background-color: #FFFFFF;
   z-index:100;
 }
 

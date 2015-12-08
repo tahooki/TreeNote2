@@ -147,6 +147,100 @@ function setKeyword(keyword) {
 	})
 }
 
+//트리 리스트 불러오기
+$(function() {
+		 $("#treeTitle").on("dblclick" , function() {
+			 alert(  "수정 Start" );
+			 var temp = $(this).text();
+			 temp = temp.substring(6);
+			 alert("왜 안되"+temp)
+			 $('#treeTitle').remove();
+			 $('#treeTitle').after('<input type="text" id="updateTitle" value="'+temp+'">');
+			
+		 $("#updateTitle").keyup(function(e){
+		    if (e.keyCode == 13) { 
+		    	$.ajax({
+					url : "/tree/updateTitle",
+					method : "POST",
+					data:JSON.stringify({
+						treeNo:$("#treeNo").val(),
+						title:$("#updateTitle").val(),
+						userNo:$("#userNo").val()
+					}),
+					dataType : "json",
+					contentType : "application/json",
+					success : function(JSONData, status) {
+						alert(status);
+						alert("JSONData : \n" + JSONData);
+						$("#treeTitle").append(treeTitle);
+						//alert("title :" + treeTitle);
+						var count=0;
+						var value=[];
+						
+						for(var i in JSONData.Tree){
+							count++;
+							//value=JSONData.Tree[i].title;
+							value="<li>"+JSONData.Tree[i].title+"</li>";
+							//alert("ttteesstt::: "+value);
+							$("#list").append(value);
+						}
+						$("#count").append(count);
+					}
+					
+				});
+			}
+			}); 
+			
+		 }); 
+		 
+		$("#userNo").on("click", function(e) {
+			//if(e.keyCode==13 ){
+			//var userNo = $("#userNo").val();
+			$("#treeTitle").empty();
+			$("#list").empty();
+			$("#count").empty(); 
+			
+			alert("userNo :" + userNo);
+			$.ajax({
+				url : "/tree/listTree/"+1000000,
+				method : "GET",
+				dataType : "json",
+				headers : {
+					"Accept" : "application/json",
+					"Content-Type" : "application/json"
+				},
+				success : function(JSONData, status) {
+					//alert(status);
+					//alert("JSONData : \n" + JSONData);
+					var treeTitle=JSONData.Tree[0].title;
+					$("#treeTitle").append(treeTitle+'<img src="resources/img/btn_add.png" id="addTitle"/>');
+					//alert("title :" + treeTitle);
+					var count=0;
+					var value=[];
+					
+					for(var i in JSONData.Tree){
+						count++;
+						//value=JSONData.Tree[i].title;
+						value="<li id='treeList"+i+"'  value='JSONData.Tree[i].title' class='listData'>"+JSONData.Tree[i].title+
+								"<input type='hidden' id='treeNo' value="+JSONData.Tree[i].treeNo+">"+"</li>";
+						//alert("ttteesstt::: "+value);
+						$("#list").append(value);
+						
+					$('#treeList'+i+'').on("click" , function() {
+						 var temp = $(this).text();
+						 alert("test ::"+temp);
+						 $("#treeTitle").text(temp).append('<img src="resources/img/btn_add.png" id="addTitle"/>'); 
+					});
+					}
+					$("#count").append("TreeList ::"+count);
+				}
+			});
+			//}	
+			
+			
+		});
+	});
+
 function openDialog() {
 	$("#dialog").show().dialog();
 }
