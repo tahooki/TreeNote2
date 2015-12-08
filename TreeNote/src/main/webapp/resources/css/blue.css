@@ -155,7 +155,7 @@ margin: 0 0 10px;
 
 
 
-#content div {
+#content .content-2,#content .content-1 {
 	background: #fff;
 	border-radius: 0 0 5px 5px;
     position: absolute;
@@ -174,6 +174,7 @@ margin: 0 0 10px;
 
 .tabs input.tab-selector-1:checked ~ #content .content-1,
 .tabs input.tab-selector-2:checked ~ #content .content-2,
+.tabs input.tab-selector-1:checked ~ #content .content-1 div,
 .tabs input.tab-selector-3:checked ~ #content .content-3,
 .tabs input.tab-selector-4:checked ~ #content .content-4 {
 	z-index: 100;
@@ -189,7 +190,13 @@ margin: 0 0 10px;
 }
 
 
-#content .field {
+#content .fileupload-buttonbar{
+    -moz-box-sizing: content-box;
+    border: 1px solid #B2B2B2;
+    border-radius: 3px 3px 3px 3px;
+    transition: all 0.2s linear 0s;
+}
+#content .field{
     -moz-box-sizing: content-box;
     border: 1px solid #B2B2B2;
     border-radius: 3px 3px 3px 3px;
@@ -209,13 +216,13 @@ margin: 0 0 10px;
     background: none repeat scroll 0 0 #449D44;
     border: 1px solid #1C6C7A;
     border-radius: 3px 3px 3px 3px;
-    box-shadow: 0 1px 3px 2px rgba(0, 0, 0, 0.07) inset, 0 0 0 1.5px #FEFEFE, 0 2.5px 1.5px 1.5px #D2D2D2;
     color: #FFFFFF;
     cursor: pointer;
     font-family: 'BebasNeueRegular','Arial Narrow',Arial,sans-serif;
     font-size: 15px;
     margin:0;
-    padding: 5px;
+    padding-bottom: 3px;
+	padding-top: 3px;
     transition: all 0.2s linear 0s;
 	float:right;    
 }
@@ -293,10 +300,6 @@ float:left;
     content: "f";
     text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
 }
-
-
-
-
 
 
 

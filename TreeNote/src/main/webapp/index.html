@@ -5,8 +5,17 @@
 
 <title>Insert title here</title>
 <link rel="stylesheet"href="../resources/css/blue.css">
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<link rel="stylesheet" href="resources/css/alertModal.css">
 
+<!-- <link href="//fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet" type="text/css"/> -->
+<link href="resources/css/main.css" rel="stylesheet" type="text/css"/>
+<link href="resources/css/jquery.Jcrop.min.css" rel="stylesheet" type="text/css"/>
+<style type="text/css">
+
+</style>
 </head>
 
 
@@ -27,21 +36,60 @@
 			<div class="content-2">
 				<form id="loginaction" action="/user/login" method="post"  >
 				  <p>
-					<input class="field" name="email" required="required" type="text" placeholder="Name or Email">
+					<input class="field" name="email" required="required" type="email" placeholder="Name or Email">
 				  </p>
 				  <p>
 					<input class="field" name="password" required="required" type="password" placeholder="Password">
 				  </p>
 				  
 				  <p>
-				  	<div id="loginbutton" style="clear:both; opacity: 1;position: relative; float: left; background-color: #449D44; border-radius: 3px; width: 93%;
-				  	text-align: center; font-size:x-large; height: 20px; ">SIGN IN</div>
+				  	<div id="loginbutton" style="clear:both; opacity: 1;position: relative; float: left; background-color: #449D44; border-radius: 3px; width: 99%;
+				  	text-align: center; font-size:x-large; height: 24px; ">SIGN IN</div>
 				  </p>
 				</form>
 			</div>
 			
+			
+<!--///////////////////////////////////////////////////////////////////////////////////////////////////////////////////  -->				 	
+			
+	<div id="popup" class="popup" style="display: none;">
+		<div class="popup__body"><div class="js-img"></div></div>
+		<div style="margin: 0 0 5px; text-align: center;">
+			<div class="js-upload btn btn_browse btn_browse_small">Upload</div>
+		</div>
+	</div>
+			
+			
 			<div class="content-1">
-				<form id="signUpForm" >
+				<form id="signUpForm" enctype="multipart/form-data" >
+<!--///////////////////////////////////////////////////////////////////////////////////////////////////////////////////  -->				 	
+		    <div class="content">
+		       <div class="example">
+			       <div class="example__left" style=" position:relative;"  >
+						<div id="userpic" class="userpic"  >
+							<div class="js-preview userpic__preview" ></div>
+							<div class="btn btn-success js-fileapi-wrapper" style="position:relative;">
+								<div class="js-browse" style="position:relative;">
+									<span class="btn-txt" style="position:relative;margin:0px;">IMAGE</span>
+									<input type="file" name="filedata" style="z-index:5"/>
+								</div>
+								<div class="js-upload" style="display: none;">
+									<div class="progress progress-success" style="position:relative;"><div class="js-progress bar" style="position:relative;"></div></div>
+									<span class="btn-txt">Uploading</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>	
+			</div>
+
+<!--///////////////////////////////////////////////////////////////////////////////////////////////////////////////////  -->				 	
+				 	
+				 	
+				 	
+				 	
+				 	
+				 	
 				  <p>
 					<input class="field" name="name" required="required" type="text" placeholder="Your Name">
 				  </p> 
@@ -56,14 +104,14 @@
 				  </p>
 				  	
 				  <p>
-					<input class="field" name="passwordCheck" required="required" type="password" placeholder="Confirm Password">
+					<input class="field"  name="passwordCheck" required="required" type="password" placeholder="Confirm Password">
 				  </p>
 				  <p class="signin button">
 					<input type="checkbox" required="required"> I agree with terms and conditions 
 				  </p>
 				  <p>
-				  	<div id="signUpButton" style="clear:both; opacity: 1;position: relative; float: left; background-color: #449D44; border-radius: 3px; width: 93%;
-				  	text-align: center; font-size:x-large; height: 20px">SIGN UP</div>
+				  	<div id="signUpButton" style="clear:both; opacity: 1;position: relative; float: left; background-color: #449D44; border-radius: 3px; width: 100%;
+				  	text-align: center; font-size:x-large; height: 24px;color:white;padding-bottom: 3px;padding-top: 3px;">SIGN UP</div>
 				  </p>
 				</form>
 			</div>
@@ -76,6 +124,56 @@
 </div>
 <script src="../resources/js/jquery.min.js"></script>
 <!-- <script type="text/javascript" src="../resources/js/facebookLogin.js"></script> -->
+
+
+
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modal Header</h4>
+      </div>
+      <div class="modal-body">
+        <p>Some text in the modal.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<div id="myModal2" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">alert</h4>
+      </div>
+      <div class="modal-body">
+        <p>아이디와 비밀번호가 일치 하지 않음</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
 
 
 
@@ -106,7 +204,6 @@ $("#loginbutton").click(function() {
 		  success : function(data){
 			  console.log(data)
 			  console.log(data.success);
-			  //alert(data.user.userNo);
 				if(data.boolean){
 						 self.location="/main.html" 
 						 if (window.sessionStorage) {
@@ -115,9 +212,10 @@ $("#loginbutton").click(function() {
                //var position = sessionStorage.getItem('저장된 이름');
              }
 				}else{
-					alert("입력한 이메일과 비밀번호가 일치하지 않습니다.");
-						$('#exampleInputEmail1').val('');
-						$('#exampleInputPassword1').val('');
+					$("#signUpForm p input[name=name]").attr('data-toggle','modal').attr('data-target','#myModal2');
+					$("#signUpForm p input[name=name]").click()
+					$("#signUpForm p input[name=name]").removeAttr('data-toggle').removeAttr('data-target')
+					$('.field').val('');
 				}
 		  },
 		  dataType: "json"
@@ -126,22 +224,49 @@ $("#loginbutton").click(function() {
 	
 })
 
+var checkEmail =false;
+var checkPassword = false;
+var checkName = false;
+
+//name check
+$('#signUpForm p input[name=name]').on('focusout',function(){
+	if($('#signUpForm p input[name=name]').val()!=""){
+		checkName = true;
+	}else{
+		checkName = false;
+	}
+})
+
+$('#signUpForm p input[name=passwordCheck]').on('focusout',function(){
+	if($('#signUpForm p input[name=password]').val() !=$('#signUpForm p input[name=passwordCheck]').val()){
+		$('#signUpForm p input[name=passwordCheck]').css('border-color','red')
+		checkPassword = false;
+	}else{
+		checkPassword = true;
+	}
+})
+
+$('#signUpForm p input[name=passwordCheck]').on('focusin',function(){
+	$('#signUpForm p input[name=passwordCheck]').css('border-color','rgb(85, 85, 85)')
+})
+
+
 
 //회원가입 버튼 
-$("#signUpForm p input[name=passwordCheck]").on('focusout',function() {
+$('#signUpButton').on('click',function(){
 	var str = $('#signUpForm')
 	var user = getFormData(str)
-	if($('#signUpForm p input[name=password]').val() !=$('#signUpForm p input[name=passwordCheck]').val()){
-		alert("비밀번호 확인이 일치하지 않습니다.");
-//			document.detailForm.password2.focus();
-		$('#signUpForm p input[name=passwordCheck]').focus();
-	}else{
+	if(checkEmail&&checkPassword&&checkName){
 		$.ajax({
 			  type: 'POST',
 			  url: '/user/addUser',
 			  data: JSON.stringify(user),
 			  contentType : 'application/json; charset=utf-8',
 			  success : function(data){
+				  //controller 에서 db에 데이터 정상적으로 입력시만 true값 내려오게 변경 할것
+				  if(data.boolean){
+					 self.location="/main.html" 
+				}
 				  console.log(data)
 				  console.log(data.success);
 					if(true){
@@ -153,35 +278,46 @@ $("#signUpForm p input[name=passwordCheck]").on('focusout',function() {
 			  },
 			  dataType: "json"
 			});
+	}else{
+		$("#signUpForm p input[name=name]").attr('data-toggle','modal').attr('data-target','#myModal');
+		$("#signUpForm p input[name=name]").click()
+		$("#signUpForm p input[name=name]").removeAttr('data-toggle').removeAttr('data-target')
 	}
-	
-	
-	
 })
+
+
+
 
 //중복 이메일 체크 
 $('#signUpForm p input[name=email]').on('focusout',function(){
-	var temp = $('#signUpForm p input[name=email]').val().length;
-	if(temp >5){
-		$.ajax({
-			url:'/user/checkDuplication/'+$(this).val()+'.',
-			contentType : 'application/json',
-			dataType : 'json',
-			success : function(data){
-				
-				if(data.boolean){
-					$('#appendmessage').remove();
-					$('#signUpForm p input[name=email]').after('<p id="appendmessage" class="signin button" style="color:red; ">이미 가입된 이메일 입니다.</p>')
-				}else{
-					$('#appendmessage').remove();
-					$('#signUpForm p input[name=email]').after('<p id="appendmessage" class="signin button" >사용 가능한 이메일 입니다.</p>')
+	var temp = $('#signUpForm p input[name=email]').val()
+	var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+	if (re.test(temp) ){  
+		
+			$.ajax({
+				type:'post',
+				url:'/user/checkDuplication',
+				contentType : 'application/json',
+				data:temp,
+				dataType : 'json',
+				success : function(data){
+					
+					if(data.boolean){
+						$('#appendmessage').remove();
+						$('#signUpForm p input[name=email]').after('<p id="appendmessage" class="signin button" style="color:red; ">이미 가입된 이메일 입니다.</p>')
+						checkEmail = false;
+					}else{
+						$('#appendmessage').remove();
+						$('#signUpForm p input[name=email]').after('<p id="appendmessage" class="signin button" >사용 가능한 이메일 입니다.</p>')
+						checkEmail=true;
+					}
 				}
-			}
-		})
-	}
-	if(temp==0){
-		$('#appendmessage').remove();
-	}
+			})
+  } else{
+	  
+	  $('#signUpForm p input[name=email]').after('<p id="appendmessage" class="signin button" style="color:red;" >올바른 양식이 아닙니다..</p>')
+  } 
+	
 	
 
 })
@@ -189,8 +325,6 @@ $('#signUpForm p input[name=email]').on('focusout',function(){
 
 
 </script>
-<!-- <link rel="stylesheet" href="../resources/css/bootstrap.css"> -->
-<!-- <link rel="stylesheet" href="../resources/css/bootstrap.min.css"> -->
 <script type="text/javascript" src="../resources/js/common-passwords.js"></script>
 <script type="text/javascript">
 	
@@ -245,6 +379,142 @@ $('#signUpForm p input[name=email]').on('focusout',function(){
 
 	})
 </script>
+<!--파일 업로드  -->
+<!--  //////////////////////////////////////////-->
+	<script src="//code.jquery.com/jquery-1.8.2.min.js"></script>
+	<script>!window.jQuery && document.write('<script src="/js/jquery.dev.js"><'+'/script>');</script>
+
+	<script src="//yandex.st/highlightjs/7.2/highlight.min.js"></script>
+	<script src="//yandex.st/jquery/easing/1.3/jquery.easing.min.js"></script>
+
+
+	<script>
+		var FileAPI = {
+			  debug: true
+			, media: true
+			, staticPath: './FileAPI/'
+		};
+	</script>
+
+
+
+	<script src="resources/js/FileAPI/FileAPI.min.js"></script>
+	<script src="resources/js/FileAPI/FileAPI.exif.js"></script>
+	<script src="resources/js/FileAPI/jquery.fileapi.js"></script>
+	<script src="resources/js/FileAPI/jquery.Jcrop.min.js"></script>
+	<script src="resources/js/FileAPI/jquery.modal.js"></script>
+				
+				<script>
+		var examples = [];
+					examples.push(function (){
+						$('#userpic').fileapi({
+							url: '/user/addUser',
+							accept: 'image/*',
+							imageSize: { minWidth: 200, minHeight: 200 },
+							elements: {
+								active: { show: '.js-upload', hide: '.js-browse' },
+								preview: {
+									el: '.js-preview',
+									width: 200,
+									height: 200
+								},
+								progress: '.js-progress'
+							},
+							onSelect: function (evt, ui){
+								var file = ui.files[0];
+
+								if( !FileAPI.support.transform ) {
+									alert('Your browser does not support Flash :(');
+								}
+								else if( file ){
+									$('#popup').modal({
+										closeOnEsc: true,
+										closeOnOverlayClick: false,
+										onOpen: function (overlay){
+											$(overlay).on('click', '.js-upload', function (){
+												$.modal().close();
+												$('#userpic').fileapi('upload');
+											});
+
+											$('.js-img', overlay).cropper({
+												file: file,
+												bgColor: '#fff',
+												maxSize: [$(window).width()-100, $(window).height()-100],
+												minSize: [200, 200],
+												selection: '90%',
+												onSelect: function (coords){
+													$('#userpic').fileapi('crop', file, coords);
+												}
+											});
+										}
+									}).open();
+								}
+							}
+						});
+					});
+				</script>
+<script>
+		jQuery(function ($){
+			var $blind = $('.splash__blind');
+
+			$('.splash')
+				.mouseenter(function (){
+					$('.splash__blind', this)
+						.animate({ top: -10 }, 'fast', 'easeInQuad')
+						.animate({ top: 0 }, 'slow', 'easeOutBounce')
+					;
+				})
+				.click(function (){
+					if( !FileAPI.support.media ){
+						$blind.animate({ top: -$(this).height() }, 'slow', 'easeOutQuart');
+					}
+
+					FileAPI.Camera.publish($('.splash__cam'), function (err, cam){
+						if( err ){
+							alert("Unfortunately, your browser does not support webcam.");
+						} else {
+							$('.splash').off();
+							$blind.animate({ top: -$(this).height() }, 'slow', 'easeOutQuart');
+						}
+					});
+				})
+			;
+
+
+
+
+			$('body').on('click', '[data-tab]', function (evt){
+				evt.preventDefault();
+
+				var el = evt.currentTarget;
+				var tab = $.attr(el, 'data-tab');
+				var $example = $(el).closest('.example');
+
+				$example
+					.find('[data-tab]')
+						.removeClass('active')
+						.filter('[data-tab="'+tab+'"]')
+							.addClass('active')
+							.end()
+						.end()
+					.find('[data-code]')
+						.hide()
+						.filter('[data-code="'+tab+'"]').show()
+				;
+			});
+
+
+			
+
+			// Init examples
+			FileAPI.each(examples, function (fn){
+				fn();
+			});
+		});
+	</script>
+<!--  //////////////////////////////////////////-->
+
+
 
 </body>
 </html>
