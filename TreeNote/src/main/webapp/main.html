@@ -71,7 +71,13 @@
 				<img id="btn_mypage" src="resources/img/btn_mypage.png" width="30px" height="30px" style="margin:10px;">
 				<img id="btn_timeline" src="resources/img/btn_timeline.png" width="30px" height="30px" style="margin:10px;">
 				<img id="btn_search" src="resources/img/btn_search.png" width="30px" height="30px" style="margin:10px;">
-				<img id="btn_friend" src="resources/img/btn_friend.png" width="30px" height="30px" style="margin:10px;">
+				<!-- 친구리스트 드롭다운 메뉴 -->
+				<img id="btn_friend" src="resources/img/btn_friend.png"  class="dropdown-toggle"
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" width="30px" height="30px" style="margin:10px;cursor:pointer;">
+				<ul class="dropdown-menu dropdown-menu-right">
+					<li role="separator" class="divider"></li>
+				</ul>
+				<!---------------------------------------- -->
 				<img id="btn_logout" src="resources/img/btn_logout.png" width="30px" height="30px" style="margin:10px;">	
 			</div>
 			<!--/.navbar-collapse -->
@@ -126,7 +132,6 @@
 				</div>
 			</div>
 
-			<div id="friendlist" style="display: none;"></div>
 		</div>
 
 		<!-- style="width: 200px; height: 100%; border: 2px solid #00FF00; background: #efefef; float: right; display: none; -->
@@ -155,9 +160,10 @@
 			<input id="data" type="hidden">
 		</div>
 	</div>
+<!-- //핸들바 js파일 추가 -->
+<script type="text/javascript" src="../resources/js/handlebars.min.js"></script>
 
-
-	<script type="text/javascript">
+<script type="text/javascript">
 	$("#navbar").show("slide", {
 		direction : "up"
 	}, 1000);
@@ -181,5 +187,36 @@
 	})(jQuery);
 
 </script>
+
+
+<!-- //친구리스트 불러오기 핸들바 탬플릿  -->
+<script id="boardTrTemplate" type="text/x-handlebars-template">
+{{#each friend}}
+<li>
+	<div>
+		<div style="height: 40px">
+			<img src="user/ST_LOGO.jpg" style="height: 40px; float: left; margin-left: 3px"> 
+			<span style="float: left; margin-top: 10px; margin-left: 7px">{{name}}</span>
+			<button style="height: 20px; margin-top: 10px">수락</button>
+		</div>
+	</div>          
+</li><br>
+{{/each}}
+</script>
+
+<!-- //핸들바 이용 서버에서 가져온 친구 정보 입력 -->
+<script type="text/javascript">
+	$.getJSON('/user/listFriend', function(obj) {
+		var tr;
+		var templateSource = $("#boardTrTemplate").html();
+		var template = Handlebars.compile(templateSource);
+
+		tr = template(obj);
+		console.log(tr);
+		$('li[role=separator]').before(tr)
+	});
+</script>
+
+
 </body>
 </html>
