@@ -90,6 +90,7 @@ function goImpl() {
 				}, // 기본색이 whitsmoke 인듯... stroke는
 				new go.Binding("fill", "color")), gojs(go.TextBlock, {	
 					font : "15pt Jeju Gothic",
+					stroke : "black",
 					editable : true,
 					margin : 2,
 					textAlign: "center",
@@ -201,6 +202,7 @@ function goImpl() {
 }
 
 function newKeyword(parentdata) { // 노드를 생성하는 부분.
+	var colors = ["#2ECC71","#3498DB","#9B59B6","#F1C40F","#E67E22","#E74C3C"];
 	jQuery.ajax( 
 	{
 		url : "/keyword/newKeyword" ,
@@ -213,7 +215,7 @@ function newKeyword(parentdata) { // 노드를 생성하는 부분.
 			copyNo : 0,
 			parent : parentdata.key,
 			collapse : 0,
-			color : go.Brush.randomColor()
+			color : colors[Math.floor(Math.random() * 6)]
 		}),
 		headers : {
 			"Accept" : "application/json",
@@ -538,68 +540,3 @@ function setBtnUnVisible(){
 		console.log(jQuery(viewList[i]).find(".btn_copy").hide());
 	}
 }
-
-/*function copyCreate(data){
-	var redata = JSON.parse(data);
-	redata.key = 0;
-	redata.treeNo = 0;
-	redata.parent = 0;
-	console.log("copyCreate : "+redata);
-	myDiagram.model.addNodeData(redata);
-}
-
-function copyRemove(data){
-	var redata = JSON.parse(data);
-	redata.key = 0;
-	redata.treeNo = 0;
-	redata.parent = 0;
-	console.log("copyRemove : "+redata);
-	
-	myDiagram.model.removeNodeData(myDiagram.model.findNodeDataForKey(0));
-}*/
-//
-
-/*
-// the expand/collapse button, at the top-right corner
-			gojs("TreeExpanderButton", {
-				name : "button1",
-				alignment : go.Spot.TopRight, // +- 오른쪽 상단에 배치
-				alignmentFocus : go.Spot.Center,
-				visible : false,
-				// customize the expander behavior to
-				// create children if the node has never been expanded
-				click : function(e, obj) { // OBJ is the Button
-					console.log("버튼 obj : "+obj);
-					var node = obj.part; // 버튼 오브젝트가 있는 노드를 받는다.
-					if (node === null)
-						return; // 노드가 없으면 끝낸다.
-					e.handled = true; // ??
-					var diagram = node.diagram; // 노드의 다이어 그램을 받는다.
-					diagram.startTransaction("	"); // 트랜젝션 시작... 중간에 오류가 나거나하면 롤백됨.
-					// this behavior is specific to this incrementalTree sample:
-					var data = node.data;
-					if (data.collapse==0) { // data에 everExpanded이 false이거나 없으면...
-						// only create children once per node
-						// data array에 everExpeanded 라는 property 추가하고 그걸 true
-						diagram.model.setDataProperty(data, "collapse", 1);
-						var numchildren = createSubTree(data); // 트리생성
-						if (numchildren === 0) { // 자식이 없으면 +- 버튼을 안보이게 만듬.
-							obj.visible = false;
-						}
-						console.log(myDiagram.model.toJson());
-					}
-					// this behavior is generic for most expand/collapse tree buttons:
-					// 이 노드를 펼치거나 안펼치거나 한다.
-					node.isTreeExpanded = !node.isTreeExpanded; // expand or collapse
-					diagram.commitTransaction("CollapseExpandTree"); // startTransaction
-				}
-			}),
-mouseDragEnter
-mouseDragLeave
-mouseDrop
-mouseEnter
-mouseHold
-mouseHover
-mouseLeave
-mouseOver
-*/

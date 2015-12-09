@@ -30,32 +30,6 @@ input[type="text"] {
   margin-top:-50px;
 }
 
-#btn_timeline{
-	position: absolute;
-	left:0px;
-	width:10px;
-  height: inherit;
-  background-color: #ccc;
-  z-index:100;
-  margin-top:-70px;
-	line-height: 850px;
-}
-.btn_timeline_in{
-	width: 10px;
-	height: 10px;
-	vertical-align: middle;
-	background-image: url("/resources/img/btn_timeline_in.png");
-  background-size:contain;
-}
-.btn_timeline_out{
-	width: 10px;
-	height: 10px;
-	vertical-align: middle;
-	background-image: url("/resources/img/btn_timeline_out.png");
-  background-size:contain;
-  
-}
-
 .center-block {
   display: block;
   margin-left: auto;

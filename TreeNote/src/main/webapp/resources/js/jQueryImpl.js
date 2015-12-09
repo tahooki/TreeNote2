@@ -70,8 +70,8 @@ function setListSearchKeyword(keyword) {
 						JSON.stringify(keywordList[i]));
 				$("#timelinec #" + keywordList[i].key + " #name").text(
 						keywordList[i].keyword);
-				console.log($("#timelinec #" + keywordList[i].key + " #name")
-						.text());
+				$("#" + keywordList[i].key).css("background",keywordList[i].color);
+				//console.log($("#timelinec #" + keywordList[i].key + " #name").text());
 			}
 			$("#timelinec .keyword").show();
 			$(".btn_add").click(function() {
@@ -108,6 +108,7 @@ function setListTimeKeyword() {
 						JSON.stringify(keywordList[i]));
 				$("#timelinec #" + keywordList[i].key + " #name").text(
 						keywordList[i].keyword);
+				$("#" + keywordList[i].key).css("background",keywordList[i].color);
 				//console.log($("#timelinec #" + keywordList[i].key + " #name").text());
 			}
 			$("#timelinec .keyword").show();
