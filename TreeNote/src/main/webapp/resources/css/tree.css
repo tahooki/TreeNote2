@@ -1,3 +1,13 @@
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css); 
+@import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css); 
+
+canvas {
+	outline: none;
+}
+
+input[type="text"] {
+  outline:none;
+}
 
 .timeline-in {
 	position: absolute;
@@ -44,7 +54,6 @@
 	background-image: url("/resources/img/btn_timeline_out.png");
   background-size:contain;
 }
-
 
 #temp {
 	position: absolute;
