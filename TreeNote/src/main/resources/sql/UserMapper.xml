@@ -15,6 +15,7 @@
 		<result property="photo" column="PHOTO" jdbcType="VARCHAR" />
 		<result property="snsUser" column="SNSUSER" jdbcType="VARCHAR" />
 		<result property="editTreeNo" column="EDIT_TREE_NO" jdbcType="INTEGER" />
+		<result property="requestStatus" column="REQUEST_STATUS" jdbcType="INTEGER"/>
 	</resultMap>
 
 
@@ -96,13 +97,17 @@
 	</update>
 
 
-	<select id="listFriend" parameterType="int" resultType="list">
-		SELECT name
-		FROM USERS u
+	<select id="listFriend" parameterType="int" resultMap="userMap">
+		SELECT 
+		u.name, 
+		u.user_no, 
+		u.email, 
+		u.photo,
+		f.request_status
+		FROM USERS u, FRIENDS f
 		<where>
-			u.USER_NO in (SELECT user_no2
-			FROM FRIENDS f, USERS uu
-			WHERE uu.USER_NO = f.USER_NO AND uu.USER_NO=#{value});
+			u.USER_NO = f.USER_NO2 
+			AND f.USER_NO =#{value}
 		</where>
 	</select>
 
@@ -117,6 +122,51 @@
 			USER_NO = #{userNo}
 		</where>
 	</update>
+
+
+<!--추가!! 친구요청시 친구 테이블에 추가  -->
+<insert id="requestFriend" parameterType="map" >
+		INSERT ALL INTO FRIENDS (
+			user_no,
+			user_no2
+		)
+		VALUES (
+			#{userNo},
+			#{userNo2}
+		)
+		INTO FRIENDS (
+			user_no,
+			user_no2,
+			request_status			
+		)
+		VALUES
+		(
+			#{userNo2},
+			#{userNo},
+			1
+		)
+		SELECT * FROM dual
+	</insert>
+	
+	
+	
+	
+	<update id="acceptFriend" parameterType="map">
+		UPDATE 
+			(select * from friends where user_no=#{userNo} and user_no2=#{userNo2} or user_no=#{userNo2} and user_no2=#{userNo})
+		<set>
+			request_status = 2
+		</set>
+		
+	</update>
+	
+	
+	<delete id="declineFriend" parameterType="map">
+		DELETE FROM  
+			(select * from friends where user_no=#{userNo} and user_no2=#{userNo2} or user_no=#{userNo2} and user_no2=#{userNo})
+		
+		
+	</delete>
 
 
 </mapper>

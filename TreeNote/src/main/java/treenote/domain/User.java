@@ -9,6 +9,14 @@ public class User {
 	private String phone;
 	private String photo;
 	private String snsUser;
+	private int requestStatus;
+
+	@Override
+	public String toString() {
+		return "User [userNo=" + userNo + ", editTreeNo=" + editTreeNo + ", email=" + email + ", password=" + password
+				+ ", name=" + name + ", phone=" + phone + ", photo=" + photo + ", snsUser=" + snsUser
+				+ ", requestStatus=" + requestStatus + "]";
+	}
 
 	public int getUserNo() {
 		return userNo;
@@ -74,10 +82,14 @@ public class User {
 		this.snsUser = snsUser;
 	}
 
-	@Override
-	public String toString() {
-		return "User [userNo=" + userNo + ", editTreeNo=" + editTreeNo + ", email=" + email + ", password=" + password
-				+ ", name=" + name + ", phone=" + phone + ", photo=" + photo + ", snsUser=" + snsUser + "]";
+	
+
+	public int getRequestStatus() {
+		return requestStatus;
+	}
+
+	public void setRequestStatus(int requestStatus) {
+		this.requestStatus = requestStatus;
 	}
 
 }

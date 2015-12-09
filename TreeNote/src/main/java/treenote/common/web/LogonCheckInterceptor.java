@@ -39,15 +39,21 @@ public class LogonCheckInterceptor extends HandlerInterceptorAdapter {
 		//==> 로그인 유무확인
 		HttpSession session = request.getSession(true);
 		User user = (User)session.getAttribute("user");
-
+		
 		//==> 로그인한 회원이라면...
 		if(   user != null   )  {
 			//==> 로그인 상태에서 접근 불가 URI
+			
 			String uri = request.getRequestURI();
-			if(		uri.indexOf("addUserView") != -1 	|| 	uri.indexOf("addUser") != -1 || 
-					uri.indexOf("loginView") != -1 			||	uri.indexOf("login") != -1 		|| 
-					uri.indexOf("checkDuplication") != -1 ||	uri.indexOf("json") != -1) {
-				request.getRequestDispatcher("/index.html").forward(request, response);
+			System.out.println(":::::::+++"+uri);
+			System.out.println(":::::::+++"+uri.toString());
+			System.out.println(":::::__________"+uri.lastIndexOf("/"));
+			if(uri.equals("/")){
+				System.out.println("aksdjflkajdlf;ajskldfjlksjadl;fkjlaksdjf");
+			}
+			if(		uri.indexOf("index") != -1 	|| 	uri.indexOf("addUser") != -1 || 
+					uri.indexOf("checkDuplication") != -1 ||uri.indexOf("login")!=-1 ||uri.equals("/") ) {
+				request.getRequestDispatcher("main.html").forward(request, response);
 				System.out.println("[ 로그인 상태.. 로그인 후 불필요 한 요구.... ]");
 				System.out.println("[ LogonCheckInterceptor end........]\n");
 				return false;
@@ -59,15 +65,16 @@ public class LogonCheckInterceptor extends HandlerInterceptorAdapter {
 		}else{ //==> 미 로그인한 화원이라면...
 			//==> 로그인 시도 중.....
 			String uri = request.getRequestURI();
-			if(		uri.indexOf("addUserView") != -1 	|| 	uri.indexOf("addUser") != -1 || 
-					uri.indexOf("loginView") != -1 			||	uri.indexOf("login") != -1 		|| 
-					uri.indexOf("checkDuplication") != -1 ){
+			System.out.println(":::::::+++"+uri);
+			if(		uri.indexOf("addUser") != -1 || 	
+					uri.indexOf("index") != -1 			||	uri.indexOf("login") != -1 		|| 
+					uri.indexOf("checkDuplication") != -1 ||uri.equals("/")){
 				System.out.println("[ 로그 시도 상태 .... ]");
 				System.out.println("[ LogonCheckInterceptor end........]\n");
 				return true;
 			}
 			
-			request.getRequestDispatcher("/index.html").forward(request, response);
+			request.getRequestDispatcher("index.html").forward(request, response);
 			System.out.println("[ 로그인 이전 ... ]");
 			System.out.println("[ LogonCheckInterceptor end........]\n");
 			

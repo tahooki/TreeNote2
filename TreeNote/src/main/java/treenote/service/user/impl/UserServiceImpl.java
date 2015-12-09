@@ -1,6 +1,7 @@
 package treenote.service.user.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -43,7 +44,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<User> ListFriend(int userNo) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return userDao.getFriendList(userNo);
 	}
 
 	@Override
@@ -74,5 +75,26 @@ public class UserServiceImpl implements UserService {
 	public void updateEditTreeNo(User user) throws Exception {
 		// TODO Auto-generated method stub
 		userDao.updateEditTreeNo(user);
+	}
+
+	@Override
+	public int requestFriend(Map<String, Object> userNo) throws Exception {
+		// TODO Auto-generated method stub
+		return userDao.requestFriend(userNo);
+		
+	}
+
+	@Override
+	public int acceptFriend(Map<String, Object> userNo) throws Exception {
+		// TODO Auto-generated method stub
+		
+		return userDao.acceptFriend(userNo);
+	}
+	
+	@Override
+	public int declineFriend(Map<String, Object> userNo) throws Exception {
+		// TODO Auto-generated method stub
+		
+		return userDao.declineFriend(userNo);
 	}
 }

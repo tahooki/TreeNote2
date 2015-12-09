@@ -1,6 +1,8 @@
 package treenote.service.user;
 
 import java.util.List;
+import java.util.Map;
+
 import treenote.domain.User;
 public interface UserService {
 	
@@ -19,4 +21,11 @@ public interface UserService {
 	public User getUser2(String email)throws Exception;
 	
 	public void updateEditTreeNo(User user) throws Exception;
+	
+	public int requestFriend(Map<String, Object> userNo) throws Exception; 
+	
+	public int acceptFriend(Map<String, Object> userNo) throws Exception;
+
+	int declineFriend(Map<String, Object> userNo) throws Exception;
+
 }

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 
 <title>Insert title here</title>
-<link rel="stylesheet"href="../resources/css/blue.css">
+<link rel="stylesheet"href="resources/css/blue.css">
 <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -44,7 +44,7 @@
 				  
 				  <p>
 				  	<div id="loginbutton" style="clear:both; opacity: 1;position: relative; float: left; background-color: #449D44; border-radius: 3px; width: 99%;
-				  	text-align: center; font-size:x-large; height: 24px; ">SIGN IN</div>
+				  	text-align: center; font-size:x-large; height: 24px;cursor:pointer; ">SIGN IN</div>
 				  </p>
 				</form>
 			</div>
@@ -62,6 +62,8 @@
 			
 			<div class="content-1">
 				<form id="signUpForm" enctype="multipart/form-data" >
+				 	
+				 	
 <!--///////////////////////////////////////////////////////////////////////////////////////////////////////////////////  -->				 	
 		    <div class="content">
 		       <div class="example">
@@ -88,8 +90,6 @@
 				 	
 				 	
 				 	
-				 	
-				 	
 				  <p>
 					<input class="field" name="name" required="required" type="text" placeholder="Your Name">
 				  </p> 
@@ -111,7 +111,7 @@
 				  </p>
 				  <p>
 				  	<div id="signUpButton" style="clear:both; opacity: 1;position: relative; float: left; background-color: #449D44; border-radius: 3px; width: 100%;
-				  	text-align: center; font-size:x-large; height: 24px;color:white;padding-bottom: 3px;padding-top: 3px;">SIGN UP</div>
+				  	text-align: center; font-size:x-large; height: 24px;color:white;padding-bottom: 3px;padding-top: 3px; cursor:pointer;">SIGN UP</div>
 				  </p>
 				</form>
 			</div>
@@ -122,7 +122,7 @@
 	</section>
   </div>
 </div>
-<script src="../resources/js/jquery.min.js"></script>
+<script src="resources/js/jquery.min.js"></script>
 <!-- <script type="text/javascript" src="../resources/js/facebookLogin.js"></script> -->
 
 
@@ -255,35 +255,44 @@ $('#signUpForm p input[name=passwordCheck]').on('focusin',function(){
 //회원가입 버튼 
 $('#signUpButton').on('click',function(){
 	var str = $('#signUpForm')
-	var user = getFormData(str)
+	var user = new FormData(str);
+	var formuser = getFormData(str)
+	
 	if(checkEmail&&checkPassword&&checkName){
-		$.ajax({
-			  type: 'POST',
-			  url: '/user/addUser',
-			  data: JSON.stringify(user),
-			  contentType : 'application/json; charset=utf-8',
-			  success : function(data){
-				  //controller 에서 db에 데이터 정상적으로 입력시만 true값 내려오게 변경 할것
-				  if(data.boolean){
-					 self.location="/main.html" 
-				}
-				  console.log(data)
-				  console.log(data.success);
-					if(true){
-						 self.location="/main.html";
-					}else{
-						$('#exampleInputEmail1').val('');
-						$('#exampleInputPassword1').val('');
-					}
-			  },
-			  dataType: "json"
-			});
+		$('#signUpForm').attr('action','/user/addUser').attr('method','post').submit();
+		
+		
+// 		/* $.ajax({
+// 			  type: 'POST',
+// 			  url: '/user/addUser',
+// 			  data: {user:user,filedata:$('.userpic').files},
+// // 			  contentType : 'application/json',
+// 			  contentType : 'multipart/form-data',
+//  			  processData: false,
+// //               contentType: false,
+// 			  success : function(data){
+// 				  //controller 에서 db에 데이터 정상적으로 입력시만 true값 내려오게 변경 할것
+// 				  if(data.boolean){
+// 					 self.location="/main.html" 
+// 				}
+// 				  console.log(data)
+// 				  console.log(data.success);
+// 					if(true){
+// 						 self.location="/main.html";
+// 					}else{
+// 						$('#exampleInputEmail1').val('');
+// 						$('#exampleInputPassword1').val('');
+// 					}
+// 			  },
+// 			  dataType: "text"
+// 			}); */
 	}else{
 		$("#signUpForm p input[name=name]").attr('data-toggle','modal').attr('data-target','#myModal');
 		$("#signUpForm p input[name=name]").click()
 		$("#signUpForm p input[name=name]").removeAttr('data-toggle').removeAttr('data-target')
-	}
-})
+	}	
+
+}).on()
 
 
 
@@ -292,6 +301,7 @@ $('#signUpButton').on('click',function(){
 $('#signUpForm p input[name=email]').on('focusout',function(){
 	var temp = $('#signUpForm p input[name=email]').val()
 	var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+	$('#appendmessage').remove();
 	if (re.test(temp) ){  
 		
 			$.ajax({
@@ -303,17 +313,17 @@ $('#signUpForm p input[name=email]').on('focusout',function(){
 				success : function(data){
 					
 					if(data.boolean){
-						$('#appendmessage').remove();
 						$('#signUpForm p input[name=email]').after('<p id="appendmessage" class="signin button" style="color:red; ">이미 가입된 이메일 입니다.</p>')
 						checkEmail = false;
 					}else{
-						$('#appendmessage').remove();
 						$('#signUpForm p input[name=email]').after('<p id="appendmessage" class="signin button" >사용 가능한 이메일 입니다.</p>')
 						checkEmail=true;
 					}
 				}
 			})
-  } else{
+  } else if(temp==""){
+	  
+  }	else{
 	  
 	  $('#signUpForm p input[name=email]').after('<p id="appendmessage" class="signin button" style="color:red;" >올바른 양식이 아닙니다..</p>')
   } 
@@ -325,7 +335,7 @@ $('#signUpForm p input[name=email]').on('focusout',function(){
 
 
 </script>
-<script type="text/javascript" src="../resources/js/common-passwords.js"></script>
+<script type="text/javascript" src="resources/js/common-passwords.js"></script>
 <script type="text/javascript">
 	
 	//패스워드 강도 체크
@@ -381,7 +391,6 @@ $('#signUpForm p input[name=email]').on('focusout',function(){
 </script>
 <!--파일 업로드  -->
 <!--  //////////////////////////////////////////-->
-	<script src="//code.jquery.com/jquery-1.8.2.min.js"></script>
 	<script>!window.jQuery && document.write('<script src="/js/jquery.dev.js"><'+'/script>');</script>
 
 	<script src="//yandex.st/highlightjs/7.2/highlight.min.js"></script>
@@ -404,55 +413,64 @@ $('#signUpForm p input[name=email]').on('focusout',function(){
 	<script src="resources/js/FileAPI/jquery.Jcrop.min.js"></script>
 	<script src="resources/js/FileAPI/jquery.modal.js"></script>
 				
-				<script>
-		var examples = [];
-					examples.push(function (){
-						$('#userpic').fileapi({
-							url: '/user/addUser',
-							accept: 'image/*',
-							imageSize: { minWidth: 200, minHeight: 200 },
-							elements: {
-								active: { show: '.js-upload', hide: '.js-browse' },
-								preview: {
-									el: '.js-preview',
-									width: 200,
-									height: 200
-								},
-								progress: '.js-progress'
-							},
-							onSelect: function (evt, ui){
-								var file = ui.files[0];
+<script>
+var examples = [];
+	examples.push(function (){
+		$('#userpic').fileapi({
+			url: '/user',
+			accept: 'image/*',
+			imageSize: { minWidth: 100, minHeight: 100 },
+			autoUpload:true,
+			maxSize : FileAPI.MB*10,
+			paramName: 'filedata',
+			elements: {
+				active: { show: '.js-upload', hide: '.js-browse' },
+				preview: {
+					el: '.js-preview',
+					width: 200,
+					height: 200
+				},
+				progress: '.js-progress'
+			},
+			onSelect: function (evt, ui){
+				var file = ui.files[0];
 
-								if( !FileAPI.support.transform ) {
-									alert('Your browser does not support Flash :(');
-								}
-								else if( file ){
-									$('#popup').modal({
-										closeOnEsc: true,
-										closeOnOverlayClick: false,
-										onOpen: function (overlay){
-											$(overlay).on('click', '.js-upload', function (){
-												$.modal().close();
-												$('#userpic').fileapi('upload');
-											});
+				if( !FileAPI.support.transform ) {
+					alert('Your browser does not support Flash :(');
+				}
+				else if( file ){
+					$('#popup').modal({
+						closeOnEsc: true,
+						closeOnOverlayClick: false,
+						onOpen: function (overlay){
+							$(overlay).on('click', '.js-upload', function (){
+								$.modal().close();
+								$('#userpic').fileapi('upload');
+							});
 
-											$('.js-img', overlay).cropper({
-												file: file,
-												bgColor: '#fff',
-												maxSize: [$(window).width()-100, $(window).height()-100],
-												minSize: [200, 200],
-												selection: '90%',
-												onSelect: function (coords){
-													$('#userpic').fileapi('crop', file, coords);
-												}
-											});
-										}
-									}).open();
+							$('.js-img', overlay).cropper({
+								file: file,
+								bgColor: '#fff',
+								maxSize: [$(window).width()-100, $(window).height()-100],
+								minSize: [100, 100],
+								selection: '100%',
+								onSelect: function (coords){
+									$('#userpic').fileapi('crop', file, coords);
 								}
-							}
-						});
-					});
-				</script>
+							});
+						}
+					}).open();
+				}
+			}
+		});
+	});
+
+		
+		
+		
+</script>
+
+
 <script>
 		jQuery(function ($){
 			var $blind = $('.splash__blind');

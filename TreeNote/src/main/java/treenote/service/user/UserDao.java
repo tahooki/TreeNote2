@@ -1,6 +1,7 @@
 package treenote.service.user;
 
 import java.util.List;
+import java.util.Map;
 
 import treenote.domain.User;
 
@@ -21,4 +22,10 @@ public interface UserDao {
 	
 	//추가 !! 수정중인 트리 일련번호 업데이트 - by.Tahooki
 	public void updateEditTreeNo(User user) throws Exception;
-}
+	
+	public int requestFriend(Map<String, Object> userNo) throws Exception; 
+	
+	public int acceptFriend(Map<String, Object> userNo) throws Exception;
+
+	int declineFriend(Map<String, Object> userNo) throws Exception;
+	}

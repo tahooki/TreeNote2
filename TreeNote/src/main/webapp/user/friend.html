@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="../resources/js/jquery.min.js"></script>
+</head>
+<body>
+
+<button id="button" value="친구불러">친구리스트</button>
+<button id="button2" value="친구불러">친구 요청</button>
+<button id="button3" value="친구불러">친구 수락</button>
+<button id="button4" value="친구불러">친구 안해</button>
+<script type="text/javascript">
+$('#button').on('click',function(){
+	$.ajax({
+		contentType : "application/json",
+		dataType : "json",
+		url : "/user/listFriend",
+		success : function(data){
+			$('body').append("<p>"+JSON.stringify(data.friend)+"</p>");
+		}
+	})
+})
+
+
+
+$('#button2').on('click',function(){
+	$.ajax({
+		contentType : "application/json",
+		dataType : "json",
+		url : "/user/requestFriend/1000025",
+		success : function(data){
+			$('body').append("<p>"+JSON.stringify(data.friend)+"</p>");
+		}
+	})
+})
+
+$('#button3').on('click',function(){
+	$.ajax({
+		contentType : "application/json",
+		dataType : "json",
+		url : "/user/acceptFriend/1000024",
+		success : function(data){
+			$('body').append("<p>"+JSON.stringify(data.friend)+"</p>");
+		}
+	})
+})
+
+$('#button4').on('click',function(){
+	$.ajax({
+		contentType : "application/json",
+		dataType : "json",
+		url : "/user/declineFriend/1000024",
+		success : function(data){
+			$('body').append("<p>"+JSON.stringify(data.friend)+"</p>");
+		}
+	})
+})
+
+
+
+
+
+
+
+
+</script>
+</form>
+</body>
+</html>

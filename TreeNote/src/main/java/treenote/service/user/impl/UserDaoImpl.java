@@ -1,6 +1,7 @@
 package treenote.service.user.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,8 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public List<User> getFriendList(int userNo) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		System.out.println(userNo);
+		return sqlSession.selectList("UserMapper.listFriend", userNo);
 	}
 
 	@Override
@@ -71,5 +73,27 @@ public class UserDaoImpl implements UserDao {
 		// TODO Auto-generated method stub
 		sqlSession.update("UserMapper.updateEditTreeNo",user);
 	}
+
+	@Override
+	public int requestFriend(Map<String, Object> userNo) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("UserMapper.requestFriend",userNo);
+		
+	}
+
+	@Override
+	public int acceptFriend(Map<String, Object> userNo) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.update("UserMapper.acceptFriend", userNo);
+	}
+	
+	@Override
+	public int declineFriend(Map<String, Object> userNo) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.update("UserMapper.declineFriend", userNo);
+	}
+	
+	
+	
 	
 }
