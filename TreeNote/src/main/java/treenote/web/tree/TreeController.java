@@ -84,9 +84,10 @@ public class TreeController {
 	
 	
 	//트리 리스트를 불러온다.
-	@RequestMapping(value = "listTree/{userNo}")
-	public void listTree(int userNo, Model model) throws Exception{
+	@RequestMapping(value = "listTree/{userNo}", method=RequestMethod.GET )
+	public void listTree(@PathVariable int userNo, Model model) throws Exception{
 		System.out.println("/listTree");
+		model.addAttribute("Tree", treeService.listTree(userNo));
 	}
 	
 	//추가 !! login할때 불러오는 Tree - by.Tahooki

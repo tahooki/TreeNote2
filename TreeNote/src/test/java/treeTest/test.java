@@ -77,7 +77,7 @@ public class test {
 						
 	}
 	
-	@Test
+	//@Test
 	public void testGetTree() throws Exception {
 		Tree tree=new Tree();
 				
