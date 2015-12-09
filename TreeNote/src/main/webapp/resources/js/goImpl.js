@@ -169,6 +169,17 @@ function goImpl() {
 			
 		); // end Node
 
+		myDiagram.linkTemplate =
+		      gojs(go.Link,  // the whole link panel
+		        new go.Binding("points").makeTwoWay(),
+		        { curve: go.Link.Bezier, toShortLength: 15 },
+		        new go.Binding("curviness", "curviness"),
+		        gojs(go.Shape,  // the link shape
+		          { stroke: "#2F4F4F", strokeWidth: 2.5 }),
+		        gojs(go.Shape,  // the arrowhead
+		          { toArrow: "kite", fill: "#2F4F4F", stroke: null, scale: 2 })
+		    );
+		
 		// create the model with a root node data
 		myDiagram.model = new go.TreeModel([ // 트리모델로 설정
 	     {

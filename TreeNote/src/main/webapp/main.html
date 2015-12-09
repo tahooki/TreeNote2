@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="en" style="height:100%; min-height: 780px; min-width: 992px;">
+<html lang="en"
+	style="height: 100%; min-height: 780px; min-width: 992px;">
 <head>
 <meta charset="utf-8">
 <title>Tree</title>
@@ -18,7 +19,7 @@
 <link rel="stylesheet" href="resources/css/style.css">
 <link rel="stylesheet" href="resources/css/treeList.css">
 
-<link rel="stylesheet" href="resources/css/jquery-ui.min.css">	
+<link rel="stylesheet" href="resources/css/jquery-ui.min.css">
 <link rel="stylesheet" href="resources/css/bootstrap.css">
 <link rel="stylesheet" href="resources/css/bootstrap.min.css">
 
@@ -41,86 +42,93 @@
   
   </script> -->
 </head>
-<body style="height:100%;">
+<body style="height: 100%;">
 	<nav class="navbar navbar-fixed-top" id="navbar"
-		style="display: none; background-color: green;">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed"
-					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-					aria-controls="navbar">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<img id="tree" src="resources/img/tree2.png" width="40px" height="40px"
-					style="margin: 5px;">
+		style="display: none;background-color: #2ECC71;">
+		<div class="container" style="padding:0px; width: 992px;">
+			<div class="col-xs-4" style="padding:0px;">
+				<div class="col-xs-2" style="padding:0px;">
+				<img id="tree" src="resources/img/btn_treeadd.png" width="40px"
+					height="40px" style="margin: 5px;">
+				</div>
+				<div class="col-xs-1" style="padding:0px;">
+				<img id="tree" src="resources/img/btn_treelist_left.png" width="20px"
+					height="40px" style="margin: 5px;">
+				</div>
+				<div class="col-xs-8" style="padding-top:17px; color:white; font-family:Jeju Gothic;">여기가 트리 리스트 나오는 곳...</div>
+				<div class="col-xs-1" style="padding:0px;">
+				<img id="tree" src="resources/img/btn_treelist_right.png" width="20px"
+					height="40px" style="margin: 5px;">
+				</div>
 			</div>
-			<div id="navbar" class="navbar-collapse collapse">
-				<form class="navbar-form navbar-right">
-					<div class="navber" style="color: white;" align="center">
-						honggildong@gmail.com</div>
-				</form>
+
+			<div class="col-xs-4 text-center" style="padding:0px;">
+				<img id="tree" src="resources/img/treenote.png" width="280px"
+					height="50px" >
+
+			</div>
+			<div class="col-xs-4 text-right" style="padding:0px;">
+				<img id="tree" src="resources/img/btn_mypage.png" width="30px" height="30px" style="margin:10px;">
+				<img id="tree" src="resources/img/btn_timeline.png" width="30px" height="30px" style="margin:10px;">
+				<img id="tree" src="resources/img/btn_search.png" width="30px" height="30px" style="margin:10px;">
+				<img id="tree" src="resources/img/btn_friend.png" width="30px" height="30px" style="margin:10px;">
+				<img id="tree" src="resources/img/btn_logout.png" width="30px" height="30px" style="margin:10px;">	
 			</div>
 			<!--/.navbar-collapse -->
 		</div>
 	</nav>
 
 
-	
+
 
 
 
 	<div id="treeContainer"
-		style="display:none; max-width: 992px; width: 100%; height: 100%; margin: 0 auto; border-radius: 5px; background:#E4E4E4;">
+		style="display: none; max-width: 992px; width: 100%; height: 100%; margin: 0 auto; background: #E4E4E4;">
 
-		
-		<div id="base" style="position:relative; width: 100%; height: 100%; float: left; padding-top:50px ; display: none;">
-			<div id="myDiagram" style="position:relative; background:#E4E4E4; float: left; width: 100%; height: 100% "></div>
-			
-			<div class="timeline-out" id="timeline" style="overflow-x:hidden; overflow-y:visible;">
-				
-				<div id="timelinec"  style=" ">
-					<input type="text" id="search" class="form-control" style="width:180px; margin: 0 auto; " >
-					<div id="keywordTop"style="height:25px;"></div>
+
+		<div id="base"
+			style="position: relative; width: 100%; height: 100%; float: left; padding-top: 50px; display: none;">
+			<div id="myDiagram"
+				style="position: relative; background: #E4E4E4; float: left; width: 100%; height: 100%"></div>
+
+			<div class="timeline-out" id="timeline"
+				style="overflow-x: hidden; overflow-y: visible;">
+
+				<div id="timelinec" style="">
+					<input type="text" id="search" class="form-control"
+						style="width: 180px; border: 0; margin: 0 auto; border-radius: 5px;">
+					<div id="keywordTop" style="height: 25px;"></div>
 				</div>
 			</div>
-				
-			<div id="content" style="display: none;">
-				
-			</div>
-			
-			<div id="reply" style="display: none;">
-			
-			</div>
-			
-			<div id="mypage" style="display: none;">
-			
-			</div>
-			
-			<div id="userpage" style="display: none;">
-			
-			</div>
-			
+
+			<div id="content" style="display: none;"></div>
+
+			<div id="reply" style="display: none;"></div>
+
+			<div id="mypage" style="display: none;"></div>
+
+			<div id="userpage" style="display: none;"></div>
+
 			<div id="treelist" style="display: none;">
 				<div id="demo" class="showcase">
 					<section id="examples">
-					<!-- content -->
-						<h3 id="userNo">TreeTitle </h3>
+						<!-- content -->
+						<h3 id="userNo">TreeTitle</h3>
 						<h3 id="treeTitle"></h3>
-							<div id="content-9" class="content vertical-images">
-								<ul id="treeList">
-									<h2 id="count">TreeList:</h2>
-									<li id="list"></li>
-								</ul>
-							</div>		
+						<div id="content-9" class="content vertical-images">
+							<ul id="treeList">
+								<h2 id="count">TreeList:</h2>
+								<li id="list"></li>
+							</ul>
+						</div>
 					</section>
 				</div>
 			</div>
-			
+
 			<div id="friendlist" style="display: none;"></div>
 		</div>
-		
+
 		<div id="temp">
 			<div id="btn_content">내용</div>
 			<div id="btn_mypage">개인page</div>
@@ -129,28 +137,36 @@
 			<div id="btn_reply">댓글리스트</div>
 			<div id="btn_friend">친구리스트</div>
 		</div>
-		
+
 		<!-- style="width: 200px; height: 100%; border: 2px solid #00FF00; background: #efefef; float: right; display: none; -->
-		
+
 	</div>
 
-<div id="dialog" title="Basic dialog" style="display: none; width:100%;">
-  <p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
-</div>
+	<div id="dialog" title="Basic dialog"
+		style="display: none; width: 100%;">
+		<p>This is the default dialog which is useful for displaying
+			information. The dialog window can be moved, resized and closed with
+			the 'x' icon.</p>
+	</div>
 	<!-- /container -->
-<input id="inputText" type="text" class="form-control"  style="display:none; width:auto; font-family:Jeju Gothic;">
+	<input id="inputText" type="text" class="form-control"
+		style="display: none; width: auto; border-radius: 5px; font-family: Jeju Gothic;">
 
-<div id="keywordTemp">
-	<div id="temp" class="keyword" style="width: 180px; height: 100px; border: 2px solid #00ff00; margin: 0 auto; margin-bottom: 10px; border-radius: 5px; display:none; background:#eee;">
-		<div id="name" style="text-align: left; font-size: 20px; font-family:Jeju Gothic; font-weight: bold; padding: 10px"></div>
-		<span class="btn_copy" style=" font-size: 15px; padding: 2px; width: 40px; height: 20px; border: 2px solid #00ff00; margin-left: 10px; margin-bottom: 10px; border-radius: 5px; background:#ddd; display:none;">복사</span>
-		<span class="btn_add" style=" font-size: 15px; padding: 2px; width: 40px; height: 20px; border: 2px solid #00ff00; margin-left: 10px; margin-bottom: 10px; border-radius: 5px; background:#ddd; display:none;">추가</span>
-		<input id="data" type="hidden">
+	<div id="keywordTemp">
+		<div id="temp" class="keyword"
+			style="width: 180px; height: 100px; margin: 0 auto; margin-bottom: 15px; border-radius: 15px; display: none; background: #55aa55;">
+			<div id="name"
+				style="text-align: left; font-size: 20px; font-family: Jeju Gothic; padding: 10px"></div>
+			<span class="btn_copy"
+				style="font-size: 15px; padding: 2px; width: 40px; height: 20px; border: 2px solid #00ff00; margin-left: 10px; margin-bottom: 10px; border-radius: 5px; background: #ddd; display: none;">복사</span>
+			<span class="btn_add"
+				style="font-size: 15px; padding: 2px; width: 40px; height: 20px; border: 2px solid #00ff00; margin-left: 10px; margin-bottom: 10px; border-radius: 5px; background: #ddd; display: none;">추가</span>
+			<input id="data" type="hidden">
+		</div>
 	</div>
-</div>
 
 
-<script type="text/javascript">
+	<script type="text/javascript">
 	$("#navbar").show("slide", {
 		direction : "up"
 	}, 1000);

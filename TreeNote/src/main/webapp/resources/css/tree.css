@@ -15,7 +15,7 @@ input[type="text"] {
 	right:0px;
   width:10px;
   height: 100%;
-  background-color: #ccc;
+  background-color: rgba(255, 0, 0, 0);
   z-index:100;
   margin-top:-50px;
 }
@@ -25,7 +25,7 @@ input[type="text"] {
 	right:0px;
   width:200px;
   height: 100%;
-  background-color: #ccc;
+  background-color: rgba(255, 0, 0, 0);
   z-index:100;
   margin-top:-50px;
 }
@@ -53,6 +53,13 @@ input[type="text"] {
 	vertical-align: middle;
 	background-image: url("/resources/img/btn_timeline_out.png");
   background-size:contain;
+  
+}
+
+.center-block {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #temp {
