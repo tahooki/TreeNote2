@@ -24,6 +24,10 @@ function goImpl() {
 				"undoManager.isEnabled" : true, // ctrl+z, ctrl+y 되게마는 것.
 				hasHorizontalScrollbar : false,
 				hasVerticalScrollbar : false,
+				allowCopy : false,
+				allowUndo : false,
+				allowDelete : false,
+				
 				
 				mouseOver:function(e){
 					//잠시 폐쇠
@@ -72,7 +76,7 @@ function goImpl() {
 		          selectionAdorned: false,
 		          shadowOffset: new go.Point(0, 0),
 		          shadowBlur: 15,
-		          shadowColor: "blue",
+		          shadowColor: "gray",
 		    },
 			// the node's outer shape, which will surround the text
 			gojs(go.Panel, "Auto", {
@@ -82,12 +86,13 @@ function goImpl() {
 				{
 					fill : "whitesmoke",
 					stroke : "black",
-					strokeWidth : 2,
+					strokeWidth : 0,
 				}, // 기본색이 whitsmoke 인듯... stroke는
 				new go.Binding("fill", "color")), gojs(go.TextBlock, {	
-					font : "12pt sans-serif",
+					font : "15pt Jeju Gothic",
 					editable : true,
 					margin : 2,
+					textAlign: "center",
 					isMultiline : false,
 					wrap: go.TextBlock.WrapFit
 				}, // 폰트, margin, 텍스트 박스 수정가능을 설정.
@@ -168,7 +173,7 @@ function goImpl() {
 		myDiagram.model = new go.TreeModel([ // 트리모델로 설정
 	     {
 	    	 key : 0,
-	    	 keyword : "키워드",
+	    	 keyword : "로그아웃 되었습니다.",
 	    	 color : "lightgreen",
 	    	 collapse : 0
 	     } // 초기 토드 추가
@@ -177,33 +182,7 @@ function goImpl() {
 		myDiagram.layoutDiagram(true);
 
 		myDiagram.model = go.Model.fromJson(success.Tree)
-
-		myDiagram.model.addChangedListener(function(e) { // changeListener...
-			
-			if (e.isTransactionFinished) {
-				var tx = e.object;
-				if (tx instanceof go.Transaction && console) {
-					tx.changes.each(function(ea){
-						if (e.modelChange !== "nodeDataArray") return;
-					      // record node insertions and removals
-					      if (e.change === go.ChangedEvent.Insert) {
-					        console.log(evt.propertyName + " added node with key: " + e.newValue.key);
-					      } else if (e.change === go.ChangedEvent.Remove) {
-					        console.log(evt.propertyName + " removed node with key: " + e.oldValue.key);
-					      }
-					});
-					console.log(tx.toString());
-					tx.changes.each(function(c) {
-						// consider which ChangedEvents to record
-						if (c.model)
-							console.log("  " + c.toString());
-					});
-				}
-			}
-		});
 		
-		myDiagram.addDiagramListener("TextEdited", function(e) {
-		});
 		// console.log(myDiagram.model);
 		allExpanded();
 		myDiagram.toolManager.textEditingTool.defaultTextEditor = createInput();
