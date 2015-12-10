@@ -153,8 +153,8 @@ public class UserController {
 	@RequestMapping(value = "listFriend")
 	public void listFriend( Model model, HttpSession session) throws Exception {
 		User user = (User)session.getAttribute("user");
-//		List<User> list = userService.ListFriend(user.getUserNo());
-		List<User> list = userService.ListFriend(1000000);
+		List<User> list = userService.ListFriend(user.getUserNo());
+//		List<User> list = userService.ListFriend(1000000);
 		model.addAttribute("friend",list);
 	}
 	
