@@ -16,8 +16,6 @@ public interface UserDao {
 	
 	public boolean checkDuplication(String email) throws Exception;
 
-	public List<User> getFriendList(int userNo) throws Exception;
-	
 	public User getLoginUser(String email) throws Exception;
 	
 	//추가 !! 수정중인 트리 일련번호 업데이트 - by.Tahooki
@@ -28,4 +26,6 @@ public interface UserDao {
 	public int acceptFriend(Map<String, Object> userNo) throws Exception;
 
 	int declineFriend(Map<String, Object> userNo) throws Exception;
+
+	List<User> getFriendList(Map<String, Object> userNo) throws Exception;
 	}

@@ -97,19 +97,24 @@
 	</update>
 
 
-	<select id="listFriend" parameterType="int" resultMap="userMap">
-		SELECT 
-		u.name, 
-		u.user_no, 
-		u.email, 
-		u.photo,
-		f.request_status
-		FROM USERS u, FRIENDS f
-		<where>
-			u.USER_NO = f.USER_NO2 
-			AND f.USER_NO =#{value}
-		</where>
+	<select id="listFriend" parameterType="map" resultMap="userMap">
+	SELECT 
+		uu.user_no, 
+		uu.email, 
+		uu.name, 
+		uu.photo, 
+		ff.request_status 
+	FROM users uu, friends ff
+	<where>
+		uu.user_no = ff.USER_NO2 and
+		ff.user_no2 in(SELECT f.User_NO2
+					  	FROM USERS u, FRIENDS f
+					 	where u.USER_NO = f.USER_NO AND u.user_no = #{userNo1})
+		and ff.user_no = #{userNo2}
+	</where>
+ 
 	</select>
+	
 
 
 <!-- 추가 !! 수정중인 트리 일련번호 업데이트 - by.Tahooki -->

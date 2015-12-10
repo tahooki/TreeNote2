@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<User> ListFriend(int userNo) throws Exception {
+	public List<User> ListFriend(Map<String, Object> userNo) throws Exception {
 		// TODO Auto-generated method stub
 		return userDao.getFriendList(userNo);
 	}

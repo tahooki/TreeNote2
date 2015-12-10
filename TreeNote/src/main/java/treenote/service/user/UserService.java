@@ -10,8 +10,6 @@ public interface UserService {
 
 	public User getUser(int userNo) throws Exception ;
 
-	public List<User> ListFriend(int userNo) throws Exception ;
-
 	public int updateUser(User user) throws Exception ;
 	
 	public boolean checkDuplication(String email) throws Exception;
@@ -27,5 +25,7 @@ public interface UserService {
 	public int acceptFriend(Map<String, Object> userNo) throws Exception;
 
 	int declineFriend(Map<String, Object> userNo) throws Exception;
+
+	List<User> ListFriend(Map<String, Object> userNo) throws Exception;
 
 }

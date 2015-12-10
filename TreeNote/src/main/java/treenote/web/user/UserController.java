@@ -24,9 +24,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 import treenote.domain.User;
 import treenote.service.user.UserService;
@@ -152,8 +149,14 @@ public class UserController {
 	// 친구 목록
 	@RequestMapping(value = "listFriend")
 	public void listFriend( Model model, HttpSession session) throws Exception {
+		System.out.println("/listFriend");
 		User user = (User)session.getAttribute("user");
-		List<User> list = userService.ListFriend(user.getUserNo());
+		Map<String, Object> map = new HashMap<>();
+		map.put("userNo1", user.getUserNo());
+		map.put("userNo2", user.getUserNo());
+//		map.put("userNo1", 1000000);
+//		map.put("userNo2", 1000000);
+		List<User> list = userService.ListFriend(map);
 //		List<User> list = userService.ListFriend(1000000);
 		model.addAttribute("friend",list);
 	}
@@ -181,10 +184,13 @@ public class UserController {
 		userNoMap.put("userNo", user.getUserNo()); // 실제 코드 
 //		userNoMap.put("userNo", 1000000); // 테스트 코드
 		userNoMap.put("userNo2", userNo);
+		Map<String, Object> map2 = new HashMap<>();
+		map2.put("userNo1", user.getUserNo());
+		map2.put("userNo2", user.getUserNo());
 		int result = userService.requestFriend(userNoMap);
 		System.out.println(":::::::"+result);
 		if(result==2){
-			List<User> list = userService.ListFriend(user.getUserNo());
+			List<User> list = userService.ListFriend(map2);
 			model.addAttribute("friend",list);
 		}
 		
@@ -196,12 +202,15 @@ public class UserController {
 	public void acceptFriend(@PathVariable int userNo, HttpSession session, Model model) throws Exception{
 		User user = (User)session.getAttribute("user");
 		Map<String, Object> map = new HashMap<>();
+		Map<String, Object> map2 = new HashMap<>();
 		map.put("userNo", user.getUserNo()); //실제 코드
 //		map.put("userNo", 1000000); // 테스트 코드
 		map.put("userNo2", userNo);
+		map2.put("userNo1", user.getUserNo());
+		map2.put("userNo2", user.getUserNo());
 		int result = userService.acceptFriend(map);
 		if(result==2){
-			List<User> list = userService.ListFriend(user.getUserNo());
+			List<User> list = userService.ListFriend(map2);
 			model.addAttribute("friend",list);
 		}
 		
@@ -217,8 +226,11 @@ public class UserController {
 //		map.put("userNo", 1000000); // 테스트 코드
 		map.put("userNo2", userNo);
 		int result = userService.declineFriend(map);
+		Map<String, Object> map2 = new HashMap<>();
+		map2.put("userNo1", user.getUserNo());
+		map2.put("userNo2", user.getUserNo());
 		if(result==2){
-			List<User> list = userService.ListFriend(user.getUserNo());
+			List<User> list = userService.ListFriend(map2);
 //			List<User> list = userService.ListFriend(1000000);
 			model.addAttribute("friend",list);
 		}

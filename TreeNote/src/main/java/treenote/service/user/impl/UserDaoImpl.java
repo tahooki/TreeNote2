@@ -43,7 +43,7 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public List<User> getFriendList(int userNo) throws Exception {
+	public List<User> getFriendList(Map<String, Object> userNo) throws Exception {
 		// TODO Auto-generated method stub
 		System.out.println(userNo);
 		return sqlSession.selectList("UserMapper.listFriend", userNo);
