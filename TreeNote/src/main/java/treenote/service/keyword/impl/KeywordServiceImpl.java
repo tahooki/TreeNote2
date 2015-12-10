@@ -1,5 +1,6 @@
 package treenote.service.keyword.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,9 +9,12 @@ import org.springframework.stereotype.Service;
 
 import treenote.domain.Content;
 import treenote.domain.Keyword;
+import treenote.domain.Search;
 import treenote.service.content.ContentDao;
 import treenote.service.keyword.KeywordDao;
-import treenote.service.keyword.KeywordService;;
+import treenote.service.keyword.KeywordService;
+import treenote.service.tree.TreeDao;
+import treenote.service.user.UserDao;;
 
 @Service("keywordServiceImpl")
 public class KeywordServiceImpl implements KeywordService {
@@ -23,6 +27,14 @@ public class KeywordServiceImpl implements KeywordService {
 	@Autowired
 	@Qualifier("contentDaoImpl")
 	private ContentDao contentDao;
+	
+	@Autowired
+	@Qualifier("userDaoImpl")
+	private UserDao userDao;
+
+	@Autowired
+	@Qualifier("treeDaoImpl")
+	private TreeDao treeDao;
 
 	public void setKeywordDao(KeywordDao keywordDao) {
 		this.keywordDao = keywordDao;
@@ -30,6 +42,14 @@ public class KeywordServiceImpl implements KeywordService {
 
 	public void setContentDao(ContentDao contentDao) {
 		this.contentDao = contentDao;
+	}
+
+	public void setUserDao(UserDao userDao) {
+		this.userDao = userDao;
+	}
+
+	public void setTreeDao(TreeDao treeDao) {
+		this.treeDao = treeDao;
 	}
 
 	/// Constructor
@@ -91,9 +111,21 @@ public class KeywordServiceImpl implements KeywordService {
 	}
 
 	@Override
-	public List<Keyword> listSearchKeyword(String keyword) throws Exception {
+	public List<Search> listSearchKeyword(String keyword) throws Exception {
 		// TODO Auto-generated method stub
-		return keywordDao.listSearchKeyword(keyword);
+		List<Search> searchList = new ArrayList<Search>();
+		
+		List<Keyword> keywordList = keywordDao.listSearchKeyword(keyword);
+		for (Keyword temp : keywordList){
+			Search search = new Search();
+			search.setKeyword(keywordDao.getKeyword(temp.getKey()));
+			search.setParentKeyword(keywordDao.getKeyword(temp.getParent()));
+			search.setChildKeywordList(keywordDao.listChildKeyword(temp.getKey()));
+			search.setUser(userDao.getUser(treeDao.getTree(temp.getTreeNo()).getUserNo()));
+			searchList.add(search);
+		}
+		
+		return searchList;
 	}
 
 	@Override
@@ -117,9 +149,20 @@ public class KeywordServiceImpl implements KeywordService {
 	}
 
 	@Override
-	public List<Keyword> listTimeLineKeyword(int userNo) throws Exception {
+	public List<Search> listTimeLineKeyword(int userNo) throws Exception {
 		// TODO Auto-generated method stub
-		return keywordDao.listTimeLineKeyword(userNo);
+		List<Search> searchList = new ArrayList<Search>();
+		
+		List<Keyword> keywordList = keywordDao.listTimeLineKeyword(userNo);
+		for (Keyword temp : keywordList){
+			Search search = new Search();
+			search.setKeyword(keywordDao.getKeyword(temp.getKey()));
+			search.setParentKeyword(keywordDao.getKeyword(temp.getParent()));
+			search.setChildKeywordList(keywordDao.listChildKeyword(temp.getKey()));
+			search.setUser(userDao.getUser(treeDao.getTree(temp.getTreeNo()).getUserNo()));
+			searchList.add(search);
+		}
+		return searchList;
 	}
 
 	@Override

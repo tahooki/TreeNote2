@@ -186,7 +186,7 @@ function goImpl() {
 	     {
 	    	 key : 0,
 	    	 keyword : "로그아웃 되었습니다.",
-	    	 color : "lightgreen",
+	    	 color : "#2ECC71",
 	    	 collapse : 0
 	     } // 초기 토드 추가
 	     ]);

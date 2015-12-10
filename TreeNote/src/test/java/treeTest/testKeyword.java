@@ -11,6 +11,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import treenote.domain.Keyword;
+import treenote.domain.Search;
 import treenote.service.keyword.KeywordDao;
 import treenote.service.keyword.KeywordService;
 
@@ -82,14 +83,21 @@ public class testKeyword {
 	}
 
 	// 해당 키워드 리스트 불러오기
-	//@Test
+	@Test
 	public void testListTimeLineKeyword() throws Exception {
-		List<Keyword> list = keywordDao.listTimeLineKeyword(1000000);
-		for (Keyword keyword : list) {
+		List<Search> list = keywordService.listTimeLineKeyword(1000000);
+		for (Search keyword : list) {
 			System.out.println(keyword);
 		}
 	}
-
+	//@Test
+	public void testListSearchKeyword() throws Exception {
+		List<Search> list = keywordService.listSearchKeyword("동식물");
+		for (Search keyword : list) {
+			System.out.println(keyword);
+		}
+	}
+	
 	// 복사
 	@Test
 	public void testCopyKeyword() throws Exception {

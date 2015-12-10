@@ -1,13 +1,5 @@
 package treenote.domain;
 
-/**
- * @author Window77
- *
- */
-/**
- * @author Window77
- *
- */
 public class Keyword {
 	private int key;
 	private int treeNo;

@@ -62,19 +62,24 @@ function setListSearchKeyword(keyword) {
 		},
 		success : function(JSONData, status) {
 			$("#timelinec .keyword").remove();
-			var keywordList = JSONData.list;
-			for (var i = 0; i < keywordList.length; i++) {
+			var searchList = JSONData.list;
+			/*var templateSource = $("#searchListTemplate").html();
+			var template = Handlebars.compile(templateSource);*/
+			console.log(setSearchList(JSONData));
+			$("#keywordTop").after(setSearchList(JSONData));
+			/*
+			for (var i = 0; i < searchList.length; i++) {
 				$("#keywordTop").after($("#keywordTemp").html());
-				$($("#timelinec #temp")[0]).attr("id", keywordList[i].key);
-				$("#timelinec #" + keywordList[i].key + " #data").attr("value",
-						JSON.stringify(keywordList[i]));
-				$("#timelinec #" + keywordList[i].key + " #name").text(
-						keywordList[i].keyword);
-				$("#" + keywordList[i].key).css("background",keywordList[i].color);
-				//console.log($("#timelinec #" + keywordList[i].key + " #name").text());
-			}
+				$($("#timelinec #temp")[0]).attr("id", searchList[i].keyword.key);
+				$("#timelinec #" + searchList[i].keyword.key + " #data").attr("value",
+						JSON.stringify(searchList[i]));
+				$("#timelinec #" + searchList[i].keyword.key + " #name").text(
+						searchList[i].keyword.keyword);
+				$("#" + searchList[i].keyword.key).css("background",searchList[i].keyword.color);
+				//console.log($("#timelinec #" + searchList[i].key + " #name").text());
+			}*/
 			$("#timelinec .keyword").show();
-			$(".btn_add").click(function() {
+			/*$(".btn_add").click(function() {
 				console.log($($(this).parent()).find("input").val());
 				addKeyword($($(this).parent()).find("input").val());
 			});
@@ -82,7 +87,7 @@ function setListSearchKeyword(keyword) {
 				console.log($($(this).parent()).find("input").val());
 				changeKeyword($($(this).parent()).find("input").val());
 			});
-			setBtnVisible();
+			setBtnVisible();*/
 		}
 	})
 }
@@ -99,17 +104,18 @@ function setListTimeKeyword() {
 			"Content-Type" : "application/json"
 		},
 		success : function(JSONData, status) {
+			console.log(JSONData);
 			$("#timelinec .keyword").remove();
-			var keywordList = JSONData.list;
-			for (var i = 0; i < keywordList.length; i++) {
+			var searchList = JSONData.list;
+			for (var i = 0; i < searchList.length; i++) {
 				$("#keywordTop").after($("#keywordTemp").html());
-				$($("#timelinec #temp")[0]).attr("id", keywordList[i].key);
-				$("#timelinec #" + keywordList[i].key + " #data").attr("value",
-						JSON.stringify(keywordList[i]));
-				$("#timelinec #" + keywordList[i].key + " #name").text(
-						keywordList[i].keyword);
-				$("#" + keywordList[i].key).css("background",keywordList[i].color);
-				//console.log($("#timelinec #" + keywordList[i].key + " #name").text());
+				$($("#timelinec #temp")[0]).attr("id", searchList[i].keyword.key);
+				$("#timelinec #" + searchList[i].keyword.key + " #data").attr("value",
+						JSON.stringify(searchList[i].keyword));
+				$("#timelinec #" + searchList[i].keyword.key + " #name").text(
+						searchList[i].keyword.keyword);
+				$("#" + searchList[i].keyword.key).css("background",searchList[i].keyword.color);
+				console.log($("#timelinec #" + searchList[i].key + " #name").text());
 			}
 			$("#timelinec .keyword").show();
 			$(".btn_add").click(function() {

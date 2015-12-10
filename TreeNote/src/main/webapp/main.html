@@ -69,15 +69,47 @@
 			</div>
 			<div class="col-xs-4 text-right" style="padding:0px;">
 				<img id="btn_mypage" src="resources/img/btn_mypage.png" width="30px" height="30px" style="margin:10px;">
-				<img id="btn_timeline" src="resources/img/btn_timeline.png" width="30px" height="30px" style="margin:10px;">
 				<img id="btn_search" src="resources/img/btn_search.png" width="30px" height="30px" style="margin:10px;">
-				<!-- 친구리스트 드롭다운 메뉴 -->
-				<img id="btn_friend" src="resources/img/btn_friend.png"  class="dropdown-toggle"
-					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" width="30px" height="30px" style="margin:10px;cursor:pointer;">
-				<ul class="dropdown-menu dropdown-menu-right">
-					<li role="separator" class="divider"></li>
-				</ul>
-				<!---------------------------------------- -->
+				<!--  친구리스트 드롭다운 메뉴 -->
+				<div style="display:inline-block">
+					<span class="dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" width="30px" height="30px" style="margin:10px;cursor:pointer;clear:both;z-index:100">
+						<span class="label label-danger" style="position: absolute;display: inline;border-radius: .25em;vertical-align: top;opacity: .5;top: 6px;margin-left: 20px">2</span>
+						<img id="btn_friend" src="../resources/img/btn_friend.png" style="width:30px;height:30px;" >
+					</span>
+					<div class="dropdown-menu dropdown-right" style="padding-top:0px; right:0px">
+	                        <div class="dropdown-header list-group-item-success" style="margin-top:0px">
+	                           Friend List
+	                            <ul class="actions a-alt">
+	                                <li><a href=""><i class="zmdi zmdi-check-all"></i></a></li>
+	                            </ul>
+	                        </div>
+	                        <div class="list-group lg-alt">
+	                        	<p id="friendListDropdown" style="display:none"></p> 
+<!-- 	                            <div class="view-more">View more</div> -->
+	                        </div>
+	                    </div>
+				</div>
+				
+<!-- 				알림창 -->
+				<div style="display:inline-block">
+					<span class="dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" width="30px" height="30px" style="margin:10px;cursor:pointer;clear:both;z-index:100">
+						<span class="label label-danger" style="position: absolute;display: inline;border-radius: .25em;vertical-align: top;opacity: .5;top: 6px;margin-left: 20px">2</span>
+						<img id="btn_friend" src="../resources/img/btn_alam.png" style="width:30px;height:30px;" >
+					</span>
+					<div class="dropdown-menu dropdown-right" style="padding-top:0px;right:0px">
+	                        <div class="dropdown-header list-group-item-success" style="margin-top:0px">
+	                           Alert List
+	                            <ul class="actions a-alt">
+	                                <li><a href=""><i class="zmdi zmdi-check-all"></i></a></li>
+	                            </ul>
+	                        </div>
+	                        <div class="list-group lg-alt">
+	                        	<p id ="alertDropdown" style="display:none"></p> 
+<!--   	                            <div class="view-more">View more</div> -->
+	                        </div>
+	                    </div>
+				</div>
+				<!---------------------------------------------------------------->
 				<img id="btn_logout" src="resources/img/btn_logout.png" width="30px" height="30px" style="margin:10px;">	
 			</div>
 			<!--/.navbar-collapse -->
@@ -160,6 +192,36 @@
 			<input id="data" type="hidden">
 		</div>
 	</div>
+	
+	<!-- <div id="tempa" class="keyworda" style="position:relative; width: 180px; height: 100px; margin: 0 auto; margin-bottom: 15px; padding:8px; border-radius: 15px; background: #55aa55;">
+		<div>
+			<div class="col-xs-6" style="padding: 0; margin:0;">
+				<span id="namea" style="font-size: 10px; font-family: Jeju Gothic; padding:2px; padding-top:3px; border-radius: 5px; background: #eeeeee;">키워드????</span>
+			</div> 
+			<div class="col-xs-6 text-right" style="padding: 0; margin:0;">
+				<span id="namea" style="font-size: 10px; font-family: Jeju Gothic; padding:2px; padding-top:3px; color:white;">by홍길동</span>
+			</div>
+		</div>
+		<div>
+			<div class="col-xs-12 text-left" style="padding: 0; margin-bottom:-5px;">
+				<span id="namea" style="font-size: 20px; font-family: Jeju Gothic; padding:2px;">키워드????</span>
+			</div>
+		</div>
+		<div>
+			<div class="col-xs-12 text-left" style="padding: 0; margin:0; display:inline;">
+				<span id="namea" style="font-size: 10px; font-family: Jeju Gothic; padding:2px; padding-top:3px; border-radius: 5px; background: #eeeeee; white-space:nowrap;">키워드????</span>
+				<span id="namea" style="font-size: 10px; font-family: Jeju Gothic; padding:2px; padding-top:3px; border-radius: 5px; background: #eeeeee; white-space:nowrap;">키워드????</span>
+				<span id="namea" style="font-size: 10px; font-family: Jeju Gothic; padding:2px; padding-top:3px; border-radius: 5px; background: #eeeeee; white-space:nowrap;">키워드????</span>
+				<span id="namea" style="font-size: 10px; font-family: Jeju Gothic; padding:2px; padding-top:3px; border-radius: 5px; background: #eeeeee; white-space:nowrap;">키워드????</span>
+				<span id="namea" style="font-size: 10px; font-family: Jeju Gothic; padding:2px; padding-top:3px; border-radius: 5px; background: #eeeeee; white-space:nowrap;">키워드????</span>
+			</div>
+		</div>
+			<span class="btn_copy"
+				style="font-size: 15px; padding: 2px; width: 40px; height: 20px; border: 2px solid #00ff00; margin-left: 10px; margin-bottom: 10px; border-radius: 5px; background: #ddd; display: none;">복사</span>
+			<span class="btn_add"
+				style="font-size: 15px; padding: 2px; width: 40px; height: 20px; border: 2px solid #00ff00; margin-left: 10px; margin-bottom: 10px; border-radius: 5px; background: #ddd; display: none;">추가</span>
+			<input id="data" type="hidden">
+		</div> -->
 <!-- //핸들바 js파일 추가 -->
 <script type="text/javascript" src="../resources/js/handlebars.min.js"></script>
 
@@ -189,20 +251,142 @@
 </script>
 
 
-<!-- //친구리스트 불러오기 핸들바 탬플릿  -->
-<script id="boardTrTemplate" type="text/x-handlebars-template">
+<!--  핸들바 탬플릿  -->
+<script id="alertList" type="text/x-handlebars-template">
 {{#each friend}}
-<li>
-	<div>
-		<div style="height: 40px">
-			<img src="user/ST_LOGO.jpg" style="height: 40px; float: left; margin-left: 3px"> 
-			<span style="float: left; margin-top: 10px; margin-left: 7px">{{name}}</span>
-			<button style="height: 20px; margin-top: 10px">수락</button>
-		</div>
-	</div>          
-</li><br>
+<div class="list-group-item " href="" style="margin:0px;border:0px;{{#checkStatus requestStatus}} {{/checkStatus}}">
+	<div class="pull-left"> 
+		<img class="img-avatar" src="{{#checkPhoto photo}}{{/checkPhoto}}" alt="" width="40" height="40">
+	</div>
+	  
+     <div class="pull-right" >
+        <img class="img-avatar" src="/resources/img/minus3.png" alt="" width="40" height="40">
+    </div>
+
+     <div class="pull-right" style="margin-right:10px;">
+        <img class="img-avatar"  src="/resources/img/circle108.png" alt="" width="40" height="40" >
+    </div>
+	
+    
+    <div class="media-body" >
+        <div class="list-group-item-heading" style="margin-left:7px">{{name}} </div>
+        <small class="list-group-item-text c-gray" style="margin-left:7px">{{email}}</small>
+    </div>
+</div>
 {{/each}}
 </script>
+
+<!-- //핸들바 이용 서버에서 가져온 친구 정보 입력 -->
+<script type="text/javascript">
+	$.getJSON('/user/listFriend', function(obj) {
+		Handlebars.registerHelper( "checkStatus", function ( status ){
+		    if (status == 2 && status !=0)
+		    {
+		        return 'display: none"'
+		    }
+		    else
+		    {
+		        return ;
+		    }
+		});
+		Handlebars.registerHelper( "checkPhoto", function ( status ){
+		    if (status !=null )
+		    {
+		        return status
+		    }
+		    else
+		    {
+		        return '../resources/img/man.jpg';
+		    }
+		});
+		
+		Handlebars.registerHelper( "checkStatus2", function ( status ){
+		    if (status != 2 )
+		    {
+		        return 'display: none"'
+		    }
+		    else
+		    {
+		        return ;
+		    }
+		});
+
+		
+		var tr2;
+		var templateSource2 = $("#friendlist").html();
+		var template2 = Handlebars.compile(templateSource2);
+		tr2 = template2(obj);
+		console.log(tr2);
+		$('#friendListDropdown').before(tr2)
+		
+		
+		var tr;
+		var templateSource = $("#alertList").html();
+		var template = Handlebars.compile(templateSource);
+		tr = template(obj);
+		console.log(tr);
+		$('#alertDropdown').before(tr)
+		
+		
+	});
+</script>
+
+<script id="friendlist" type="text/x-handlebars-template">
+{{#each friend}}
+<div class="list-group-item " href="" style="margin:0px;border:0px;{{#checkStatus2 requestStatus}} {{/checkStatus2}}">
+	<div class="pull-left"> 
+		<img class="img-avatar" src="{{#checkPhoto photo}}{{/checkPhoto}}" alt="" width="40" height="40">
+	</div>
+	  
+     <div class="pull-right" >
+        <img class="img-avatar" src="../resources/img/minus3.png" alt="" width="40" height="40">
+    </div>
+
+     <div class="pull-right" style="margin-right:10px;">
+        <img class="img-avatar"  src="../resources/img/circle108.png" alt="" width="40" height="40" >
+    </div>
+	
+    
+    <div class="media-body" >
+        <div class="list-group-item-heading" style="margin-left:7px">{{name}} </div>
+        <small class="list-group-item-text c-gray" style="margin-left:7px">{{email}}</small>
+    </div>
+</div>
+{{/each}}
+</script>
+
+
+<script id="searchListTemplate" type="text/x-handlebars-template">
+{{#list}}
+<div id="{{keyword.key}}" class="keyword" style="position:relative; width: 180px; height: 100px; margin: 0 auto; margin-bottom: 15px; padding:8px; border-radius: 15px; background: {{keyword.color}};">
+	<div>
+		<div class="col-xs-6" style="padding: 0; margin:0;">
+			<span id="parentKeyword" style="font-size: 10px; font-family: Jeju Gothic; padding:2px; padding-top:3px; border-radius: 5px; background: {{parentKeyword.color}};">{{parentKeyword.keyword}}
+				<input type="hidden" value="{{parentKeyword}}">
+			</span>
+		</div> 
+		<div class="col-xs-6 text-right" style="padding: 0; margin:0;">
+			<span id="user" style="font-size: 10px; font-family: Jeju Gothic; padding:2px; padding-top:3px; color:white;">{{user.name}}
+				<input type="hidden" value="{{user}}">
+			</span>
+		</div>
+	</div>
+	<div>
+		<div class="col-xs-12 text-left" style="padding: 0; margin-bottom:-5px;">
+			<span id="keyword" style="font-size: 20px; font-family: Jeju Gothic; padding:2px;"><input type="hidden" value="">{{keyword.keyword}}
+				<input type="hidden" value="{{keyword}}">
+			</span>
+		</div>
+	</div>
+	<div>
+		<div class="col-xs-12 text-left" style="padding: 0; margin:0; display:inline;">
+			<span id="childkeyword" style="font-size: 10px; font-family: Jeju Gothic; padding:2px; padding-top:3px; border-radius: 5px; background: #eeeeee; white-space:nowrap;"><input type="hidden" value=""></span>
+		</div>
+	</div>
+</div>
+{{/list}}
+</script>
+
 
 <!-- //핸들바 이용 서버에서 가져온 친구 정보 입력 -->
 <script type="text/javascript">
@@ -215,7 +399,20 @@
 		console.log(tr);
 		$('li[role=separator]').before(tr)
 	});
+
+
+	function setSearchList(data){
+		var templateSource = $("#searchListTemplate").html();
+		console.log(templateSource);
+		var template = Handlebars.compile(templateSource);
+		console.log(data);
+		console.log(template);
+		console.log(template(data));
+		return template(data);
+	}
+
 </script>
+
 
 
 </body>

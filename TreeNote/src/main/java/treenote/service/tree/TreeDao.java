@@ -20,6 +20,9 @@ public interface TreeDao {
 	
 	//트리 일련번호 가지고오기
 	public int getTreeNo() throws Exception;
+	
+	//트리 가지고오기
+	public Tree getTree(int treeNo) throws Exception;
 }
 
 

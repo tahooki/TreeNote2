@@ -67,4 +67,10 @@ public class TreeDaoImpl implements TreeDao {
 		return sqlSession.selectOne("TreeMapper.getTreeNo");
 	}
 
+	@Override
+	public Tree getTree(int treeNo) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("TreeMapper.getTree",treeNo);
+	}
+
 }

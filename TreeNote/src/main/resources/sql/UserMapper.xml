@@ -22,7 +22,7 @@
 	<select id="findUser" parameterType="string" resultMap="userMap">
 		SELECT * from USERS
 		<where>
-			user_id =#{value}
+			user_no =#{value}
 		</where>
 	</select>
 
@@ -31,7 +31,7 @@
 		snsuser
 		FROM users
 		<where>
-			user_id = #{value}
+			user_no = #{value}
 		</where>
 	</select>
 
