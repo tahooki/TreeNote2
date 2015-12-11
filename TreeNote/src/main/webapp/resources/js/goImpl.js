@@ -35,8 +35,7 @@ function goImpl() {
 					//myDiagram.model.removeNodeData(myDiagram.model.findNodeDataForKey(0));
 				},
 				click:function(e){
-					setListTimeKeyword();
-					setBtnUnVisible();
+					
 				}
 			});
 		
@@ -60,6 +59,10 @@ function goImpl() {
 					part.findObject("button3").visible = part.isSelected;
 					if(part.isSelected){
 						setBtnVisible();
+					}else{
+						//서치 풀리면 show 하게 할 예정
+						setListTimeKeyword();
+						setBtnUnVisible();
 					}
 					jQuery("#content").hide("fade",300);
 				},

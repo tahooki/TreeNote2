@@ -55,7 +55,7 @@
 		WHERE KEYWORD = #{value} 
 		)tv)tv2
 		WHERE
-		rn BETWEEN 0 AND 10
+		rn BETWEEN 1 AND 7
 	</select>
 	
 	<select id="listTimelineKeyword" parameterType="java.lang.Integer" resultMap="keywordSelectMap">
@@ -68,7 +68,7 @@
 		t.user_no IN(SELECT user_no2 FROM friends WHERE user_no = #{value}))
 		ORDER BY c.reg_date DESC
 		)tv)tv2
-		WHERE rn BETWEEN 0 AND 10
+		WHERE rn BETWEEN 1 AND 7
 	</select>
 	
 	<select id="listTreeKeyword" parameterType="java.lang.Integer" resultMap="keywordSelectMap">

@@ -63,22 +63,14 @@ function setListSearchKeyword(keyword) {
 		success : function(JSONData, status) {
 			$("#timelinec .keyword").remove();
 			var searchList = JSONData.list;
-			/*var templateSource = $("#searchListTemplate").html();
-			var template = Handlebars.compile(templateSource);*/
-			console.log(setSearchList(JSONData));
 			$("#keywordTop").after(setSearchList(JSONData));
-			/*
-			for (var i = 0; i < searchList.length; i++) {
-				$("#keywordTop").after($("#keywordTemp").html());
-				$($("#timelinec #temp")[0]).attr("id", searchList[i].keyword.key);
-				$("#timelinec #" + searchList[i].keyword.key + " #data").attr("value",
-						JSON.stringify(searchList[i]));
-				$("#timelinec #" + searchList[i].keyword.key + " #name").text(
-						searchList[i].keyword.keyword);
-				$("#" + searchList[i].keyword.key).css("background",searchList[i].keyword.color);
-				//console.log($("#timelinec #" + searchList[i].key + " #name").text());
-			}*/
-			$("#timelinec .keyword").show();
+			var showKeyword = $("#timelinec .keyword");
+			for(var i = 0 ; i < showKeyword.length; i++){
+				$(showKeyword[i]).delay(200*i).effect("slide",{
+					direction : "right",
+					duration : 500
+				});
+			}
 			/*$(".btn_add").click(function() {
 				console.log($($(this).parent()).find("input").val());
 				addKeyword($($(this).parent()).find("input").val());
@@ -106,7 +98,8 @@ function setListTimeKeyword() {
 		success : function(JSONData, status) {
 			console.log(JSONData);
 			$("#timelinec .keyword").remove();
-			var searchList = JSONData.list;
+			$("#keywordTop").after(setSearchList(JSONData));
+			/*var searchList = JSONData.list;
 			for (var i = 0; i < searchList.length; i++) {
 				$("#keywordTop").after($("#keywordTemp").html());
 				$($("#timelinec #temp")[0]).attr("id", searchList[i].keyword.key);
@@ -116,8 +109,14 @@ function setListTimeKeyword() {
 						searchList[i].keyword.keyword);
 				$("#" + searchList[i].keyword.key).css("background",searchList[i].keyword.color);
 				console.log($("#timelinec #" + searchList[i].key + " #name").text());
+			}*/
+			var showKeyword = $("#timelinec .keyword");
+			for(var i = 0 ; i < showKeyword.length; i++){
+				$(showKeyword[i]).delay(200*i).show("slide",{
+					direction : "right",
+					duration : 500
+				});
 			}
-			$("#timelinec .keyword").show();
 			$(".btn_add").click(function() {
 				console.log($($(this).parent()).find("input").val());
 				addKeyword($($(this).parent()).find("input").val());

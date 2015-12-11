@@ -133,10 +133,10 @@
 			<div class="timeline-out" id="timeline"
 				style="overflow-x: hidden; overflow-y: visible;">
 
-				<div id="timelinec" style="">
+				<div id="timelinec">
 					<input type="text" id="search" class="form-control"
 						style="width: 180px; border: 0; margin: 0 auto; border-radius: 5px;">
-					<div id="keywordTop" style="height: 25px;"></div>
+					<div id="keywordTop" style="height: 0px;"></div>
 				</div>
 			</div>
 
@@ -177,45 +177,8 @@
 			the 'x' icon.</p>
 	</div>
 	<!-- /container -->
-	<input id="inputText" type="text" class="form-control"
-		style="display: none; width: auto; border-radius: 5px; font-family: Jeju Gothic;">
-
-	<div id="keywordTemp">
-		<div id="temp" class="keyword"
-			style="width: 180px; height: 100px; margin: 0 auto; margin-bottom: 15px; border-radius: 15px; display: none; background: #55aa55;">
-			<div id="name"
-				style="text-align: left; font-size: 20px; font-family: Jeju Gothic; padding: 10px"></div>
-			<span class="btn_copy"
-				style="font-size: 15px; padding: 2px; width: 40px; height: 20px; border: 2px solid #00ff00; margin-left: 10px; margin-bottom: 10px; border-radius: 5px; background: #ddd; display: none;">복사</span>
-			<span class="btn_add"
-				style="font-size: 15px; padding: 2px; width: 40px; height: 20px; border: 2px solid #00ff00; margin-left: 10px; margin-bottom: 10px; border-radius: 5px; background: #ddd; display: none;">추가</span>
-			<input id="data" type="hidden">
-		</div>
-	</div>
-	
-	<!-- <div id="tempa" class="keyworda" style="position:relative; width: 180px; height: 100px; margin: 0 auto; margin-bottom: 15px; padding:8px; border-radius: 15px; background: #55aa55;">
-		<div>
-			<div class="col-xs-6" style="padding: 0; margin:0;">
-				<span id="namea" style="font-size: 10px; font-family: Jeju Gothic; padding:2px; padding-top:3px; border-radius: 5px; background: #eeeeee;">키워드????</span>
-			</div> 
-			<div class="col-xs-6 text-right" style="padding: 0; margin:0;">
-				<span id="namea" style="font-size: 10px; font-family: Jeju Gothic; padding:2px; padding-top:3px; color:white;">by홍길동</span>
-			</div>
-		</div>
-		<div>
-			<div class="col-xs-12 text-left" style="padding: 0; margin-bottom:-5px;">
-				<span id="namea" style="font-size: 20px; font-family: Jeju Gothic; padding:2px;">키워드????</span>
-			</div>
-		</div>
-		<div>
-			<div class="col-xs-12 text-left" style="padding: 0; margin:0; display:inline;">
-				<span id="namea" style="font-size: 10px; font-family: Jeju Gothic; padding:2px; padding-top:3px; border-radius: 5px; background: #eeeeee; white-space:nowrap;">키워드????</span>
-				<span id="namea" style="font-size: 10px; font-family: Jeju Gothic; padding:2px; padding-top:3px; border-radius: 5px; background: #eeeeee; white-space:nowrap;">키워드????</span>
-				<span id="namea" style="font-size: 10px; font-family: Jeju Gothic; padding:2px; padding-top:3px; border-radius: 5px; background: #eeeeee; white-space:nowrap;">키워드????</span>
-				<span id="namea" style="font-size: 10px; font-family: Jeju Gothic; padding:2px; padding-top:3px; border-radius: 5px; background: #eeeeee; white-space:nowrap;">키워드????</span>
-				<span id="namea" style="font-size: 10px; font-family: Jeju Gothic; padding:2px; padding-top:3px; border-radius: 5px; background: #eeeeee; white-space:nowrap;">키워드????</span>
-			</div>
-		</div>
+	<input id="inputText" type="text" class="form-control" style="display: none; width: auto; border-radius: 5px; border:0; padding-left:1px; font-family: Jeju Gothic;">
+<!-- 
 			<span class="btn_copy"
 				style="font-size: 15px; padding: 2px; width: 40px; height: 20px; border: 2px solid #00ff00; margin-left: 10px; margin-bottom: 10px; border-radius: 5px; background: #ddd; display: none;">복사</span>
 			<span class="btn_add"
@@ -280,38 +243,31 @@
 <script type="text/javascript">
 	$.getJSON('/user/listFriend', function(obj) {
 		Handlebars.registerHelper( "checkStatus", function ( status ){
-		    if (status == 2 && status !=0)
-		    {
+		    if (status != 1){
 		        return 'display: none"'
 		    }
-		    else
-		    {
+		    else{
 		        return ;
 		    }
 		});
 		Handlebars.registerHelper( "checkPhoto", function ( status ){
-		    if (status !=null )
-		    {
+		    if (status !=null ){
 		        return status
 		    }
-		    else
-		    {
+		    else{
 		        return '../resources/img/man.jpg';
 		    }
 		});
 		
 		Handlebars.registerHelper( "checkStatus2", function ( status ){
-		    if (status != 2 )
-		    {
+		    if (status != 2 ){
 		        return 'display: none"'
 		    }
-		    else
-		    {
+		    else{
 		        return ;
 		    }
 		});
 
-		
 		var tr2;
 		var templateSource2 = $("#friendlist").html();
 		var template2 = Handlebars.compile(templateSource2);
@@ -319,15 +275,12 @@
 		console.log(tr2);
 		$('#friendListDropdown').before(tr2)
 		
-		
 		var tr;
 		var templateSource = $("#alertList").html();
 		var template = Handlebars.compile(templateSource);
 		tr = template(obj);
 		console.log(tr);
 		$('#alertDropdown').before(tr)
-		
-		
 	});
 </script>
 
@@ -338,19 +291,18 @@
 		<img class="img-avatar" src="{{#checkPhoto photo}}{{/checkPhoto}}" alt="" width="40" height="40">
 	</div>
 	  
-     <div class="pull-right" >
-        <img class="img-avatar" src="../resources/img/minus3.png" alt="" width="40" height="40">
-    </div>
+  <div class="pull-right" >
+    <img class="img-avatar" src="../resources/img/minus3.png" alt="" width="40" height="40">
+  </div>
 
-     <div class="pull-right" style="margin-right:10px;">
-        <img class="img-avatar"  src="../resources/img/circle108.png" alt="" width="40" height="40" >
-    </div>
+  <div class="pull-right" style="margin-right:10px;">
+    <img class="img-avatar"  src="../resources/img/circle108.png" alt="" width="40" height="40" >
+  </div>
 	
-    
-    <div class="media-body" >
-        <div class="list-group-item-heading" style="margin-left:7px">{{name}} </div>
-        <small class="list-group-item-text c-gray" style="margin-left:7px">{{email}}</small>
-    </div>
+  <div class="media-body" >
+    <div class="list-group-item-heading" style="margin-left:7px">{{name}} </div>
+  	<small class="list-group-item-text c-gray" style="margin-left:7px">{{email}}</small>
+  </div>
 </div>
 {{/each}}
 </script>
@@ -358,29 +310,33 @@
 
 <script id="searchListTemplate" type="text/x-handlebars-template">
 {{#list}}
-<div id="{{keyword.key}}" class="keyword" style="position:relative; width: 180px; height: 100px; margin: 0 auto; margin-bottom: 15px; padding:8px; border-radius: 15px; background: {{keyword.color}};">
+<div id="{{keyword.key}}" class="keyword" style="background:{{keyword.color}};">
 	<div>
 		<div class="col-xs-6" style="padding: 0; margin:0;">
-			<span id="parentKeyword" style="font-size: 10px; font-family: Jeju Gothic; padding:2px; padding-top:3px; border-radius: 5px; background: {{parentKeyword.color}};">{{parentKeyword.keyword}}
+			{{#if parentKeyword}}
+				<span id="parentKeyword" style="background: {{parentKeyword.color}};">{{parentKeyword.keyword}}
 				<input type="hidden" value="{{parentKeyword}}">
 			</span>
+			{{else}}
+				<span id="parentKeyword" style="background:white;">최상위</span>
+			{{/if}}
 		</div> 
 		<div class="col-xs-6 text-right" style="padding: 0; margin:0;">
-			<span id="user" style="font-size: 10px; font-family: Jeju Gothic; padding:2px; padding-top:3px; color:white;">{{user.name}}
+			<span id="searchKeywordUser" style="">by {{user.name}}
 				<input type="hidden" value="{{user}}">
 			</span>
 		</div>
 	</div>
 	<div>
-		<div class="col-xs-12 text-left" style="padding: 0; margin-bottom:-5px;">
-			<span id="keyword" style="font-size: 20px; font-family: Jeju Gothic; padding:2px;"><input type="hidden" value="">{{keyword.keyword}}
+		<div class="col-xs-12 text-left" style="padding: 0;">
+			<span id="keyword" style="font-size: 20px; font-family: Jeju Gothic; padding:2px;">{{keyword.keyword}}
 				<input type="hidden" value="{{keyword}}">
 			</span>
 		</div>
 	</div>
 	<div>
-		<div class="col-xs-12 text-left" style="padding: 0; margin:0; display:inline;">
-			<span id="childkeyword" style="font-size: 10px; font-family: Jeju Gothic; padding:2px; padding-top:3px; border-radius: 5px; background: #eeeeee; white-space:nowrap;"><input type="hidden" value=""></span>
+		<div class="col-xs-12 text-left" style="padding: 0; margin:0;">
+			{{#setChildKeyword childKeywordList}} {{/setChildKeyword}}
 		</div>
 	</div>
 </div>
@@ -400,8 +356,30 @@
 		$('li[role=separator]').before(tr)
 	});
 
-
 	function setSearchList(data){
+
+		Handlebars.registerHelper( "setChildKeyword", function ( childKeywordList ){
+			var returnString = "";
+			if(childKeywordList.length == 0){
+				returnString = '<span id="childkeyword" style="background:white; display:inline;">없음</span>'
+				return returnString;
+			}
+			else{
+				for(var i = 0 ; i < childKeywordList.length ; i++){	
+			    if (i < 4)
+			    {
+			    	returnString += '<span id="childkeyword" style="background: '+childKeywordList[i].color+';">'+childKeywordList[i].keyword+'<input type="hidden" value="'+childKeywordList[i]+'"></span>';
+			    }
+			    else if(i == 4)
+			    {
+			    	returnString += '<span id="childkeyword" style="background:white; display:inline;">...</span>';
+			    }
+			    console.log("childKeywordList : "+childKeywordList.length+"i : "+i+"");
+				}
+				return returnString;
+			}
+		});
+		
 		var templateSource = $("#searchListTemplate").html();
 		console.log(templateSource);
 		var template = Handlebars.compile(templateSource);

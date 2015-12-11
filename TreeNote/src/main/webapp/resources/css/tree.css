@@ -8,7 +8,9 @@ canvas {
 input[type="text"] {
   outline:none;
 }
-
+#timelinec{
+	height:100%;
+}
 .timeline-in {
 	position: absolute;
 	padding-top:70px;
@@ -36,6 +38,48 @@ input[type="text"] {
   margin-right: auto;
 }
 
+#childkeyword {
+	width:50px;
+	font-size: 11px; 
+	font-family: Jeju Gothic; 
+	padding:2px; 
+	padding-top:3px; 
+	margin-right:3px; 
+	margin-top:-1px;
+	border-radius:5px;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+	overflow:hidden;
+  display:inline-block;
+}
+
+#searchKeywordUser{
+	font-size: 11px; font-family: Jeju Gothic; padding:2px; padding-top:3px; color:white;
+}
+
+#parentKeyword{
+	font-size: 11px; 
+	font-family: Jeju Gothic; 
+	padding:2px; 
+	padding-top:3px; 
+	border-radius: 5px;
+}
+
+.keyword{
+	width: 180px; 
+	height: 108px; 
+	margin: 0 auto; 
+	margin-top: 15px; 
+	padding:8px; 
+	border-radius: 15px;
+	display:none;
+}
+
+.ui-effects-wrapper .keyword{
+	width: 180px; 
+	height: 108px; 
+}
+
 #temp {
 	position: absolute;
 	padding-top:70px;
@@ -54,8 +98,7 @@ input[type="text"] {
   background-color: #ddd;
   z-index:100;
  	left:22%;
- 	top:30%;
- 	
+ 	top:30%;	
 }
 
 #reply{
