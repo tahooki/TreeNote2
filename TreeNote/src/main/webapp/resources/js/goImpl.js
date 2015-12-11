@@ -71,7 +71,25 @@ function goImpl() {
 				},
 				doubleClick:function(e,obj){
 					console.log("doubleClick : "+obj.data);
-					jQuery("#content").show("fade",300);
+					var keywordNo = JSON.stringify(obj.data.key);
+					var keyword = JSON.stringify(obj.data.keyword);
+					sessionStorage.setItem("keywordNo",keywordNo);
+					sessionStorage.setItem("keyword",keyword);					
+				
+					$.getJSON("/content/getContent/" +keywordNo, function(data) {
+						console.log("000000000 "+data.content);
+						
+					if(data.content==null){
+						jQuery("#content").show("fade",300).find("iframe").attr("src","contents.html");
+						console.log("1111111 "+data.content);
+					}
+					else{
+						jQuery("#content").show("fade",300).find("iframe").attr("src","get.html");
+						console.log("22222222 "+data.content);
+					}						
+					});					
+										
+					//jQuery("#content").show("fade",300);
 				}
 			},
 			new go.Binding("isShadowed", "isSelected").ofObject(),
