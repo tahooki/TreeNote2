@@ -1,6 +1,7 @@
 package treenote.domain;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Content {
 	private int contentNo;
@@ -9,6 +10,7 @@ public class Content {
 	private String photo;
 	private int scrap;
 	private Date regDate;
+	private Timestamp regTime; //작성시간 추가 됨
 
 	public int getContentNo() {
 		return contentNo;
@@ -58,9 +60,19 @@ public class Content {
 		this.regDate = regDate;
 	}
 
+	public Timestamp getRegTime() {
+		return regTime;
+	}
+
+	public void setRegTime(Timestamp regTime) {
+		this.regTime = regTime;
+	}
+
 	@Override
 	public String toString() {
 		return "Content [contentNo=" + contentNo + ", keywordNo=" + keywordNo + ", content=" + content + ", photo="
-				+ photo + ", scrap=" + scrap + ", regDate=" + regDate + "]";
+				+ photo + ", scrap=" + scrap + ", regDate=" + regDate + ", regTime=" + regTime + "]";
 	}
+	
 }
+	

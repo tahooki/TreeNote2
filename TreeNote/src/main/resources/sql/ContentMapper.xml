@@ -12,6 +12,7 @@
 		<result property="photo" column="photo" jdbcType="VARCHAR" />
 		<result property="scrap" column="scrap" jdbcType="NUMERIC" />
 		<result property="regDate" column="reg_date" jdbcType="DATE" />
+		<result property="regTime" column="reg_date" jdbcType="DATE" />
 	</resultMap>
 	
 	
@@ -43,7 +44,7 @@
 			content = #{content:CLOB},
 			photo = #{photo:VARCHAR}
 		</set>
-		WHERE content_no = #{contentNo}
+		WHERE keyword_no = #{keywordNo}
 	</update>
 	
 	
@@ -61,7 +62,7 @@
 	<delete id="deleteContent"	parameterType="int">
 		DELETE
 		FROM contents
-		WHERE content_no = #{value}
+		WHERE keyword_no = #{value}
 	</delete>
 	
 

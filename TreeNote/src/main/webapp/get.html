@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Get</title>
+
+  <!-- Bootstrap -->
+<link href="resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+
+<!-- jQuery를 사용하기위해 jQuery라이브러리 추가 -->
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+</head>
+<body>
+
+ <!-- 좌우측의 공간 확보 -->
+        <div class="container">
+            <hr/>
+            <div class="row">
+                <div class="col-md-10">
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr >
+                                <th width="5%"align="center" class="keywordNo"></th>
+                                <th width="20%"align="left" class="keywordd"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                                        
+                            <tr>
+                                <td id="No" >
+                                
+                                </td>
+                                <td id="Name">
+                                
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td>Date
+                                </td>
+                                <td id="bcd"> <span style='float:right'> Scrap : 0</span>
+                                </td>
+                            </tr>
+                            
+                            
+                            <tr>
+                                <td colspan="2" id="abc">
+                       
+                                </td>
+                            </tr>
+                        </tbody>
+                       
+                    </table>
+
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr>
+                                <td>
+                                    <span style='float:right'>
+                                        <button type="button" id="modify" class="btn btn-default" onclick="location.href='update.html'">수정</button>
+                                        <button type="button" id="delete" class="btn btn-default" onclick="parent.location.href='http://192.168.0.18:8080/main.html'">삭제</button>
+                                    </span>
+                                </td>
+                            </tr>
+                        </thead>
+                    </table>
+
+	<div id="test"></div>
+
+	<script type="text/javascript">
+		$(function() {
+			
+			var keywordNo = sessionStorage.getItem("keywordNo");
+			console.log(keywordNo);
+			$(".keywordNo").text(keywordNo);
+			
+			var keyword = sessionStorage.getItem("keyword");
+			console.log("111111111111111111 "+keyword);
+			var keywordd = keyword.replace(/"/g, "");
+			console.log(keywordd);
+			$(".keywordd").text(keywordd);
+			
+			
+			$.getJSON("/content/getContent/" +keywordNo, function(data) {
+// 				console.log(data.content.content);
+// 				console.log(data.content.regTime);
+// 				console.log(data);
+// 				console.log(data.user);
+// 				console.log(data.user.userNo);
+// 				console.log(data.user.name);
+				
+				var UserNo = data.user.userNo;
+				var Name = data.user.name;
+				var regTime = new Date();
+				regTime.setTime(data.content.regTime);
+				
+			    var time = regTime.toTimeString().substring(0,8);
+			    var date = regTime.toISOString().substring(0,10);
+			    console.log("날짜 :: "+date+" 시간 :: "+time );
+			    
+			    $("#No").append(UserNo);
+			    $("#Name").append(Name);
+				$(data.content.content).appendTo("#abc");
+				$("#bcd").append(date+" "+ time);
+			});		
+			
+			
+			
+			$("#delete").click(function(){
+				var content = $("iframe").contents().find("#se2_iframe").contents().find("html").html(); 
+			
+				$.ajax( 
+				{
+					url : "/content/removeContent/" +keywordNo,
+					method : "POST" ,
+					dataType : "json" ,
+					data: JSON.stringify({
+						keywordNo : keywordNo,
+						content : content,						
+					}),
+					headers : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					},
+					success : function(JSONData , status) {
+					}
+				});
+			});
+		});
+	</script>
+</body>
+</html>
