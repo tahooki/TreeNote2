@@ -35,7 +35,11 @@ function goImpl() {
 					//myDiagram.model.removeNodeData(myDiagram.model.findNodeDataForKey(0));
 				},
 				click:function(e){
-					
+					//서치 풀리면 show 하게 할 예정
+					if (sessionStorage.getItem('isTimeline') == 'false') {
+				        //sessionStorage.setItem('isTimeline', 'false');
+						setListTimeKeyword();
+				    }
 				}
 			});
 		
@@ -60,9 +64,8 @@ function goImpl() {
 					if(part.isSelected){
 						setBtnVisible();
 					}else{
-						//서치 풀리면 show 하게 할 예정
-						//setListTimeKeyword();
-						//setBtnUnVisible();
+						
+						setBtnUnVisible();
 					}
 					jQuery("#content").hide("fade",300);
 				},

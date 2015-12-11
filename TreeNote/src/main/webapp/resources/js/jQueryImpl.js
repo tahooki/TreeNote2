@@ -5,10 +5,6 @@ $(function() {
         //var position = sessionStorage.getItem('저장된 이름');
 		//alert(sessionStorage.getItem('editTreeNo'));
     }
-	
-	$(window).resize(function(){
-		$("#timelinec").css("height",$("#myDiagram").css("height") - 60);
-	});
 
 	$("#btn_content").click(function() {
 		$("#content").toggle("drop");
@@ -27,6 +23,20 @@ $(function() {
 	});
 	$("#btn_friend").click(function() {
 		$("#friendlist").toggle("drop");
+	});
+	
+	$("#btn_search").click(function(){
+		if (window.sessionStorage) {
+			if(sessionStorage.getItem('isTimeline') == 'true'){
+	        	$("#timelinec .keyword").remove();
+	        	$("#timeLineTitleBox").hide();
+	    		$("#searchBox").show("slide",{
+	    			direction : "up",
+	    			duration : 500
+	    		});
+	        }
+	        sessionStorage.setItem('isTimeline', 'false');
+	    }
 	});
 
 	autocom();
@@ -63,6 +73,10 @@ function setListSearchKeyword(keyword) {
 		},
 		success : function(JSONData, status) {
 			//$(#"timelinec").css("height",window.innerHeight-110);
+			if (window.sessionStorage) {
+		        sessionStorage.setItem('isTimeline', 'false');
+				//alert(sessionStorage.getItem('editTreeNo'));
+		    }
 			$("#timelinec .keyword").remove();
 			$("#timeLineTitleBox").hide();
 			var searchList = JSONData.list;
@@ -103,6 +117,10 @@ function setListTimeKeyword() {
 			"Content-Type" : "application/json"
 		},
 		success : function(JSONData, status) {
+			if (window.sessionStorage) {
+		        sessionStorage.setItem('isTimeline', 'true');
+				//alert(sessionStorage.getItem('editTreeNo'));
+		    }
 			console.log(JSONData);
 			$("#timelinec .keyword").remove();
 			$("#searchBox").hide();
