@@ -69,15 +69,16 @@ input[type="text"] {
 	width: 180px; 
 	height: 108px; 
 	margin: 0 auto; 
-	margin-top: 15px; 
 	padding:8px; 
 	border-radius: 15px;
-	display:none;
 }
 
-.ui-effects-wrapper .keyword{
-	width: 180px; 
-	height: 108px; 
+.keywordBox{
+	position:relative;
+	width:200; 
+	height:125; 
+	margin-top:15; 
+	display:none;
 }
 
 #temp {

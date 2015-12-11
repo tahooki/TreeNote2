@@ -73,7 +73,6 @@
 				<!--  친구리스트 드롭다운 메뉴 -->
 				<div style="display:inline-block">
 					<span class="dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" width="30px" height="30px" style="margin:10px;cursor:pointer;clear:both;z-index:100">
-						<span class="label label-danger" style="position: absolute;display: inline;border-radius: .25em;vertical-align: top;opacity: .5;top: 6px;margin-left: 20px">2</span>
 						<img id="btn_friend" src="../resources/img/btn_friend.png" style="width:30px;height:30px;" >
 					</span>
 					<div class="dropdown-menu dropdown-right" style="padding-top:0px; right:0px">
@@ -93,8 +92,7 @@
 <!-- 				알림창 -->
 				<div style="display:inline-block">
 					<span class="dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" width="30px" height="30px" style="margin:10px;cursor:pointer;clear:both;z-index:100">
-						<span class="label label-danger" style="position: absolute;display: inline;border-radius: .25em;vertical-align: top;opacity: .5;top: 6px;margin-left: 20px">2</span>
-						<img id="btn_friend" src="../resources/img/btn_alam.png" style="width:30px;height:30px;" >
+						<img id="btn_alam" src="../resources/img/btn_alam.png" style="width:30px;height:30px;" >
 					</span>
 					<div class="dropdown-menu dropdown-right" style="padding-top:0px;right:0px">
 	                        <div class="dropdown-header list-group-item-success" style="margin-top:0px">
@@ -268,6 +266,19 @@
 		    }
 		});
 
+		var countAlert = 0;
+		var countFriend = 0;
+		for(var i in obj.friend){
+			if(obj.friend[i].requestStatus ==1){
+				countAlert++;
+			}else if( obj.friend[i].requestStatus ==2){
+				countFriend++;
+			}
+		}
+		
+		$('#btn_friend').before('<span class="label label-danger" style="position: absolute;display: inline;border-radius: .25em;vertical-align: top;opacity: .5;top: 6px;margin-left: 20px">'+countFriend+'</span>');
+		$('#btn_alam').before('<span class="label label-danger" style="position: absolute;display: inline;border-radius: .25em;vertical-align: top;opacity: .5;top: 6px;margin-left: 20px">'+countAlert+'</span>');
+		
 		var tr2;
 		var templateSource2 = $("#friendlist").html();
 		var template2 = Handlebars.compile(templateSource2);
@@ -310,6 +321,7 @@
 
 <script id="searchListTemplate" type="text/x-handlebars-template">
 {{#list}}
+<div class="keywordBox" style="margin-top:15px">
 <div id="{{keyword.key}}" class="keyword" style="background:{{keyword.color}};">
 	<div>
 		<div class="col-xs-6" style="padding: 0; margin:0;">
@@ -339,6 +351,7 @@
 			{{#setChildKeyword childKeywordList}} {{/setChildKeyword}}
 		</div>
 	</div>
+</div>
 </div>
 {{/list}}
 </script>
