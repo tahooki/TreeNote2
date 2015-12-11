@@ -201,18 +201,24 @@ public class UserController {
 	@RequestMapping(value="acceptFriend/{userNo}")
 	public void acceptFriend(@PathVariable int userNo, HttpSession session, Model model) throws Exception{
 		User user = (User)session.getAttribute("user");
+		System.out.println(userNo+":::::::::");
 		Map<String, Object> map = new HashMap<>();
 		Map<String, Object> map2 = new HashMap<>();
 		map.put("userNo", user.getUserNo()); //실제 코드
 //		map.put("userNo", 1000000); // 테스트 코드
 		map.put("userNo2", userNo);
-		map2.put("userNo1", user.getUserNo());
-		map2.put("userNo2", user.getUserNo());
+//		map2.put("userNo1", user.getUserNo());
+//		map2.put("userNo2", user.getUserNo());
 		int result = userService.acceptFriend(map);
 		if(result==2){
-			List<User> list = userService.ListFriend(map2);
-			model.addAttribute("friend",list);
+//			List<User> list = userService.ListFriend(map2);
+//			model.addAttribute("friend",list);
+			model.addAttribute("boolean",true);
+		}else{
+			model.addAttribute("boolean",false);
 		}
+		
+		
 		
 	}
 	
