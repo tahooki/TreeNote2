@@ -128,17 +128,24 @@
 			<div id="myDiagram"
 				style="position: relative; background: #E4E4E4; float: left; width: 100%; height: 100%"></div>
 
-			<div class="timeline-out" id="timeline"
-				style="overflow-x: hidden; overflow-y: visible;">
-
-				<div id="timelinec">
-					<input type="text" id="search" class="form-control"
-						style="width: 180px; border: 0; margin: 0 auto; border-radius: 5px;">
+			<div id="timeline">
+				<div style="height: 70px;"></div>
+				<div id="timeLineTitleBox" style="height: 40px; display:none;">
+					<div id="titleImageBox">
+						<img src="/resources/img/timelinetitle.png" width="170px" height="30px"style="margin:0 auto;">
+					</div>
+				</div>
+				<div id="searchBox" style="height: 40px; display:none;">
+					<input type="text" id="search" class="form-control" style="width: 180px; border: 0; margin: 0 auto; border-radius: 5px;">
+				</div>
+				<div id="timelinec" style="overflow-y: hidden;">
 					<div id="keywordTop" style="height: 0px;"></div>
 				</div>
 			</div>
 
-			<div id="content" style="display: none;"></div>
+			 <div id="content" style="display: none;">
+       		<iframe src="" frameborder="0" width="100%" height="100%" marginwidth="0" marginheight="0"> </iframe>
+       </div>
 
 			<div id="reply" style="display: none;"></div>
 
@@ -374,18 +381,18 @@
 		Handlebars.registerHelper( "setChildKeyword", function ( childKeywordList ){
 			var returnString = "";
 			if(childKeywordList.length == 0){
-				returnString = '<span id="childkeyword" style="background:white; display:inline;">없음</span>'
+				returnString = '<span id="childkeyword" class="childkeyword" style="background:white; display:inline;">없음</span>'
 				return returnString;
 			}
 			else{
 				for(var i = 0 ; i < childKeywordList.length ; i++){	
-			    if (i < 4)
+			    if (i < 5)
 			    {
-			    	returnString += '<span id="childkeyword" style="background: '+childKeywordList[i].color+';">'+childKeywordList[i].keyword+'<input type="hidden" value="'+childKeywordList[i]+'"></span>';
+			    	returnString += '<span class="childkeyword" style="background: '+childKeywordList[i].color+';">'+childKeywordList[i].keyword+'<input type="hidden" value="'+childKeywordList[i]+'"></span>';
 			    }
-			    else if(i == 4)
+			    else if(i == 5)
 			    {
-			    	returnString += '<span id="childkeyword" style="background:white; display:inline;">...</span>';
+			    	returnString += '<span class="childkeyword" style="background:white; width:14px;">...</span>';
 			    }
 			    console.log("childKeywordList : "+childKeywordList.length+"i : "+i+"");
 				}

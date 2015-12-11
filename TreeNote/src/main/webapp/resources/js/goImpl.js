@@ -61,8 +61,8 @@ function goImpl() {
 						setBtnVisible();
 					}else{
 						//서치 풀리면 show 하게 할 예정
-						setListTimeKeyword();
-						setBtnUnVisible();
+						//setListTimeKeyword();
+						//setBtnUnVisible();
 					}
 					jQuery("#content").hide("fade",300);
 				},

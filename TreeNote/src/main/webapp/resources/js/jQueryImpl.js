@@ -5,6 +5,10 @@ $(function() {
         //var position = sessionStorage.getItem('저장된 이름');
 		//alert(sessionStorage.getItem('editTreeNo'));
     }
+	
+	$(window).resize(function(){
+		$("#timelinec").css("height",$("#myDiagram").css("height") - 60);
+	});
 
 	$("#btn_content").click(function() {
 		$("#content").toggle("drop");
@@ -26,7 +30,7 @@ $(function() {
 	});
 
 	autocom();
-	setListTimeKeyword();
+	setTimeout("setListTimeKeyword()",2000);
 })
 
 // 페이스북 로그인 버트 클릭시 이벤
@@ -37,9 +41,6 @@ function facebookLogin() {
 	}, 1000);
 	$("#loginContainer").css("display", "none");
 	$('#treeContainer').css('display', 'block');
-	$("#timeline").delay(1000).show("slide", {
-		direction : "right"
-	}, 500);
 	$("#base").delay(1000).show("fade", 500);
 	setTimeout("goImpl()", 2000);
 
@@ -61,12 +62,18 @@ function setListSearchKeyword(keyword) {
 			"Content-Type" : "application/json"
 		},
 		success : function(JSONData, status) {
+			//$(#"timelinec").css("height",window.innerHeight-110);
 			$("#timelinec .keyword").remove();
+			$("#timeLineTitleBox").hide();
 			var searchList = JSONData.list;
 			$("#keywordTop").after(setSearchList(JSONData));
+			$("#searchBox").show("slide",{
+				direction : "up",
+				duration : 600
+			});
 			var showKeyword = $("#timelinec .keywordBox");
 			for(var i = 0 ; i < showKeyword.length; i++){
-				$(showKeyword[i]).delay(200*i).show("slide",{
+				$(showKeyword[i]).delay(200*i+200).show("slide",{
 					direction : "right",
 					duration : 500
 				});
@@ -98,13 +105,17 @@ function setListTimeKeyword() {
 		success : function(JSONData, status) {
 			console.log(JSONData);
 			$("#timelinec .keyword").remove();
+			$("#searchBox").hide();
 			$("#keywordTop").after(setSearchList(JSONData));
+			$("#timeLineTitleBox").show("slide",{
+				direction : "up",
+				duration : 500
+			});
 			var showKeyword = $("#timelinec .keywordBox");
 			for(var i = 0 ; i < showKeyword.length; i++){
-				$(showKeyword[i]).delay(200*i).show("slide",{
+				$(showKeyword[i]).delay(200*i+200).show("slide",{
 					direction : "right",
 					duration : 500
-					
 				});
 			}
 			/*$(".btn_add").click(function() {

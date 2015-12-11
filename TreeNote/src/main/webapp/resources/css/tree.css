@@ -9,27 +9,24 @@ input[type="text"] {
   outline:none;
 }
 #timelinec{
-	height:100%;
 }
-.timeline-in {
+#timeline {
 	position: absolute;
-	padding-top:70px;
-	right:0px;
-  width:10px;
-  height: 100%;
-  background-color: rgba(255, 0, 0, 0);
-  z-index:100;
-  margin-top:-50px;
-}
-.timeline-out {
-	position: absolute;
-	padding-top:70px;
 	right:0px;
   width:200px;
   height: 100%;
   background-color: rgba(255, 0, 0, 0);
   z-index:100;
   margin-top:-50px;
+  overflow-y: auto;
+}
+#titleImageBox{
+	width: 180px; 
+	height: 40px; 
+	margin: 0 auto; 
+	padding:5px; 
+	border-radius: 15px;
+	background:white;
 }
 
 .center-block {
@@ -38,7 +35,7 @@ input[type="text"] {
   margin-right: auto;
 }
 
-#childkeyword {
+.childkeyword {
 	width:50px;
 	font-size: 11px; 
 	font-family: Jeju Gothic; 
@@ -93,7 +90,6 @@ input[type="text"] {
 
 #content{
 	position: absolute;
-	padding-top:70px;
   width:300px;
   height: 400px;
   background-color: #ddd;
