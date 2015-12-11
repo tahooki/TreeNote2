@@ -69,44 +69,51 @@
 			</div>
 			<div class="col-xs-4 text-right" style="padding:0px;">
 				<img id="btn_mypage" src="resources/img/btn_mypage.png" width="30px" height="30px" style="margin:10px;">
-				<img id="btn_search" src="resources/img/btn_search.png" width="30px" height="30px" style="margin:10px;">
-				<!--  친구리스트 드롭다운 메뉴 -->
-				<div style="display:inline-block">
-					<span class="dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" width="30px" height="30px" style="margin:10px;cursor:pointer;clear:both;z-index:100">
+				<img id="btn_search" src="resources/img/btn_search.png" width="30px" height="30px" style="margin:10px;"><!-- update 12/11/friday -->	
+				
+				
+				
+				<!-- 친구리스트 드롭다운 메뉴 -->
+				<div style="display:inline-block" id ="friendListDrop">
+					<span  class="dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" width="30px" height="30px" style="margin:10px;cursor:pointer;clear:both;z-index:100">
+						
 						<img id="btn_friend" src="../resources/img/btn_friend.png" style="width:30px;height:30px;" >
 					</span>
 					<div class="dropdown-menu dropdown-right" style="padding-top:0px; right:0px">
-             <div class="dropdown-header list-group-item-success" style="margin-top:0px">
-                Friend List
-                 <ul class="actions a-alt">
-                     <li><a href=""><i class="zmdi zmdi-check-all"></i></a></li>
-                 </ul>
-             </div>
-             <div class="list-group lg-alt">
-             	<p id="friendListDropdown" style="display:none"></p> 
-<!-- 	        <div class="view-more">View more</div> -->
-             </div>
-       	  </div>
+	                        <div class="dropdown-header list-group-item-success" style="margin-top:0px">
+	                           Friend List
+	                            <ul class="actions a-alt">
+	                                <li><a href=""><i class="zmdi zmdi-check-all"></i></a></li>
+	                            </ul>
+	                        </div>
+	                        <div class="list-group lg-alt" style="margin-bottom: 0px;">
+	                        	<p id="friendListDropdown" style="display:none"></p> 
+<!-- 	                            <div class="view-more">View more</div> -->
+	                        </div>
+	                    </div>
 				</div>
 				
 <!-- 				알림창 -->
-				<div style="display:inline-block">
+				<div style="display:inline-block" id ="alertListDrop">
 					<span class="dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" width="30px" height="30px" style="margin:10px;cursor:pointer;clear:both;z-index:100">
+						
 						<img id="btn_alam" src="../resources/img/btn_alam.png" style="width:30px;height:30px;" >
 					</span>
 					<div class="dropdown-menu dropdown-right" style="padding-top:0px;right:0px">
-            <div class="dropdown-header list-group-item-success" style="margin-top:0px">
-               Alert List
-                <ul class="actions a-alt">
-                    <li><a href=""><i class="zmdi zmdi-check-all"></i></a></li>
-                </ul>
-            </div>
-            <div class="list-group lg-alt">
-            	<p id ="alertDropdown" style="display:none"></p> 
-<!--   	      <div class="view-more">View more</div> -->
-            </div>
-          </div>
+	                        <div class="dropdown-header list-group-item-success" style="margin-top:0px">
+	                           Alert List
+	                            <ul class="actions a-alt">
+	                                <li><a href=""><i class="zmdi zmdi-check-all"></i></a></li>
+	                            </ul>
+	                        </div>
+	                        <div class="list-group lg-alt" style="margin-bottom: 0px;">
+	                        	<p id ="alertDropdown" style="display:none"></p> 
+<!-- 	                            <div class="view-more">View more</div> -->
+	                        </div>
+	                    </div>
 				</div>
+				<!---------------------------------------- -->
+				
 				<!---------------------------------------------------------------->
 				<img id="btn_logout" src="resources/img/btn_logout.png" width="30px" height="30px" style="margin:10px;">	
 			</div>
@@ -219,20 +226,22 @@
 </script>
 
 
-<!--  핸들바 탬플릿  -->
+<!-- update 12/11/friday -->
+<!-- 핸들바 탬플릿 -->
 <script id="alertList" type="text/x-handlebars-template">
 {{#each friend}}
 <div class="list-group-item " href="" style="margin:0px;border:0px;{{#checkStatus requestStatus}} {{/checkStatus}}">
 	<div class="pull-left"> 
-		<img class="img-avatar" src="{{#checkPhoto photo}}{{/checkPhoto}}" alt="" width="40" height="40">
+		<input type="text" class="userNoLink" value="{{userNo}}" hidden>
+		<img class="img-avatar "  src="{{#checkPhoto photo}}{{/checkPhoto}}" alt="" style="width:40px; height:40px; cursor:pointer">
 	</div>
 	  
      <div class="pull-right" >
-        <img class="img-avatar" src="/resources/img/minus3.png" alt="" width="40" height="40">
+        <img class="img-avatar declineFriend" src="../resources/img/minus3.png" alt="" style="width:40px; height:40px;cursor:pointer"">
     </div>
 
      <div class="pull-right" style="margin-right:10px;">
-        <img class="img-avatar"  src="/resources/img/circle108.png" alt="" width="40" height="40" >
+        <img class="img-avatar acceptFriend"  src="../resources/img/circle108.png" alt="" alt="" style="width:40px; height:40px; cursor:pointer" >
     </div>
 	
     
@@ -244,37 +253,70 @@
 {{/each}}
 </script>
 
+<!-- update 12/11/friday -->
+<script id="friendlist" type="text/x-handlebars-template">
+{{#each friend}}
+<div class="list-group-item " href="" style="margin:0px;border:0px;{{#checkStatus2 requestStatus}} {{/checkStatus2}}">
+	<div class="pull-left"> 
+		<input type="text" class="userNoLink" value="{{userNo}}" hidden>
+		<img class="img-avatar" src="{{#checkPhoto photo}}{{/checkPhoto}}" alt="" alt="" style="width:40px; height:40px; cursor:pointer">
+	</div>
+	  
+     <div class="pull-right" >
+        <img class="img-avatar deletFriend" src="../resources/img/minus3.png" alt="" alt="" style="width:40px; height:40px; cursor:pointer">
+    </div>
+
+    
+    <div class="media-body" >
+        <div class="list-group-item-heading" style="margin-left:7px">{{name}} </div>
+        <small class="list-group-item-text c-gray" style="margin-left:7px">{{email}}</small>
+    </div>
+</div>
+{{/each}}
+</script>
+
+
+
+<!-- update 12/11/friday -->
 <!-- //핸들바 이용 서버에서 가져온 친구 정보 입력 -->
 <script type="text/javascript">
+	var countAlert = 0;
+	var countFriend = 0;
+	
 	$.getJSON('/user/listFriend', function(obj) {
 		Handlebars.registerHelper( "checkStatus", function ( status ){
-		    if (status != 1){
+		    if (status != 1 )
+		    {
 		        return 'display: none"'
 		    }
-		    else{
+		    else
+		    {
 		        return ;
 		    }
 		});
 		Handlebars.registerHelper( "checkPhoto", function ( status ){
-		    if (status !=null ){
+		    if (status !=null )
+		    {
 		        return status
 		    }
-		    else{
+		    else
+		    {
 		        return '../resources/img/man.jpg';
 		    }
 		});
 		
 		Handlebars.registerHelper( "checkStatus2", function ( status ){
-		    if (status != 2 ){
+		    if (status != 2 )
+		    {
 		        return 'display: none"'
 		    }
-		    else{
+		    else
+		    {
 		        return ;
 		    }
 		});
-
-		var countAlert = 0;
-		var countFriend = 0;
+		
+		
 		for(var i in obj.friend){
 			if(obj.friend[i].requestStatus ==1){
 				countAlert++;
@@ -286,6 +328,7 @@
 		$('#btn_friend').before('<span class="label label-danger" style="position: absolute;display: inline;border-radius: .25em;vertical-align: top;opacity: .5;top: 6px;margin-left: 20px">'+countFriend+'</span>');
 		$('#btn_alam').before('<span class="label label-danger" style="position: absolute;display: inline;border-radius: .25em;vertical-align: top;opacity: .5;top: 6px;margin-left: 20px">'+countAlert+'</span>');
 		
+		
 		var tr2;
 		var templateSource2 = $("#friendlist").html();
 		var template2 = Handlebars.compile(templateSource2);
@@ -293,38 +336,45 @@
 		console.log(tr2);
 		$('#friendListDropdown').before(tr2)
 		
+		
 		var tr;
 		var templateSource = $("#alertList").html();
 		var template = Handlebars.compile(templateSource);
 		tr = template(obj);
 		console.log(tr);
 		$('#alertDropdown').before(tr)
+		
+		
+		
 	});
-</script>
 
-<script id="friendlist" type="text/x-handlebars-template">
-{{#each friend}}
-<div class="list-group-item " href="" style="margin:0px;border:0px;{{#checkStatus2 requestStatus}} {{/checkStatus2}}">
-	<div class="pull-left"> 
-		<img class="img-avatar" src="{{#checkPhoto photo}}{{/checkPhoto}}" alt="" width="40" height="40">
-	</div>
-	  
-  <div class="pull-right" >
-    <img class="img-avatar" src="../resources/img/minus3.png" alt="" width="40" height="40">
-  </div>
-
-  <div class="pull-right" style="margin-right:10px;">
-    <img class="img-avatar"  src="../resources/img/circle108.png" alt="" width="40" height="40" >
-  </div>
 	
-  <div class="media-body" >
-    <div class="list-group-item-heading" style="margin-left:7px">{{name}} </div>
-  	<small class="list-group-item-text c-gray" style="margin-left:7px">{{email}}</small>
-  </div>
-</div>
-{{/each}}
+	//친구 수락 
+	console.log("click event start")
+	$(document).on('click', '.acceptFriend', function(){
+		var accFriend = $(this);
+		var acceptFriendNo = accFriend.parents('.list-group-item').find('.userNoLink').val();
+		var acceptFriendHtml = accFriend.parents('.list-group-item')
+		$.getJSON('/user/acceptFriend/'+acceptFriendNo,function(data){
+			if(data){
+				acceptFriendHtml.remove()
+				$('#btn_friend').prev().text(++countFriend)
+				$('#btn_alam').prev().text(--countAlert);
+				$('#friendListDrop').find('.userNoLink[value='+acceptFriendNo+']').parents('.list-group-item').css('display','');
+			}
+		})
+		
+	})
+	
+	
+	$(document).on('click','.deletFriend', function(){
+		var delFriend = $(this);
+ 		var deleteFridneNo = delFriend.parents('.list-group-item').find('.userNoLink').val();
+ 		delFriend.parents('.list-group-item').remove();
+ 		$('#btn_friend').prev().text(--countFriend)
+	})
+	
 </script>
-
 
 <script id="searchListTemplate" type="text/x-handlebars-template">
 {{#list}}
