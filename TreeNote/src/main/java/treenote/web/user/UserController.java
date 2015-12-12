@@ -242,7 +242,47 @@ public class UserController {
 		}
 	}
 	
+//sns signup
+	@RequestMapping(value="facebookSignup")
+	public void facebookSignup(@RequestBody User user, HttpSession session, Model model) throws Exception{
+		System.out.println("facebookSignup");
+		System.out.println(user);
+		User sessionUser = (User)session.getAttribute("user");
+		if(sessionUser!=null){
+			if(sessionUser.getEmail()==user.getEmail()){
+				model.addAttribute("boolean", false);
+				return;
+			}
+		}
+		
+		if(userService.getUser2(user.getEmail())!=null){
+			model.addAttribute("boolean", false);
+			return;
+		}
+		UUID uuidPassword = UUID.randomUUID();
+		user.setPassword(uuidPassword.toString());
+		System.out.println(user+"::::::::uuid user");
+		int result = userService.snsSignup(user);
+		if(result==1){
+			model.addAttribute("boolean", true);
+		}else{
+			model.addAttribute("boolean", false);
+		}
+		
+		
+	}
+	
+	@RequestMapping(value="fLogin")
+	public void fLogin(@RequestBody User user, HttpSession session, Model model)throws Exception{
+		System.out.println("/fLogin start");
+		User fUser = userService.fLogin(user);
+		if(fUser!=null){
+			model.addAttribute( true);
+			session.setAttribute("user", fUser);
+		}else{
+			model.addAttribute(false);
+		}
+	}
 	
 	
-	//친구 거절후 확
 }

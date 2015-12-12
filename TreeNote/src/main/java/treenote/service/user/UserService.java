@@ -24,8 +24,12 @@ public interface UserService {
 	
 	public int acceptFriend(Map<String, Object> userNo) throws Exception;
 
-	int declineFriend(Map<String, Object> userNo) throws Exception;
+	public int declineFriend(Map<String, Object> userNo) throws Exception;
 
-	List<User> ListFriend(Map<String, Object> userNo) throws Exception;
+	public List<User> ListFriend(Map<String, Object> userNo) throws Exception;
+
+	public int snsSignup(User user) throws Exception;
+
+	User fLogin(User user) throws Exception;
 
 }

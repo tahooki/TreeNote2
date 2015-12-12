@@ -97,4 +97,17 @@ public class UserServiceImpl implements UserService {
 		
 		return userDao.declineFriend(userNo);
 	}
+	
+	
+	@Override
+	public int snsSignup(User user) throws Exception{
+		System.out.println("snsSignup:::service");
+		return userDao.snsSignup(user);
+	}
+	
+	
+	@Override
+	public User fLogin(User user)throws Exception{
+		return userDao.fLogin(user);
+	}
 }

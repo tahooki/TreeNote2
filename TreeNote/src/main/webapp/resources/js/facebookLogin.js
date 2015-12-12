@@ -26,10 +26,21 @@
        console.log('로그인 확인 ');
 //       console.log(response.email);
         //console.log(response); // dump complete info
-        var access_token = response.authResponse.accessToken; //get access token
+//        var access_token = response.authResponse.accessToken; //get access token
         var user_id = response.authResponse.userID; //get FB UID
-        facebookLogin();
-       
+        $.ajax({
+        	method:"POST",
+        	url:"/user/fLogin",
+        	data:JSON.stringify({snsUser : user_id}),
+        	dataType : "json",
+        	contentType : 'application/json',
+        	success : function(data){
+        		if(data){
+        			self.location='main.html';
+        		}
+        	}
+        	
+        })
         
     } else if (response.status === 'not_authorized') {
       // The person is logged into Facebook, but not your app.
@@ -108,7 +119,7 @@
 
   };
   
-function login(){
+function signup(){
 	
 	FB.login(function(response) {
 		if (response.authResponse) {
@@ -125,6 +136,22 @@ function login(){
 				snsUserId = response.id;
 				userName = response.name
 				console.log(response);
+				$.ajax({
+					url:'/user/facebookSignup',
+					contentType:'application/json',
+					dataType:'json',
+					method:'post',
+					data : JSON.stringify({snsUser: snsUserId,
+							name : userName,
+							email:userEmail}),
+					success : function(data){
+						if(data){
+							self.location="treenote.java74.com";
+						}else{
+							alert("이미 가입되어 있는 아이디 입니다.")
+						}
+					}
+				})
 				
 				// you can store this data into your database             
 			});
@@ -144,6 +171,55 @@ function login(){
 	
 }
   
+
+function login(){
+	
+	FB.login(function(response) {
+		if (response.authResponse) {
+//          console.log('로그인 되었습니다.');
+			//console.log(response); // dump complete info
+			var pageAccessToken = response.authResponse.accessToken; //get access token
+			var user_id = response.authResponse.userID; //get FB UID
+			var user_email=null;
+			
+			FB.api('https://graph.facebook.com/v2.5/me?fields=id%2Cemail&access_token='+pageAccessToken, 
+					function(response) {
+				console.log(response.email);
+				userEmail = response.email; //get user email
+				snsUserId = response.id;
+				console.log(response);
+				$.ajax({
+					url:'/user/facebookSignup',
+					method:'post',
+					data : {snsUser: snsUserId,
+						email:userEmail},
+						success : function(data){
+							if(data){
+								self.location="treenote.java74.com";
+							}else{
+								alert("회원가입 실패 다시 시도해 주세요!!!")
+							}
+						}
+				})
+				
+				// you can store this data into your database             
+			});
+			facebookLogin();
+//			location.href='/user/login?email='+userEmail+'&snsUserId='+snsUserId;
+			
+		} else {
+			//user hit cancel button
+			console.log('User cancelled login or did not fully authorize.');
+			
+		}
+	}, {
+		scope: 'public_profile,email'
+	});
+	
+	
+	
+}
+
 
 
 // $(document).ready(function() {

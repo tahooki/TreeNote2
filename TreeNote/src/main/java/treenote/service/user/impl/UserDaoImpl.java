@@ -95,5 +95,18 @@ public class UserDaoImpl implements UserDao {
 	
 	
 	
+	@Override
+	public int snsSignup(User user) throws Exception{
+		System.out.println("snsSignup userDao");
+		return sqlSession.insert("UserMapper.snsSignup", user);
+	}
+	
+	@Override
+	public User fLogin(User user) {
+		// TODO Auto-generated method stub
+		return  sqlSession.selectOne("UserMapper.fLogin", user);
+	}
+	
+	
 	
 }

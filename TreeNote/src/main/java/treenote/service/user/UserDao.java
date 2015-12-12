@@ -25,7 +25,11 @@ public interface UserDao {
 	
 	public int acceptFriend(Map<String, Object> userNo) throws Exception;
 
-	int declineFriend(Map<String, Object> userNo) throws Exception;
+	public int declineFriend(Map<String, Object> userNo) throws Exception;
 
-	List<User> getFriendList(Map<String, Object> userNo) throws Exception;
+	public List<User> getFriendList(Map<String, Object> userNo) throws Exception;
+
+	public int snsSignup(User user) throws Exception;
+
+	public User fLogin(User user);
 	}
