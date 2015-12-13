@@ -172,6 +172,40 @@
 		
 		
 	</delete>
+	
+	
+	<insert id="snsSignup" parameterType="user">
+		INSERT INTO users(
+			user_no,
+			email,
+			password,
+			name,
+			snsuser,
+			edit_tree_no
+			)
+		VALUES(
+			SEQ_USERS_USER_NO.nextval,
+			#{email},
+			#{password},
+			#{name},
+			#{snsUser},
+			0
+		)
+		
+	</insert>
+	
+	<select id="fLogin" parameterType="user" resultMap="userMap">
+		SELECT 
+			user_no,
+			email,
+			name,
+			edit_tree_no,
+			photo,
+			phone
+		FROM users
+		WHERE snsuser=#{snsUser}
+						
+	</select>
 
 
 </mapper>

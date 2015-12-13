@@ -92,14 +92,12 @@ h2 {
 
 
 .content {
-	width: 80%;
+	width: 100%;
 	max-width: 1200px;
-	margin: auto;
 	border: 1px solid #fff;
 	position: relative;
 	min-height: 240px;
-	background-color:white;
-	background-image: url('content.png');
+	margin-bottom: 10px
 }
 	.content__head {
 		top: -21px;
