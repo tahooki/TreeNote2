@@ -83,11 +83,11 @@ function goImpl() {
 						console.log("000000000 "+data.content);
 						
 					if(data.content==null){
-						jQuery("#content").show("fade",300).find("iframe").attr("src","contents.html");
+						jQuery("#content").show("fade",300).find("iframe").attr("src","../../../contents/contents.html");
 						console.log("1111111 "+data.content);
 					}
 					else{
-						jQuery("#content").show("fade",300).find("iframe").attr("src","get.html");
+						jQuery("#content").show("fade",300).find("iframe").attr("src","../../../contents/get.html");
 						console.log("22222222 "+data.content);
 					}						
 					});					
