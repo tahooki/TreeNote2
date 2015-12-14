@@ -13,10 +13,7 @@
 <script src="resources/js/bootstrap.min.js"></script>
 
 <!-- 트리 리스트 -->
-<script src="resources/js/jquery.mCustomScrollbar.concat.min.js"></script>
 
-<link rel="stylesheet" href="resources/css/jquery.mCustomScrollbar.css">
-<link rel="stylesheet" href="resources/css/style.css">
 <link rel="stylesheet" href="resources/css/treeList.css">
 
 <link rel="stylesheet" href="resources/css/jquery-ui.min.css">
@@ -46,11 +43,13 @@
 	<nav class="navbar navbar-fixed-top" id="navbar"
 		style="display: none;background-color: #2ECC71;">
 		<div class="container" style="padding:0px; width: 992px;">
+			<!-- 트리리스트부분 -->
 			<div class="col-xs-4" style="padding:0px;">
 				<div class="col-xs-2" style="padding:0px;">
 				<img  src="resources/img/btn_treeadd.png" width="40px"
 					height="40px" style="margin: 5px;">
 				</div>
+			<div class="templist">
 				<div class="col-xs-1" style="padding:0px;">
 				<img src="resources/img/btn_treelist_left.png" width="20px"
 					height="40px" style="margin: 5px;">
@@ -60,6 +59,8 @@
 				<img src="resources/img/btn_treelist_right.png" width="20px"
 					height="40px" style="margin: 5px;">
 				</div>
+			</div>
+			
 			</div>
 
 			<div class="col-xs-4 text-center" style="padding:0px;">
@@ -212,16 +213,6 @@
 	$("#base").delay(1000).show("fade", 500);
 	setTimeout("goImpl()", 2000);
 	
-	(function($){
-		$(window).load(function(){
-			$("#content-9").mCustomScrollbar({
-				scrollButtons:{enable:true,scrollType:"stepped"},
-				theme:"rounded-dark",
-				scrollbarPosition:"outside"
-			});
-			
-		});
-	})(jQuery);
 
 </script>
 

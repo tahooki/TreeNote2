@@ -148,98 +148,134 @@ function setListTimeKeyword() {
 	})
 }
 
+
 //트리 리스트 불러오기
 $(function() {
-		 $("#treeTitle").on("dblclick" , function() {
-			 alert(  "수정 Start" );
-			 var temp = $(this).text();
-			 temp = temp.substring(6);
-			 alert("왜 안되"+temp)
-			 $('#treeTitle').remove();
-			 $('#treeTitle').after('<input type="text" id="updateTitle" value="'+temp+'">');
-			
-		 $("#updateTitle").keyup(function(e){
-		    if (e.keyCode == 13) { 
-		    	$.ajax({
-					url : "/tree/updateTitle",
-					method : "POST",
-					data:JSON.stringify({
-						treeNo:$("#treeNo").val(),
-						title:$("#updateTitle").val(),
-						userNo:$("#userNo").val()
-					}),
-					dataType : "json",
-					contentType : "application/json",
-					success : function(JSONData, status) {
-						alert(status);
-						alert("JSONData : \n" + JSONData);
-						$("#treeTitle").append(treeTitle);
-						//alert("title :" + treeTitle);
-						var count=0;
-						var value=[];
-						
-						for(var i in JSONData.Tree){
-							count++;
-							//value=JSONData.Tree[i].title;
-							value="<li>"+JSONData.Tree[i].title+"</li>";
-							//alert("ttteesstt::: "+value);
-							$("#list").append(value);
-						}
-						$("#count").append(count);
+	alert("리스트");	
+		$.ajax({
+			url : '/tree/listTree',
+			type : 'GET',
+			dataType : 'json',
+			ContentType : "application/json",
+			success : function(list) {
+				//console.log(list);
+				$.ajax({
+					url : "resources/hbs/treeList2.hbs",
+					success : function(data) {
+						var source = data;
+						//console.log("gggggg ::"+source)
+						var template = Handlebars.compile(source);
+
+						var tr = template(list);
+						$(".col-xs-1").remove();
+						$(".col-xs-7").remove();
+						$(tr).appendTo(".templist");
+						updateTitle();
 					}
-					
-				});
-			}
-			}); 
-			
-		 }); 
-		 
-		$("#userNo").on("click", function(e) {
-			//if(e.keyCode==13 ){
-			//var userNo = $("#userNo").val();
-			$("#treeTitle").empty();
-			$("#list").empty();
-			$("#count").empty(); 
-			
-			alert("userNo :" + userNo);
-			$.ajax({
-				url : "/tree/listTree/"+1000000,
-				method : "GET",
-				dataType : "json",
-				headers : {
-					"Accept" : "application/json",
-					"Content-Type" : "application/json"
-				},
-				success : function(JSONData, status) {
-					//alert(status);
-					//alert("JSONData : \n" + JSONData);
-					var treeTitle=JSONData.Tree[0].title;
-					$("#treeTitle").append(treeTitle+'<img src="resources/img/btn_add.png" id="addTitle"/>');
-					//alert("title :" + treeTitle);
-					var count=0;
-					var value=[];
-					
-					for(var i in JSONData.Tree){
-						count++;
-						//value=JSONData.Tree[i].title;
-						value="<li id='treeList"+i+"'  value='JSONData.Tree[i].title' class='listData'>"+JSONData.Tree[i].title+
-								"<input type='hidden' id='treeNo' value="+JSONData.Tree[i].treeNo+">"+"</li>";
-						//alert("ttteesstt::: "+value);
-						$("#list").append(value);
-						
-					$('#treeList'+i+'').on("click" , function() {
-						 var temp = $(this).text();
-						 alert("test ::"+temp);
-						 $("#treeTitle").text(temp).append('<img src="resources/img/btn_add.png" id="addTitle"/>'); 
-					});
-					}
-					$("#count").append("TreeList ::"+count);
-				}
-			});
-			
-			
+				})
+					/*해당트리 펼쳐짐*/
+						$(".item.active").dblclick(function(){
+							alert("get1");
+						}); 
+			}			
 		});
-	});
+	/*트리추가*/	
+	$(".col-xs-2").click(function(){
+		var data=$(".item.active")
+		//console.log(data)
+		$.ajax({
+			url : "/tree/addTree",
+				method : "POST",
+				data:JSON.stringify({
+					treeNo:data.find('input[name=treeNo]').val(),
+					userNo:data.find('input[name=userNo]').val()
+					
+				}),
+				dataType : "json",
+				contentType : "application/json",
+				success : function(JSONData, status) {
+					alert(status);
+					alert("JSONData : \n" + JSONData);
+/*S.O.S*/
+					goImpl();
+				}
+		 
+			 });
+		
+	})	
+
+});
+
+
+function updateTitle() {
+	/*트리타이틀 수정*/
+	var longpress = 1000;
+	var start;
+		$(".item").on( 'mousedown', function( e ) {
+		    start = new Date().getTime();
+		} );  
+		$(".item").on( 'mouseleave', function( e ) {
+	        start = 0;
+	    } );
+		$(".item").on( 'mouseup', function( e ) {
+		    if ( new Date().getTime() >= ( start + longpress )  ) {
+		       var id=$(this).find('h5').text();
+		      // alert('long press!'+id);
+		       
+		      $('h5').remove();
+		      $(this).append('<input type="text" id="updateTitle" value="'+id+'">');
+		      
+			$("#updateTitle").keyup(function(e){
+			var data = $(".item.active");
+			//console.log(data);
+				if (e.keyCode == 13) { 
+			    	$.ajax({
+						url : "/tree/updateTitle",
+						method : "POST",
+						data:JSON.stringify({
+								treeNo:data.find('input[name=treeNo]').val(),
+								title:$("#updateTitle").val(),
+								userNo:data.find('input[name=userNo]').val()
+								}),
+						dataType : "json",
+						contentType : "application/json",
+						success : function(JSONData, status) {
+							alert(status);
+							$("#carousel-example-generic").remove();
+							List();
+						}
+					});
+				}
+			}); 
+		    }
+		});
+}
+
+function List() {
+	$.ajax({
+	url : '/tree/listTree',
+	method : "GET",
+	dataType : 'json',
+	ContentType : "application/json",
+	success : function(list) {	
+		console.log(list);
+		$.ajax({
+			url : "resources/hbs/treeList2.hbs",
+			success : function(data) {
+				var source = data;
+				//console.log("gggggg ::"+source)
+				var template = Handlebars.compile(source);
+
+				var tr = template(list);
+				$(".col-xs-1").remove();
+				$(".col-xs-7").remove();
+				$(tr).appendTo(".templist");
+			}
+		})
+	}
+	})
+}
+
 
 function openDialog() {
 	$("#dialog").show().dialog();

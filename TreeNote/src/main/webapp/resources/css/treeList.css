@@ -1,61 +1,42 @@
 @CHARSET "UTF-8";
 
-#demo {
-	width: 210px;
-	margin:0 0 0 2%;
-	padding:0 0 0 0;
-	background-color: #ffffff;
-}
-#demo.showcase{ min-width: 200px; }
-
-#examples{
-	background-color: #ffffff;
-	padding:0 5% 0 5%;
-	margin:0 0 0 0;
-}
-       
-.showcase #content-9.content{
-	height:90%;
-	background-color:#ffffff;
+.templist{
+    position: absolute;
+    left: 50px;
+    width: 90%;
+    height: 100%;
 }
 
-.content{
-	margin: 2% 0 0 0; 
-	max-width:100%;
+#carousel-example-generic{
+    height: 100%;
+    width: 100%;
+    vertical-align: middle;
 }
 
-#examples h3#userNo{
-	margin: 3% 3% 0 1%;
-	font-size:20px;
-	float:left;
+.carousel-inner{
+    position: absolute;
+    height: 100%;
+    text-align: center;
+    vertical-align: middle;
 }
 
-#examples h3#treeTitle{
-	font-size:20px;
-	margin:3% 0 0 2%;
-	overflow:hidden;
+div.item {
+	color:white;
+	font-family:Jeju Gothic;
+	margin-top: 5%;
 }
-#examples h3#treeTitle #addTitle{
-	height:20px;
-	margin-left:5%;
-	overflow:hidden;
-
+div.item.active {
+	color:white;
+	font-family:Jeju Gothic;
+	margin-top: 5%;
 }
-
-
-.showcase #content-9.content #count{
-	font-size:15px;
-	padding: 0 0 5% 2% ;
-	margin:0 0 5% 0;
-	
+input#updateTitle{
+	color: black;
+    background-color: inherit;
+    margin:auto;
+    border-style: hidden;
+    text-align: center;
+  
 }
-
-.showcase #content-9.content li{
-	font-size:20px;
-	margin-bottom:20%;
-	
-}
-
-
 
 

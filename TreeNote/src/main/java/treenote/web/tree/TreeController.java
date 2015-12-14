@@ -1,5 +1,7 @@
 package treenote.web.tree;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,10 +86,15 @@ public class TreeController {
 	
 	
 	//트리 리스트를 불러온다.
-	@RequestMapping(value = "listTree/{userNo}", method=RequestMethod.GET )
-	public void listTree(@PathVariable int userNo, Model model) throws Exception{
+	@RequestMapping(value = "listTree", method=RequestMethod.GET)
+	public void listTree(HttpSession session , Model model) throws Exception{
 		System.out.println("/listTree");
-		model.addAttribute("Tree", treeService.listTree(userNo));
+		User user=(User)session.getAttribute("user");
+		System.out.println("UserNo ::::::::::::"+treeService.listTree(user.getUserNo()));
+		List<Tree> listTree=treeService.listTree(user.getUserNo());
+		List<Tree> subTree=listTree.subList(1, listTree.size());
+		model.addAttribute("Tree", listTree);
+		model.addAttribute("subTree", subTree);
 	}
 	
 	//추가 !! login할때 불러오는 Tree - by.Tahooki
