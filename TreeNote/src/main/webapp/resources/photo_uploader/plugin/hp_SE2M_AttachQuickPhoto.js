@@ -47,7 +47,7 @@ nhn.husky.SE2M_AttachQuickPhoto = jindo.$Class({
 	 * nhn.husky.SE2M_AttachQuickPhoto.prototype.makePopupURL로 덮어써서 사용하시면 됨.
 	 */
 	makePopupURL : function(){
-		var sPopupUrl = "./photo_uploader/popup/photo_uploader.html";
+		var sPopupUrl = "../../resources/photo_uploader/popup/photo_uploader.html";
 		
 		return sPopupUrl;
 	},
@@ -94,7 +94,8 @@ nhn.husky.SE2M_AttachQuickPhoto = jindo.$Class({
 	 */
 	_getPhotoTag : function(htPhotoInfo){
 		// id와 class는 썸네일과 연관이 많습니다. 수정시 썸네일 영역도 Test
-		var sTag = '<img src="{=sOriginalImageURL}" title="{=sName}" >';
+		//var sTag = '<img src="{=sOriginalImageURL}" title="{=sName}" >';
+		var sTag = '<img src="{=sOriginalImageURL}" title="{=sName}" style="max-width:100%; height:auto;">'; 
 		if(htPhotoInfo.bNewLine){
 			sTag += '<br style="clear:both;">';
 		}
