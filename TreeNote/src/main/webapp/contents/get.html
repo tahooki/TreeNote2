@@ -59,7 +59,7 @@
                                 <td>
                                     <span style='float:right'>
                                         <button type="button" id="modify" class="btn btn-default" onclick="location.href='update.html'">수정</button>
-                                        <button type="button" id="delete" class="btn btn-default" onclick="parent.location.href='http://192.168.0.18:8080/main.html'">삭제</button>
+                                        <button type="button" id="delete" class="btn btn-default" >삭제</button>
                                     </span>
                                 </td>
                             </tr>
@@ -110,30 +110,32 @@
 				var answer = confirm("내용을 삭제하시겠습니까?");
 				if(answer){
 					document.write(answer);
-				}else{
-					return false;
-				}
-			
+							
+					var content = $("iframe").contents().find("#se2_iframe").contents().find("html").html(); 
 				
-				var content = $("iframe").contents().find("#se2_iframe").contents().find("html").html(); 
-			
-				$.ajax( 
-				{
-					url : "/content/removeContent/" +keywordNo,
-					method : "POST" ,
-					dataType : "json" ,
-					data: JSON.stringify({
-						keywordNo : keywordNo,
-						content : content,						
-					}),
-					headers : {
-						"Accept" : "application/json",
-						"Content-Type" : "application/json"
-					},
-					success : function(JSONData , status) {
-					}
-				});
+					$.ajax( 
+					{
+						url : "/content/removeContent/" +keywordNo,
+						method : "POST" ,
+						dataType : "json" ,
+						data: JSON.stringify({
+							keywordNo : keywordNo,
+							content : content,						
+						}),
+						headers : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+						},
+						success : function(JSONData , status) {
+							parent.location.href='../main.html';
+						}
+					});
+				}else{
+
+				}				
 			});
+			
+			
 		});
 	</script>
 </body>
