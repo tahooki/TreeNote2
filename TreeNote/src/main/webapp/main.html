@@ -137,17 +137,23 @@
 				style="position: relative; background: #E4E4E4; float: left; width: 100%; height: 100%"></div>
 
 			<div id="timeline">
-				<div style="height: 70px;"></div>
-				<div id="timeLineTitleBox" style="height: 40px; display:none;">
-					<div id="titleImageBox">
-						<img src="/resources/img/timelinetitle.png" width="170px" height="30px"style="margin:0 auto;">
+				<div style="position: absolute; width:70px; right:150px">
+					<div id="keywordBtnTop" style="height: 105px;"></div>
+				</div>
+				<div style="width:190px; position: absolute; right:0px;">
+					<div style="height: 65px;"></div>
+					<div id="timeLineTitleBox" style="height: 40px; display:none;">
+						<div id="titleImageBox">
+							<div style ="width: 180px; height: 40px; margin: 0 auto; padding:5px; border-radius: 15px; background:white;">
+							<img src="/resources/img/timelinetitle.png" width="170px" height="30px"style="margin:0 auto;"></div>
+						</div>
 					</div>
-				</div>
-				<div id="searchBox" style="height: 40px; display:none;">
-					<input type="text" id="search" class="form-control" style="width: 180px; border: 0; margin: 0 auto; border-radius: 5px;">
-				</div>
-				<div id="timelinec" style="overflow-y: hidden;">
-					<div id="keywordTop" style="height: 0px;"></div>
+					<div id="searchBox" style="height: 40px; display:none;">
+						<input type="text" id="search" class="form-control" style="width: 180px; border: 0; margin-right: 10px; border-radius: 5px;">
+					</div>
+					<div id="timelinec" style="overflow: hidden;">
+						<div id="keywordTop" style="height: 0px;"></div>
+					</div>
 				</div>
 			</div>
 
@@ -156,8 +162,6 @@
        </div>
 
 			<div id="reply" style="display: none;"></div>
-
-			<div id="mypage" style="display: none;"></div>
 
 			<div id="userpage" style="display: none;"></div>
 
@@ -191,13 +195,8 @@
 	</div>
 	<!-- /container -->
 	<input id="inputText" type="text" class="form-control" style="display: none; width: auto; border-radius: 5px; border:0; padding-left:1px; font-family: Jeju Gothic;">
-<!-- 
-			<span class="btn_copy"
-				style="font-size: 15px; padding: 2px; width: 40px; height: 20px; border: 2px solid #00ff00; margin-left: 10px; margin-bottom: 10px; border-radius: 5px; background: #ddd; display: none;">복사</span>
-			<span class="btn_add"
-				style="font-size: 15px; padding: 2px; width: 40px; height: 20px; border: 2px solid #00ff00; margin-left: 10px; margin-bottom: 10px; border-radius: 5px; background: #ddd; display: none;">추가</span>
-			<input id="data" type="hidden">
-		</div> -->
+
+
 <!-- //핸들바 js파일 추가 -->
 <script type="text/javascript" src="../resources/js/handlebars.min.js"></script>
 
@@ -324,7 +323,7 @@
 		var templateSource2 = $("#friendlist").html();
 		var template2 = Handlebars.compile(templateSource2);
 		tr2 = template2(obj);
-		console.log(tr2);
+		//console.log(tr2);
 		$('#friendListDropdown').before(tr2)
 		
 		
@@ -332,7 +331,7 @@
 		var templateSource = $("#alertList").html();
 		var template = Handlebars.compile(templateSource);
 		tr = template(obj);
-		console.log(tr);
+		//console.log(tr);
 		$('#alertDropdown').before(tr)
 		
 		
@@ -375,7 +374,7 @@
 		<div class="col-xs-6" style="padding: 0; margin:0;">
 			{{#if parentKeyword}}
 				<span id="parentKeyword" style="background: {{parentKeyword.color}};">{{parentKeyword.keyword}}
-				<input type="hidden" value="{{parentKeyword}}">
+				<input type="hidden" value={{parentKeyword.key}}>
 			</span>
 			{{else}}
 				<span id="parentKeyword" style="background:white;">최상위</span>
@@ -383,14 +382,14 @@
 		</div> 
 		<div class="col-xs-6 text-right" style="padding: 0; margin:0;">
 			<span id="searchKeywordUser" style="">by {{user.name}}
-				<input type="hidden" value="{{user}}">
+				<input type="hidden" value={{user.userNo}}>
 			</span>
 		</div>
 	</div>
 	<div>
 		<div class="col-xs-12 text-left" style="padding: 0;">
 			<span id="keyword" style="font-size: 20px; font-family: Jeju Gothic; padding:2px;">{{keyword.keyword}}
-				<input type="hidden" value="{{keyword}}">
+				<input type="hidden" value={{keyword.key}}>
 			</span>
 		</div>
 	</div>
@@ -404,6 +403,20 @@
 {{/list}}
 </script>
 
+<script id="searchListBtnTemp" type="text/x-handlebars-template">
+{{#list}}
+<div class="timeLineBtnBox" style="margin-top:15px; display:none;">
+	<div class="timeLineCopyButton" style="display:none;">
+		<div style="width:2px; height:70px; display: inline-block;">C O P Y</div>
+	</div>
+	<div class="timeLineAddButton" style="display:none;">
+		<div style="width:2px; height:70px; display: inline-block;">+ A D D</div>
+	</div>
+	<input name="key" type="hidden" value={{keyword.key}}>
+	<input name="keyword" type="hidden" value={{keyword.keyword}}>
+</div>
+{{/list}}
+</script>
 
 <!-- //핸들바 이용 서버에서 가져온 친구 정보 입력 -->
 <script type="text/javascript">
@@ -422,14 +435,14 @@
 		Handlebars.registerHelper( "setChildKeyword", function ( childKeywordList ){
 			var returnString = "";
 			if(childKeywordList.length == 0){
-				returnString = '<span id="childkeyword" class="childkeyword" style="background:white; display:inline;">없음</span>'
+				returnString = '<span id="childkeyword" class="childkeyword" style="background:white; display:inline; color:gray;">없음</span>'
 				return returnString;
 			}
 			else{
 				for(var i = 0 ; i < childKeywordList.length ; i++){	
 			    if (i < 5)
 			    {
-			    	returnString += '<span class="childkeyword" style="background: '+childKeywordList[i].color+';">'+childKeywordList[i].keyword+'<input type="hidden" value="'+childKeywordList[i]+'"></span>';
+			    	returnString += '<span class="childkeyword" style="background: '+childKeywordList[i].color+';">'+childKeywordList[i].keyword+'<input type="hidden" value="'+childKeywordList[i].key+'"></span>';
 			    }
 			    else if(i == 5)
 			    {
@@ -442,11 +455,17 @@
 		});
 		
 		var templateSource = $("#searchListTemplate").html();
-		console.log(templateSource);
+		//console.log(templateSource);
 		var template = Handlebars.compile(templateSource);
-		console.log(data);
-		console.log(template);
-		console.log(template(data));
+		//console.log(data);
+		//console.log(template);
+		//console.log(template(data));
+		return template(data);
+	}
+
+	function setSearchBtnList(data){
+		var templateSource = $("#searchListBtnTemp").html();
+		var template = Handlebars.compile(templateSource);
 		return template(data);
 	}
 

@@ -45,7 +45,7 @@ public class KeywordController {
 	@RequestMapping(value = "changeKeyword")
 	public void changeKeyword(@RequestBody Keyword keyword, Model model) throws Exception{
 		System.out.println("/changeKeyword");
-		model.addAttribute("keyword", keywordService.changeKeyword(keyword));
+		keywordService.changeKeyword(keyword);
 	}
 
 	// 수정

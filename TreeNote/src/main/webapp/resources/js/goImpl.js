@@ -1,5 +1,5 @@
 var selectKeyword;
-function goImpl() {
+function goImpl(treeNo) {
 	// if (window.goSamples) goSamples();
 	//json data를 서버에서 호출후 map 생성
 
@@ -257,12 +257,12 @@ function newKeyword(parentdata) { // 노드를 생성하는 부분.
 			
 			parentdata.collapse = 1;
 			updateKeyword(parentdata);
+			setListTimeKeyword();
 		}
 	})
 }
 
-function addKeyword(data) { // 노드를 생성하는 부분.
-	var keyword = JSON.parse(data);
+function addKeyword(key) { // 노드를 생성하는 부분.
 	var selectedKeyword;
 	var nodes = myDiagram.nodes;
 	while(nodes.hasNext()){
@@ -278,13 +278,10 @@ function addKeyword(data) { // 노드를 생성하는 부분.
 		method : "POST" ,
 		dataType : "json" ,
 		data: JSON.stringify({
-			key : 0,
+			key : key,
 			treeNo : selectedKeyword.data.treeNo,
-			keyword : keyword.keyword,
-			copyNo : keyword.copyNo,
 			parent : selectedKeyword.data.key,
-			collapse : 0,
-			color : keyword.color
+			collapse : 0
 		}),
 		headers : {
 			"Accept" : "application/json",
@@ -305,12 +302,12 @@ function addKeyword(data) { // 노드를 생성하는 부분.
 			selectedKeyword.isTreeExpanded = true;
 			selectedKeyword.data.collapse = 1;
 			updateKeyword(selectedKeyword.data);
+			setListTimeKeyword();
 		}
 	})
 }
 
-function changeKeyword(data) { // 노드를 생성하는 부분.
-	var keyword = JSON.parse(data);
+function changeKeyword(key) { // 노드를 생성하는 부분.
 	var selectedKeyword;
 	var nodes = myDiagram.nodes;
 	while(nodes.hasNext()){
@@ -328,11 +325,10 @@ function changeKeyword(data) { // 노드를 생성하는 부분.
 		data: JSON.stringify({
 			key : selectedKeyword.data.key,
 			treeNo : selectedKeyword.data.treeNo,
-			keyword : keyword.keyword,
-			copyNo : keyword.copyNo,
+			copyNo : key,
 			parent : selectedKeyword.data.parent,
 			collapse : 0,
-			color : keyword.color
+			color : selectedKeyword.data.color
 		}),
 		headers : {
 			"Accept" : "application/json",
@@ -347,10 +343,9 @@ function changeKeyword(data) { // 노드를 생성하는 부분.
 				console.log(childList.value.data);
 				removeKeyword(childList.value);
 			}
-			selectedKeyword.data.keyword = keyword.keyword;
-			selectedKeyword.data.copyNo = keyword.copyNo;
+			selectedKeyword.data.copyNo = key;
 			selectedKeyword.data.collapse = 0;
-			selectedKeyword.data.color = keyword.color
+			selectedKeyword.data.color = keyword.color;
 			selectedKeyword.findObject("button2").source = "resources/img/btn_expanded.png";
 			selectedKeyword.isTreeExpanded = false;
 		}
@@ -409,6 +404,7 @@ function removeKeyword(node) { // 노드를 생성하는 부분.
 		success : function(JSONData , status) {
 			console.log("remove data :: "+keyword);
 			myDiagram.model.removeNodeData(keyword);
+			setListTimeKeyword();
 		}
 	})
 }
@@ -535,32 +531,41 @@ function setBtnVisible(){
 	console.log(nodes);
 	while(nodes.hasNext()){
 		if(nodes.value.isSelected){
-			selectedKeyword=nodes.value.data.keyword;
+			selectedKeyword=nodes.value.data;
 			console.log(selectedKeyword);
 			console.log(selectedKeyword.data);
 		}
 	}
 	
-	var viewList = jQuery(".keyword");
-	//console.log(viewList.length);
+	var viewList = jQuery(".timeLineBtnBox");
+	console.log(viewList.length);
 	for(var i = 0; i < viewList.length ; i++){
-		console.log("select : " + selectedKeyword + " keyword : " +jQuery(viewList[i]).find("#name").text());
-		if(selectedKeyword == jQuery(viewList[i]).find("#name").text()){
-			console.log(jQuery(viewList[i]).find(".btn_add").hide());
-			console.log(jQuery(viewList[i]).find(".btn_copy").show());
+		console.log("select : " + selectedKeyword + " keyword : " +jQuery(viewList[i]).find("input[name='keyword']").val());
+		console.log(JSON.stringify(jQuery(viewList[i]).find("input[name='keyword']").val()));
+		//if(selectedKeyword.keyword == jQuery(viewList[i]).find("input[name='treeNo']").val())
+		if(selectedKeyword.keyword == jQuery(viewList[i]).find("input[name='keyword']").val()){
+			console.log(jQuery(viewList[i]).find(".timeLineAddButton").hide()); 
+			console.log(jQuery(viewList[i]).find(".timeLineCopyButton").show());
 		}
 		else{
-			console.log(jQuery(viewList[i]).find(".btn_copy").hide());
-			console.log(jQuery(viewList[i]).find(".btn_add").show());
+			console.log(jQuery(viewList[i]).find(".timeLineCopyButton").hide());
+			console.log(jQuery(viewList[i]).find(".timeLineAddButton").show());
 		}
+	}
+	var timeLineBtnList = $(".timeLineBtnBox");
+	console.log(timeLineBtnList);
+	for(var i = 0; i < timeLineBtnList.length ; i++){
+		$(timeLineBtnList[i]).delay(200*i).show("slide",{
+			direction : "right",
+			duration : 500
+		});
 	}
 }
 
 function setBtnUnVisible(){
-	var viewList = jQuery(".keyword");
-	//console.log(viewList.length);
+	var viewList = jQuery(".timeLineBtnBox");
+	console.log(viewList.length);
 	for(var i = 0; i < viewList.length ; i++){
-		console.log(jQuery(viewList[i]).find(".btn_add").hide());
-		console.log(jQuery(viewList[i]).find(".btn_copy").hide());
+		console.log(jQuery(viewList[i]).dequeue().hide());
 	}
 }

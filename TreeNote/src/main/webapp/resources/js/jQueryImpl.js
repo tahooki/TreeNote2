@@ -28,7 +28,9 @@ $(function() {
 	$("#btn_search").click(function(){
 		if (window.sessionStorage) {
 			if(sessionStorage.getItem('isTimeline') == 'true'){
-	        	$("#timelinec .keyword").remove();
+				$(".keywordBox").remove();
+				$(".timeLineBtnBox").remove();
+				$(".ui-effects-wrapper").remove();
 	        	$("#timeLineTitleBox").hide();
 	    		$("#searchBox").show("slide",{
 	    			direction : "up",
@@ -57,7 +59,6 @@ function facebookLogin() {
 }
 
 function setListSearchKeyword(keyword) {
-	// circleLabel = JSON.parse(data);
 	console.log(keyword);
 	$("#search").val(keyword);
 	jQuery.ajax({
@@ -77,10 +78,15 @@ function setListSearchKeyword(keyword) {
 		        sessionStorage.setItem('isTimeline', 'false');
 				//alert(sessionStorage.getItem('editTreeNo'));
 		    }
-			$("#timelinec .keyword").remove();
+			$("#timelinec .keywordBox").remove();
+			$(".timeLineBtnBox").remove();
+			$(".ui-effects-wrapper").remove();
 			$("#timeLineTitleBox").hide();
 			var searchList = JSONData.list;
 			$("#keywordTop").after(setSearchList(JSONData));
+			$("#keywordBtnTop").after(setSearchBtnList(JSONData));
+			console.log(setSearchBtnList(JSONData));
+			console.log($("#keywordBtnTop").parent().html());
 			$("#searchBox").show("slide",{
 				direction : "up",
 				duration : 600
@@ -89,18 +95,20 @@ function setListSearchKeyword(keyword) {
 			for(var i = 0 ; i < showKeyword.length; i++){
 				$(showKeyword[i]).delay(200*i+200).show("slide",{
 					direction : "right",
-					duration : 500
+					duration : 500,
+					complete : function(){
+						setBtnVisible();
+					}
 				});
 			}
-			/*$(".btn_add").click(function() {
-				console.log($($(this).parent()).find("input").val());
-				addKeyword($($(this).parent()).find("input").val());
+			$(".timeLineAddButton").click(function() {
+				console.log($($(this).parent()).find("input[name='key']").val());
+				addKeyword($($(this).parent()).find("input[name='key']").val());
 			});
-			$(".btn_copy").click(function() {
-				console.log($($(this).parent()).find("input").val());
-				changeKeyword($($(this).parent()).find("input").val());
+			$(".timeLineCopyButton").click(function() {
+				console.log($($(this).parent()).find("input[name='key']").val());
+				changeKeyword($($(this).parent()).find("input[name='key']").val());
 			});
-			setBtnVisible();*/
 		}
 	})
 }
@@ -122,9 +130,12 @@ function setListTimeKeyword() {
 				//alert(sessionStorage.getItem('editTreeNo'));
 		    }
 			console.log(JSONData);
-			$("#timelinec .keyword").remove();
+			$("#timelinec .keywordBox").remove();
+			$(".timeLineBtnBox").remove();
+			$(".ui-effects-wrapper").remove();
 			$("#searchBox").hide();
 			$("#keywordTop").after(setSearchList(JSONData));
+			$("#keywordBtnTop").after(setSearchBtnList(JSONData));
 			$("#timeLineTitleBox").show("slide",{
 				direction : "up",
 				duration : 500
@@ -136,19 +147,119 @@ function setListTimeKeyword() {
 					duration : 500
 				});
 			}
-			/*$(".btn_add").click(function() {
-				console.log($($(this).parent()).find("input").val());
-				addKeyword($($(this).parent()).find("input").val());
+			$(".timeLineAddButton").click(function() {
+				console.log($($(this).parent()).find("input[name='key']").val());
+				addKeyword($($(this).parent()).find("input[name='key']").val());
 			});
-			$(".btn_copy").click(function() {
-				console.log($($(this).parent()).find("input").val());
-				changeKeyword($($(this).parent()).find("input").val());
-			});*/
+			$(".timeLineCopyButton").click(function() {
+				console.log($($(this).parent()).find("input[name='key']").val());
+				changeKeyword($($(this).parent()).find("input[name='key']").val());
+			});
 		}
 	})
 }
 
 
+//트리 리스트 불러오기
+$(function() {
+	alert("리스트");	
+		$.ajax({
+			url : '/tree/listTree',
+			type : 'GET',
+			dataType : 'json',
+			ContentType : "application/json",
+			success : function(list) {
+				//console.log(list);
+				$.ajax({
+					url : "resources/hbs/treeList2.hbs",
+					success : function(data) {
+						var source = data;
+						//console.log("gggggg ::"+source)
+						var template = Handlebars.compile(source);
+
+						var tr = template(list);
+						$(".col-xs-1").remove();
+						$(".col-xs-7").remove();
+						$(tr).appendTo(".templist");
+						updateTitle();
+					}
+				})
+					/*해당트리 펼쳐짐*/
+						$(".item.active").dblclick(function(){
+							alert("get1");
+						}); 
+			}			
+		});
+	/*트리추가*/	
+	$(".col-xs-2").click(function(){
+		var data=$(".item.active")
+		//console.log(data)
+		$.ajax({
+			url : "/tree/addTree",
+				method : "POST",
+				data:JSON.stringify({
+					treeNo:data.find('input[name=treeNo]').val(),
+					userNo:data.find('input[name=userNo]').val()
+					
+				}),
+				dataType : "json",
+				contentType : "application/json",
+				success : function(JSONData, status) {
+					alert(status);
+					alert("JSONData : \n" + JSONData);
+/*S.O.S*/
+					goImpl();
+				}
+		 
+			 });
+		
+	})	
+
+});
+
+
+function updateTitle() {
+	/*트리타이틀 수정*/
+	var longpress = 1000;
+	var start;
+		$(".item").on( 'mousedown', function( e ) {
+		    start = new Date().getTime();
+		} );  
+		$(".item").on( 'mouseleave', function( e ) {
+	        start = 0;
+	    } );
+		$(".item").on( 'mouseup', function( e ) {
+		    if ( new Date().getTime() >= ( start + longpress )  ) {
+		       var id=$(this).find('h5').text();
+		      // alert('long press!'+id);
+		       
+		      $('h5').remove();
+		      $(this).append('<input type="text" id="updateTitle" value="'+id+'">');
+		      
+			$("#updateTitle").keyup(function(e){
+			var data = $(".item.active");
+			//console.log(data);
+				if (e.keyCode == 13) { 
+			    	$.ajax({
+						url : "/tree/updateTitle",
+						method : "POST",
+						data:JSON.stringify({
+								treeNo:data.find('input[name=treeNo]').val(),
+								title:$("#updateTitle").val(),
+								userNo:data.find('input[name=userNo]').val()
+								}),
+						dataType : "json",
+						contentType : "application/json",
+						success : function(JSONData, status) {
+							alert(status);
+							$("#carousel-example-generic").remove();
+							List();
+						}
+					});
+				}
+<<<<<<< .mine
+			});
+=======
 //트리 리스트 불러오기
 $(function() {
 	alert("리스트");	
@@ -275,6 +386,7 @@ function List() {
 	}
 	})
 }
+
 
 
 function openDialog() {

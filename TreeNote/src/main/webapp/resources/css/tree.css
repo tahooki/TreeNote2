@@ -13,7 +13,7 @@ input[type="text"] {
 #timeline {
 	position: absolute;
 	right:0px;
-  width:200px;
+  width:240px;
   height: 100%;
   background-color: rgba(255, 0, 0, 0);
   z-index:100;
@@ -23,10 +23,6 @@ input[type="text"] {
 #titleImageBox{
 	width: 180px; 
 	height: 40px; 
-	margin: 0 auto; 
-	padding:5px; 
-	border-radius: 15px;
-	background:white;
 }
 
 .center-block {
@@ -65,17 +61,45 @@ input[type="text"] {
 .keyword{
 	width: 180px; 
 	height: 108px; 
-	margin: 0 auto; 
 	padding:8px; 
 	border-radius: 15px;
 }
 
 .keywordBox{
 	position:relative;
-	width:200; 
-	height:125; 
+	width:190px; 
+	height:108px; 
 	margin-top:15; 
 	display:none;
+}
+
+.timeLineBottonBox{
+	position:relative;
+	width:70px; 
+	height:108px;  
+}
+
+.timeLineAddButton{
+	width:70px; 
+	height:108px;
+	padding-top:15px;
+	padding-left:11px;
+	border-radius: 15px;
+	background:#F39C12;
+	color:white;
+	font-family: "jeju Gothic";
+	font-weight: bold;
+}
+.timeLineCopyButton{
+	width:70px; 
+	height:108px;
+	padding-top:15px;
+	padding-left:11px;
+	border-radius: 15px;
+	background:#7E44AD;
+	color:white;
+	font-family: "jeju Gothic";
+	font-weight: bold;
 }
 
 #temp {
@@ -90,12 +114,11 @@ input[type="text"] {
 
 #content{
 	position: absolute;
-  width:300px;
-  height: 400px;
+	bottom:0;
+  width:100%;
+  height: 350px;
   background-color: #ddd;
   z-index:100;
- 	left:22%;
- 	top:30%;	
 }
 
 #reply{
@@ -111,22 +134,20 @@ input[type="text"] {
 
 #mypage{
 	position: absolute;
-	padding-top:70px;
-	left:15%;
-	top:15%;
-  width:550px;
-  height: 600px;
+	padding-top:50px;
+	top:0;
+  width:100%;
+  height: 350px;
   background-color: #ddd;
   z-index:100;
 }
 
 #userpage{
 	position: absolute;
-	padding-top:70px;
-	left:15%;
-	top:15%;
-  width:550px;
-  height: 600px;
+	padding-top:50px;
+	top:0;
+  width:100%;
+  height: 350px;
   background-color: #ddd;
   z-index:100;
 }

@@ -78,9 +78,11 @@ public class KeywordServiceImpl implements KeywordService {
 	public Keyword addKeyword(Keyword keyword) throws Exception {
 		// TODO Auto-generated method stub
 		int keywordNo = keywordDao.getKeywrodNo();
-		//int keywordNo = keyword.getKeywordNo();
-		keyword.setKey(keywordNo);
-		keywordDao.addKeyword(keyword);
+		Keyword addKeyword = keywordDao.getKeyword(keyword.getKey());
+		addKeyword.setKey(keywordNo);
+		addKeyword.setParent(keyword.getParent());
+		addKeyword.setTreeNo(keyword.getTreeNo());
+		keywordDao.addKeyword(addKeyword);
 		//content 복사
 		return keywordDao.getKeyword(keywordNo);
 	}
@@ -91,11 +93,14 @@ public class KeywordServiceImpl implements KeywordService {
 		// content 복사
 		contentDao.removeContent(contentDao.getContent(keyword.getKey()).getContentNo());
 		Content content = contentDao.getContent(keyword.getCopyNo());
+		Keyword copyKeyword = keywordDao.getKeyword(keyword.getCopyNo()); 
 		if(content != null){
 			content.setKeywordNo(keyword.getKey());
 			content.setScrap(0);
 			contentDao.copyContent(content);
 		}
+		copyKeyword.setKey(keyword.getKey());
+		copyKeyword.setParent(keyword.getParent());
 		return keywordDao.updateKeyword(keyword);
 	}
 
