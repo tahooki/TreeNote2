@@ -53,6 +53,7 @@ public class UserController {
 		if (user.getPassword().equals(returnUser.getPassword())) {
 			session.setAttribute("user", returnUser);
 			System.out.println("success login");
+			System.out.println(returnUser);
 			model.addAttribute("boolean", true);
 
 			// 추가됨 !! session정보 대신 데이터 가져가는 부분. - by.Tahooki
@@ -65,10 +66,9 @@ public class UserController {
 
 	// 로그아웃
 	@RequestMapping(value = "logout")
-	public String logout(HttpSession session) throws Exception {
+	public void logout(HttpSession session) throws Exception {
 		System.out.println("/logout");
 		session.invalidate();
-		return "redirect:/index.jsp";
 	}
 
 	// 가입체크
@@ -86,57 +86,81 @@ public class UserController {
 	}
 
 	// 유저정보가지고 오기
-	@RequestMapping(value = "getUser/{userNo}")
-	public void getUser(@PathVariable int userNo, Model model) throws Exception {
+	@RequestMapping(value = "getUser")
+	public void getUser( Model model, HttpSession session) throws Exception {
 		System.out.println("/getUser");
-		User user = userService.getUser(userNo);
+		User user = (User)session.getAttribute("user");
+		System.out.println(user);
+		model.addAttribute("user", user);
 
 	}
 
 	// 유저 가입
-	@RequestMapping(value = "addUser", headers = "content-type=multipart/form-data")
-	public void addUser(@RequestParam("filedata") MultipartFile filedata, 
-			@ModelAttribute User user, Model model, HttpSession session) throws Exception {
-		System.out.println("/addUser");
+	//////test
+	@RequestMapping(value="/addUser", method=RequestMethod.POST)
+    public @ResponseBody void addUser(@ModelAttribute User user, Model model,
+            @RequestParam("file") MultipartFile file){
 		System.out.println(user);
-		String path ="/resources/upload/image";
-		File dir = new File(path);
-		if(!dir.isDirectory()){
-			dir.mkdirs();
-		}
-////////file upload/////////////////////////////////////////////////////////////////////////////////
-		if (!filedata.isEmpty()) {
+        if (!file.isEmpty()) {
             try {
-            	UUID uuid = UUID.randomUUID();
-            	filedata.transferTo(new File(path,filedata.getOriginalFilename()));
-//                byte[] bytes = filedata.getBytes();
-//                BufferedOutputStream stream =
-//                        new BufferedOutputStream(new FileOutputStream(new File(filedata.getOriginalFilename())));
-                System.out.println("::::::::::::::::::::::"+filedata.getOriginalFilename());
-                user.setPhoto(path.substring(path.lastIndexOf("/")+1)+"/"+filedata.getOriginalFilename());
-//                stream.write(bytes);
-//                stream.close();
-//                System.out.println("You successfully uploaded " + profil + "!");
+                byte[] bytes = file.getBytes();
+                BufferedOutputStream stream =
+                        new BufferedOutputStream(new FileOutputStream(new File(file.getOriginalFilename())));
+                stream.write(bytes);
+                stream.close();
             } catch (Exception e) {
-            	System.out.println(e);
-//                System.out.println("You failed to upload " + profil + " => " + e.getMessage());
             }
-            
         } else {
-//            System.out.println("You failed to upload " + profil + " because the file was empty.");
         }
-		
-		
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-		userService.addUser(user);
-		model.addAttribute("user", user);
-
-		// 세션 정보 추가
-		User returnUser = userService.getUser2(user.getEmail());
-		session.setAttribute("user", returnUser);
-
-	}
+    }
+	
+	
+	
+//	
+//	@RequestMapping(value = "addUser", headers = "content-type=multipart/form-data")
+//	public void addUser(@RequestParam("filedata") MultipartFile filedata, 
+//			@ModelAttribute User user, Model model, HttpSession session) throws Exception {
+//		System.out.println("/addUser");
+//		System.out.println(user);
+//		String path ="/resources/upload/image";
+//		File dir = new File(path);
+//		if(!dir.isDirectory()){
+//			dir.mkdirs();
+//		}
+//////////file upload/////////////////////////////////////////////////////////////////////////////////
+//		if (!filedata.isEmpty()) {
+//            try {
+//            	UUID uuid = UUID.randomUUID();
+//            	filedata.transferTo(new File(path,filedata.getOriginalFilename()));
+////                byte[] bytes = filedata.getBytes();
+////                BufferedOutputStream stream =
+////                        new BufferedOutputStream(new FileOutputStream(new File(filedata.getOriginalFilename())));
+//                System.out.println("::::::::::::::::::::::"+filedata.getOriginalFilename());
+//                user.setPhoto(path.substring(path.lastIndexOf("/")+1)+"/"+filedata.getOriginalFilename());
+//                System.out.println(user.getPhoto());
+////                stream.write(bytes);
+////                stream.close();
+////                System.out.println("You successfully uploaded " + profil + "!");
+//            } catch (Exception e) {
+//            	System.out.println(e);
+////                System.out.println("You failed to upload " + profil + " => " + e.getMessage());
+//            }
+//            
+//        } else {
+////            System.out.println("You failed to upload " + profil + " because the file was empty.");
+//        }
+//		
+//		
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//		userService.addUser(user);
+//		model.addAttribute("user", user);
+//
+//		// 세션 정보 추가
+//		User returnUser = userService.getUser2(user.getEmail());
+//		session.setAttribute("user", returnUser);
+//
+//	}
 
 	// 유저 정보 업데이트
 	@RequestMapping(value = "updateUser")

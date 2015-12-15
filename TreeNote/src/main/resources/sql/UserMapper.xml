@@ -16,6 +16,8 @@
 		<result property="snsUser" column="SNSUSER" jdbcType="VARCHAR" />
 		<result property="editTreeNo" column="EDIT_TREE_NO" jdbcType="INTEGER" />
 		<result property="requestStatus" column="REQUEST_STATUS" jdbcType="INTEGER"/>
+		<result property="activity" column="ACTIVITY" jdbcType="INTEGER"/>
+		<result property="role" column="ROLE" jdbcType="VARCHAR"/>
 	</resultMap>
 
 
@@ -28,7 +30,7 @@
 
 	<select id="getUser" parameterType="int" resultMap="userMap">
 		SELECT user_no, edit_tree_no, email, password, name, phone, photo,
-		snsuser
+		snsuser, activity, role
 		FROM users
 		<where>
 			user_no = #{value}
@@ -39,10 +41,10 @@
 
 	<select id="getLoginUser" parameterType="string" resultMap="userMap">
 		SELECT user_no, edit_tree_no, email, password, name, phone, photo,
-		snsuser
+		snsuser,  activity, role
 		FROM users
 		<where>
-			email = #{value}
+			email = #{value} 
 		</where>
 
 	</select>
@@ -181,7 +183,9 @@
 			password,
 			name,
 			snsuser,
+			photo,
 			edit_tree_no
+			activity
 			)
 		VALUES(
 			SEQ_USERS_USER_NO.nextval,
@@ -189,7 +193,9 @@
 			#{password},
 			#{name},
 			#{snsUser},
-			0
+			#{photo:VARCHAR},
+			0,
+			1
 		)
 		
 	</insert>

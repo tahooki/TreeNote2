@@ -35,7 +35,7 @@
         	dataType : "json",
         	contentType : 'application/json',
         	success : function(data){
-        		if(data){
+        		if(data.boolean){
         			self.location='main.html';
         		}
         	}
@@ -128,14 +128,18 @@ function signup(){
 			var pageAccessToken = response.authResponse.accessToken; //get access token
 			var user_id = response.authResponse.userID; //get FB UID
 			var user_email=null;
-			
-			FB.api('https://graph.facebook.com/v2.5/me?fields=id%2Cname%2Cemail&access_token='+pageAccessToken, 
+			var photo = "";
+			FB.api('https://graph.facebook.com/v2.5/me?fields=id%2Cname%2Cemail%2Cpicture&access_token='+pageAccessToken, 
 					function(response) {
 				console.log(response.email);
 				userEmail = response.email; //get user email
 				snsUserId = response.id;
-				userName = response.name
-				console.log(response);
+				userName = response.name;
+				photo = response.picture.data.url;
+				console.log(JSON.stringify({snsUser: snsUserId,
+							name : userName,
+							email:userEmail,
+							photo:photo}))
 				$.ajax({
 					url:'/user/facebookSignup',
 					contentType:'application/json',
@@ -143,10 +147,11 @@ function signup(){
 					method:'post',
 					data : JSON.stringify({snsUser: snsUserId,
 							name : userName,
-							email:userEmail}),
+							email:userEmail,
+							photo:photo}),
 					success : function(data){
 						if(data){
-							self.location="treenote.java74.com";
+							self.reload;
 						}else{
 							alert("이미 가입되어 있는 아이디 입니다.")
 						}
