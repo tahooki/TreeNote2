@@ -10,12 +10,16 @@ public class User {
 	private String photo;
 	private String snsUser;
 	private int requestStatus;
+	private int activity;
+	private String role;
+
+	
 
 	@Override
 	public String toString() {
 		return "User [userNo=" + userNo + ", editTreeNo=" + editTreeNo + ", email=" + email + ", password=" + password
 				+ ", name=" + name + ", phone=" + phone + ", photo=" + photo + ", snsUser=" + snsUser
-				+ ", requestStatus=" + requestStatus + "]";
+				+ ", requestStatus=" + requestStatus + ", activity=" + activity + ", role=" + role + "]";
 	}
 
 	public int getUserNo() {
@@ -90,6 +94,22 @@ public class User {
 
 	public void setRequestStatus(int requestStatus) {
 		this.requestStatus = requestStatus;
+	}
+
+	public int getActivity() {
+		return activity;
+	}
+
+	public void setActivity(int activity) {
+		this.activity = activity;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 }
