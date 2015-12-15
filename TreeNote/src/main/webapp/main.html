@@ -41,8 +41,8 @@
 </head>
 <body style="height: 100%;">
 	<nav class="navbar navbar-fixed-top" id="navbar"
-		style="display: none;background-color: #2ECC71;">
-		<div class="container" style="padding:0px; width: 992px;">
+		style="display: none;">
+		<div class="container" style="padding:0px; width: 992px;background-color: #2ECC71;">
 			<!-- 트리리스트부분 -->
 			<div class="col-xs-4" style="padding:0px;">
 				<div class="col-xs-2" style="padding:0px;">
@@ -158,7 +158,14 @@
 			</div>
 
 			 <div id="content" style="display: none;">
-       		<iframe src="" frameborder="0" width="100%" height="100%" marginwidth="0" marginheight="0"> </iframe>
+			 		<div class="col-xs-8" style="height:100%;padding:10px;">
+       			<iframe src="" frameborder="0" width="100%" height="330px" marginwidth="0" marginheight="0"> </iframe>
+       		</div>
+       		<div class="col-xs-4" style="height:100%; padding:10px; padding-left:0px;">
+       			<div style="width:100%; height:256px; background:white;"></div>
+       			<div style="width:100%; height:10px;"></div>
+       			<div style="width:100%; height:64px; background:white;"></div>
+       		</div>
        </div>
 
 			<div id="reply" style="display: none;"></div>
@@ -256,7 +263,6 @@
         <img class="img-avatar deletFriend" src="../resources/img/minus3.png" alt="" alt="" style="width:40px; height:40px; cursor:pointer">
     </div>
 
-    
     <div class="media-body" >
         <div class="list-group-item-heading" style="margin-left:7px">{{name}} </div>
         <small class="list-group-item-text c-gray" style="margin-left:7px">{{email}}</small>

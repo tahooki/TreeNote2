@@ -1,11 +1,5 @@
 
-$(function() {
-	if (window.sessionStorage) {
-        // sessionStorage.setItem('editTreeNo', data.user.userNo);
-        // var position = sessionStorage.getItem('저장된 이름');
-		// alert(sessionStorage.getItem('editTreeNo'));
-    }
-
+window.onload = function(){
 	$("#btn_content").click(function() {
 		$("#content").toggle("drop");
 	});
@@ -43,6 +37,15 @@ $(function() {
 
 	autocom();
 	setTimeout("setListTimeKeyword()",2000);
+}
+
+
+$(function() {
+	if (window.sessionStorage) {
+        // sessionStorage.setItem('editTreeNo', data.user.userNo);
+        // var position = sessionStorage.getItem('저장된 이름');
+		// alert(sessionStorage.getItem('editTreeNo'));
+    }
 })
 
 // 페이스북 로그인 버트 클릭시 이벤

@@ -5,9 +5,6 @@ canvas {
 	outline: none;
 }
 
-input[type="text"] {
-  outline:none;
-}
 #timelinec{
 }
 #timeline {
@@ -117,7 +114,7 @@ input[type="text"] {
 	bottom:0;
   width:100%;
   height: 350px;
-  background-color: #ddd;
+  background-color: #2ECC71;
   z-index:100;
 }
 
