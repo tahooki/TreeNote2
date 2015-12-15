@@ -1,0 +1,24 @@
+{{#each replyOfReplyList}}
+<div style="margin-left: 50px">
+	<div class="media-left">
+		<a href="#"> <img class="media-object" class="img-circle"
+			src="//placehold.it/100" alt="..."
+			style="width: 35px; height: 35px">
+		</a>
+	</div>
+	<div class="media-body" style="height: 40px;">
+		<p>
+			<font size="2px" class="replyofreply">{{{reply}}}</font>
+		</p>
+		<ul class="list-inline">
+			<li class="update" value="{{replyNo}}"><a href="#"><i
+					class="glyphicon glyphicon-comment"></i><font size="2px">수정</font></a></li>
+			<li class="delete" value="{{replyNo}}"><a href="#"><i
+					class="glyphicon glyphicon-share"></i><font size="2px">삭제</font></a></li>
+			<li><p>
+					<font size="2px">{{regTime}}</font>
+				</p></li>
+		</ul>
+	</div>
+</div>
+{{/each}}

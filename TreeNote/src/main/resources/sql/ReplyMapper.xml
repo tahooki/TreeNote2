@@ -10,6 +10,7 @@
 		<result property="contentNo" 	column="content_no" 		jdbcType="INTEGER" />
 		<result property="reply" 				column="reply" 					jdbcType="VARCHAR" />
 		<result property="regDate" 		column="reg_date" 			jdbcType="DATE" />
+		<result property="regTime" 		column="reg_date" 			jdbcType="DATE" />
 		<result property="parentReplyNo" 			column="par_reply_no" 			jdbcType="INTEGER"/>
 	</resultMap>
 	
@@ -57,10 +58,12 @@
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 	  					FROM		(	SELECT reply_no , user_no , content_no , reply , reg_date, par_reply_no
 										FROM replys 	
-										WHERE content_no = #{replyValueNo}
-										ORDER BY reply_no ) inner_table
+										WHERE content_no = #{replyValueNo} 
+										AND par_reply_no = 0										
+										ORDER BY reply_no DESC) inner_table
 						WHERE ROWNUM &lt;= #{endRowNum} )
-		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 	  	
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+		ORDER BY reply_no DESC	  	
 	 </select>
 	 
 	 <!-- SQL : SELECT LIST --> 
@@ -70,9 +73,10 @@
 	  					FROM		(	SELECT reply_no , user_no , content_no , reply , reg_date, par_reply_no
 										FROM replys 	
 										WHERE par_reply_no = #{replyValueNo}
-										ORDER BY reply_no ) inner_table
-						WHERE ROWNUM &lt;= #{endRowNum} )
-		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 	  	
+										ORDER BY reply_no DESC) inner_table
+						WHERE ROWNUM &lt;= 1000000 )
+		WHERE row_seq BETWEEN 0 AND 1000000 	  	
+		ORDER BY reply_no DESC
 	 </select>
   	
   	<!-- SQL : SELECT ROW Count -->	 
@@ -81,6 +85,7 @@
 	  	FROM(	SELECT reply_no , user_no , content_no , reply , reg_date, par_reply_no
 					   FROM replys		   
 					   WHERE content_no = #{value}
+					   and par_reply_no = 0
 					   ) countTable						
 	 </select>
 	 

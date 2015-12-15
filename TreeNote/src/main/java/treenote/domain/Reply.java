@@ -2,17 +2,20 @@ package treenote.domain;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.Arrays;
+import java.util.List;
 
 public class Reply {
 	private int replyNo;
 	private int userNo;
 	private int contentNo;
 	private int parentReplyNo;
+	private int totalReplyCount;
 	private String reply;
 	private Date regDate;
 	private Timestamp regTime; 	
 	private boolean deleteChildReply;
-	
+	private List<Reply> replyOfReply;
 	
 	public int getReplyNo() {
 		return replyNo;
@@ -78,11 +81,32 @@ public class Reply {
 		this.regTime = regTime;
 	}
 
+	public int getTotalReplyCount() {
+		return totalReplyCount;
+	}
+
+	public void setTotalReplyCount(int totalReplyCount) {
+		this.totalReplyCount = totalReplyCount;
+	}
+
+	public List<Reply> getReplyOfReply() {
+		return replyOfReply;
+	}
+
+	public void setReplyOfReply(List<Reply> replyOfReply) {
+		this.replyOfReply = replyOfReply;
+	}
+
 	@Override
 	public String toString() {
 		return "Reply [replyNo=" + replyNo + ", userNo=" + userNo + ", contentNo=" + contentNo + ", parentReplyNo="
-				+ parentReplyNo + ", reply=" + reply + ", regDate=" + regDate + ", regTime=" + regTime
-				+ ", deleteChildReply=" + deleteChildReply + "]";
+				+ parentReplyNo + ", totalReplyCount=" + totalReplyCount + ", reply=" + reply + ", regDate=" + regDate
+				+ ", regTime=" + regTime + ", deleteChildReply=" + deleteChildReply + ", replyOfReply=" + replyOfReply
+				+ "]";
 	}
+
+
+	
+	
 
 }

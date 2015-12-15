@@ -39,10 +39,18 @@ public class ReplyController {
 		page.setPageSize(5);
 		page.setStartRowNum(1);
 		page.setEndRowNum(5);
-		page.setReplyValueNo(reply.getContentNo());
 		
-		replyService.addReply(reply);		
-		model.addAttribute("reply", replyService.listReply(page).get(0));
+		if (reply.getParentReplyNo() == 0) {
+			page.setReplyValueNo(reply.getContentNo());
+			replyService.addReply(reply);	
+			model.addAttribute("reply", replyService.listReply(page).get(0));
+			
+		}else{
+			page.setReplyValueNo(reply.getParentReplyNo());
+			replyService.addReply(reply);	
+			model.addAttribute("reply", replyService.listReplyOfReply(page).get(0));			
+		}
+		
 	}
 	//수정
 	@RequestMapping(value = "updateReply", method=RequestMethod.POST)
@@ -68,10 +76,48 @@ public class ReplyController {
 		System.out.println("/listReply");
 				
 		List<Reply> list = replyService.listReply(page);
-    	//JSONArray jsonArray = JSONArray.fromObject(list);
 		
-		System.out.println("date :: "+list.get(0).getRegDate());
-		System.out.println("time :: "+list.get(0).getRegTime());
+		Page page2 = new Page();
+		for(int i=0; i<list.size(); i++){
+			int totalReplyCount= replyService.replyOfReplytotalCount(list.get(i).getReplyNo());
+			list.get(i).setTotalReplyCount(totalReplyCount);
+			
+			page2 = page;
+			page2.setReplyValueNo(list.get(i).getReplyNo());
+			
+			for(int j=0; j<totalReplyCount; j++){
+				List<Reply> listReplyOfReply;
+				listReplyOfReply = replyService.listReplyOfReply(page2);
+				list.get(i).setReplyOfReply(listReplyOfReply);
+			}
+			
+		}		
 		model.addAttribute("replyList",list);
+		
+	}
+	//답글리스트
+	@RequestMapping(value = "listReplyOfReply")
+	public void listReplyOfReply(@RequestBody Page page, Model model) throws Exception{
+		System.out.println("/listReplyOfReply");
+			
+		List<Reply> list = replyService.listReplyOfReply(page);
+
+		model.addAttribute("replyOfReplyList",list);
+	}
+	
+	//댓글 갯수
+	@RequestMapping(value = "getTotalReply/{contentNo}")
+	public void getTotalReply(@PathVariable int contentNo, Model model) throws Exception{
+		System.out.println("/getTotalReply");
+			
+		model.addAttribute("totalReplyCount",replyService.replytotalCount(contentNo));
+	}
+	
+	//답글 갯수
+	@RequestMapping(value = "getTotalReplyOfReply/{parentReplyNo}")
+	public void getTotalReplyOfReply(@PathVariable int parentReplyNo, Model model) throws Exception{
+		System.out.println("/getTotalReplyOfReply");
+		
+		model.addAttribute("totalReplyOfReplyCount",replyService.replyOfReplytotalCount(parentReplyNo));
 	}
 }
