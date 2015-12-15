@@ -6,13 +6,15 @@
     <div class="item active" id="treeTitle">
       <input type="hidden"  name="treeNo" value="{{Tree.[0].treeNo}}">
       <input type="hidden" name="userNo" value="{{Tree.[0].userNo}}">
-       	<h5>{{Tree.[0].title}}</h5>
+       	<h5>{{Tree.[0].title}}<img src="resources/img/btn_edit.png" class="editTitle"
+											 style="height:20px; width:20px; margin: 0 0 0 2%;"></h5>
     </div>
     {{#each subTree}}
       <div class="item" id="treeTitle{{@index}}">
       <input type="hidden" name="treeNo" value="{{treeNo}}">
       <input type="hidden" name="userNo" value="{{userNo}}">
-       	<h5 >{{title}}</h5>
+       	<h5 >{{title}}<img src="resources/img/btn_edit.png"  class="editTitle"
+											style="height:20px; width:20px; margin: 0 0 0 2%;"></h5>
       </div>
     {{/each}}   
   </div>

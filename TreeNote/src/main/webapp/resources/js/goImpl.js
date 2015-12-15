@@ -2,8 +2,16 @@ var selectKeyword;
 function goImpl(treeNo) {
 	// if (window.goSamples) goSamples();
 	//json data를 서버에서 호출후 map 생성
-
-	var jsondata = jQuery.getJSON('/tree/getTree',function(success){
+	console.log(arguments[0]);
+	
+	if(arguments.length==1){
+		var temp='/tree/getTree/'+arguments[0];
+	}else{
+		var temp='/tree/getTree';
+	}
+	console.log(":L:::"+temp);
+	
+		var jsondata = jQuery.getJSON(temp ,function(success){
 
 		console.log(success);
 		var gojs = go.GraphObject.make; // for conciseness in defining templates

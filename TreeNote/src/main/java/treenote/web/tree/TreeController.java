@@ -84,6 +84,25 @@ public class TreeController {
 		}
 	}
 	
+	@RequestMapping(value = "getTree/{treeNo}", method=RequestMethod.GET )
+	public void getTree(@PathVariable int treeNo, HttpSession session, Model model) throws Exception{
+		System.out.println("/getTree2"+treeNo);
+		
+		User user = (User)session.getAttribute("user");
+		System.out.println(treeService.getTree(user.getEditTreeNo()));
+		System.out.println(user.getEditTreeNo());
+		if(user.getEditTreeNo() == 0){
+			System.out.println("??");
+			Tree tree = new Tree();
+			tree.setUserNo(user.getUserNo());
+			user.setEditTreeNo(treeService.addTree(tree));			
+			userService.updateEditTreeNo(user);
+			model.addAttribute("Tree", treeService.getTree(user.getEditTreeNo()));
+		}else{
+			model.addAttribute("Tree", treeService.getTree(treeNo));
+		}
+	}
+	
 	
 	//트리 리스트를 불러온다.
 	@RequestMapping(value = "listTree", method=RequestMethod.GET)
