@@ -12,7 +12,7 @@ canvas {
 	right:0px;
   width:240px;
   height: 100%;
-  background-color: rgba(255, 0, 0, 0);
+  background-color: rgba(255, 255, 255, 0.3);
   z-index:100;
   margin-top:-50px;
   overflow-y: auto;
@@ -29,19 +29,47 @@ canvas {
 }
 
 .childkeyword {
-	width:50px;
+	max-width:50px;
 	font-size: 11px; 
 	font-family: Jeju Gothic; 
 	padding:2px; 
 	padding-top:3px; 
-	margin-right:3px; 
+	margin-right:4px; 
 	margin-top:-1px;
 	border-radius:5px;
 	white-space:nowrap;
 	text-overflow:ellipsis;
 	overflow:hidden;
   display:inline-block;
+  cursor:pointer;
 }
+
+.parentKeyword {
+	max-width:95px;
+	font-size: 11px; 
+	font-family: Jeju Gothic; 
+	padding:2px; 
+	margin-top:-1px;
+	border-radius:5px;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+	overflow:hidden;
+  display:inline-block;
+  cursor:pointer;
+}
+
+.keywordName{
+	max-width:165px;  
+	font-size: 20px;
+	font-family: Jeju Gothic; 
+	padding:2px; 
+	white-space:nowrap;
+	text-overflow:ellipsis;
+	overflow:hidden;
+  display:inline-block;
+  cursor:pointer;
+}
+
 
 #searchKeywordUser{
 	font-size: 11px; font-family: Jeju Gothic; padding:2px; padding-top:3px; color:white;
@@ -60,6 +88,7 @@ canvas {
 	height: 108px; 
 	padding:8px; 
 	border-radius: 15px;
+	cursor:pointer;
 }
 
 .keywordBox{

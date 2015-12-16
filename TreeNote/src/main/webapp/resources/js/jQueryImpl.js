@@ -18,21 +18,52 @@ window.onload = function(){
 	$("#btn_friend").click(function() {
 		$("#friendlist").toggle("drop");
 	});
-	
-	$("#btn_search").click(function(){
-		if (window.sessionStorage) {
-			if(sessionStorage.getItem('isTimeline') == 'true'){
-				$(".keywordBox").remove();
-				$(".timeLineBtnBox").remove();
-				$(".ui-effects-wrapper").remove();
-	        	$("#timeLineTitleBox").hide();
-	    		$("#searchBox").show("slide",{
-	    			direction : "up",
-	    			duration : 500
-	    		});
-	        }
-	        sessionStorage.setItem('isTimeline', 'false');
+	$("#btn_timeline").click(function(){
+		if (sessionStorage.getItem('nowTimeline') == 'timeline') {
+	        sessionStorage.setItem('nowTimeline', '');
+			//setListTimeKeyword();
+			$("#timeline").hide();
+			$("#timeLineTitleBox").hide();
+			$(".keywordBox").remove();
+			$(".timeLineBtnBox").remove();
+			$(".ui-effects-wrapper").remove();
+			
+	    }else if(sessionStorage.getItem('nowTimeline') == 'search'){
+	    	$("#timeline").show();
+	    	$(".keywordBox").remove();
+			$(".timeLineBtnBox").remove();
+			$(".ui-effects-wrapper").remove();
+	    	setListTimeKeyword();
+	    }else{
+	    	$("#timeline").show();
+	    	$(".keywordBox").remove();
+			$(".timeLineBtnBox").remove();
+			$(".ui-effects-wrapper").remove();
+	    	setListTimeKeyword();
 	    }
+	});
+	$("#btn_search").click(function(){
+		if (sessionStorage.getItem('nowTimeline') == 'search') {
+			sessionStorage.setItem('nowTimeline', '');
+			$("#timeline").hide();
+			$("#searchBox").hide();
+			$(".keywordBox").remove();
+			$(".timeLineBtnBox").remove();
+			$(".ui-effects-wrapper").remove();
+		}else if(sessionStorage.getItem('nowTimeline') == 'timeline'){
+			$("#timeline").show();
+			$(".keywordBox").remove();
+			$(".timeLineBtnBox").remove();
+			$(".ui-effects-wrapper").remove();
+			setListSearchKeyword();
+		}else{
+			$("#timeline").show();
+			$(".keywordBox").remove();
+			$(".timeLineBtnBox").remove();
+			$(".ui-effects-wrapper").remove();
+			setListSearchKeyword();
+		}
+		
 	});
 
 	autocom();
@@ -78,7 +109,7 @@ function setListSearchKeyword(keyword) {
 		success : function(JSONData, status) {
 			// $(#"timelinec").css("height",window.innerHeight-110);
 			if (window.sessionStorage) {
-		        sessionStorage.setItem('isTimeline', 'false');
+		        sessionStorage.setItem('nowTimeline', 'search');
 				// alert(sessionStorage.getItem('editTreeNo'));
 		    }
 			$("#timelinec .keywordBox").remove();
@@ -129,7 +160,7 @@ function setListTimeKeyword() {
 		},
 		success : function(JSONData, status) {
 			if (window.sessionStorage) {
-		        sessionStorage.setItem('isTimeline', 'true');
+		        sessionStorage.setItem('nowTimeline', 'timeline');
 				// alert(sessionStorage.getItem('editTreeNo'));
 		    }
 			console.log(JSONData);
