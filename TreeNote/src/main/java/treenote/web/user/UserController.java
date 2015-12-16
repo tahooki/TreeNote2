@@ -4,6 +4,7 @@ package treenote.web.user;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.amazonaws.ClientConfiguration;
+import com.amazonaws.Protocol;
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.Bucket;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+                                        import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.util.StringUtils;
 
 import treenote.domain.User;
 import treenote.service.user.UserService;
@@ -94,24 +106,64 @@ public class UserController {
 		model.addAttribute("user", user);
 
 	}
-
+	
+	
 	// 유저 가입
 	//////test
 	@RequestMapping(value="/addUser", method=RequestMethod.POST)
     public @ResponseBody void addUser(@ModelAttribute User user, Model model,
-            @RequestParam("file") MultipartFile file){
+            @RequestParam("file") MultipartFile file, HttpSession session){
 		System.out.println(user);
-        if (!file.isEmpty()) {
-            try {
-                byte[] bytes = file.getBytes();
-                BufferedOutputStream stream =
-                        new BufferedOutputStream(new FileOutputStream(new File(file.getOriginalFilename())));
-                stream.write(bytes);
-                stream.close();
-            } catch (Exception e) {
-            }
-        } else {
-        }
+		
+//		String path = "https://s3-ap-northeast-1.amazonaws.com/treenote";
+//		String fileName = path+"/"+file.getOriginalFilename();
+//		s3client.putObject(new PutObjectRequest("treenote", file.getOriginalFilename(), ));		
+		try {
+			if (file != null && file.getOriginalFilename() != null
+					&& !file.getOriginalFilename().equals("")) {
+				// 파일이 존재하면
+				String original_name = file.getOriginalFilename();
+				String ext = original_name.substring(original_name.lastIndexOf(".") + 1);
+				// 파일 기본경로
+				String defaultPath = session.getServletContext().getRealPath("/");;
+				// 파일 기본경로 _ 상세경로
+				String path = defaultPath + "resource" + File.separator + "photo_upload" + File.separator;
+				File filedir = new File(path);
+				System.out.println("path:::::::::::" + path);
+				// 디렉토리 존재하지 않을경우 디렉토리 생성
+				if (!filedir.exists()) {
+					filedir.mkdirs();
+				}
+				// 서버에 업로드 할 파일명(한글문제로 인해 원본파일은 올리지 않는것이 좋음)
+				String realname = UUID.randomUUID().toString() + "." + ext;
+				System.out.println("realname : "+realname);
+				///////////////// 서버에 파일쓰기 /////////////////
+				file.transferTo(new File(path + realname));
+				user.setPhoto(path.replace(defaultPath, "/")+realname);
+//				AWSCredentials credentials = new BasicAWSCredentials("AKIAJWYFFXN4HGRWKRTA", "nyWYOwJfC8kqOWM8FqvM47pQuTpi3NQBpihXekCv");
+//
+//				ClientConfiguration clientConfig = new ClientConfiguration();
+//				clientConfig.setProtocol(Protocol.HTTP);
+//
+//				AmazonS3 conn = new AmazonS3Client(credentials, clientConfig);
+//				List<Bucket> buckets = conn.listBuckets();
+//				for (Bucket bucket : buckets){
+//					System.out.println(":::::::::::::::::::"+bucket.getName()+"\t"+ StringUtils.fromDate(bucket.getCreationDate()));
+//				}
+//				
+//				conn.putObject(new PutObjectRequest(path,  realname, filedata).withCannedAcl(CannedAccessControlList.PublicRead));
+//				System.out.println("realname : "+realname);
+//				///////////////// 서버에 파일쓰기 /////////////////
+//				
+//				System.out.println("여기");
+				
+				userService.addUser(user);
+			} else {
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     }
 	
 	
