@@ -18,6 +18,15 @@ window.onload = function(){
 	$("#btn_friend").click(function() {
 		$("#friendlist").toggle("drop");
 	});
+	$("#btn_logout").on('click', function(){
+		$.ajax({
+			url:"/user/logout",
+			
+			complete : function(){
+				self.location="../index.html"
+			}
+		})
+	})
 	$("#btn_timeline").click(function(){
 		if (sessionStorage.getItem('nowTimeline') == 'timeline') {
 	        sessionStorage.setItem('nowTimeline', '');
