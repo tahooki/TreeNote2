@@ -23,5 +23,7 @@ public interface KeywordService {
 	//자식 키워드 불러오기
 	public List<Keyword> listOnwerChildKeyword(Keyword keyword) throws Exception;
 	//자동완성
-	public List<String> autoComplete() throws Exception; 
+	public List<String> autoComplete() throws Exception;
+	//프로필 키워드 리스트 
+	public List<Keyword> getMyKeyword(int userNo); 
 }

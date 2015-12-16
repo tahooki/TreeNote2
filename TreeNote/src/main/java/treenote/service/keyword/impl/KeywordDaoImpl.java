@@ -87,4 +87,10 @@ public class KeywordDaoImpl implements KeywordDao {
 		return sqlSession.selectList("keywordMapper.autoComplete");
 	}
 
+	@Override
+	public List<Keyword> getMyKeyword(int userNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("keywordMapper.getMyKeyword", userNo);
+	}
+
 }

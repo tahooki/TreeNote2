@@ -89,4 +89,21 @@
 		SELECT DISTINCT KEYWORD FROM KEYWORDS
 	</select>
 
+<!-- profil keywordList by shin 12/16  -->
+	<select id="getMyKeyword" resultMap="keywordSelectMap" parameterType="int">
+		SELECT * FROM 
+			(SELECT ROWNUM rn, a.* FROM 
+				(SELECT  
+					color, 
+					copy_no, 
+					keyword, 
+					keyword_no, 
+					parent_keyword_no, 
+					tree_no
+				FROM keywords
+				WHERE tree_no in(SELECT tree_no FROM trees WHERE user_no = 1000023)
+				ORDER BY keyword_no DESC) a 
+			) b
+		WHERE rn BETWEEN 1 and 10
+	</select>
 </mapper>

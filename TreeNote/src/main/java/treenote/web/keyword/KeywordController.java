@@ -90,4 +90,14 @@ public class KeywordController {
 		System.out.println("/autoComplete");
 		model.addAttribute("autoComplete", keywordService.autoComplete());
 	}
+	
+	//프로필 키워드 리스트
+	@RequestMapping(value ="getMyKeyword")
+	public void getMyKeyword(Model model, HttpSession session){
+		System.out.println("/getMyKeyword");
+		model.addAttribute("keyword", keywordService.getMyKeyword( ((User)session.getAttribute("user")).getUserNo() ));
+	}
+	
+	
+	
 }

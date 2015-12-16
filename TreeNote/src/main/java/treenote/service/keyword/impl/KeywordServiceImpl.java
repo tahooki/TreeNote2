@@ -175,4 +175,10 @@ public class KeywordServiceImpl implements KeywordService {
 		// TODO Auto-generated method stub
 		return keywordDao.autoComplete();
 	}
+
+	@Override
+	public List<Keyword> getMyKeyword(int userNo) {
+		// TODO Auto-generated method stub
+		return keywordDao.getMyKeyword(userNo);
+	}
 }
