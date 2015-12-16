@@ -27,6 +27,7 @@ window.onload = function(){
 			}
 		})
 	})
+	
 	$("#btn_timeline").click(function(){
 		if (sessionStorage.getItem('nowTimeline') == 'timeline') {
 	        sessionStorage.setItem('nowTimeline', '');
@@ -144,6 +145,10 @@ function setListSearchKeyword(keyword) {
 					}
 				});
 			}
+			$(".timeLineAddButton").click(function() {
+				console.log($($(this).parent()).find("input[name='key']").val());
+				addKeyword($($(this).parent()).find("input[name='key']").val());
+			});
 			$(".timeLineAddButton").click(function() {
 				console.log($($(this).parent()).find("input[name='key']").val());
 				addKeyword($($(this).parent()).find("input[name='key']").val());

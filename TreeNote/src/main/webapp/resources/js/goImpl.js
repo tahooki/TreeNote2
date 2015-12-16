@@ -48,6 +48,7 @@ function goImpl(treeNo) {
 				        //sessionStorage.setItem('isTimeline', 'false');
 						setListTimeKeyword();
 				    }
+					jQuery("#content").hide("fade",300);
 				}
 			});
 		
@@ -55,152 +56,152 @@ function goImpl(treeNo) {
 		// This uses a Spot Panel to position a button relative
 		// to the ellipse surrounding the text.
 		myDiagram.nodeTemplate = gojs(go.Node, "Spot", {
-				selectionObjectName : "PANEL", // ??
-				isTreeExpanded : false, // 노드의 펼쳐지는 것을 설정하는 부분. 기본이ㅏ false로 해놓으면 펼쳐지지
-				// 않는다.
-				isTreeLeaf : false,
-				// 자식노드를 생성하지 못하게 만든다.?
-				click:function(e, obj) {
-					console.log("node Data : "+JSON.stringify(obj.data));
-				},
-				selectionChanged:function(part){
-					selectKeyword = part;
-					
-					part.findObject("button1").visible = part.isSelected;
-					part.findObject("button2").visible = part.isSelected;
-					part.findObject("button3").visible = part.isSelected;
-					if(part.isSelected){
-						setBtnVisible();
-					}else{
-						
-						setBtnUnVisible();
-					}
-					jQuery("#content").hide("fade",300);
-				},
-				mouseEnter:function(e,obj){
-					console.log("mouseEnter");
-				},
-				doubleClick:function(e,obj){
-					console.log("doubleClick : "+obj.data);
-					var keywordNo = JSON.stringify(obj.data.key);
-					var keyword = JSON.stringify(obj.data.keyword);
-					sessionStorage.setItem("keywordNo",keywordNo);
-					sessionStorage.setItem("keyword",keyword);					
-				
-					$.getJSON("/content/getContent/" +keywordNo, function(data) {
-						console.log("000000000 "+data.content);
-						
-					if(data.content==null){
-						jQuery("#content").show("fade",300).find("iframe").attr("src","../../../contents/contents.html");
-						console.log("1111111 "+data.content);
-					}
-					else{
-						jQuery("#content").show("fade",300).find("iframe").attr("src","../../../contents/get.html");
-						console.log("22222222 "+data.content);
-					}						
-					});					
-										
-					//jQuery("#content").show("fade",300);
-				}
+			selectionObjectName : "PANEL", // ??
+			isTreeExpanded : false, // 노드의 펼쳐지는 것을 설정하는 부분. 기본이ㅏ false로 해놓으면 펼쳐지지
+			// 않는다.
+			isTreeLeaf : false,
+			// 자식노드를 생성하지 못하게 만든다.?
+			click:function(e, obj) {
+				console.log("node Data : "+JSON.stringify(obj.data));
 			},
-			new go.Binding("isShadowed", "isSelected").ofObject(),
-	        {
-		          selectionAdorned: false,
-		          shadowOffset: new go.Point(0, 0),
-		          shadowBlur: 15,
-		          shadowColor: "gray",
-		    },
-			// the node's outer shape, which will surround the text
-			gojs(go.Panel, "Auto", {
-					name : "PANEL"
-				}, 
-				gojs(go.Shape, "Circle", // 노드의 모양을 정함.
-				{
-					fill : "whitesmoke",
-					stroke : "black",
-					strokeWidth : 0,
-				}, // 기본색이 whitsmoke 인듯... stroke는
-				new go.Binding("fill", "color")), gojs(go.TextBlock, {	
-					font : "15pt Jeju Gothic",
-					stroke : "black",
-					editable : true,
-					margin : 2,
-					textAlign: "center",
-					isMultiline : false,
-					wrap: go.TextBlock.WrapFit
-				}, // 폰트, margin, 텍스트 박스 수정가능을 설정.
-				new go.Binding("text", "keyword"))// 노드에 표시되는 텍스트를 data에서 선택하는부분.. data의
-					// property중 name이라는 것을 선택.
-			),
-			gojs(go.Picture, {
-				name: "button1",
-				alignment : go.Spot.TopRight,
-				maxSize : new go.Size(20, 20),
-				source : "resources/img/btn_add.png",
-				visible : false,
-				click : function(e, obj) {
-					// openDialog();
-					var node = obj.part; // 버튼 오브젝트가 있는 노드를 받는다.
-					if (node === null)
-						return; // 노드가 없으면 끝낸다.
-					e.handled = true; // ??
-					var diagram = node.diagram; // 노드의 다이어 그램을 받는다.
-					diagram.startTransaction("	"); // 트랜젝션 시작... 중간에 오류가 나거나하면 롤백됨.
-					// this behavior is specific to this incrementalTree sample:
-					var data = node.data;
+			selectionChanged:function(part){
+				selectKeyword = part;
+				
+				part.findObject("button1").visible = part.isSelected;
+				part.findObject("button2").visible = part.isSelected;
+				part.findObject("button3").visible = part.isSelected;
+				if(part.isSelected){
+					setBtnVisible();
+				}else{
 					
-					newKeyword(data); // 트리생성
-
-					if(!obj.part.isTreeExpanded){
-						obj.part.findObject("button2").source = "resources/img/btn_collapse.png";
-						obj.part.isTreeExpanded = true;
-						obj.part.data.collapse = 1;
-						updateKeyword(obj.part.data);
-					}
-					
-					diagram.commitTransaction("CollapseExpandTree"); // startTransaction
+					setBtnUnVisible();
 				}
-			}),
-			gojs(go.Picture, {
-				name: "button2",
-				alignment : go.Spot.BottomRight,
-				maxSize : new go.Size(20, 20),
-				source : "resources/img/btn_expanded.png",
-				visible : false,
-				click : function(e, obj) {
-					// openDialog();
-					if(obj.part.isTreeExpanded){
-						obj.source = "resources/img/btn_expanded.png";
-						obj.part.isTreeExpanded = false;
-						obj.part.data.collapse = 0;
-						updateKeyword(obj.part.data);
-					}else{
-						var child = obj.part.findTreeChildrenNodes();
-						//console.log("child count??"+ child);
-						if(child.count == 0){
-							listOnwerChildKeyword(obj.part);
-							obj.part.data.copyNo = obj.part.data.key;
-						}
-						obj.source = "resources/img/btn_collapse.png";
-						obj.part.isTreeExpanded = true;
-						obj.part.data.collapse = 1;
-						updateKeyword(obj.part.data);
-					}
-				}
-			}),
-			gojs(go.Picture, {
-				name: "button3",
-				alignment : go.Spot.BottomLeft,
-				maxSize : new go.Size(20, 20),
-				source : "resources/img/btn_delete.png",
-				visible : false,
-				click : function(e, obj) {
-					// openDialog();
-					removeKeyword(obj.part);
-				}
-			})
+				
+			},
+			mouseEnter:function(e,obj){
+				console.log("mouseEnter");
+			},
+			doubleClick:function(e,obj){
+				console.log("doubleClick : "+obj.data);
+				var keywordNo = JSON.stringify(obj.data.key);
+				var keyword = JSON.stringify(obj.data.keyword);
+				sessionStorage.setItem("keywordNo",keywordNo);
+				sessionStorage.setItem("keyword",keyword);					
 			
-		); // end Node
+				$.getJSON("/content/getContent/" +keywordNo, function(data) {
+					console.log("000000000 "+data.content);
+					
+				if(data.content==null){
+					jQuery("#content").show("fade",300).find("iframe").attr("src","../../../contents/contents.html");
+					console.log("1111111 "+data.content);
+				}
+				else{
+					jQuery("#content").show("fade",300).find("iframe").attr("src","../../../contents/get.html");
+					console.log("22222222 "+data.content);
+				}						
+				});					
+									
+				//jQuery("#content").show("fade",300);
+			}
+		},
+		new go.Binding("isShadowed", "isSelected").ofObject(),
+        {
+	          selectionAdorned: false,
+	          shadowOffset: new go.Point(0, 0),
+	          shadowBlur: 15,
+	          shadowColor: "gray",
+	    },
+		// the node's outer shape, which will surround the text
+		gojs(go.Panel, "Auto", {
+				name : "PANEL"
+			}, 
+			gojs(go.Shape, "Circle", // 노드의 모양을 정함.
+			{
+				fill : "whitesmoke",
+				stroke : "black",
+				strokeWidth : 0,
+			}, // 기본색이 whitsmoke 인듯... stroke는
+			new go.Binding("fill", "color")), gojs(go.TextBlock, {	
+				font : "15pt Jeju Gothic",
+				stroke : "black",
+				editable : true,
+				margin : 2,
+				textAlign: "center",
+				isMultiline : false,
+				wrap: go.TextBlock.WrapFit
+			}, // 폰트, margin, 텍스트 박스 수정가능을 설정.
+			new go.Binding("text", "keyword"))// 노드에 표시되는 텍스트를 data에서 선택하는부분.. data의
+				// property중 name이라는 것을 선택.
+		),
+		gojs(go.Picture, {
+			name: "button1",
+			alignment : go.Spot.TopRight,
+			maxSize : new go.Size(20, 20),
+			source : "resources/img/btn_add.png",
+			visible : false,
+			click : function(e, obj) {
+				// openDialog();
+				var node = obj.part; // 버튼 오브젝트가 있는 노드를 받는다.
+				if (node === null)
+					return; // 노드가 없으면 끝낸다.
+				e.handled = true; // ??
+				var diagram = node.diagram; // 노드의 다이어 그램을 받는다.
+				diagram.startTransaction("	"); // 트랜젝션 시작... 중간에 오류가 나거나하면 롤백됨.
+				// this behavior is specific to this incrementalTree sample:
+				var data = node.data;
+				
+				newKeyword(data); // 트리생성
+
+				if(!obj.part.isTreeExpanded){
+					obj.part.findObject("button2").source = "resources/img/btn_collapse.png";
+					obj.part.isTreeExpanded = true;
+					obj.part.data.collapse = 1;
+					updateKeyword(obj.part.data);
+				}
+				
+				diagram.commitTransaction("CollapseExpandTree"); // startTransaction
+			}
+		}),
+		gojs(go.Picture, {
+			name: "button2",
+			alignment : go.Spot.BottomRight,
+			maxSize : new go.Size(20, 20),
+			source : "resources/img/btn_expanded.png",
+			visible : false,
+			click : function(e, obj) {
+				// openDialog();
+				if(obj.part.isTreeExpanded){
+					obj.source = "resources/img/btn_expanded.png";
+					obj.part.isTreeExpanded = false;
+					obj.part.data.collapse = 0;
+					updateKeyword(obj.part.data);
+				}else{
+					var child = obj.part.findTreeChildrenNodes();
+					//console.log("child count??"+ child);
+					if(child.count == 0){
+						listOnwerChildKeyword(obj.part);
+						obj.part.data.copyNo = obj.part.data.key;
+					}
+					obj.source = "resources/img/btn_collapse.png";
+					obj.part.isTreeExpanded = true;
+					obj.part.data.collapse = 1;
+					updateKeyword(obj.part.data);
+				}
+			}
+		}),
+		gojs(go.Picture, {
+			name: "button3",
+			alignment : go.Spot.BottomLeft,
+			maxSize : new go.Size(20, 20),
+			source : "resources/img/btn_delete.png",
+			visible : false,
+			click : function(e, obj) {
+				// openDialog();
+				removeKeyword(obj.part);
+			}
+		})
+		
+	); // end Node
 
 		myDiagram.linkTemplate =
 		      gojs(go.Link,  // the whole link panel
@@ -492,6 +493,7 @@ function newKeyword(parentdata) { // 노드를 생성하는 부분.
 			
 			parentdata.collapse = 1;
 			updateKeyword(parentdata);
+			$("#timeline").show();
 			setListTimeKeyword();
 		}
 	})
@@ -537,6 +539,7 @@ function addKeyword(key) { // 노드를 생성하는 부분.
 			selectedKeyword.isTreeExpanded = true;
 			selectedKeyword.data.collapse = 1;
 			updateKeyword(selectedKeyword.data);
+			$("#timeline").show();
 			setListTimeKeyword();
 		}
 	})
@@ -639,6 +642,7 @@ function removeKeyword(node) { // 노드를 생성하는 부분.
 		success : function(JSONData , status) {
 			console.log("remove data :: "+keyword);
 			myDiagram.model.removeNodeData(keyword);
+			$("#timeline").show();
 			setListTimeKeyword();
 		}
 	})
