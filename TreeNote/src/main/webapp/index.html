@@ -265,8 +265,6 @@ $('#signUpButton').on('click',function(){
 			url:'/user/addUser',
 			success : function(data) {
 
-				alert(data.result);
-
 			},
 
 			error : function(error) {
@@ -398,6 +396,9 @@ $('#signUpForm p input[name=email]').on('focusout',function(){
 <script type="text/javascript">
  $('#facebookSignup').on('click',function(){
 	 signup()
+ });
+ $('#fLoginbutton').on('click',function(){
+	 fLogin()
  });
  
 //  fileUpload

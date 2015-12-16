@@ -151,7 +151,7 @@ function signup(){
 							photo:photo}),
 					success : function(data){
 						if(data){
-							self.reload;
+							self.location="/";
 						}else{
 							alert("이미 가입되어 있는 아이디 입니다.")
 						}
@@ -177,7 +177,7 @@ function signup(){
 }
   
 
-function login(){
+function fLogin(){
 	
 	FB.login(function(response) {
 		if (response.authResponse) {
@@ -200,7 +200,7 @@ function login(){
 						email:userEmail},
 						success : function(data){
 							if(data){
-								self.location="treenote.java74.com";
+								self.location="/main.html";
 							}else{
 								alert("회원가입 실패 다시 시도해 주세요!!!")
 							}
