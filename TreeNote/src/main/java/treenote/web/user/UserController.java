@@ -107,6 +107,15 @@ public class UserController {
 
 	}
 	
+	@RequestMapping(value = "getUser2")
+	public void getUser2(@PathVariable int userNo, Model model, HttpSession session) throws Exception {
+		System.out.println("/getUser");
+		User user = userService.getUser(userNo);
+		System.out.println(user);
+		model.addAttribute("user", user);
+		
+	}
+	
 	
 	// 유저 가입
 	//////test
@@ -115,9 +124,6 @@ public class UserController {
             @RequestParam("file") MultipartFile file, HttpSession session){
 		System.out.println(user);
 		
-//		String path = "https://s3-ap-northeast-1.amazonaws.com/treenote";
-//		String fileName = path+"/"+file.getOriginalFilename();
-//		s3client.putObject(new PutObjectRequest("treenote", file.getOriginalFilename(), ));		
 		try {
 			if (file != null && file.getOriginalFilename() != null
 					&& !file.getOriginalFilename().equals("")) {
@@ -167,63 +173,41 @@ public class UserController {
     }
 	
 	
-	
-//	
-//	@RequestMapping(value = "addUser", headers = "content-type=multipart/form-data")
-//	public void addUser(@RequestParam("filedata") MultipartFile filedata, 
-//			@ModelAttribute User user, Model model, HttpSession session) throws Exception {
-//		System.out.println("/addUser");
-//		System.out.println(user);
-//		String path ="/resources/upload/image";
-//		File dir = new File(path);
-//		if(!dir.isDirectory()){
-//			dir.mkdirs();
-//		}
-//////////file upload/////////////////////////////////////////////////////////////////////////////////
-//		if (!filedata.isEmpty()) {
-//            try {
-//            	UUID uuid = UUID.randomUUID();
-//            	filedata.transferTo(new File(path,filedata.getOriginalFilename()));
-////                byte[] bytes = filedata.getBytes();
-////                BufferedOutputStream stream =
-////                        new BufferedOutputStream(new FileOutputStream(new File(filedata.getOriginalFilename())));
-//                System.out.println("::::::::::::::::::::::"+filedata.getOriginalFilename());
-//                user.setPhoto(path.substring(path.lastIndexOf("/")+1)+"/"+filedata.getOriginalFilename());
-//                System.out.println(user.getPhoto());
-////                stream.write(bytes);
-////                stream.close();
-////                System.out.println("You successfully uploaded " + profil + "!");
-//            } catch (Exception e) {
-//            	System.out.println(e);
-////                System.out.println("You failed to upload " + profil + " => " + e.getMessage());
-//            }
-//            
-//        } else {
-////            System.out.println("You failed to upload " + profil + " because the file was empty.");
-//        }
-//		
-//		
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//
-//		userService.addUser(user);
-//		model.addAttribute("user", user);
-//
-//		// 세션 정보 추가
-//		User returnUser = userService.getUser2(user.getEmail());
-//		session.setAttribute("user", returnUser);
-//
-//	}
-
-	// 유저 정보 업데이트
-	@RequestMapping(value = "updateUser")
-	public void updateUser(@RequestBody User user, Model model) throws Exception {
-		System.out.println("/updateUser");
-		userService.updateUser(user);
-		model.addAttribute("user", user);
+	@RequestMapping(value="/updateProfil")
+	public void updateProfil(HttpSession session, @ModelAttribute MultipartFile file ){
+//		User user = (User)session.getAttribute("user");
+		
+		try {
+			if (file != null && file.getOriginalFilename() != null
+					&& !file.getOriginalFilename().equals("")) {
+				// 파일이 존재하면
+				String original_name = file.getOriginalFilename();
+				String ext = original_name.substring(original_name.lastIndexOf(".") + 1);
+				// 파일 기본경로
+				String defaultPath = session.getServletContext().getRealPath("/");;
+				// 파일 기본경로 _ 상세경로
+				String path = defaultPath + "user";
+				File filedir = new File(path);
+				System.out.println("path:::::::::::" + path);
+				// 디렉토리 존재하지 않을경우 디렉토리 생성
+				if (!filedir.exists()) {
+					filedir.mkdirs();
+				}
+				// 서버에 업로드 할 파일명(한글문제로 인해 원본파일은 올리지 않는것이 좋음)
+				String realname = UUID.randomUUID().toString() + "." + ext;
+				System.out.println("realname : "+realname);
+				///////////////// 서버에 파일쓰기 /////////////////
+				file.transferTo(new File(path + realname));
+//				user.setPhoto(path.replace(defaultPath, "/")+realname);
+			} else {
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
-
-	// 친구 목록
-	@RequestMapping(value = "listFriend")
+	
+	@RequestMapping(value="listFriend")
 	public void listFriend( Model model, HttpSession session) throws Exception {
 		System.out.println("/listFriend");
 		User user = (User)session.getAttribute("user");

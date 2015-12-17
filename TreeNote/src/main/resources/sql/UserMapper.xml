@@ -40,8 +40,17 @@
 
 
 	<select id="getLoginUser" parameterType="string" resultMap="userMap">
-		SELECT user_no, edit_tree_no, email, password, name, phone, photo,
-		snsuser,  activity, role
+		SELECT 
+			user_no, 
+			edit_tree_no, 
+			email, 
+			password, 
+			name, 
+			phone, 
+			photo,
+			snsuser,  
+			activity, 
+			role
 		FROM users
 		<where>
 			email = #{value} 
@@ -184,7 +193,7 @@
 			name,
 			snsuser,
 			photo,
-			edit_tree_no
+			edit_tree_no,
 			activity
 			)
 		VALUES(
