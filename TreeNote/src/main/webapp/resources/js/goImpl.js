@@ -29,7 +29,6 @@ function goImpl(treeNo) {
 				"commandHandler.copiesTree" : true, // for the copy command
 				"commandHandler.deletesTree" : true, // for the delete command
 				"draggingTool.dragsTree" : true, // dragging for both move and copy
-				"undoManager.isEnabled" : true, // ctrl+z, ctrl+y 되게마는 것.
 				hasHorizontalScrollbar : false,
 				hasVerticalScrollbar : false,
 				allowCopy : false,
@@ -82,25 +81,7 @@ function goImpl(treeNo) {
 				console.log("mouseEnter");
 			},
 			doubleClick:function(e,obj){
-				console.log("doubleClick : "+obj.data);
-				var keywordNo = JSON.stringify(obj.data.key);
-				var keyword = JSON.stringify(obj.data.keyword);
-				sessionStorage.setItem("keywordNo",keywordNo);
-				sessionStorage.setItem("keyword",keyword);					
-			
-				$.getJSON("/content/getContent/" +keywordNo, function(data) {
-					console.log("000000000 "+data.content);
-					
-				if(data.content==null){
-					jQuery("#content").show("fade",300).find("iframe").attr("src","../../../contents/contents.html");
-					console.log("1111111 "+data.content);
-				}
-				else{
-					jQuery("#content").show("fade",300).find("iframe").attr("src","../../../contents/get.html");
-					console.log("22222222 "+data.content);
-				}						
-				});					
-									
+				showContent(obj.data.key, obj.data.keyword);		
 				//jQuery("#content").show("fade",300);
 			}
 		},
@@ -256,7 +237,6 @@ function goSimpleImpl(treeNo) {
 				"commandHandler.copiesTree" : true, // for the copy command
 				"commandHandler.deletesTree" : true, // for the delete command
 				"draggingTool.dragsTree" : true, // dragging for both move and copy
-				"undoManager.isEnabled" : true, // ctrl+z, ctrl+y 되게마는 것.
 				hasHorizontalScrollbar : false,
 				hasVerticalScrollbar : false,
 				allowCopy : false,
@@ -308,28 +288,8 @@ function goSimpleImpl(treeNo) {
 				mouseEnter:function(e,obj){
 					console.log("mouseEnter");
 				},
-				doubleClick:function(e,obj){
-					console.log("doubleClick : "+obj.data);
-					var keywordNo = JSON.stringify(obj.data.key);
-					var keyword = JSON.stringify(obj.data.keyword);
-					sessionStorage.setItem("keywordNo",keywordNo);
-					sessionStorage.setItem("keyword",keyword);					
-				
-					$.getJSON("/content/getContent/" +keywordNo, function(data) {
-						console.log("000000000 "+data.content);
-						
-					if(data.content==null){
-						jQuery("#content").show("fade",300).find("iframe").attr("src","../../../contents/contents.html");
-						console.log("1111111 "+data.content);
-					}
-					else{
-						jQuery("#content").show("fade",300).find("iframe").attr("src","../../../contents/get.html");
-						console.log("22222222 "+data.content);
-						//console.log(data.content.contentNo);
-						reply(data.content.contentNo);
-					}						
-					});					
-										
+				doubleClick:function(e,obj){						
+					showContent(obj.data.key, obj.data.keyword);
 					//jQuery("#content").show("fade",300);
 				}
 			},
@@ -618,37 +578,42 @@ function updateKeyword(keyword) { // 노드를 생성하는 부분.
 }
 
 function removeKeyword(node) { // 노드를 생성하는 부분.
-	var childList = node.findTreeChildrenNodes();
-	while(childList.hasNext()){
-		console.log(childList.value.data);
-		removeKeyword(childList.value);
-	}
-	var keyword = node.data;
-	jQuery.ajax( 
-	{
-		url : "/keyword/removeKeyword" ,
-		method : "POST" ,
-		dataType : "json" ,
-		data: JSON.stringify({
-			key : keyword.key,
-			treeNo : keyword.treeNo,
-			keyword : keyword.keyword,
-			copyNo : keyword.copyNo,
-			parent : keyword.parent,
-			collapse : keyword.collapse,
-			color : keyword.color
-		}),
-		headers : {
-			"Accept" : "application/json",
-			"Content-Type" : "application/json"
-		},
-		success : function(JSONData , status) {
-			console.log("remove data :: "+keyword);
-			myDiagram.model.removeNodeData(keyword);
-			$("#timeline").show();
-			setListTimeKeyword();
+	if(node.findTreeParentNode() == null){
+		alert("루트 키워드는 삭제가 불가능 합니다.");
+	}else{
+		var childList = node.findTreeChildrenNodes();
+		
+		while(childList.hasNext()){
+			console.log(childList.value.data);
+			removeKeyword(childList.value);
 		}
-	})
+		var keyword = node.data;
+		jQuery.ajax( 
+		{
+			url : "/keyword/removeKeyword" ,
+			method : "POST" ,
+			dataType : "json" ,
+			data: JSON.stringify({
+				key : keyword.key,
+				treeNo : keyword.treeNo,
+				keyword : keyword.keyword,
+				copyNo : keyword.copyNo,
+				parent : keyword.parent,
+				collapse : keyword.collapse,
+				color : keyword.color
+			}),
+			headers : {
+				"Accept" : "application/json",
+				"Content-Type" : "application/json"
+			},
+			success : function(JSONData , status) {
+				console.log("remove data :: "+keyword);
+				myDiagram.model.removeNodeData(keyword);
+				$("#timeline").show();
+				setListTimeKeyword();
+			}
+		})
+	}
 }
 
 function allExpanded() {
@@ -784,14 +749,21 @@ function setBtnVisible(){
 	for(var i = 0; i < viewList.length ; i++){
 		console.log("select : " + selectedKeyword.keyword + " keyword : " +jQuery(viewList[i]).find("input[name='keyword']").val());
 		console.log(JSON.stringify(jQuery(viewList[i]).find("input[name='keyword']").val()));
-		//if(selectedKeyword.keyword == jQuery(viewList[i]).find("input[name='treeNo']").val())
-		if(selectedKeyword.keyword == jQuery(viewList[i]).find("input[name='keyword']").val()){
+		if(selectedKeyword.treeNo == jQuery(viewList[i]).find("input[name='treeNo']").val()){
+			
+			jQuery(viewList[i]).find(".timeLineAddButton").hide();
+			jQuery(viewList[i]).find(".timeLineCopyButton").hide()
+			console.log("keyword treeNo : "+selectedKeyword.treeNo+" input treeNo :" + jQuery(viewList[i]).find("input[name='treeNo']").val());
+		}
+		else if(selectedKeyword.keyword == jQuery(viewList[i]).find("input[name='keyword']").val()){
 			console.log(jQuery(viewList[i]).find(".timeLineAddButton").hide()); 
 			console.log(jQuery(viewList[i]).find(".timeLineCopyButton").show());
+			console.log("keyword treeNo : "+selectedKeyword.treeNo+" input treeNo :" + jQuery(viewList[i]).find("input[name='treeNo']").val());
 		}
 		else{
 			console.log(jQuery(viewList[i]).find(".timeLineCopyButton").hide());
 			console.log(jQuery(viewList[i]).find(".timeLineAddButton").show());
+			console.log("keyword treeNo : "+selectedKeyword.treeNo+" input treeNo :" + jQuery(viewList[i]).find("input[name='treeNo']").val());
 		}
 	}
 	var timeLineBtnList = $(".timeLineBtnBox");

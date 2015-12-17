@@ -145,9 +145,22 @@ function setListSearchKeyword(keyword) {
 					}
 				});
 			}
-			$(".timeLineAddButton").click(function() {
-				console.log($($(this).parent()).find("input[name='key']").val());
-				addKeyword($($(this).parent()).find("input[name='key']").val());
+			$(".childKeyword").click(function(){
+				if($($(this).parent()).find("input[name='keyword']").val() == "없음"){
+					showContent($($(this).parent()).find("input[name='key']").val(), $($(this).parent()).find("input[name='keyword']").val());
+				}
+				else if($($(this).parent()).find("input[name='keyword']").val() == "..."){
+					showContent($($(this).parent()).find("input[name='key']").val(), $($(this).parent()).find("input[name='keyword']").val());
+				}
+				else{
+					showContent($($(this).parent()).find("input[name='key']").val(), $($(this).parent()).find("input[name='keyword']").val());
+				}
+			});
+			$(".parentKeyword").click(function(){
+				showContent($($(this).parent()).find("input[name='key']").val(), $($(this).parent()).find("input[name='keyword']").val());
+			});
+			$(".keywordName").click(function(){
+				showContent($($(this).parent()).find("input[name='key']").val(), $($(this).parent()).find("input[name='keyword']").val());
 			});
 			$(".timeLineAddButton").click(function() {
 				console.log($($(this).parent()).find("input[name='key']").val());
@@ -195,6 +208,23 @@ function setListTimeKeyword() {
 					duration : 500
 				});
 			}
+			$(".childKeyword").click(function(){
+				if($($(this).parent()).find("input[name='keyword']").val() == "없음"){
+					showContent($($(this).parent()).find("input[name='key']").val(), $($(this).parent()).find("input[name='keyword']").val());
+				}
+				else if($($(this).parent()).find("input[name='keyword']").val() == "..."){
+					showContent($($(this).parent()).find("input[name='key']").val(), $($(this).parent()).find("input[name='keyword']").val());
+				}
+				else{
+					showContent($($(this).parent()).find("input[name='key']").val(), $($(this).parent()).find("input[name='keyword']").val());
+				}
+			});
+			$(".parentKeyword").click(function(){
+				showContent($($(this).parent()).find("input[name='key']").val(), $($(this).parent()).find("input[name='keyword']").val());
+			});
+			$(".keywordName").click(function(){
+				showContent($($(this).parent()).find("input[name='key']").val(), $($(this).parent()).find("input[name='keyword']").val());
+			});
 			$(".timeLineAddButton").click(function() {
 				console.log($($(this).parent()).find("input[name='key']").val());
 				addKeyword($($(this).parent()).find("input[name='key']").val());
@@ -379,6 +409,25 @@ function autocom() {
 			});
 		}
 	})
+}
+
+function showContent(keywordNo, keyword){
+	console.log("key : "+keywordNo+"keyword : "+keyword)
+	sessionStorage.setItem("keywordNo",keywordNo);
+	sessionStorage.setItem("keyword",keyword);					
+
+	$.getJSON("/content/getContent/" +keywordNo, function(data) {
+		console.log("000000000 "+data.content);
+		
+	if(data.content==null){
+		jQuery("#content").show("fade",300).find("iframe").attr("src","../../../contents/contents.html");
+		console.log("1111111 "+data.content);
+	}
+	else{
+		jQuery("#content").show("fade",300).find("iframe").attr("src","../../../contents/get.html");
+		console.log("22222222 "+data.content);
+	}						
+	});	
 }
 
 function inputText() {

@@ -28,7 +28,7 @@ canvas {
   margin-right: auto;
 }
 
-.childkeyword {
+.childKeyword {
 	max-width:50px;
 	font-size: 11px; 
 	font-family: Jeju Gothic; 
@@ -45,10 +45,10 @@ canvas {
 }
 
 .parentKeyword {
-	max-width:95px;
+	max-width:80px;
 	font-size: 11px; 
 	font-family: Jeju Gothic; 
-	padding:2px; 
+	padding:2px;
 	margin-top:-1px;
 	border-radius:5px;
 	white-space:nowrap;
@@ -71,16 +71,18 @@ canvas {
 }
 
 
-#searchKeywordUser{
-	font-size: 11px; font-family: Jeju Gothic; padding:2px; padding-top:3px; color:white;
-}
-
 #parentKeyword{
+	max-width:80px;
 	font-size: 11px; 
 	font-family: Jeju Gothic; 
 	padding:2px; 
-	padding-top:3px; 
-	border-radius: 5px;
+	margin-top:-1px;
+	border-radius:5px;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+	overflow:hidden;
+  display:inline-block;
+  cursor:pointer;
 }
 
 .keyword{
@@ -88,7 +90,6 @@ canvas {
 	height: 108px; 
 	padding:8px; 
 	border-radius: 15px;
-	cursor:pointer;
 }
 
 .keywordBox{
@@ -97,12 +98,6 @@ canvas {
 	height:108px; 
 	margin-top:15; 
 	display:none;
-}
-
-.timeLineBottonBox{
-	position:relative;
-	width:70px; 
-	height:108px;  
 }
 
 .timeLineAddButton{
@@ -126,6 +121,18 @@ canvas {
 	color:white;
 	font-family: "jeju Gothic";
 	font-weight: bold;
+}
+.keywordUser{
+	max-width:70px;
+	font-size: 11px;
+	font-family: Jeju Gothic; 
+	padding:2px;  
+	color:white;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+	overflow:hidden;
+  display:inline-block;
+  cursor:pointer;
 }
 
 #temp {

@@ -67,7 +67,7 @@ public class TreeServiceImpl implements TreeService {
 		keyword.setKeyword("키워드");
 		keyword.setParent(0);
 		keyword.setTreeNo(treeNo);
-		keyword.setColor("#8bfed1");
+		keyword.setColor("#2ECC71");
 		keyword.setCollapse(0);
 		
 		tree.setRootkey(((Keyword)keywordService.newKeyword(keyword)).getKey());

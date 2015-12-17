@@ -84,9 +84,6 @@
 					<div class="dropdown-menu dropdown-right" style="padding-top:0px; right:0px">
 	                        <div class="dropdown-header list-group-item-success" style="margin-top:0px">
 	                           Friend List
-	                            <ul class="actions a-alt">
-	                                <li><a href=""><i class="zmdi zmdi-check-all"></i></a></li>
-	                            </ul>
 	                        </div>
 	                        <div class="list-group lg-alt" style="margin-bottom: 0px;">
 	                        	<p id="friendListDropdown" style="display:none"></p> 
@@ -104,9 +101,6 @@
 					<div class="dropdown-menu dropdown-right" style="padding-top:0px;right:0px">
 	                        <div class="dropdown-header list-group-item-success" style="margin-top:0px">
 	                           Alert List
-	                            <ul class="actions a-alt">
-	                                <li><a href=""><i class="zmdi zmdi-check-all"></i></a></li>
-	                            </ul>
 	                        </div>
 	                        <div class="list-group lg-alt" style="margin-bottom: 0px;">
 	                        	<p id ="alertDropdown" style="display:none"></p> 
@@ -159,8 +153,7 @@
 			</div>
 			<div id="mypage"
 				style="display: none; padding-top: 0px; width: 100%; height: 350px; left: 0px; top: 50px;">
-				<iframe src="profil.html"
-					style="width: 100%; height: 100%;"></iframe>
+				<iframe style="width: 100%; height: 100%;"></iframe>
 			</div>
 
 
@@ -414,23 +407,25 @@
 	<div>
 		<div class="col-xs-6" style="padding: 0; margin:0; padding-top:2px; height:0px;">
 			{{#if parentKeyword}}
-				<span id="parentKeyword" class="parentKeyword" style=" background: {{parentKeyword.color}};"><font title="{{parentKeyword.keyword}}">{{parentKeyword.keyword}}</font>
-				<input type="hidden" value={{parentKeyword.key}}>
+				<span id="parentKeyword" style=" background: {{parentKeyword.color}};"><font title="{{parentKeyword.keyword}}">{{parentKeyword.keyword}}</font>
+				<input name="key" type="hidden" value={{parentKeyword.key}}>
+				<input name="keyword" type="hidden" value="{{parentKeyword.keyword}}">
 			</span>
 			{{else}}
 				<span id="parentKeyword" style="background:white; cursor:default;">최상위</span>
 			{{/if}}
 		</div> 
 		<div class="col-xs-6 text-right" style="padding: 0; margin:0;">
-			<span id="searchKeywordUser" style="">by {{user.name}}
+			<span id="keywordUser" class="keywordUser" style="">by {{user.name}}
 				<input type="hidden" value={{user.userNo}}>
 			</span>
 		</div>
 	</div>
 	<div>
-		<div class="col-xs-12 text-left" style="padding: 0px; margin:0px; height:30px;">
+		<div class="col-xs-12 text-left" style="padding: 0px; margin:0px; margin-top:-5px; height:30px;">
 			<span id="keyword" class="keywordName" ><font title="{{keyword.keyword}}">{{keyword.keyword}}</font>
-				<input type="hidden" value={{keyword.key}}>
+				<input name="key" type="hidden" value={{keyword.key}}>
+				<input name="keyword" type="hidden" value="{{keyword.keyword}}">
 			</span>
 		</div>
 	</div>
@@ -446,7 +441,7 @@
 
 <script id="searchListBtnTemp" type="text/x-handlebars-template">
 {{#list}}
-<div class="timeLineBtnBox" style="margin-top:15px; display:none;">
+<div class="timeLineBtnBox" style="margin-top:15px; display:none; width:70px; height:108px;">
 	<div class="timeLineCopyButton" style="display:none; cursor:pointer;">
 		<div style="width:2px; height:70px; display: inline-block;">C O P Y</div>
 	</div>
@@ -455,6 +450,7 @@
 	</div>
 	<input name="key" type="hidden" value={{keyword.key}}>
 	<input name="keyword" type="hidden" value="{{keyword.keyword}}">
+	<input name="treeNo" type="hidden" value="{{keyword.treeNo}}">
 </div>
 {{/list}}
 </script>
@@ -476,18 +472,21 @@
 		Handlebars.registerHelper( "setChildKeyword", function ( childKeywordList ){
 			var returnString = "";
 			if(childKeywordList.length == 0){
-				returnString = '<span id="childkeyword" class="childkeyword" style="background:white; display:inline; color:gray; cursor:default;">없음</span>'
+				returnString = '<span id="childkeyword" class="childKeyword" style="background:white; color:gray; cursor:default;">없음<input type="hidden" name="key" value="없음"></span>';
 				return returnString;
 			}
 			else{
 				for(var i = 0 ; i < childKeywordList.length ; i++){	
 			    if (i < 5)
 			    {
-			    	returnString += '<span class="childkeyword" style="background: '+childKeywordList[i].color+';"><font title="'+childKeywordList[i].keyword+'">'+childKeywordList[i].keyword+'</font><input type="hidden" value="'+childKeywordList[i].key+'"></span>';
+			    	returnString += '<span class="childKeyword" style="background: '+childKeywordList[i].color+';"><font title="'+childKeywordList[i].keyword+'">'
+			    						+	childKeywordList[i].keyword	+	'</font><input type="hidden" name="key" value="'+childKeywordList[i].key+'">'
+			    						+ '<input type="hidden" name="keyword" value="'+childKeywordList[i].keyword+'"></span>';
 			    }
 			    else if(i == 5)
 			    {
-			    	returnString += '<span class="childkeyword" style="background:white; width:14px;">...</span>';
+			    	returnString += '<span class="childKeyword" style="background:white; width:14px;">...'
+				    	+'<input type="hidden" name="key" value="..."></span>';
 			    }
 			    console.log("childKeywordList : "+childKeywordList.length+"i : "+i+"");
 				}
