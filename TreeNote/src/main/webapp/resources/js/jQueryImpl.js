@@ -426,6 +426,12 @@ function showContent(keywordNo, keyword){
 	else{
 		jQuery("#content").show("fade",300).find("iframe").attr("src","../../../contents/get.html");
 		console.log("22222222 "+data.content);
+		DeleteReply();
+		var sendReplyData = {
+				userNo : data.user.userNo,
+				contentNo : data.content.contentNo									
+		};
+		reply(sendReplyData);
 	}						
 	});	
 }
@@ -442,11 +448,13 @@ var page = {
 		currentPage : 1,
 		startRowNum : 0,
 		endRowNum : 0,
-		replyValueNo : 1000000
+		replyValueNo : 1000000,
+		replyUserNo : 1000000
 };
 
-function reply(contentNo) {		
-	page.replyValueNo = contentNo;
+function reply(sendReplyData) {		
+	page.replyValueNo = sendReplyData.contentNo;
+	page.replyUserNo = sendReplyData.userNo;
 	page.startRowNum=(page.currentPage-1)*page.pageSize+1;
 	page.endRowNum=page.currentPage*page.pageSize;
 	
@@ -537,7 +545,7 @@ function addReply(){
 			//$("input:hidden[name=contentNo]").val();
 			var contentNo = page.replyValueNo;
 			//var userNo = $("input:hidden[name=userNo]").val();		
-			var userNo = 1000003;
+			var userNo = page.replyUserNo;
 			
 			$.ajax( 
 					{
@@ -555,8 +563,9 @@ function addReply(){
 							"Content-Type" : "application/json"
 						},							
 						success : function(JSONData , status) {
+							console.log(JSONData);
 							JSONData.reply.regTime = compareDate(JSONData.reply.regTime);
-							console.log(JSONData.reply);
+							
 							JSONData.reply.reply.replace(" ","&nbsp;");
 							page.addReplyCounting++;
 							
@@ -565,10 +574,11 @@ function addReply(){
 								var template = Handlebars.compile(data);	
 								
 								tr = template(JSONData.reply);
-//								if($("#boardReply").find(".media").length == 1){
-//									$("#boardReply").next().before(tr); 
-//								}
-								$("#boardReply").find(".media").first().before(tr); 
+								if($("#boardReply").has(".media").length !=0){
+									$("#boardReply").find(".media").first().before(tr);									
+								}if($("#boardReply").has(".media").length==0){
+									$(tr).appendTo("#boardReply"); 
+								}								
 								replyfunction();
 								$("#reply").val("");	
 								addReplyOfReply()
@@ -589,8 +599,8 @@ function addReplyOfReply(){
 			var reply = it.val();
 			//console.log(reply);
 			var parentReplyNo = it.parent().find(".replyNo").val();
-			var contentNo = 1000011;
-			var userNo = 1000003;
+			var contentNo = page.contentNo;
+			var userNo = page.replyUserNo;
 			
 			console.log(parentReplyNo);
 			
