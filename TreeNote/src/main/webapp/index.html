@@ -246,25 +246,13 @@ $('#signUpForm p input[name=passwordCheck]').on('focusin',function(){
 
 //회원가입 버튼 
 $('#signUpButton').on('click',function(){
-// 	var str = $('#signUpForm')
-// 	var queryString = str.formSerialize(); 
-// 	alert(queryString)
-// 	var user = new FormData(str);
-// 	var formuser = getFormData(str)
-// 	console.log(formuser)
-// 	console.log(arrUser)
-// 	var formData = new FormData();
-// 	formData.append("name", $("#signUpButton input[name=name]").val());
-// 	formData.append("email", $("#signUpButton input[name=email]").val());
-// 	formData.append("password", $("#signUpButton input[name=password]").val());
-// 	formData.append("file", $("#signUpButton input[name=file]").file);
 	
 	if(checkEmail&&checkPassword&&checkName){
 		$("#signUpForm").ajaxSubmit({
 			method:'post',
 			url:'/user/addUser',
 			success : function(data) {
-
+				self.location="index.html"
 			},
 
 			error : function(error) {

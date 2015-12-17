@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.amazonaws.AmazonClientException;
+import com.amazonaws.AmazonServiceException;
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.Protocol;
 import com.amazonaws.auth.AWSCredentials;
@@ -34,7 +36,9 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.Bucket;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
-                                        import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.GetObjectRequest;
+import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.util.StringUtils;
 
 import treenote.domain.User;
@@ -129,9 +133,11 @@ public class UserController {
 					&& !file.getOriginalFilename().equals("")) {
 				// 파일이 존재하면
 				String original_name = file.getOriginalFilename();
+				System.out.println(original_name);
 				String ext = original_name.substring(original_name.lastIndexOf(".") + 1);
 				// 파일 기본경로
 				String defaultPath = session.getServletContext().getRealPath("/");;
+				System.out.println(defaultPath);
 				// 파일 기본경로 _ 상세경로
 				String path = defaultPath + "resource" + File.separator + "photo_upload" + File.separator;
 				File filedir = new File(path);
@@ -145,23 +151,51 @@ public class UserController {
 				System.out.println("realname : "+realname);
 				///////////////// 서버에 파일쓰기 /////////////////
 				file.transferTo(new File(path + realname));
-				user.setPhoto(path.replace(defaultPath, "/")+realname);
-//				AWSCredentials credentials = new BasicAWSCredentials("AKIAJWYFFXN4HGRWKRTA", "nyWYOwJfC8kqOWM8FqvM47pQuTpi3NQBpihXekCv");
-//
-//				ClientConfiguration clientConfig = new ClientConfiguration();
-//				clientConfig.setProtocol(Protocol.HTTP);
-//
-//				AmazonS3 conn = new AmazonS3Client(credentials, clientConfig);
-//				List<Bucket> buckets = conn.listBuckets();
-//				for (Bucket bucket : buckets){
-//					System.out.println(":::::::::::::::::::"+bucket.getName()+"\t"+ StringUtils.fromDate(bucket.getCreationDate()));
-//				}
-//				
-//				conn.putObject(new PutObjectRequest(path,  realname, filedata).withCannedAcl(CannedAccessControlList.PublicRead));
-//				System.out.println("realname : "+realname);
-//				///////////////// 서버에 파일쓰기 /////////////////
-//				
-//				System.out.println("여기");
+				///////////////// 아마존 서버에 파일쓰기 /////////////////
+				String AWS_BUCKETNAME = "treenote";
+		        String AWS_ACCESS_KEY = "AKIAIFT2OS6KFQXS3KDQ";
+		        String AWS_SECRET_KEY = "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";
+		        String file_path = "resources/;"; // 폴더명
+		        String file_name = realname; // 파일명 
+
+
+		        AWSCredentials credentials = new BasicAWSCredentials(AWS_ACCESS_KEY, AWS_SECRET_KEY);
+		        AmazonS3 s3 = new AmazonS3Client(credentials);
+		       
+		        try {
+		        	// 파일 업로드 부분 파일 이름과 경로를 동시에 넣어줌.
+		        	 PutObjectRequest putObjectRequest = new PutObjectRequest(AWS_BUCKETNAME, file_path+file_name,new File(path+realname));
+		             putObjectRequest.setCannedAcl(CannedAccessControlList.PublicRead); // URL 접근시 권한 읽을수 있도록 설정.
+		             s3.putObject(putObjectRequest);
+		             System.out.println("Uploadinf OK");
+		             
+		             user.setPhoto("https://s3-ap-northeast-1.amazonaws.com/"+AWS_BUCKETNAME+"/"+file_path+file_name);
+		             // 파일 다운로드 다운로드 경로와 파일이름 동시 필요. 
+//		             System.out.println("Downloading an object");
+//		             S3Object object = s3.getObject(new GetObjectRequest(AWS_BUCKETNAME, file_path+file_name));
+//		             System.out.println("Content-Type: "  + object.getObjectMetadata().getContentType());
+		             
+		             
+		             
+		             
+		        } catch (AmazonServiceException ase) {
+		            System.out.println("Caught an AmazonServiceException, which means your request made it "
+		                    + "to Amazon S3, but was rejected with an error response for some reason.");
+		            System.out.println("Error Message:    " + ase.getMessage());
+		            System.out.println("HTTP Status Code: " + ase.getStatusCode());
+		            System.out.println("AWS Error Code:   " + ase.getErrorCode());
+		            System.out.println("Error Type:       " + ase.getErrorType());
+		            System.out.println("Request ID:       " + ase.getRequestId());
+		        } catch (AmazonClientException ace) {
+		            System.out.println("Caught an AmazonClientException, which means the client encountered "
+		                    + "a serious internal problem while trying to communicate with S3, "
+		                    + "such as not being able to access the network.");
+		            System.out.println("Error Message: " + ace.getMessage());
+		        }
+				
+				
+				
+				
 				
 				userService.addUser(user);
 			} else {
