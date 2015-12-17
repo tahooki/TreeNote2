@@ -409,6 +409,17 @@ function autocom() {
 		}
 	})
 }
+var page = {
+		addReplyCounting : 0,
+		pageSize : 5,
+		currentPage : 1,
+		startRowNum : 1,
+		endRowNum : 5,
+		contentNo : 1000000,
+		replyUserNo : 1000000
+};
+
+
 
 function showContent(keywordNo, keyword){
 	console.log("key : "+keywordNo+"keyword : "+keyword)
@@ -426,11 +437,22 @@ function showContent(keywordNo, keyword){
 		jQuery("#content").show("fade",300).find("iframe").attr("src","../../../contents/get.html");
 		console.log("22222222 "+data.content);
 		DeleteReply();
-		var sendReplyData = {
-				userNo : data.user.userNo,
-				contentNo : data.content.contentNo									
-		};
-		reply(sendReplyData);
+		
+		sessionStorage.setItem('addReplyCounting', 0);
+		sessionStorage.setItem('pageSize', 5);
+		sessionStorage.setItem('currentPage', 1);
+		sessionStorage.setItem('startRowNum', 1);
+		sessionStorage.setItem('endRowNum', 5);
+		sessionStorage.setItem('contentNo', data.content.contentNo);
+		sessionStorage.setItem('replyUserNo', data.user.userNo);
+//		page.currentPage=1;
+//		page.startRowNum=1;
+//		page.endRowNum=5
+//		page.replyValueNo=data.content.contentNo;
+//		page.replyUserNo=data.user.userNo;
+		
+		getTotalReply();
+		listReply();
 	}						
 	});	
 }
@@ -441,48 +463,23 @@ function inputText() {
 } 
 
 /*댓글 기능 함수 시작*/
-var page = {
-		addReplyCounting : 0,
-		pageSize : 5,
-		currentPage : 1,
-		startRowNum : 0,
-		endRowNum : 0,
-		replyValueNo : 1000000,
-		replyUserNo : 1000000
-};
 
-function reply(sendReplyData) {		
-	page.replyValueNo = sendReplyData.contentNo;
-	page.replyUserNo = sendReplyData.userNo;
-	page.startRowNum=(page.currentPage-1)*page.pageSize+1;
-	page.endRowNum=page.currentPage*page.pageSize;
-	
-	listReply(page);
-	addReply();	
-	console.log("시작");
-	$('.totalReplyCount').click(function(e) {
-		page.currentPage++
-		if(page.addReplyCounting !=0){			
-			page.startRowNum=((page.currentPage-1)*page.pageSize+1)+page.addReplyCounting;
-			page.endRowNum=(page.currentPage*page.pageSize)+page.addReplyCounting;
-		}
-		else{
-			page.startRowNum=(page.currentPage-1)*page.pageSize+1;  
-			page.endRowNum=page.currentPage*page.pageSize;
-		}
-		listReply(page);
-	});
-	$.getJSON("/reply/getTotalReply/"+page.replyValueNo, function(data){ 
+
+
+function getTotalReply() {	
+	$.getJSON("/reply/getTotalReply/"+sessionStorage.getItem('contentNo'), function(data){ 
 		//console.log(data.totalReplyCount);
 		$(".totalReplyCount").text(data.totalReplyCount+"개");
 	});
 }		
+
 function DeleteReply(){
 	$("#boardReply").children().remove();
 	$(".totalReplyCount").text("");
 	console.log("aa");
 }
-function listReply(page){
+
+function listReply(){
 	$(function() {			
 		$.ajax( 
 				{
@@ -490,11 +487,11 @@ function listReply(page){
 					method : "POST" ,
 					dataType : "json" ,
 					data: JSON.stringify({
-						replyValueNo : page.replyValueNo,
-						pageSize : page.pageSize,
-						currentPage : page.currentPage,
-						startRowNum : page.startRowNum,
-						endRowNum : page.endRowNum							
+						replyValueNo : sessionStorage.getItem('contentNo'),
+						pageSize : sessionStorage.getItem('pageSize'),
+						currentPage : sessionStorage.getItem('currentPage'),
+						startRowNum : sessionStorage.getItem('startRowNum'),
+						endRowNum : sessionStorage.getItem('endRowNum')							
 					}),
 					headers : {
 						"Accept" : "application/json",
@@ -525,7 +522,6 @@ function listReply(page){
 								tr = template(JSONData);
 								$("#boardReply").append(tr);  
 								replyfunction();
-								addReplyOfReply();
 							}else{
 								//alert("댓글이 없습니다.");
 							} 
@@ -536,118 +532,141 @@ function listReply(page){
 	});	
 }
 
-function addReply(){
-	$('input:text[name=reply]').keyup(function(e) {
-		if (e.keyCode == 13) {
-			var reply = $("input:text[name=reply]").val();
-			var parentReplyNo = 0;
-			//$("input:hidden[name=contentNo]").val();
-			var contentNo = page.replyValueNo;
-			//var userNo = $("input:hidden[name=userNo]").val();		
-			var userNo = page.replyUserNo;
-			
-			$.ajax( 
-					{
-						url : "/reply/addReply/" ,
-						method : "POST" ,
-						dataType : "json" ,
-						data: JSON.stringify({
-							reply : reply,
-							parentReplyNo : parentReplyNo,
-							contentNo : contentNo,
-							userNo : userNo
-						}),
-						headers : {
-							"Accept" : "application/json",
-							"Content-Type" : "application/json"
-						},							
-						success : function(JSONData , status) {
-							console.log(JSONData);
-							JSONData.reply.regTime = compareDate(JSONData.reply.regTime);
-							
-							JSONData.reply.reply.replace(" ","&nbsp;");
-							page.addReplyCounting++;
-							
-							$.get("../resources/hbs/reply/replyTemplate.hbs", function(data){     
-								var tr;	
-								var template = Handlebars.compile(data);	
-								
-								tr = template(JSONData.reply);
+
+$(document).on('keyup','input:text[name=reply]',function(e) {
+	if (e.keyCode == 13) {
+		var reply = $(this).val();
+		var parentReplyNo = 0;
+		//$("input:hidden[name=contentNo]").val();
+//		var contentNo = page.replyValueNo;
+		//var userNo = $("input:hidden[name=userNo]").val();		
+//		var userNo = page.replyUserNo;
+		
+		$.ajax( 
+				{
+					url : "/reply/addReply/" ,
+					method : "POST" ,
+					dataType : "json" ,
+					data: JSON.stringify({
+						reply : reply,
+						parentReplyNo : parentReplyNo,
+						contentNo : sessionStorage.getItem('contentNo'),
+						userNo : sessionStorage.getItem('userNo')	
+					}),
+					headers : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					},							
+					success : function(JSONData , status) {
+						console.log(JSONData);
+						JSONData.reply.regTime = compareDate(JSONData.reply.regTime);
+						
+						JSONData.reply.reply.replace(" ","&nbsp;");
+						page.addReplyCounting++;
+						
+						$.get("../resources/hbs/reply/replyTemplate.hbs", function(data){
+							 var template = Handlebars.compile(data);	
+							 var tr = template(JSONData.reply);
 								if($("#boardReply").has(".media").length !=0){
 									$("#boardReply").find(".media").first().before(tr);									
 								}if($("#boardReply").has(".media").length==0){
 									$(tr).appendTo("#boardReply"); 
 								}								
 								replyfunction();
-								$("#reply").val("");	
-								addReplyOfReply()
-							});	
-						}							
+								$("#reply").val("");
+						});	
+					}							
 				});			
-		}if (e.keyCode == 27) {
-			$("#reply").val("");
-		}		
-	});			
-}
+	}if (e.keyCode == 27) {
+		$("#reply").val("");
+	}		
+});			
 
-function addReplyOfReply(){
-	$('.comentOfcomentinput').keyup(function(e) {
-		var it = $(this);
-		//console.log("AA");
-		if (e.keyCode == 13) {
-			var reply = it.val();
-			//console.log(reply);
-			var parentReplyNo = it.parent().find(".replyNo").val();
-			var contentNo = page.contentNo;
-			var userNo = page.replyUserNo;
-			
-			console.log(parentReplyNo);
-			
-			$.ajax( 
-					{
-						url : "/reply/addReply/" ,
-						method : "POST" ,
-						dataType : "json" ,
-						data: JSON.stringify({
-							reply : reply,
-							parentReplyNo : parentReplyNo,
-							contentNo : contentNo,
-							userNo : userNo
-						}),
-						headers : {
-							"Accept" : "application/json",
-							"Content-Type" : "application/json"
-						},							
-						success : function(JSONData , status) {
-							console.log("JSONData :: "+JSONData);
-							console.log(JSONData.reply);
-							JSONData.reply.regTime = compareDate(JSONData.reply.regTime);
+$(document).on('click','.totalReplyCount',function(e){
+	var currentPage = sessionStorage.getItem('currentPage');
+	var startRowNum = sessionStorage.getItem('startRowNum');
+	var endRowNum = sessionStorage.getItem('endRowNum');
+	var pageSize = sessionStorage.getItem('pageSize');
+	var addReplyCounting =sessionStorage.getItem('addReplyCounting');
+	
+	currentPage++
+	
+	if(page.addReplyCounting !=0){			
+		startRowNum=((currentPage-1)*pageSize+1)+addReplyCounting;
+		endRowNum=(currentPage*pageSize)+addReplyCounting;
+	}
+	else{
+		startRowNum=(currentPage-1)*pageSize+1;  
+		endRowNum=currentPage*pageSize;
+	}
+	
+	sessionStorage.setItem('currentPage', currentPage);
+	sessionStorage.setItem('startRowNum', startRowNum);
+	sessionStorage.setItem('endRowNum', endRowNum);
+	sessionStorage.setItem('addReplyCounting', addReplyCounting);
+	listReply();
+});
+
+$(document).on('keyup','.comentOfcomentinput',function(e) {
+	var it = $(this);
+	//console.log("AA");
+	if (e.keyCode == 13) {
+		var reply = it.val();
+		//console.log(reply);
+		var parentReplyNo = it.parent().find(".replyNo").val();
+//		var contentNo = page.replyValueNo;
+//		var userNo = page.replyUserNo;
+//		console.log(contentNo);
+//		console.log(parentReplyNo);
+		
+		$.ajax( 
+				{
+					url : "/reply/addReply/" ,
+					method : "POST" ,
+					dataType : "json" ,
+					data: JSON.stringify({
+						reply : reply,
+						parentReplyNo : parentReplyNo,
+						contentNo : sessionStorage.getItem('contentNo'),
+						userNo : sessionStorage.getItem('userNo')
+					}),
+					headers : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					},							
+					success : function(JSONData , status) {
+						console.log(JSONData);
+						console.log(JSONData.reply);
+						JSONData.reply.regTime = compareDate(JSONData.reply.regTime);
+						
+						JSONData.reply.reply.replace(" ","&nbsp;");
+						
+						var addReplyCounting = sessionStorage.getItem('addReplyCounting');
+						addReplyCounting++;
+						sessionStorage.setItem('addReplyCounting', addReplyCounting);
+						
+						$.get("../resources/hbs/reply/replyOfReplyTemplate.hbs", function(data){     
+							var tr;	
+							var template = Handlebars.compile(data);	
 							
-							JSONData.reply.reply.replace(" ","&nbsp;");
-							page.addReplyCounting++;
-							
-							$.get("../resources/hbs/reply/replyOfReplyTemplate.hbs", function(data){     
-								var tr;	
-								var template = Handlebars.compile(data);	
-								
-								tr = template(JSONData.reply);
-								it.parents(".comentOfcomentinsert").find(".media").first().before(tr); 
-								replyfunction();
-								it.parents(".media").find(".comentOfcomentinsert").show();
-								it.val("");		
-								var co = $.trim(it.parents(".media").find(".comentPlusRe").text().replace("개"," "))
-								if((co==0) || (co=="답글달기")){
-									co=1;
-								}else{
-									co++;
-								}
-								it.parents(".media").find(".comentPlusRe").text(co+" 개");
-							});	
-						}							
-				});			
-		}
-	});			
-}
+							tr = template(JSONData.reply);
+							it.parents(".comentOfcomentinsert").find(".media").first().before(tr); 
+							replyfunction();
+							it.parents(".media").find(".comentOfcomentinsert").show();
+							it.val("");		
+							var co = $.trim(it.parents(".media").find(".comentPlusRe").text().replace("개"," "))
+							if((co==0) || (co=="답글달기")){
+								co=1;
+							}else{
+								co++;
+							}
+							it.parents(".media").find(".comentPlusRe").text(co+" 개");
+						});	
+					}							
+			});			
+	}
+});			
+
  
 
 function replyfunction(){
@@ -685,7 +704,7 @@ function replyfunction(){
 		$.getJSON('/reply/removeReply/'+no, function(){	
 			thi.parents(".media").remove();	
 		});
-		$.getJSON("/reply/getTotalReply/"+page.replyValueNo, function(data){ 
+		$.getJSON("/reply/getTotalReply/"+sessionStorage.getItem('contentNo'), function(data){ 
 			//console.log(data.totalReplyCount);
 			$(".totalReplyCount").text(data.totalReplyCount+" 개")
 		});
