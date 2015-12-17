@@ -275,6 +275,7 @@ function goSimpleImpl(treeNo) {
 				        //sessionStorage.setItem('isTimeline', 'false');
 						//setListTimeKeyword();
 				    }
+					DeleteReply();
 				}
 			});
 		
@@ -324,6 +325,8 @@ function goSimpleImpl(treeNo) {
 					else{
 						jQuery("#content").show("fade",300).find("iframe").attr("src","../../../contents/get.html");
 						console.log("22222222 "+data.content);
+						//console.log(data.content.contentNo);
+						reply(data.content.contentNo);
 					}						
 					});					
 										

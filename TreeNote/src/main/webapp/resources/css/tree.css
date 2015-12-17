@@ -147,16 +147,16 @@ canvas {
   z-index:100;
 }
 
-#reply{
-	position: absolute;
-	padding-top:70px;
-  width:280px;
-  height: 200px;
-  background-color: #ddd;
-  z-index:100;
- 	left:22%;
- 	top:30%;
-}
+/* #reply{ */
+/* 	position: absolute; */
+/* 	padding-top:70px; */
+/*   width:280px; */
+/*   height: 200px; */
+/*   background-color: #ddd; */
+/*   z-index:100; */
+/*  	left:22%; */
+/*  	top:30%; */
+/* } */
 
 #mypage{
 	position: absolute;

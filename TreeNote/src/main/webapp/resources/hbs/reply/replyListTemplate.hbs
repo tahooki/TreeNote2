@@ -1,72 +1,88 @@
 {{#each replyList}}
 
-<div class="media" style="width: 500px; border-bottom-style: inset;">
-	<div class="media-left">
-		<a href="#"> <img class="media-object" class="img-circle"
-			src="../resources/img/man.jpg" alt="..."
-			style="width: 50px; height: 50px">
-		</a>
-	</div>
-	<div class="media-body" style="height: 50px;">
-		<p class="Comment"
-			style="width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{{reply}}}</p>
-		<input type="text" class="updateComment" value="">
-		<ul class="list-inline">
-			<li class="update" value="{{replyNo}}"><a href="#"><i
-					class="glyphicon glyphicon-comment"></i>수정</a></li>
-			<li class="delete" value="{{replyNo}}"><a href="#"><i
-					class="glyphicon glyphicon-share"></i>삭제</a></li>
-			<li class="comentPlus" value="{{replyNo}}">답글 수 : {{totalReplyCount}}</li>
-			<li><p>{{regTime}}</p></li>
-		</ul>
-	</div>	
+<div class="media"
+		style="width: 315px; height: auto; padding-left: 7px; margin-top: 7px;">
+			<div class="media-left">
+				<a href="#"> <img class="media-object" src="//placehold.it/100s"
+					alt="..." style="width: 40px; height: 40px;">
+				</a>
+			</div>
+			<div class="media-body" style="height: 50px;">
+								
+				<div  class="glyphicon glyphicon-trash delete" style="font-size: 12px; float: right;  padding-right : 18px;"></div>
+				<div class="glyphicon glyphicon-pencil update"  style="font-size: 12px; float: right;  padding-right : 6px;"></div>
+				<input class="replyNo" type="hidden" value="{{replyNo}}">
+				
+	
+				<div class="Comment"
+					style="width: 210px; float: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+					<font style="font-size: 12.5px;" class="CommentFont">{{{reply}}}</font>
+				</div>							
+				<ul class="list-inline" style="float: left; padding-top: 2px;">
+					<li class="comentplus" value="{{replyNo}}"><a href="#"><font
+							class="comentPlusRe" style="font-size: 12px; color: darkblue;">{{totalReplyCount}} 개</font></a></li>
+					<li class="regTime"><font class="regTimeFont" style="font-size: 12px; color: darkblue;">{{regTime}}</font></li>
+					
+				</ul>
+				<input type="text" class="updateComment" value=""
+					style="display: none; width: 220px; height: 30px; float: left;">
+			</div>	
 	
 	<div class="comentOfcomentinsert">
 		{{#each replyOfReply}}
-			<div class="media-m">
-				<div style="margin-left: 50px">
-					<div class="media-left">
-						<a href="#"> <img class="media-object" class="img-circle"
-							src="//placehold.it/100" alt="..."
-							style="width: 35px; height: 35px">
-						</a>
-					</div>
-					<div class="media-body" style="height: 40px;">
-						<p class="Comment"
-							style="width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-							<font size="2px" class="replyofreply">{{{reply}}}</font>
-						</p>
-						<input type="text" class="updateCommentOfComment" value="">
-						<ul class="list-inline">
-							<li class="updateReplyOfReply" value="{{replyNo}}"><a href="#"><i
-									class="glyphicon glyphicon-comment"></i><font size="2px">수정</font></a></li>
-							<li class="deleteReplyOfReply" value="{{replyNo}}"><a href="#"><i
-									class="glyphicon glyphicon-share"></i><font size="2px">삭제</font></a></li>
-							<li><p>
-									<font size="2px">{{regTime}}</font>
-								</p></li>
-						</ul>
-					</div>
+		<div class="media-m"
+			style="height: 50px; margin-left: 37px; border-left-style: groove; border-left-color: whitesmoke;">
+			<div style="height: 50px;">
+				<div class="media-left"
+					style="height: 30px; padding-left: 7px; padding-top: 0px;">
+					<a href="#"> <img class="media-object" src="//placehold.it/100"
+						alt="..." style="width: 33px; height: 33px;">
+					</a>
+				</div>
+				<div class="media-body" style="height: 40px; width: 180px;">
+										
+					<div  class="glyphicon glyphicon-trash deleteReplyOfReply" style="font-size: 12px; float: right;  padding-right : 0px;"></div>
+					<div class="glyphicon glyphicon-pencil updateReplyOfReply"  style="font-size: 12px; float: right;  padding-right : 6px;"></div>
+					<input class="replyNo" type="hidden" value="{{replyNo}}">
+					
+					<p class="Comment"
+						style="width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; height: 20px; margin-top: -2px;">
+						<font size="2px" class="replyofreply"
+							style="width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11.5px;">{{{reply}}}</font>
+					</p>
+					<ul class="list-inline"
+						style="height: 20px; margin-left: -3px; margin-top: -10px;">
+						
+						<li><font style="font-size: 11.5px; color: darkblue;">{{regTime}}</font></li>
+					</ul>
+															
+					<input type="text" class="updateCommentOfComment" name="{{replyNo}}"
+						style="width: 77%; margin-top: 4.5px; height: 24px;">
 				</div>
 			</div>
+		</div>
 		{{/each}}
+		<div class="media"
+			style="height: 34px; margin-top: 0px; margin-left: 37px; border-left-style: groove; border-left-color: whitesmoke;">
+			<div style="height: 34px;">
+				<div class="media-left" style="height: 30px; padding-left: 7px;">
+					<a href="#"> <img class="media-object" src="//placehold.it/100"
+						alt="..." style="width: 33px; height: 33px;">
+					</a>
+				</div>
+				<div class="media-body" style="height: 40px; width: 170px;">
+					<input type="text" class="comentOfcomentinput" name="{{replyNo}}"
+						style="width: 100%; margin-top: 4.5px; height: 24px;"
+						placeholder="답글을 입력해주세요..."> <input type="hidden"
+						class="replyNo" value="{{replyNo}}">
+					<input type="hidden" class="replyNo" value="{{replyNo}}">
+				</div>
+			</div>
+		</div> 
+		
 	</div>	
 	
-	<div style="margin-left: 50px" class="comentOfcoment">
-		<div class="media" style="width: 500px; border-bottom-style: inset;">
-			<div class="media-left">
-				<a href="#"> <img class="media-object" class="img-circle"
-					src="../resources/img/man.jpg" alt="..."
-					style="width: 35px; height: 35px">
-				</a>
-			</div>
-			<div class="media-body" style="height: 40px;">
-				<input type="text" class="comentOfcomentinput" name="{{replyNo}}"
-									style="width:70%; margin-top: 6px"  placeholder="답글을 입력해주세요..." > 
-									<input type="hidden" class="replyNo" value="{{replyNo}}">		
-			</div>			
-		</div>
-	</div> 		
+			
 </div>
    
 {{/each}}

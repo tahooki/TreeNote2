@@ -18,6 +18,9 @@
 <link rel="stylesheet" href="resources/css/bootstrap.css">
 <link rel="stylesheet" href="resources/css/bootstrap.min.css">
 
+<!-- 댓글 리스트 -->
+<link href="resources/css/font-awesome.min.css" rel="stylesheet">
+<link href="resources/css/styles.css" rel="stylesheet">
 <!-- 개발 부분 -->
 
 <script src="resources/js/goImpl.js"></script>
@@ -166,10 +169,41 @@
 			 		<div class="col-xs-8" style="height:100%; padding:10px;">
        			<iframe src="" frameborder="0" width="100%" height="340px" marginwidth="0" marginheight="0" > </iframe>
        		</div>
+       		
+       		<!-- 댓글 리스트란  시작-->
        		<div class="col-xs-4" style="height:100%; padding:10px; padding-left:0px;">
-       			<div style="width:100%; height:256px; background:white;"></div>
+       			<div style="width: 100%; height: 256px; background: white; overflow: auto; overflow-x: hidden; overflow-y: auto;">
+					<div id="boardReply">
+						
+					</div>
+					<p class="totalReplyCount" style="position: fixed;top: 712px;right: 36px;"></p>
+									
+					
+       			</div>
+       			<!-- 댓글 리스트란  끝-->
        			<div style="width:100%; height:10px;"></div>
-       			<div style="width:100%; height:64px; background:white;"></div>
+       			
+       			<!-- 댓글 입력란  시작-->
+       			<div style="width:100%; height:64px; background:white;">
+										
+					<div class="media"
+						style="width: 315px; height: 50px; padding-left: 7px; padding-top: 12px; overflow: visible;">
+						<div class="media-left" style="max-width: 40px; max-height: 40px;">
+							<a href="#"> <img class="media-object" src="//placehold.it/100"
+								alt="..." style="width: 40px; height: 40px;">
+							</a>
+						</div>
+						<div class="media-body"
+							style="height: 30px; padding-left: 7px; padding-top: 4px;">
+							<input type="text" name="reply" id="reply"
+								style="width: 258px; height: 30px; float: left;"
+								placeholder="댓글을 입력해주세요..."> <a href="#"
+								style="float: right; margin-bottom: 15px"></a>
+						</div>
+					</div>
+					
+       			</div>
+       			<!-- 댓글 입력란 끝 -->
        		</div>
        </div>
 
