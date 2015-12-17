@@ -409,17 +409,6 @@ function autocom() {
 		}
 	})
 }
-var page = {
-		addReplyCounting : 0,
-		pageSize : 5,
-		currentPage : 1,
-		startRowNum : 1,
-		endRowNum : 5,
-		contentNo : 1000000,
-		replyUserNo : 1000000
-};
-
-
 
 function showContent(keywordNo, keyword){
 	console.log("key : "+keywordNo+"keyword : "+keyword)
@@ -439,17 +428,13 @@ function showContent(keywordNo, keyword){
 		DeleteReply();
 		
 		sessionStorage.setItem('addReplyCounting', 0);
-		sessionStorage.setItem('pageSize', 5);
+		sessionStorage.setItem('pageSize', 4);
 		sessionStorage.setItem('currentPage', 1);
 		sessionStorage.setItem('startRowNum', 1);
-		sessionStorage.setItem('endRowNum', 5);
+		sessionStorage.setItem('endRowNum', 4);
 		sessionStorage.setItem('contentNo', data.content.contentNo);
 		sessionStorage.setItem('replyUserNo', data.user.userNo);
-//		page.currentPage=1;
-//		page.startRowNum=1;
-//		page.endRowNum=5
-//		page.replyValueNo=data.content.contentNo;
-//		page.replyUserNo=data.user.userNo;
+
 		
 		getTotalReply();
 		listReply();
@@ -591,7 +576,7 @@ $(document).on('click','.totalReplyCount',function(e){
 	
 	currentPage++
 	
-	if(page.addReplyCounting !=0){			
+	if(addReplyCounting !=0){			
 		startRowNum=((currentPage-1)*pageSize+1)+addReplyCounting;
 		endRowNum=(currentPage*pageSize)+addReplyCounting;
 	}
