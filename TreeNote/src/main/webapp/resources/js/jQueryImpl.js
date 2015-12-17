@@ -547,7 +547,9 @@ $(document).on('keyup','input:text[name=reply]',function(e) {
 						JSONData.reply.regTime = compareDate(JSONData.reply.regTime);
 						
 						JSONData.reply.reply.replace(" ","&nbsp;");
-						page.addReplyCounting++;
+						var addReplyCounting = sessionStorage.getItem("addReplyCounting");
+						addReplyCounting++;
+						sessionStorage.setItem("addReplyCounting",addReplyCounting);
 						
 						$.get("../resources/hbs/reply/replyTemplate.hbs", function(data){
 							 var template = Handlebars.compile(data);	
@@ -559,6 +561,10 @@ $(document).on('keyup','input:text[name=reply]',function(e) {
 								}								
 								replyfunction();
 								$("#reply").val("");
+								$.getJSON("/reply/getTotalReply/"+sessionStorage.getItem('contentNo'), function(data){ 
+									//console.log(data.totalReplyCount);
+									$(".totalReplyCount").text(data.totalReplyCount+" 개")
+								});
 						});	
 					}							
 				});			
