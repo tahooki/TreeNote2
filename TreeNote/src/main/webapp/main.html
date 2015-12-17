@@ -43,12 +43,16 @@
 <body style="height: 100%;">
 	<nav class="navbar navbar-fixed-top" id="navbar">
 		<div class="container" style="padding:0px; width: 992px;background-color: #2ECC71;">
-			<!-- 트리리스트부분 -->
 			<div class="col-xs-4" style="padding:0px;">
-				<div class="col-xs-2" style="padding:0px;">
+				<img src="resources/img/treenote.png" width="280px"
+					height="50px" style="width: 55%; margin: 1% 0 0 5%; height: 80%;">
 				<img  src="resources/img/btn_treeadd.png" width="40px"
 					height="40px" style="margin: 5px; cursor:pointer;" title="트리추가">
-				</div>
+			</div>
+		
+			<!-- 트리리스트부분 -->
+			<div class="col-xs-4 text-center" style="padding:0px;height: 50px;">
+
 			<div class="templist">
 				<div class="col-xs-1" style="padding:0px;">
 				<img src="resources/img/btn_treelist_left.png" width="20px"	height="40px" style="margin: 5px;" >
@@ -59,20 +63,12 @@
 					height="40px" style="margin: 5px;">
 				</div>
 			</div>
-			
 			</div>
 
-			<div class="col-xs-4 text-center" style="padding:0px;">
-				<img src="resources/img/treenote.png" width="280px"
-					height="50px" >
-
-			</div>
 			<div class="col-xs-4 text-right" style="padding:0px;">
 				<img id="btn_mypage" src="resources/img/btn_mypage.png" width="30px" height="30px" style="margin:10px; cursor:pointer;" title="마이페이지">
 				<img id="btn_timeline" src="resources/img/btn_timeline.png" width="30px" height="30px" style="margin:10px; cursor:pointer;" title="타임라인">
 				<img id="btn_search" src="resources/img/btn_search.png" width="30px" height="30px" style="margin:10px; cursor:pointer;" title="검색"><!-- update 12/11/friday -->	
-
-				
 				
 				<!-- 친구리스트 드롭다운 메뉴 -->
 				<div style="display:inline-block" id ="friendListDrop">
@@ -107,19 +103,12 @@
 	                        </div>
 	                    </div>
 				</div>
-				<!---------------------------------------- -->
-				
-				<!---------------------------------------------------------------->
+
 				<img id="btn_logout" src="resources/img/btn_logout.png" width="30px" height="30px" style="margin:10px; cursor:pointer;" title="로그아웃">	
 			</div>
 			<!--/.navbar-collapse -->
 		</div>
 	</nav>
-
-
-
-
-
 
 	<div id="treeContainer"
 		style="display: none; max-width: 992px; width: 100%; height: 100%; margin: 0 auto; background: #E4E4E4;">
@@ -293,8 +282,6 @@
 {{/each}}
 </script>
 
-
-
 <!-- update 12/11/friday -->
 <!-- //핸들바 이용 서버에서 가져온 친구 정보 입력 -->
 <script type="text/javascript">
@@ -353,19 +340,14 @@
 		tr2 = template2(obj);
 		//console.log(tr2);
 		$('#friendListDropdown').before(tr2)
-		
-		
+
 		var tr;
 		var templateSource = $("#alertList").html();
 		var template = Handlebars.compile(templateSource);
 		tr = template(obj);
 		//console.log(tr);
 		$('#alertDropdown').before(tr)
-		
-		
-		
 	});
-
 	
 	//친구 수락 
 	console.log("click event start")

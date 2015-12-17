@@ -91,16 +91,11 @@ public class TreeController {
 		User user = (User)session.getAttribute("user");
 		System.out.println(treeService.getTree(user.getEditTreeNo()));
 		System.out.println(user.getEditTreeNo());
-		if(user.getEditTreeNo() == 0){
-			System.out.println("??");
-			Tree tree = new Tree();
-			tree.setUserNo(user.getUserNo());
-			user.setEditTreeNo(treeService.addTree(tree));			
-			userService.updateEditTreeNo(user);
-			model.addAttribute("Tree", treeService.getTree(user.getEditTreeNo()));
-		}else{
-			model.addAttribute("Tree", treeService.getTree(treeNo));
-		}
+		
+		user.setEditTreeNo(treeNo);			
+		userService.updateEditTreeNo(user);
+		model.addAttribute("Tree", treeService.getTree(treeNo));
+		
 	}
 	
 	
@@ -109,11 +104,21 @@ public class TreeController {
 	public void listTree(HttpSession session , Model model) throws Exception{
 		System.out.println("/listTree");
 		User user=(User)session.getAttribute("user");
+		int editTreeNo=user.getEditTreeNo();
 		System.out.println("UserNo ::::::::::::"+treeService.listTree(user.getUserNo()));
-		List<Tree> listTree=treeService.listTree(user.getUserNo());
-		List<Tree> subTree=listTree.subList(1, listTree.size());
-		model.addAttribute("Tree", listTree);
-		model.addAttribute("subTree", subTree);
+		List<Tree> listTree=treeService.listTree(user.getUserNo());	
+		List<Tree> sizeTree=treeService.listTree(user.getUserNo());
+		Object editTree = null;
+		for(int i=0 ; i<sizeTree.size() ; i++ ){
+			int treeNo=(listTree.get(i).getTreeNo());
+			if(treeNo==editTreeNo){
+				editTree=listTree.get(i);		
+				listTree.remove(i);
+				break;
+			}
+		}
+		model.addAttribute("Tree", editTree);
+		model.addAttribute("subTree", listTree);
 	}
 	
 	//추가 !! login할때 불러오는 Tree - by.Tahooki
