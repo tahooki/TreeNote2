@@ -663,27 +663,57 @@ function replyfunction(){
 		$(".updateComment").hide();	
 		$(".updateCommentOfComment").hide();
 		$(".comentOfcomentinsert").hide();
-//		$(".delete").hide();
-//		$(".update").hide();
+		$(".delete").animate({opacity:"0"}, 0);
+		$(".update").animate({opacity:"0"}, 0);
+		$(".deleteReplyOfReply").animate({opacity:"0"}, 0);
+		$(".updateReplyOfReply").animate({opacity:"0"}, 0);
+		
+		$( ".delete" ).mouseenter(function() {
+			$(this).animate({opacity:"1"});
+			$(this).next().animate({opacity:"1"});
+		}).mouseleave(function() {
+			$(this).animate({opacity:"0"});
+			$(this).next().animate({opacity:"0"});
+		});
+		
+		$( ".update" ).mouseenter(function() {
+			$(this).animate({opacity:"1"});
+			$(this).prev().animate({opacity:"1"});
+		}).mouseleave(function() {
+			$(this).animate({opacity:"0"});
+			$(this).prev().animate({opacity:"0"});
+		});		
+		
+		$( ".deleteReplyOfReply" ).mouseenter(function() {
+			$(this).animate({opacity:"1"});
+			$(this).next().animate({opacity:"1"});
+		}).mouseleave(function() {
+			$(this).animate({opacity:"0"});
+			$(this).next().animate({opacity:"0"});
+		});
+		
+		$( ".updateReplyOfReply" ).mouseenter(function() {
+			$(this).animate({opacity:"1"});
+			$(this).prev().animate({opacity:"1"});
+		}).mouseleave(function() {
+			$(this).animate({opacity:"0"});
+			$(this).prev().animate({opacity:"0"});
+		});
 		
 		$('.Comment').mouseenter(function(){
 			$(this).css("white-space","initial"); 
 		}).mouseleave(function() {
 			$(this).css("white-space","nowrap"); 
 		});
+		$('.replyofreply').mouseenter(function(){
+			$(this).css("white-space","initial"); 
+			$(this).children().css("white-space","initial");
+		}).mouseleave(function() {
+			$(this).css("white-space","nowrap"); 
+			$(this).children().css("white-space","nowrap");
+		});
 		
-//		$('.delete').mouseenter(function(){
-//			$(this).show(); 
-//		}).mouseleave(function() {
-//			//$(this).hide();
-//		});
-//		
-//		$('.update').mouseenter(function(){
-//			$(this).show(); 
-//		}).mouseleave(function() {
-//			//$(this).hide();
-//		});
-					
+		
 	});
 	
 	$('.delete').click(function(){
@@ -808,10 +838,7 @@ function replyfunction(){
 	});
 	
 	$('.comentplus').click(function(){				
-		$(this).parents(".media").find(".comentOfcomentinsert").show();		
-	});
-	$('.comentplus').dblclick(function(){
-		$(this).parents(".media").find(".comentOfcomentinsert").hide();
+		$(this).parents(".media").find(".comentOfcomentinsert").toggle();		
 	});
  };
 	 
