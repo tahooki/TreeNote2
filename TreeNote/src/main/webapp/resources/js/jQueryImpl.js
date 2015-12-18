@@ -30,6 +30,31 @@ window.onload = function(){
 		})
 	})
 	
+	$("#btn_treeadd").click(function(){
+		var data=$(".item.active")
+		//console.log(data)
+		$.ajax({
+			url : "/tree/addTree",
+				method : "POST",
+				data:JSON.stringify({
+					userNo:data.find('input[name=userNo]').val()
+				}),
+				dataType : "json",
+				contentType : "application/json",
+				success : function(JSONData, status) {
+					alert(status);
+					
+					var temp=JSONData.tree.treeNo;
+					console.log(temp);
+					$("#myDiagram").remove();
+					$("#timeline").before('<div id="myDiagram" style="position: relative; background: #E4E4E4; float: left; width: 100%; height: 100%"></div>');
+					goImpl(temp);
+					treeList();
+				}
+		 
+			 });
+	})	
+	
 	$("#btn_timeline").click(function(){
 		if (sessionStorage.getItem('nowTimeline') == 'timeline') {
 	        sessionStorage.setItem('nowTimeline', '');
@@ -77,9 +102,11 @@ window.onload = function(){
 		}
 		
 	});
-
+	
+	treeList();
 	autocom();
 	setTimeout("setListTimeKeyword()",2000);
+	
 }
 
 
@@ -250,82 +277,6 @@ function setListTimeKeyword() {
 }
 
 
-//트리 리스트 불러오기
-$(function() {
-	//alert("리스트");	
-		$.ajax({
-			url : '/tree/listTree',
-			type : 'GET',
-			dataType : 'json',
-			ContentType : "application/json",
-			success : function(list) {
-				//console.log(list);
-				$.ajax({
-					url : "resources/hbs/treeList2.hbs",
-					success : function(data) {
-						var source = data;
-						//console.log("gggggg ::"+source)
-						var template = Handlebars.compile(source);
-
-						var tr = template(list);
-						$(".col-xs-1").remove();
-						$(".col-xs-7").remove();
-						$(tr).appendTo(".templist");
-						
-						$("h5 .editTitle").click(function(){
-							var temp=$(".item.active").find('input[name=treeNo]').val();
-							updateTitle(temp);
-						})
-						$("h5").hover(function(){
-							$("h5 .editTitle").show();
-						},function(){
-							$("h5 .editTitle").hide();
-						})
-
-				/*해당트리 펼쳐짐*/
-						$(".carousel-control").click(function() {
-							var temp=$(".item.active").next().find('input[name=treeNo]').val();
-							if(temp == null){
-								temp = $($(".item")[0]).find('input[name=treeNo]').val();
-							}
-							$("#myDiagram").remove();
-							$("#timeline").before('<div id="myDiagram" style="position: relative; background: #E4E4E4; float: left; width: 100%; height: 100%"></div>');
-							setTimeout(goImpl(temp), 3000)
-							}); 
-					}
-				});
-
-			}
-
-		}); 
-
-/*트리추가*/	
-	$(".col-xs-2").click(function(){
-		var data=$(".item.active")
-		//console.log(data)
-		$.ajax({
-			url : "/tree/addTree",
-				method : "POST",
-				data:JSON.stringify({
-					userNo:data.find('input[name=userNo]').val()
-				}),
-				dataType : "json",
-				contentType : "application/json",
-				success : function(JSONData, status) {
-					alert(status);
-					
-					var temp=JSONData.tree.treeNo;
-					console.log(temp);
-					$("#myDiagram").remove();
-					$("#timeline").before('<div id="myDiagram" style="position: relative; background: #E4E4E4; float: left; width: 100%; height: 100%"></div>');
-					goImpl(temp);
-				}
-		 
-			 });
-	})	
-
-});
-
 
 function updateTitle(temp) {
 	/*트리타이틀 수정*/
@@ -358,35 +309,53 @@ function updateTitle(temp) {
 	      })
 }
 
-function List() {
+function treeList() {
 	$.ajax({
 		url : '/tree/listTree',
-		method : "GET",
+		type : 'GET',
 		dataType : 'json',
 		ContentType : "application/json",
 		success : function(list) {
+			//console.log(list);
 			$.ajax({
 				url : "resources/hbs/treeList2.hbs",
 				success : function(data) {
-				var source = data;
-				// console.log("gggggg ::"+source)
-				var template = Handlebars.compile(source);
-				var tr = template(list);
+					var source = data;
+					//console.log("gggggg ::"+source)
+					var template = Handlebars.compile(source);
+
+					var tr = template(list);
 					$(".col-xs-1").remove();
 					$(".col-xs-7").remove();
+					$("#carousel-example-generic").remove();
 					$(tr).appendTo(".templist");
-				/* 해당트리 펼쳐짐 */
+					
+					$("h5 .editTitle").click(function(){
+						var temp=$(".item.active").find('input[name=treeNo]').val();
+						updateTitle(temp);
+					})
+					$("h5").hover(function(){
+						$("h5 .editTitle").show();
+					},function(){
+						$("h5 .editTitle").hide();
+					})
+
+			/*해당트리 펼쳐짐*/
 					$(".carousel-control").click(function() {
-						var temp = $(".item.active").find('input[name=treeNo]').val();
-						alert(temp);
+						var temp=$(".item.active").next().find('input[name=treeNo]').val();
+						if(temp == null){
+							temp = $($(".item")[0]).find('input[name=treeNo]').val();
+						}
 						$("#myDiagram").remove();
 						$("#timeline").before('<div id="myDiagram" style="position: relative; background: #E4E4E4; float: left; width: 100%; height: 100%"></div>');
-						goImpl(temp);
-						});
+						setTimeout(goImpl(temp), 3000)
+						}); 
 				}
-			})
+			});
+
 		}
-	})
+
+	}); 
 }
 
 
