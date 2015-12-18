@@ -12,6 +12,8 @@ public class Reply {
 	private int parentReplyNo;
 	private int totalReplyCount;
 	private String reply;
+	private String userName;
+	private String userPhoto;
 	private Date regDate;
 	private Timestamp regTime; 	
 	private boolean deleteChildReply;
@@ -97,16 +99,27 @@ public class Reply {
 		this.replyOfReply = replyOfReply;
 	}
 
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getUserPhoto() {
+		return userPhoto;
+	}
+
+	public void setUserPhoto(String userPhoto) {
+		this.userPhoto = userPhoto;
+	}
+
 	@Override
 	public String toString() {
 		return "Reply [replyNo=" + replyNo + ", userNo=" + userNo + ", contentNo=" + contentNo + ", parentReplyNo="
-				+ parentReplyNo + ", totalReplyCount=" + totalReplyCount + ", reply=" + reply + ", regDate=" + regDate
-				+ ", regTime=" + regTime + ", deleteChildReply=" + deleteChildReply + ", replyOfReply=" + replyOfReply
-				+ "]";
+				+ parentReplyNo + ", totalReplyCount=" + totalReplyCount + ", reply=" + reply + ", userName=" + userName
+				+ ", userPhoto=" + userPhoto + ", regDate=" + regDate + ", regTime=" + regTime + ", deleteChildReply="
+				+ deleteChildReply + ", replyOfReply=" + replyOfReply + "]";
 	}
-
-
-	
-	
-
 }

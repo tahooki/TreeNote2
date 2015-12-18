@@ -1,13 +1,15 @@
 {{#each replyOfReplyList}}
-<div style="margin-left: 50px">
+<div style="margin-left: 50px; word-break: break-all;">
 	<div class="media-left">
 		<a href="#"> <img class="media-object" class="img-circle"
-			src="//placehold.it/100" alt="..."
+			src="{{userPhoto}}" alt="..."
 			style="width: 35px; height: 35px">
 		</a>
 	</div>
 	<div class="media-body" style="height: auto;">
 		<p>
+			<font size="2px" class="userName"
+							style="color: darkblue; width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11.5px;">{{userName}}</font>
 			<font size="2px" class="replyofreply" style="width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11.5px;">{{{reply}}}</font>
 		</p>
 		<ul class="list-inline">

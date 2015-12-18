@@ -437,10 +437,13 @@ function showContent(keywordNo, keyword){
 	if(data.content==null){
 		jQuery("#content").show("fade",300).find("iframe").attr("src","../../../contents/contents.html");
 		console.log("1111111 "+data.content);
+		$(".replyIn").children().hide();
 	}
 	else{
 		jQuery("#content").show("fade",300).find("iframe").attr("src","../../../contents/get.html");
 		console.log("22222222 "+data.content);
+		
+		$(".replyIn").children().show();
 		DeleteReply();
 		
 		sessionStorage.setItem('addReplyCounting', 0);
@@ -450,8 +453,8 @@ function showContent(keywordNo, keyword){
 		sessionStorage.setItem('endRowNum', 4);
 		sessionStorage.setItem('contentNo', data.content.contentNo);
 		sessionStorage.setItem('replyUserNo', data.user.userNo);
-
 		
+		$(".userPhoto").attr("src",data.user.photo);
 		getTotalReply();
 		listReply();
 	}						
@@ -499,7 +502,8 @@ function listReply(){
 						$.get("../resources/hbs/reply/replyListTemplate.hbs", function(data){     
 							var tr;	
 							var template = Handlebars.compile(data);									
-	
+							
+							console.log(JSONData);
 							var list = JSONData.replyList; 
 							
 							console.log(list);
@@ -673,190 +677,179 @@ $(document).on('keyup','.comentOfcomentinput',function(e) {
  
 
 function replyfunction(){
-	$(function(){
-		$(".updateComment").hide();	
-		$(".updateCommentOfComment").hide();
-		$(".comentOfcomentinsert").hide();
-		$(".delete").animate({opacity:"0"}, 0);
-		$(".update").animate({opacity:"0"}, 0);
-		$(".deleteReplyOfReply").animate({opacity:"0"}, 0);
-		$(".updateReplyOfReply").animate({opacity:"0"}, 0);
-		
-		$( ".delete" ).mouseenter(function() {
-			$(this).animate({opacity:"1"});
-			$(this).next().animate({opacity:"1"});
-		}).mouseleave(function() {
-			$(this).animate({opacity:"0"});
-			$(this).next().animate({opacity:"0"});
-		});
-		
-		$( ".update" ).mouseenter(function() {
-			$(this).animate({opacity:"1"});
-			$(this).prev().animate({opacity:"1"});
-		}).mouseleave(function() {
-			$(this).animate({opacity:"0"});
-			$(this).prev().animate({opacity:"0"});
-		});		
-		
-		$( ".deleteReplyOfReply" ).mouseenter(function() {
-			$(this).animate({opacity:"1"});
-			$(this).next().animate({opacity:"1"});
-		}).mouseleave(function() {
-			$(this).animate({opacity:"0"});
-			$(this).next().animate({opacity:"0"});
-		});
-		
-		$( ".updateReplyOfReply" ).mouseenter(function() {
-			$(this).animate({opacity:"1"});
-			$(this).prev().animate({opacity:"1"});
-		}).mouseleave(function() {
-			$(this).animate({opacity:"0"});
-			$(this).prev().animate({opacity:"0"});
-		});
-		
-		$('.Comment').mouseenter(function(){
-			$(this).css("white-space","initial"); 
-		}).mouseleave(function() {
-			$(this).css("white-space","nowrap"); 
-		});
-		$('.replyofreply').mouseenter(function(){
-			$(this).css("white-space","initial"); 
-			$(this).children().css("white-space","initial");
-		}).mouseleave(function() {
-			$(this).css("white-space","nowrap"); 
-			$(this).children().css("white-space","nowrap");
-		});
-		
-		
-	});
-	
-	$('.delete').click(function(){
-		var no= $(this).parent().find(".replyNo").val();
-		console.log(no);
-		var thi =$(this);
-		$.getJSON('/reply/removeReply/'+no, function(){	
-			thi.parents(".media").remove();	
-		});
-		$.getJSON("/reply/getTotalReply/"+page.replyValueNo, function(data){ 
-			//console.log(data.totalReplyCount);
-			$(".totalReplyCount").text(data.totalReplyCount+" 개")
-		});
-	});
-	
-	$('.deleteReplyOfReply').click(function(){
-		var no= $(this).parent().find(".replyNo").val();
-		console.log(no);
-		var thi =$(this); 
-		var it = thi.parents(".comentOfcomentinsert").prev(".media-body").find(".comentplus");
-		var parentReplyNo = it.val();
-		$.getJSON('/reply/removeReply/'+no, function(){	
-			thi.parents(".media-m").remove();	
-		});
-		
-		$.getJSON("/reply/getTotalReplyOfReply/"+parentReplyNo, function(data){ 
-			//console.log(data.totalReplyCount);
-			it.parent().text(data.totalReplyOfReplyCount+" 개");
-		});
-	});
-	
-	$('.update').click(function(){
-		var no= $(this).parent().find(".replyNo").val();	
-		console.log("no::"+no)
-		var reply = $(this).parents(".media-body").find(".CommentFont").text();					
-		console.log(reply);
-		$(this).parents(".media-body").find(".updateComment").show();
-		$(this).parents(".media-body").find(".updateComment").val(reply);
-		$(this).parents(".media-body").find(".CommentFont").hide();
-		$(this).parents(".media-body").find(".list-inline").hide();
-		$(this).parents(".media-body").find(".updateComment").keyup(function(e) {
-			if (e.keyCode == 27) {
-				$(this).parents(".media-body").find(".updateComment").hide();
-				$(this).parents(".media-body").find(".CommentFont").show();
-				$(this).parents(".media-body").find(".list-inline").show();
-			}
-			if (e.keyCode == 13) {							
-				var reply = $(this).parents(".media-body").find(".updateComment").val();
-				var replyNo = no;
-				console.log(reply);
-				console.log(replyNo);
-				var comment;
-				var addressUpdate=$(this);
-				$(this).parents(".media-body").find(".CommentFont").show();
-				$(this).parents(".media-body").find(".list-inline").show();
-				$(this).parents(".media-body").find(".updateComment").hide();							
-				$.ajax( 
-						{
-							url : "/reply/updateReply/" ,
-							method : "POST" ,
-							dataType : "json" ,
-							data: JSON.stringify({
-								reply : reply,											
-								replyNo : replyNo
-							}),
-							headers : {
-								"Accept" : "application/json",
-								"Content-Type" : "application/json"
-							},							
-							success : function(JSONData , status) {											
-								addressUpdate.parent().find(".CommentFont").text(JSONData.reply);
-							}				
-				});		 
-			}						
-		});						
-	});	
-	
-	$('.updateReplyOfReply').click(function(){
-		var no= $(this).parent().find(".replyNo").val();	
-		console.log("no::"+no)
-		var reply = $(this).parents(".media-m").find(".replyofreply").text();					
-		console.log(reply);
-		$(this).parents(".media-m").find(".updateCommentOfComment").show();
-		$(this).parents(".media-m").find(".updateCommentOfComment").val(reply);
-		$(this).parents(".media-m").find(".Comment").hide();
-		$(this).parents(".media-m").find(".list-inline").hide();
-		$(this).parents(".media-m").find(".updateCommentOfComment").keyup(function(e) {
-			if (e.keyCode == 27) {
-				$(this).parents(".media-m").find(".updateCommentOfComment").hide();
-				$(this).parents(".media-m").find(".Comment").show();
-				$(this).parents(".media-m").find(".list-inline").show();
-			}
-			if (e.keyCode == 13) {							
-				var reply = $(this).parents(".media-m").find(".updateCommentOfComment").val();
-				var replyNo = no;
-				console.log(reply);
-				console.log(replyNo);
-				var comment;
-				var addressUpdate=$(this).parents(".media-m");
-				$(this).parents(".media-m").find(".Comment").show();
-				$(this).parents(".media-m").find(".list-inline").show();
-				$(this).parents(".media-m").find(".updateCommentOfComment").hide();							
-				$.ajax( 
-						{
-							url : "/reply/updateReply/" ,
-							method : "POST" ,
-							dataType : "json" ,
-							data: JSON.stringify({
-								reply : reply,											
-								replyNo : replyNo
-							}),
-							headers : {
-								"Accept" : "application/json",
-								"Content-Type" : "application/json"
-							},							
-							success : function(JSONData , status) {											
-								addressUpdate.find(".replyofreply").text(JSONData.reply);
-							}				
-				});		 
-			}						
-		});						
-	});
-	
-	$('.comentplus').click(function(){				
-		$(this).parents(".media").find(".comentOfcomentinsert").toggle();		
-	});
- };
-	 
+	$(".updateComment").hide();	
+	$(".updateCommentOfComment").hide();
+	$(".comentOfcomentinsert").hide();
+	$(".delete").animate({opacity:"0"}, 0);
+	$(".update").animate({opacity:"0"}, 0);
+	$(".deleteReplyOfReply").animate({opacity:"0"}, 0);
+	$(".updateReplyOfReply").animate({opacity:"0"}, 0);
+};
 
+ $(document).on('mouseenter','.delete',function(){
+	$(this).animate({opacity:"1"});
+	$(this).next().animate({opacity:"1"});
+}).on('mouseleave','.delete',function(){
+	$(this).animate({opacity:"0"});
+	$(this).next().animate({opacity:"0"});
+}); 
+ 
+$(document).on('mouseenter','.update',function(){
+	$(this).animate({opacity:"1"});
+	$(this).prev().animate({opacity:"1"}); 
+}).on('mouseleave','.update',function(){
+	$(this).animate({opacity:"0"});
+	$(this).prev().animate({opacity:"0"});
+}); 
+ 
+$(document).on('mouseenter','.deleteReplyOfReply',function(){
+	$(this).animate({opacity:"1"});
+	$(this).next().animate({opacity:"1"});
+}).on('mouseleave','.deleteReplyOfReply',function(){
+	$(this).animate({opacity:"0"});
+	$(this).next().animate({opacity:"0"});
+}); 
+ 
+$(document).on('mouseenter','.updateReplyOfReply',function(){
+	$(this).animate({opacity:"1"});
+	$(this).prev().animate({opacity:"1"}); 
+}).on('mouseleave','.updateReplyOfReply',function(){
+	$(this).animate({opacity:"0"});
+	$(this).prev().animate({opacity:"0"});
+}); 
+ 
+$(document).on('click','.Comment',function(){
+	$(this).css("white-space","initial");  
+});
+ 
+$(document).on('click','.replyofreply',function(){
+	$(this).css("white-space","initial"); 
+	$(this).children().css("white-space","initial");	 
+});
+
+ $(document).on('click','.delete',function(){
+	var no= $(this).parent().find(".replyNo").val();
+	console.log(no);
+	var thi =$(this);
+	$.getJSON('/reply/removeReply/'+no, function(){	
+		thi.parents(".media").remove();	
+	});
+	$.getJSON("/reply/getTotalReply/"+page.replyValueNo, function(data){ 
+		//console.log(data.totalReplyCount);
+		$(".totalReplyCount").text(data.totalReplyCount+" 개")
+	});
+});
+ 
+ $(document).on('click','.deleteReplyOfReply',function() {
+	var no= $(this).parent().find(".replyNo").val();
+	console.log(no);
+	var thi =$(this); 
+	var it = thi.parents(".comentOfcomentinsert").prev(".media-body").find(".comentplus");
+	var parentReplyNo = it.val();
+	$.getJSON('/reply/removeReply/'+no, function(){	
+		thi.parents(".media-m").remove();	
+	});
+	
+	$.getJSON("/reply/getTotalReplyOfReply/"+parentReplyNo, function(data){ 
+		//console.log(data.totalReplyCount);
+		it.parent().text(data.totalReplyOfReplyCount+" 개");
+	});
+});
+		 
+$(document).on('click','.update',function() {
+	var no= $(this).parent().find(".replyNo").val();	
+	console.log("no::"+no)
+	var reply = $(this).parents(".media-body").find(".CommentFont").text();					
+	console.log(reply);
+	$(this).parents(".media-body").find(".updateComment").show();
+	$(this).parents(".media-body").find(".updateComment").val(reply);
+	$(this).parents(".media-body").find(".Comment").hide();
+	$(this).parents(".media-body").find(".list-inline").hide();
+	$(this).parents(".media-body").find(".updateComment").keyup(function(e) {
+		if (e.keyCode == 27) {
+			$(this).parents(".media-body").find(".updateComment").hide();
+			$(this).parents(".media-body").find(".Comment").show();
+			$(this).parents(".media-body").find(".list-inline").show();
+		}
+		if (e.keyCode == 13) {							
+			var reply = $(this).parents(".media-body").find(".updateComment").val();
+			var replyNo = no;
+			console.log(reply);
+			console.log(replyNo);
+			var comment;
+			var addressUpdate=$(this);
+			$(this).parents(".media-body").find(".Comment").show();
+			$(this).parents(".media-body").find(".list-inline").show();
+			$(this).parents(".media-body").find(".updateComment").hide();							
+			$.ajax( 
+					{
+						url : "/reply/updateReply/" ,
+						method : "POST" ,
+						dataType : "json" ,
+						data: JSON.stringify({
+							reply : reply,											
+							replyNo : replyNo
+						}),
+						headers : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+						},							
+						success : function(JSONData , status) {											
+							addressUpdate.parent().find(".CommentFont").text(JSONData.reply);
+						}				
+			});		 
+		}						
+	});						
+});
+$(document).on('click','.updateReplyOfReply',function() {
+	var no= $(this).parent().find(".replyNo").val();	
+	console.log("no::"+no)
+	var reply = $(this).parents(".media-m").find(".replyofreply").text();					
+	console.log(reply);
+	$(this).parents(".media-m").find(".updateCommentOfComment").show();
+	$(this).parents(".media-m").find(".updateCommentOfComment").val(reply);
+	$(this).parents(".media-m").find(".Comment").hide();
+	$(this).parents(".media-m").find(".list-inline").hide();
+	$(this).parents(".media-m").find(".updateCommentOfComment").keyup(function(e) {
+		if (e.keyCode == 27) {
+			$(this).parents(".media-m").find(".updateCommentOfComment").hide();
+			$(this).parents(".media-m").find(".Comment").show();
+			$(this).parents(".media-m").find(".list-inline").show();
+		}
+		if (e.keyCode == 13) {							
+			var reply = $(this).parents(".media-m").find(".updateCommentOfComment").val();
+			var replyNo = no;
+			console.log(reply);
+			console.log(replyNo);
+			var comment;
+			var addressUpdate=$(this).parents(".media-m");
+			$(this).parents(".media-m").find(".Comment").show();
+			$(this).parents(".media-m").find(".list-inline").show();
+			$(this).parents(".media-m").find(".updateCommentOfComment").hide();							
+			$.ajax( 
+					{
+						url : "/reply/updateReply/" ,
+						method : "POST" ,
+						dataType : "json" ,
+						data: JSON.stringify({
+							reply : reply,											
+							replyNo : replyNo
+						}),
+						headers : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+						},							
+						success : function(JSONData , status) {											
+							addressUpdate.find(".replyofreply").text(JSONData.reply);
+						}				
+			});		 
+		}						
+	});						
+}); 
+ 
+$(document).on('click','.comentplus',function(){	
+	$(this).parents(".media").find(".comentOfcomentinsert").toggle();		
+});
 
 function compareDate(regTime){
 	var thisDate = getWorldTime(+9);

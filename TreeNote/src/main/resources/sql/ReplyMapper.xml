@@ -12,6 +12,8 @@
 		<result property="regDate" 		column="reg_date" 			jdbcType="DATE" />
 		<result property="regTime" 		column="reg_date" 			jdbcType="DATE" />
 		<result property="parentReplyNo" 			column="par_reply_no" 			jdbcType="INTEGER"/>
+		<result property="userName" 				column="userName" 					jdbcType="VARCHAR" />
+		<result property="userPhoto" 				column="userPhoto" 					jdbcType="VARCHAR" />
 	</resultMap>
 	
 	<!-- SQL : INSERT -->
@@ -56,11 +58,16 @@
   	<select  id="getRelpyList"  parameterType="page"	resultMap="relpySelectMap">
 	  	SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(	SELECT reply_no , user_no , content_no , reply , reg_date, par_reply_no
-										FROM replys 	
-										WHERE content_no = #{replyValueNo} 
-										AND par_reply_no = 0										
-										ORDER BY reply_no DESC) inner_table
+	  					FROM		(	select 
+										r.reply_no reply_no, r.user_no user_no, r.content_no content_no, 
+										r.reply reply, r.reg_date reg_date, r.par_reply_no par_reply_no,
+										u.name userName, u.photo userPhoto 
+										FROM replys r
+										inner join users u 
+										on r.user_no = u.user_no 
+										WHERE r.content_no = #{replyValueNo} 
+										AND r.par_reply_no = 0										
+										ORDER BY r.reply_no DESC) inner_table
 						WHERE ROWNUM &lt;= #{endRowNum} )
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
 		ORDER BY reply_no DESC	  	
@@ -70,8 +77,13 @@
   	<select  id="getRelpyOfReplyList"  parameterType="page"	resultMap="relpySelectMap">
 	  	SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(	SELECT reply_no , user_no , content_no , reply , reg_date, par_reply_no
-										FROM replys 	
+	  					FROM		(	select 
+										r.reply_no reply_no, r.user_no user_no, r.content_no content_no, 
+										r.reply reply, r.reg_date reg_date, r.par_reply_no par_reply_no,
+										u.name userName, u.photo userPhoto 
+										FROM replys r
+										inner join users u 
+										on r.user_no = u.user_no 
 										WHERE par_reply_no = #{replyValueNo}
 										ORDER BY reply_no DESC) inner_table
 						WHERE ROWNUM &lt;= 1000000 )

@@ -1,7 +1,7 @@
 <div class="media"
 		style="width: 315px; height: auto; padding-left: 7px; margin-top: 7px;">
 			<div class="media-left">
-				<a href="#"> <img class="media-object" src="//placehold.it/100s"
+				<a href="#"> <img class="media-object" src="{{userPhoto}}"
 					alt="..." style="width: 40px; height: 40px;">
 				</a>
 			</div>
@@ -13,6 +13,7 @@
 	
 				<div class="Comment"
 					style="width: 210px; float: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+					<font style="font-size: 12.5px; display: inline; color: darkblue;" class="userName">{{userName}}</font>
 					<font style="font-size: 12.5px; display: inline;" class="CommentFont">{{{reply}}}</font>
 				</div>							
 				<ul class="list-inline" style="float: left; padding-top: 2px;">
@@ -22,15 +23,15 @@
 					
 				</ul>
 				<input type="text" class="updateComment" value=""
-					style="display: none; width: 220px; height: 30px; float: left;">
+					style="margin-top: 5px; display: none; width: 200px; height: 30px; float: left;">
 			</div>
 	
 	<div class="comentOfcomentinsert">
 		<div class="media"
 			style="height: auto; margin-top: 0px; margin-left: 37px; border-left-style: groove; border-left-color: whitesmoke;">
-			<div style="height: 34px;">
+			<div style="height: auto;">
 				<div class="media-left" style="height: 30px; padding-left: 7px;">
-					<a href="#"> <img class="media-object" src="//placehold.it/100"
+					<a href="#"> <img class="media-object" src="{{userPhoto}}"
 						alt="..." style="width: 33px; height: 33px;">
 					</a>
 				</div>
