@@ -20,8 +20,7 @@
 div.item h5{
 	color:white;
 	font-family:Jeju Gothic;
-
-    font-size: x-large;
+  font-size: x-large;
 }
 div.item.active {
 	color:white;

@@ -7,14 +7,14 @@
       <input type="hidden"  name="treeNo" value="{{Tree.treeNo}}">
       <input type="hidden" name="userNo" value="{{Tree.userNo}}">
        	<h5>{{Tree.title}}<img src="resources/img/btn_edit.png" class="editTitle"
-											 style="height:20px; width:20px; margin: 0 0 0 2%;"></h5>
+											 style="height:20px; width:20px; margin-left: 2px; margin-top:2px; display:none; cursor:pointer;"></h5>
     </div>
     {{#each subTree}}
       <div class="item" id="treeTitle{{@index}}">
       <input type="hidden" name="treeNo" value="{{treeNo}}">
       <input type="hidden" name="userNo" value="{{userNo}}">
        	<h5 >{{title}}<img src="resources/img/btn_edit.png"  class="editTitle"
-											style="height:20px; width:20px; margin: 0 0 0 2%;"></h5>
+											style="height:20px; width:20px; margin-left: 2px; margin-top:2px; display:none; cursor:pointer;"></h5>
       </div>
     {{/each}}   
   </div>

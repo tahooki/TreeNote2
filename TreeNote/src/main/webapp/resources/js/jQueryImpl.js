@@ -275,7 +275,12 @@ $(function() {
 						$("h5 .editTitle").click(function(){
 							var temp=$(".item.active").find('input[name=treeNo]').val();
 							updateTitle(temp);
-						})		
+						})
+						$("h5").hover(function(){
+							$("h5 .editTitle").show();
+						},function(){
+							$("h5 .editTitle").hide();
+						})
 
 				/*해당트리 펼쳐짐*/
 						$(".carousel-control").click(function() {
