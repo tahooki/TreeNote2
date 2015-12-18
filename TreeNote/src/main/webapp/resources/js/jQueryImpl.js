@@ -691,36 +691,20 @@ function replyfunction(){
 	$(".updateReplyOfReply").animate({opacity:"0"}, 0);
 };
 
- $(document).on('mouseenter','.delete',function(){
-	$(this).animate({opacity:"1"});
-	$(this).next().animate({opacity:"1"});
-}).on('mouseleave','.delete',function(){
-	$(this).animate({opacity:"0"});
-	$(this).next().animate({opacity:"0"});
+$(document).on('mouseenter','.media-body',function(){
+	$(this).find(".update").animate({opacity:"1"});
+	$(this).find(".delete").animate({opacity:"1"});
+}).on('mouseleave','.media-body',function(){
+	$(this).find(".update").animate({opacity:"0"});
+	$(this).find(".delete").animate({opacity:"0"});
 }); 
- 
-$(document).on('mouseenter','.update',function(){
-	$(this).animate({opacity:"1"});
-	$(this).prev().animate({opacity:"1"}); 
-}).on('mouseleave','.update',function(){
-	$(this).animate({opacity:"0"});
-	$(this).prev().animate({opacity:"0"});
-}); 
- 
-$(document).on('mouseenter','.deleteReplyOfReply',function(){
-	$(this).animate({opacity:"1"});
-	$(this).next().animate({opacity:"1"});
-}).on('mouseleave','.deleteReplyOfReply',function(){
-	$(this).animate({opacity:"0"});
-	$(this).next().animate({opacity:"0"});
-}); 
- 
-$(document).on('mouseenter','.updateReplyOfReply',function(){
-	$(this).animate({opacity:"1"});
-	$(this).prev().animate({opacity:"1"}); 
-}).on('mouseleave','.updateReplyOfReply',function(){
-	$(this).animate({opacity:"0"});
-	$(this).prev().animate({opacity:"0"});
+
+$(document).on('mouseenter','.media-body',function(){
+	$(this).find(".updateReplyOfReply").animate({opacity:"1"});
+	$(this).find(".deleteReplyOfReply").animate({opacity:"1"});
+}).on('mouseleave','.media-body',function(){
+	$(this).find(".updateReplyOfReply").animate({opacity:"0"});
+	$(this).find(".deleteReplyOfReply").animate({opacity:"0"});
 }); 
  
 $(document).on('click','.Comment',function(){
