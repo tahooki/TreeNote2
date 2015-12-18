@@ -1,6 +1,8 @@
 package treenote.web.content;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
@@ -15,10 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import treenote.domain.Content;
-import treenote.domain.Keyword;
 import treenote.domain.Photo;
 import treenote.domain.User;
 import treenote.service.content.ContentService;
+import treenote.service.user.UserService;
 
 @Controller
 @RequestMapping("/content/*")
@@ -29,6 +31,10 @@ public class ContentController {
 	@Qualifier("contentServiceImpl")
 	private ContentService contentService;
 
+	@Autowired
+	@Qualifier("userServiceImpl")
+	private UserService userService;
+	
 	public ContentController() {
 		System.out.println(this.getClass());
 	}
@@ -72,11 +78,21 @@ public class ContentController {
 				
 		Content content = new Content();
 		content = contentService.getContent(keywordNo);
-		
 		System.out.println("111111111111 "+content);
+		
+		List<User> originUserList = new ArrayList<User>();
+		if(content.getOriginUserList() != null){
+			String userNoList[] = content.getOriginUserList().split(",");
+			
+			for(int i = 0; i < userNoList.length ; i++){
+				originUserList.add(userService.getUser(Integer.parseInt(userNoList[i])));
+			}
+			System.out.println("originUserList : "+originUserList);
+		}
 		
 		model.addAttribute("content", content);
 		model.addAttribute("user", user);
+		model.addAttribute("originUserList", originUserList);
 	}
 	
 	
