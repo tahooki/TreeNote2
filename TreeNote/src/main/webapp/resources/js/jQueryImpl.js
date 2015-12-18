@@ -587,6 +587,7 @@ $(document).on('click','.totalReplyCount',function(e){
 	sessionStorage.setItem('endRowNum', endRowNum);
 	sessionStorage.setItem('addReplyCounting', addReplyCounting);
 	listReply();
+	alert("aa");
 });
 
 $(document).on('keyup','.comentOfcomentinput',function(e) {
@@ -622,10 +623,6 @@ $(document).on('keyup','.comentOfcomentinput',function(e) {
 						JSONData.reply.regTime = compareDate(JSONData.reply.regTime);
 						
 						JSONData.reply.reply.replace(" ","&nbsp;");
-						
-						var addReplyCounting = sessionStorage.getItem('addReplyCounting');
-						addReplyCounting++;
-						sessionStorage.setItem('addReplyCounting', addReplyCounting);
 						
 						$.get("../resources/hbs/reply/replyOfReplyTemplate.hbs", function(data){     
 							var tr;	
@@ -702,15 +699,15 @@ $(document).on('click','.replyofreply',function(){
 	var no= $(this).parent().find(".replyNo").val();
 	console.log(no);
 	var thi =$(this); 
-	var it = thi.parents(".comentOfcomentinsert").prev(".media-body").find(".comentplus");
-	var parentReplyNo = it.val();
+	var it = thi.parents(".media").find(".comentPlusRe");
+	var parentReplyNo = thi.parents(".media").find(".replyNo").val();
 	$.getJSON('/reply/removeReply/'+no, function(){	
 		thi.parents(".media-m").remove();	
 	});
 	
 	$.getJSON("/reply/getTotalReplyOfReply/"+parentReplyNo, function(data){ 
 		//console.log(data.totalReplyCount);
-		it.parent().text(data.totalReplyOfReplyCount+" 개");
+		it.text(data.totalReplyOfReplyCount+" 개");
 	});
 });
 		 
