@@ -280,7 +280,9 @@ $(function() {
 				/*해당트리 펼쳐짐*/
 						$(".carousel-control").click(function() {
 							var temp=$(".item.active").next().find('input[name=treeNo]').val();
-							alert(temp);
+							if(temp == null){
+								temp = $($(".item")[0]).find('input[name=treeNo]').val();
+							}
 							$("#myDiagram").remove();
 							$("#timeline").before('<div id="myDiagram" style="position: relative; background: #E4E4E4; float: left; width: 100%; height: 100%"></div>');
 							setTimeout(goImpl(temp), 3000)
