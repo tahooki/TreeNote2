@@ -38,11 +38,6 @@ public class ContentServiceImpl implements ContentService {
 	@Override
 	public int updateContent(Content content) throws Exception {
 		return contentDao.updateContent(content);
-	}	
-	
-	@Override
-	public int updateScrapContent(int content) throws Exception {
-		return contentDao.updateScrapContent(content);
 	}
 
 	@Override

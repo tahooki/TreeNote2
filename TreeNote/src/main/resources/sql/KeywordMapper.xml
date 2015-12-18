@@ -106,4 +106,8 @@
 			) b
 		WHERE rn BETWEEN 1 and 10
 	</select>
+	
+	<select id="getUserNoKeyword" resultType="java.lang.Integer">
+		SELECT u.user_no FROM users u, trees t, keywords k WHERE u.user_no = t.user_no and t.tree_no = k.tree_no and k.keyword_no = #{value}
+	</select>
 </mapper>

@@ -9,8 +9,6 @@ public interface ContentService {
 	public void removeContent(int contentNo) throws Exception;
 	//수정
 	public int updateContent(Content content) throws Exception;
-	//스크랩 업데이트
-	public int updateScrapContent(int content) throws Exception;
 	//불러오기
 	public Content getContent(int keywordNo) throws Exception;
 }

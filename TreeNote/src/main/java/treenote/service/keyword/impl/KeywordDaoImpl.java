@@ -93,4 +93,10 @@ public class KeywordDaoImpl implements KeywordDao {
 		return sqlSession.selectList("keywordMapper.getMyKeyword", userNo);
 	}
 
+	@Override
+	public int getUserNoKeyword(int keywordNo) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("keywordMapper.getUserNoKeyword", keywordNo);
+	}
+
 }

@@ -32,8 +32,8 @@ public class ContentDaoImpl implements ContentDao {
 	}
 
 	@Override
-	public void removeContent(int contentNo) throws Exception {
-		sqlSession.delete("ContentMapper.deleteContent", contentNo);
+	public int removeContent(int contentNo) throws Exception {
+		return sqlSession.delete("ContentMapper.deleteContent", contentNo);
 	}
 
 	@Override
@@ -42,21 +42,13 @@ public class ContentDaoImpl implements ContentDao {
 	}
 
 	@Override
-	public int updateScrapContent(int content) throws Exception {
-		return sqlSession.update("contentMapper.updateScrapContent", content);
+	public int updateScrapContent(Content content) throws Exception {
+		return sqlSession.update("ContentMapper.updateScrapContent", content);
 	}
 
 	@Override
 	public Content getContent(int keywordNo) throws Exception {
 		return sqlSession.selectOne("ContentMapper.getContent", keywordNo);
-	}
-
-	@Override
-	public Content copyContent(Content content) throws Exception {
-		addContent(content);
-		updateScrapContent(content.getScrap()+1);		
-		
-		return null;
 	}
 	
 }

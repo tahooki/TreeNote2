@@ -2,15 +2,17 @@ package treenote.domain;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.List;
 
 public class Content {
 	private int contentNo;
 	private int keywordNo;
 	private String content;
-	private String photo;
 	private int scrap;
 	private Date regDate;
 	private Timestamp regTime; //작성시간 추가 됨
+	private String originUserList;
+	
 
 	public int getContentNo() {
 		return contentNo;
@@ -34,14 +36,6 @@ public class Content {
 
 	public void setContent(String content) {
 		this.content = content;
-	}
-
-	public String getPhoto() {
-		return photo;
-	}
-
-	public void setPhoto(String photo) {
-		this.photo = photo;
 	}
 
 	public int getScrap() {
@@ -68,10 +62,18 @@ public class Content {
 		this.regTime = regTime;
 	}
 
+	public String getOriginUserList() {
+		return originUserList;
+	}
+
+	public void setOriginUserList(String originUserList) {
+		this.originUserList = originUserList;
+	}
+
 	@Override
 	public String toString() {
-		return "Content [contentNo=" + contentNo + ", keywordNo=" + keywordNo + ", content=" + content + ", photo="
-				+ photo + ", scrap=" + scrap + ", regDate=" + regDate + ", regTime=" + regTime + "]";
+		return "Content [contentNo=" + contentNo + ", keywordNo=" + keywordNo + ", content=" + content + ", scrap="
+				+ scrap + ", regDate=" + regDate + ", regTime=" + regTime + ", originUserList=" + originUserList + "]";
 	}
 	
 }

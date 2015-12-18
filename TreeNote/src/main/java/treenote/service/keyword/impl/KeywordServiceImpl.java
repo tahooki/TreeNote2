@@ -84,6 +84,21 @@ public class KeywordServiceImpl implements KeywordService {
 		addKeyword.setTreeNo(keyword.getTreeNo());
 		keywordDao.addKeyword(addKeyword);
 		//content 복사
+		Content content = contentDao.getContent(keyword.getKey());
+		if(keywordDao.getUserNoKeyword(keywordNo) != keywordDao.getUserNoKeyword(keyword.getKey())){
+			content.setScrap(content.getScrap()+1);
+			contentDao.updateScrapContent(content);
+			
+			if(content.getOriginUserList() == null){
+				content.setOriginUserList(""+keywordDao.getUserNoKeyword(keyword.getKey()));
+			}else{
+				content.setOriginUserList(content.getOriginUserList()+","+keywordDao.getUserNoKeyword(keyword.getKey()));
+			}
+		}
+
+		content.setKeywordNo(keywordNo);
+		content.setScrap(0);
+		contentDao.addContent(content);
 		return keywordDao.getKeyword(keywordNo);
 	}
 	
@@ -91,17 +106,27 @@ public class KeywordServiceImpl implements KeywordService {
 	public int changeKeyword(Keyword keyword) throws Exception {
 		// TODO Auto-generated method stub 
 		// content 복사
-		contentDao.removeContent(contentDao.getContent(keyword.getKey()).getContentNo());
+		contentDao.removeContent(keyword.getKey());
 		Content content = contentDao.getContent(keyword.getCopyNo());
 		Keyword copyKeyword = keywordDao.getKeyword(keyword.getCopyNo()); 
-		if(content != null){
-			content.setKeywordNo(keyword.getKey());
-			content.setScrap(0);
-			contentDao.copyContent(content);
+		
+		if(keywordDao.getUserNoKeyword(keyword.getKey()) != keywordDao.getUserNoKeyword(keyword.getCopyNo())){
+			content.setScrap(content.getScrap()+1);
+			contentDao.updateScrapContent(content);
+
+			if(content.getOriginUserList() == null){
+				content.setOriginUserList(""+keywordDao.getUserNoKeyword(keyword.getCopyNo()));
+			}else{
+				content.setOriginUserList(content.getOriginUserList()+","+keywordDao.getUserNoKeyword(keyword.getCopyNo()));
+			}
 		}
+		content.setKeywordNo(keyword.getKey());
+		content.setScrap(0);
+		contentDao.addContent(content);
+		
 		copyKeyword.setKey(keyword.getKey());
 		copyKeyword.setParent(keyword.getParent());
-		return keywordDao.updateKeyword(keyword);
+		return keywordDao.updateKeyword(copyKeyword);
 	}
 
 	@Override

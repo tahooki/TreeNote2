@@ -247,12 +247,12 @@ $(function() {
 			dataType : 'json',
 			ContentType : "application/json",
 			success : function(list) {
-				console.log(list);
+				//console.log(list);
 				$.ajax({
 					url : "resources/hbs/treeList2.hbs",
 					success : function(data) {
 						var source = data;
-						console.log("gggggg ::"+source)
+						//console.log("gggggg ::"+source)
 						var template = Handlebars.compile(source);
 
 						var tr = template(list);
@@ -264,6 +264,7 @@ $(function() {
 							var temp=$(".item.active").find('input[name=treeNo]').val();
 							updateTitle(temp);
 						})		
+
 				/*해당트리 펼쳐짐*/
 						$(".carousel-control").click(function() {
 							var temp=$(".item.active").next().find('input[name=treeNo]').val();
@@ -274,6 +275,7 @@ $(function() {
 							}); 
 					}
 				});
+
 			}
 
 		}); 
@@ -416,7 +418,7 @@ function showContent(keywordNo, keyword){
 	sessionStorage.setItem("keyword",keyword);					
 
 	$.getJSON("/content/getContent/" +keywordNo, function(data) {
-		console.log("000000000 "+data.content);
+		console.log(data);
 		
 	if(data.content==null){
 		jQuery("#content").show("fade",300).find("iframe").attr("src","../../../contents/contents.html");
@@ -448,9 +450,6 @@ function inputText() {
 } 
 
 /*댓글 기능 함수 시작*/
-
-
-
 function getTotalReply() {	
 	$.getJSON("/reply/getTotalReply/"+sessionStorage.getItem('contentNo'), function(data){ 
 		//console.log(data.totalReplyCount);
@@ -657,7 +656,6 @@ $(document).on('keyup','.comentOfcomentinput',function(e) {
 			});			
 	}
 });			
-
  
 
 function replyfunction(){
@@ -695,7 +693,7 @@ function replyfunction(){
 		$.getJSON('/reply/removeReply/'+no, function(){	
 			thi.parents(".media").remove();	
 		});
-		$.getJSON("/reply/getTotalReply/"+sessionStorage.getItem('contentNo'), function(data){ 
+		$.getJSON("/reply/getTotalReply/"+page.replyValueNo, function(data){ 
 			//console.log(data.totalReplyCount);
 			$(".totalReplyCount").text(data.totalReplyCount+" 개")
 		});

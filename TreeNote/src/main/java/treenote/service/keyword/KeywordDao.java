@@ -28,4 +28,7 @@ public interface KeywordDao {
 	public List<String> autoComplete() throws Exception;
 	//프로필 키워드 리스트
 	public List<Keyword> getMyKeyword(int userNo); 
+	
+	//키워드로 유저 넘버 가지고오기
+	public int getUserNoKeyword(int keywordNo) throws Exception;
 }
