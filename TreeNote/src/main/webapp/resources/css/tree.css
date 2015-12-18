@@ -16,6 +16,12 @@ canvas {
   z-index:100;
   overflow-y: auto;
 }
+#timeline::-webkit-scrollbar { 
+  /* This is the magic bit */
+  display: none;
+}
+
+
 #titleImageBox{
 	width: 180px; 
 	height: 40px; 

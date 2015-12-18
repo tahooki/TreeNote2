@@ -253,7 +253,7 @@ function goSimpleImpl(treeNo) {
 					//서치 풀리면 show 하게 할 예정
 					if (sessionStorage.getItem('isTimeline') == 'false') {
 				        //sessionStorage.setItem('isTimeline', 'false');
-						//setListTimeKeyword();
+						setListTimeKeyword();
 				    }
 					DeleteReply();
 				}

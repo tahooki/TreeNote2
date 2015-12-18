@@ -236,8 +236,20 @@ function setListTimeKeyword() {
 				changeKeyword($($(this).parent()).find("input[name='key']").val());
 			});
 		}
+		
 	})
+/*		$("#timeline").scroll(function(){
+			if($(window).scrollTop()==$(document).height()-$(window).height()){
+					alert("gooooooooooooooood?");
+					
+					
+					
+					
+			}
+		})*/
 }
+
+
 //트리 리스트 불러오기
 $(function() {
 	//alert("리스트");	
