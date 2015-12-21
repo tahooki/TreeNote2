@@ -251,8 +251,11 @@ $('#signUpButton').on('click',function(){
 		$("#signUpForm").ajaxSubmit({
 			method:'post',
 			url:'/user/addUser',
-			success : function(data) {
-				self.location="index.html"
+			success : function(data) {		
+				//정태가 추가한 부분				
+				alertEmail()
+				self.location="index.html";
+				sendEmail();
 			},
 
 			error : function(error) {
@@ -321,8 +324,57 @@ $('#signUpForm p input[name=email]').on('focusout',function(){
 	
 
 })
+//정태가 추가한 부분 시작
+function alertEmail(){
+	var name = $('#signUpForm p input[name=name]').val();
+	var reseiver =  $('#signUpForm p input[name=email]').val();
+	var tempArray1 = reseiver.split("@");
+	var tempArray2 = tempArray1[1].split(".");
+	var homepage = tempArray2[0].substring(0,1).toUpperCase() + tempArray2[0].substring(1,tempArray2[0].length).toLowerCase();
+	
+	alert(name+"님 "+homepage+"로 가서 E-Mail 인증을 해주세요.");
+}
 
-
+function sendEmail(){
+	var reseiver =  $('#signUpForm p input[name=email]').val();
+	var name = $('#signUpForm p input[name=name]').val();
+	var activityNo = Math.floor(Math.random() * 999999) + 1;
+	
+	console.log("reseiver"+reseiver);
+	console.log("name"+name);
+	console.log("activityNo"+activityNo);
+	
+	var content ="<div class='bb' >"+
+						"<p><font style='font-size: 23px'>가입을 위해 Tree 계정 인증이 필요합니다</font></p>"+
+						"<hr>"+
+						"<p><font style='font-size: 17px'>"+name+"님, 안녕하세요</font></p>"+		
+						"<p><font style='font-size: 17px'>Tree에 가입해주셔서 감사합니다</font></p>"+
+						"<p><font style='font-size: 17px'>Tree 가입을 완료하려면 계정을 확인하세요</font></p>"+
+						"<p><font style='font-size: 20px'>"+
+						"<a href='http://127.0.0.1:8080/user/sendEmailCheck?&reseiver="+reseiver+"&activityNo="+activityNo+"'>계정확인</a></font></p>"+
+					"</div>"+ 
+					"</div>";										
+		
+	$.ajax( 
+			{
+				url : "/user/sendEmali/" ,
+				method : "POST" ,
+				dataType : "json" ,
+				data: JSON.stringify({
+					reseiver : reseiver,											
+					content : content,
+					activityNo : activityNo
+				}),
+				headers : {
+					"Accept" : "application/json",
+					"Content-Type" : "application/json"
+				},							
+				success : function(JSONData , status) {										
+					
+				}				
+	});	
+}
+// 정태가 추가한 부분 끝
 
 </script>
 <script type="text/javascript" src="resources/js/common-passwords.js"></script>
@@ -383,7 +435,7 @@ $('#signUpForm p input[name=email]').on('focusout',function(){
 <script type="text/javascript" src="resources/js/facebookLogin.js"></script>
 <script type="text/javascript">
  $('#facebookSignup').on('click',function(){
-	 signup()
+	 signup();	
  });
  $('#fLoginbutton').on('click',function(){
 	 fLogin()

@@ -32,4 +32,7 @@ public interface UserDao {
 	public int snsSignup(User user) throws Exception;
 
 	public User fLogin(User user);
+	
+//	정태가 추가한 것 
+	public int updateUserActivity(User user) throws Exception;
 	}

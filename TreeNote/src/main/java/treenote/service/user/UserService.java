@@ -31,5 +31,7 @@ public interface UserService {
 	public int snsSignup(User user) throws Exception;
 
 	User fLogin(User user) throws Exception;
-
+	
+//	정태가 추가한 것 
+	public int updateUserActivity(User user) throws Exception;
 }

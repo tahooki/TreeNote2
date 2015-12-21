@@ -110,4 +110,13 @@ public class UserServiceImpl implements UserService {
 	public User fLogin(User user)throws Exception{
 		return userDao.fLogin(user);
 	}
+	
+//	정태가 추가한 것 
+	@Override
+	public int updateUserActivity(User user) throws Exception {
+		// TODO Auto-generated method stub
+		return userDao.updateUserActivity(user);
+	}
+	
+	
 }

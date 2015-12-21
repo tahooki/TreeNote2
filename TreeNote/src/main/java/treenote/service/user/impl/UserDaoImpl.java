@@ -107,6 +107,13 @@ public class UserDaoImpl implements UserDao {
 		return  sqlSession.selectOne("UserMapper.fLogin", user);
 	}
 	
+//	정태가 추가한 것 
+	@Override
+	public int updateUserActivity(User user) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.update("UserMapper.updateUserActivity", user);
+	}
+	
 	
 	
 }

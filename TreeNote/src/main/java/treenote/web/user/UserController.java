@@ -4,12 +4,26 @@ package treenote.web.user;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.UUID;
 
+import javax.jws.soap.SOAPBinding.Use;
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,7 +80,8 @@ public class UserController {
 		System.out.println("/login");
 		User returnUser = userService.getUser2(user.getEmail());
 		// System.out.println(password);
-		if (user.getPassword().equals(returnUser.getPassword())) {
+//		정태가 변경한 곳  && returnUser.getActivity()==1
+		if (user.getPassword().equals(returnUser.getPassword()) && returnUser.getActivity()==1) {
 			session.setAttribute("user", returnUser);
 			System.out.println("success login");
 			System.out.println(returnUser);
@@ -378,5 +393,45 @@ public class UserController {
 		}
 	}
 	
+	// 정태가 추가한 곳 
+	//이메일 인증하기 위한 사용자에게 이메일 보내기
+	@RequestMapping(value="sendEmali")
+	public void sendEmali(@RequestBody Map<String, Object> sendMap, HttpSession session, Model model)throws Exception{
+		System.out.println("/sendEmali start");
+		
+		String title = "Tree 계정인증 확인메일 입니다.";		
+		String content = (String)sendMap.get("content");
+		String receiver = (String)sendMap.get("reseiver");
+		
+		int activityNo = (int)sendMap.get("activityNo");
+		
+		System.out.println("content"+content);
+		System.out.println("receiver"+receiver);
+		System.out.println("activityNo"+activityNo);
+		
+		SendEmail sendEmail = new SendEmail();
+		sendEmail.send(title, receiver, content);
+		User user = userService.getUser2(receiver);
+		user.setActivity(activityNo);
+		userService.updateUserActivity(user);
+	}
+	
+	// 정태가 추가한 곳 
+	//계정인증요청으로 인한 Activity활성화
+	@RequestMapping(value="sendEmailCheck")
+	public String sendEmaliCheck(@RequestParam("reseiver") String userEmail, 
+								 @RequestParam("activityNo") int activity, 
+								 HttpSession session)throws Exception{
+				
+		System.out.println("/sendEmailCheck start");
+		
+		User user = userService.getUser2(userEmail);
+		
+		if(user.getActivity() == activity){
+			user.setActivity(1);
+			userService.updateUserActivity(user);
+		}
+		return "redirect:http://127.0.0.1:8080/index.html";
+	}
 	
 }
