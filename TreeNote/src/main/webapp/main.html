@@ -30,7 +30,11 @@
 <script type="text/javascript">
 
 </script>
-
+<style type="text/css">
+.modal-content fmodal .list-group-item{
+	
+}
+</style>
 <!-- 개발 부분 -->
 
 <!-- <script>
@@ -70,9 +74,9 @@
 				<img id="btn_timeline" src="resources/img/btn_timeline.png" width="30px" height="30px" style="margin:10px; margin-left:0px;cursor:pointer;" title="타임라인">
 				<img id="btn_search" src="resources/img/btn_search.png" width="30px" height="30px" style="margin:10px;margin-left:0px; margin-right:0px;cursor:pointer;" title="검색"><!-- update 12/11/friday -->	
 				
-				<!-- 친구리스트 드롭다운 메뉴 -->
+				<!-- 친구리스트 드롭다운 메뉴 // 12/18일 업데이트 됨 by shin-->
 				<div style="display:inline-block" id ="friendListDrop">
-					<span  class="dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" width="30px" height="30px" style="margin:10px; margin-left:0px;cursor:pointer;clear:both;z-index:100;">
+					<span  class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" width="30px" height="30px" style="margin:10px; margin-left:0px;cursor:pointer;clear:both;z-index:100;">
 						
 						<img id="btn_friend" src="../resources/img/btn_friend.png" style="width:30px;height:30px; cursor:pointer;" title="친구목록">
 					</span>
@@ -81,11 +85,34 @@
 	                           Friend List
 	                        </div>
 	                        <div class="list-group lg-alt" style="margin-bottom: 0px;">
-	                        	<p id="friendListDropdown" style="display:none"></p> 
-<!-- 	                            <div class="view-more">View more</div> -->
+	                        	<p id="friendListDropdown" style="display:none"></p>
+	                        	
+	                        </div>
+	                        <hr style="margin-top:5px;margin-bottom:5px">
+	                        <div id="friendSearch" style="margin-left:15px; margin-top:4px">
+	                        	<p>친구검색</p>
+	                        	<input type="text" placeholder="ex) tree@note.com " style="width:80%; margin-right:10px "> 
+	                        	<button class="flistButton" type="button">검색</button>
 	                        </div>
 	                    </div>
 				</div>
+				
+            <button class="flistButton1" type="button" data-toggle="modal" data-target=".bs-example-modal-sm" hidden>검색</button>
+			<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" >
+			  <div class="modal-dialog modal-sm" style="top:50px">
+			    <div class="modal-content fmodal" style="height:262px; text-align:center;">
+					
+			    </div>
+			  </div>
+			</div>
+				
+				
+				
+
+<!-- Small modal -->
+
+				
+				
 				
 <!-- 				알림창 -->
 				<div style="display:inline-block" id ="alertListDrop">
@@ -229,6 +256,8 @@
 	$("#timeline").show("fade", 500);
 	$("#base").show("fade", 500);
 	setTimeout("goImpl()", 1000);
+	
+	
 </script>
 
 
@@ -279,6 +308,8 @@
 </div>
 {{/each}}
 </script>
+
+
 
 <!-- update 12/11/friday -->
 <!-- //핸들바 이용 서버에서 가져온 친구 정보 입력 -->
@@ -482,6 +513,66 @@
 		var template = Handlebars.compile(templateSource);
 		return template(data);
 	}
+	
+</script>
+
+
+<!-- 	//12월 18일 추가분 by shin -->
+<script id="searchFriend" type="text/x-handlebars-template" >
+	<img alt="" src="resources/img/profile.png" style="width:100px;height:100px;margin-top:20px ">
+	<div style="font-size:2em;margin-top:10px;">{{searchFriend.name}}</div>
+	<div style="font-size:1em;margin-top:5px;">{{searchFriend.email}}</div>
+	<button style="font-size:1.2em;margin-top:15px;" onclick="javascript:requestFriend()">친구요청</button>
+	<input id="requestUserNo" type="text" value="{{searchFriend.userNo}}" hidden>
+
+</script>
+	
+<script>	
+	
+	$('#friendSearch').click(function(){return false;});
+	$('#friendSearch input').on('keypress',function(e){
+		if(e.keyCode==13){
+			$('#friendSearch button').click();
+		}
+	})
+	
+	function searchF (data){
+		var searchFS = $('#searchFriend').html();
+		var searchFST = Handlebars.compile(searchFS);
+		return searchFST(data);
+	}
+	
+	
+	$('#friendSearch button').on('click',function(){
+		$('.modal-content.fmodal').empty();
+		$('.flistButton1').click()
+		var searchEmail = $('#friendSearch input').val();
+		$.ajax({
+				url:'user/searchFriend/'+searchEmail+'.',
+				contentType:'application/json',
+				dataType:'json',
+				success:function(s){
+					var searchFST = searchF(s);
+					$('.modal-content.fmodal').append(searchFST);
+					
+				}
+			})
+	})
+	
+	function requestFriend(){
+		var requestNo = $('#requestUserNo').val();
+		$.ajax({
+			url:'/user/requestFriend/'+requestNo,
+			contentType:'application/json',
+			dataType:'json',
+			success:function(s){
+				alert('친구 요청 성공')
+			}
+		})
+	}
+	
+	
+	
 
 </script>
 
