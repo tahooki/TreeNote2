@@ -12,9 +12,22 @@
 
 <link href="//fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet" type="text/css"/>
 <link href="resources/css/main.css" rel="stylesheet" type="text/css"/>
+<script src="resources/js/jquery.min.js"></script>
 <style type="text/css">
 
 </style>
+<script type="text/javascript">
+	$.ajax({
+		url:'/user/index',
+		contentType:"application/json",
+		dataType:"json",
+		success:function(data){
+			if(data.boolean==true){
+				self.location="main.html"
+			}
+		}
+	})
+</script>
 </head>
 
 
@@ -112,7 +125,7 @@
 	</section>
   </div>
 </div>
-<script src="resources/js/jquery.min.js"></script>
+
 <!-- <script type="text/javascript" src="../resources/js/facebookLogin.js"></script> -->
 
 
@@ -181,6 +194,11 @@
 	    return indexed_array;
 	}
 	
+	$('#loginaction input[name=password]').on('keypress',function(e){
+		if(e.keyCode==13){
+			$('#loginbutton').click();
+		}
+	})
 	
 //로그인 버튼
 $("#loginbutton").click(function() {

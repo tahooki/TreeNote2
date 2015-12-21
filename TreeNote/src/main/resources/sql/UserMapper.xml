@@ -231,4 +231,12 @@
 	</select>
 
 
+	<delete id="deleteFriend" parameterType="map" >
+		DELETE FROM friends
+		<where>
+			user_no = #{user01} AND user_no2=#{user02}
+			OR user_no=#{user02} AND user_no2=#{user01}
+		</where>
+	</delete>
+
 </mapper>

@@ -101,7 +101,17 @@ public class UserController {
 		System.out.println("/logout");
 		session.invalidate();
 	}
-
+	
+	@RequestMapping(value="index")
+	public void index(HttpSession session,Model model)throws Exception{
+		if(session.getAttribute("user")!=null){
+			model.addAttribute(true);
+		}else{
+			model.addAttribute(false);
+		}
+	}
+	
+	
 	// 가입체크
 	@RequestMapping(value = "checkDuplication")
 	public void checkDuplication(@RequestBody String email, Model model) throws Exception {
@@ -432,6 +442,29 @@ public class UserController {
 			userService.updateUserActivity(user);
 		}
 		return "redirect:http://127.0.0.1:8080/index.html";
+	}
+	
+	@RequestMapping(value="searchFriend/{email}")
+	public void searchFriend(@PathVariable String email, HttpSession session, Model model) throws Exception{
+		User user = (User)session.getAttribute("user");
+		if(user!=null){
+			User searchFriend = userService.getUser2(email);
+			searchFriend.setPassword(null);
+			model.addAttribute("searchFriend", searchFriend);
+		}
+	}
+	
+	
+	//12월 21일 추가 by shin
+	@RequestMapping(value="deleteFriend/{userNo}")
+	public void deleteFriend(@PathVariable int userNo, HttpSession session) throws Exception{
+		User user = (User)session.getAttribute("user");
+		if(user!=null){
+			Map<String, Object> map = new HashMap<>();
+			map.put("user01", userNo);
+			map.put("user02", user.getUserNo());
+			userService.deleteFriend(map);
+		}
 	}
 	
 }

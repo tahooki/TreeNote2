@@ -28,7 +28,7 @@
 <link rel="stylesheet" href="resources/css/tree.css">
 
 <script type="text/javascript">
-
+	
 </script>
 <style type="text/css">
 .modal-content fmodal .list-group-item{
@@ -398,9 +398,15 @@
 	
 	$(document).on('click','.deletFriend', function(){
 		var delFriend = $(this);
- 		var deleteFridneNo = delFriend.parents('.list-group-item').find('.userNoLink').val();
- 		delFriend.parents('.list-group-item').remove();
- 		$('#btn_friend').prev().text(--countFriend)
+ 		var deleteFriendNo = delFriend.parents('.list-group-item').find('.userNoLink').val();
+ 		
+ 		$.getJSON('/user/deleteFriend/'+deleteFriendNo,function(data){
+			if(data){
+		 		delFriend.parents('.list-group-item').remove();
+		 		$('#btn_friend').prev().text(--countFriend)
+				
+			}
+		})
 	})
 	
 </script>
@@ -462,15 +468,7 @@
 
 <!-- //핸들바 이용 서버에서 가져온 친구 정보 입력 -->
 <script type="text/javascript">
-	$.getJSON('/user/listFriend', function(obj) {
-		var tr;
-		var templateSource = $("#boardTrTemplate").html();
-		var template = Handlebars.compile(templateSource);
-
-		tr = template(obj);
-		console.log(tr);
-		$('li[role=separator]').before(tr)
-	});
+	
 
 	function setSearchList(data){
 

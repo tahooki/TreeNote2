@@ -34,4 +34,6 @@ public interface UserService {
 	
 //	정태가 추가한 것 
 	public int updateUserActivity(User user) throws Exception;
+	void deleteFriend(Map<String, Object> map) throws Exception;
+
 }

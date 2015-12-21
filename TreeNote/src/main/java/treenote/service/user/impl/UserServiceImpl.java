@@ -110,6 +110,14 @@ public class UserServiceImpl implements UserService {
 	public User fLogin(User user)throws Exception{
 		return userDao.fLogin(user);
 	}
+
+	
+	
+	@Override
+	public void deleteFriend(Map< String, Object> map) throws Exception{
+		userDao.deleteFriend(map);
+	}
+
 	
 //	정태가 추가한 것 
 	@Override
@@ -119,4 +127,5 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	
+
 }

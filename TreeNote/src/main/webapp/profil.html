@@ -372,10 +372,8 @@ img.img-avatar{
 				var keyno = $(this).find('input').val();
 				sessionStorage.setItem("keywordNo",keyno);
 				sessionStorage.setItem("keyword",$(this).text());
-				alert($(this).text())
 				$.getJSON("/content/getContent/" +keyno, function(data) {
 					console.log("aaaaasaaasdfadsfsdf "+data.content);
-					alert(data.content)
 					if(data.content==null){
 						jQuery("#content",parent.document).show("fade",300).find("iframe").attr("src","../../../contents/contents.html");
 						console.log("1111111 "+data.content);

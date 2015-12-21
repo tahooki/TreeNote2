@@ -107,6 +107,12 @@ public class UserDaoImpl implements UserDao {
 		return  sqlSession.selectOne("UserMapper.fLogin", user);
 	}
 	
+
+	@Override
+	public void deleteFriend(Map<String, Object> map) throws Exception{
+		sqlSession.delete("UserMapper.deleteFriend", map);
+	}
+
 //	정태가 추가한 것 
 	@Override
 	public int updateUserActivity(User user) throws Exception {
@@ -115,5 +121,6 @@ public class UserDaoImpl implements UserDao {
 	}
 	
 	
+
 	
 }
