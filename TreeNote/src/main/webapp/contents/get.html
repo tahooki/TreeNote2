@@ -18,20 +18,20 @@
 <!--             <hr/> -->
 <!--             <div class="row"> -->
 <!--                 <div class="col-md-10"> -->
-                    <table class="table table-condensed">
+                    <table class="table table-condensed" style="width:85%; margin-left:47px;">
                         <thead>
                             <tr >
-                                <th width="10%" style="text-align:center" class="keywordNo"></th>
-                                <th width="20%" style="text-align:left" class="keywordd"></th>
+                                <th width="25%" style="text-align:center; font-family:Jeju Gothic; font-size: 20px; font-weight:bold;" class="keywordd"></th>
+                                <th width="30%" style="text-align:left; text-align:right;" id="Name"></th>                            	
                             </tr>
                         </thead>
                         <tbody>
-                                                        
+                                          
                             <tr>
-                                <td id="No" style="text-align:center">
+                                <td style="text-align:center">출처
                                 
                                 </td>
-                                <td id="Name" style="text-align:left">
+                                <td id="UserName" style="text-align:left">
                                 
                                 </td>
                             </tr>
@@ -57,7 +57,7 @@
                         <thead>
                             <tr>
                                 <td>
-                                    <span style='float:right'>
+                                    <span style='float:right; margin-right:50px;' class="button">
                                         <button type="button" id="modify" class="btn btn-default" onclick="location.href='update.html'">수정</button>
                                         <button type="button" id="delete" class="btn btn-default" >삭제</button>
                                     </span>
@@ -80,15 +80,19 @@
 			var keywordd = keyword.replace(/"/g, "");
 //			console.log(keywordd);
 			$(".keywordd").text(keywordd);
-			
-			
+
+// 			var keywordUser = sessionStorage.getItem("keywordUser");
+// 			console.log(keywordUser);
+// 			$(".keywordUser").text(keywordUser);	
+
 			$.getJSON("/content/getContent/" +keywordNo, function(data) {
-// 				console.log(data.content.content);
-// 				console.log(data.content.regTime);
-// 				console.log(data);
-// 				console.log(data.user);
-// 				console.log(data.user.userNo);
-// 				console.log(data.user.name);
+ 				console.log(data.content.content);
+ 				console.log(data.content.regTime);
+ 				console.log(data);
+ 				console.log(data.user);
+ 				console.log(data.user.userNo);
+ 				console.log(data.userNo);
+ 				console.log(data.user.name);
 				
 				var UserNo = data.user.userNo;
 				var Name = data.user.name;
@@ -97,12 +101,39 @@
 				
 			    var time = regTime.toTimeString().substring(0,8);
 			    var date = regTime.toISOString().substring(0,10);
-//			    console.log("날짜 :: "+date+" 시간 :: "+time );
 			    
+			    if(data.user.userNo!=data.userNo){
+					$(".button").hide();
+				}
+			    
+//			    console.log("날짜 :: "+date+" 시간 :: "+time );
+
+//				console.log("4444444");
+//				console.log(data.originUserList);
+				if(data.originUserList.length > 0){	
+//					for(var i = 0; i < data.originUserList.length ; i++){					
+					console.log("55555");
+				    console.log();
+				    var sendoo = "<font class='name' title='"+data.originUserList[0].userNo+"'>"
+				    				+data.originUserList[0].name+
+				    				"님의 Content를 공유했습니다."+"</font>";
+				    				
+ 				    //var UserName = data.originUserList[0].name+"님의 Content를 공유했습니다.";
+				    console.log("요기요기요기 "+UserName);
+ 				    $("#UserName").append(sendoo);				  
+//					alert($(".name").attr("title"));
+ 				    
+				}
+			    
+			    			    
 			    $("#No").append(UserNo);
 			    $("#Name").append(Name);
 				$(data.content.content).appendTo("#abc");
-				$("#bcd").append(date+" "+ time);
+				var DT = date.replace(/-/g,".").substring(2,date.length);
+				var Time = time.substring(0,5);
+				console.log("date "+date +"time "+time);
+				$("#bcd").append(DT+" "+ Time);
+							
 			});	
 			
 			

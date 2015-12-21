@@ -14,12 +14,19 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import treenote.domain.Content;
+import treenote.domain.Keyword;
 import treenote.domain.Photo;
+import treenote.domain.Tree;
 import treenote.domain.User;
 import treenote.service.content.ContentService;
+import treenote.service.keyword.KeywordDao;
+import treenote.service.keyword.KeywordService;
+import treenote.service.keyword.impl.KeywordDaoImpl;
+import treenote.service.keyword.impl.KeywordServiceImpl;
 import treenote.service.user.UserService;
 
 @Controller
@@ -34,6 +41,10 @@ public class ContentController {
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
+	
+	@Autowired
+	@Qualifier("keywordDaoImpl")
+	private KeywordDao keywordDao;
 	
 	public ContentController() {
 		System.out.println(this.getClass());
@@ -71,14 +82,19 @@ public class ContentController {
 	
 	//불러오기
 	@RequestMapping(value = "getContent/{keywordNo}")
-	public void getContent(@PathVariable int keywordNo, HttpSession session, Model model) throws Exception{
+	public void getContent(@PathVariable int keywordNo, Model model, HttpSession session) throws Exception{
 		System.out.println("/getContent");
-		
-		User user = (User)session.getAttribute("user");
 				
 		Content content = new Content();
 		content = contentService.getContent(keywordNo);
 		System.out.println("111111111111 "+content);
+				
+		User user2 = (User)session.getAttribute("user");
+		
+		User user = userService.getUser(keywordDao.getUserNoKeyword(keywordNo));
+		System.out.println("22222 "+user);
+		//int userNo= keywordDao.getUserNoKeyword(keywordNo);				
+		//User user = userService.getUser(userNo);
 		
 		List<User> originUserList = new ArrayList<User>();
 		if(content.getOriginUserList() != null){
@@ -93,6 +109,7 @@ public class ContentController {
 		model.addAttribute("content", content);
 		model.addAttribute("user", user);
 		model.addAttribute("originUserList", originUserList);
+		model.addAttribute("userNo", user2.getUserNo());
 	}
 	
 	
