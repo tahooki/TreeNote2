@@ -49,27 +49,37 @@
 		DELETE FROM KEYWORDS WHERE KEYWORD_NO = #{value}
 	</delete> 
 	
-	<select id="listSearchKeyword" parameterType="java.lang.String" resultMap="keywordSelectMap">
+	<select id="listSearchKeyword" parameterType="map" resultMap="keywordSelectMap">
 		SELECT * FROM (SELECT ROWNUM rn, tv.* FROM (
 		<include refid="select-keywords"/>
-		WHERE KEYWORD = #{value} 
+		WHERE KEYWORD = #{keyword} 
 		)tv)tv2
 		WHERE
-		rn BETWEEN 1 AND 7
+		rn BETWEEN #{startNum} AND #{endNum}
 	</select>
+	<!-- 키워드 수  --> 
+	<select  id="totalKeyword" parameterType="int" resultType="int">
+		SELECT count(*) FROM (SELECT ROWNUM rn, tv.* FROM (
+		SELECT
+		KEYWORD_NO, TREE_NO, COPY_NO, KEYWORD, COLLAPSE, PARENT_KEYWORD_NO, COLOR
+		FROM KEYWORDS
+		WHERE KEYWORD = '키워드'
+		)tv)tv2		
+	 </select>
 	
-	<select id="listTimelineKeyword" parameterType="java.lang.Integer" resultMap="keywordSelectMap">
+	<select id="listTimelineKeyword" parameterType="map" resultMap="keywordSelectMap">
 		SELECT * FROM (SELECT ROWNUM rn, tv.* FROM (
 		SELECT k.* FROM trees t, keywords k, contents c
 		WHERE
 		t.tree_No = k.tree_No AND
 		k.keyword_no = c.keyword_no AND
-		(t.user_no = #{value} OR
-		t.user_no IN(SELECT user_no2 FROM friends WHERE user_no = #{value}))
+		(t.user_no = #{userNo} OR
+		t.user_no IN(SELECT user_no2 FROM friends WHERE user_no = #{userNo}))
 		ORDER BY c.reg_date DESC
 		)tv)tv2
-		WHERE rn BETWEEN 1 AND 7
+		WHERE rn BETWEEN #{startNum} AND #{endNum}
 	</select>
+	
 	
 	<select id="listTreeKeyword" parameterType="java.lang.Integer" resultMap="keywordSelectMap">
 		<include refid="select-keywords"/>
@@ -103,7 +113,7 @@
 				FROM keywords
 				WHERE tree_no in(SELECT tree_no FROM trees WHERE user_no = 1000023)
 				ORDER BY keyword_no DESC) a 
-			) b
+			)
 		WHERE rn BETWEEN 1 and 10
 	</select>
 	

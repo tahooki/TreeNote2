@@ -15,8 +15,12 @@ public interface KeywordDao {
 	public List<Keyword> listTreeKeyword(int treeNo) throws Exception;
 	//해당 키워드 리스트 불러오기
 	public List<Keyword> listTimeLineKeyword(int userNo) throws Exception;
+	
+	public List<Keyword> listTimeLineKeyword(int userNo, int count) throws Exception;
 	//해당 키워드 리스트 불러오기
 	public List<Keyword> listSearchKeyword(String keyword) throws Exception;
+	
+	public List<Keyword> listSearchKeyword(String keyword, int count) throws Exception;
 	//자식 키워드 불러오기
 	public List<Keyword> listChildKeyword(int keywordNo) throws Exception;
 	
@@ -31,4 +35,8 @@ public interface KeywordDao {
 	
 	//키워드로 유저 넘버 가지고오기
 	public int getUserNoKeyword(int keywordNo) throws Exception;
+	
+	//전체키워드 수
+	public int totalKeyword() throws Exception;
+
 }

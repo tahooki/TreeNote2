@@ -18,12 +18,18 @@ public interface KeywordService {
 	public void removeKeyword(Keyword keyword) throws Exception;
 	//해당 유저 타임라인 키워드 리스트 불러오기
 	public List<Search> listTimeLineKeyword(int userNo) throws Exception;
+	//해당 유저 타임라인 키워드 리스트 불러오기
+	public List<Search> listTimeLineKeyword(int userNo, int count) throws Exception;
 	//해당 검색 키워드 리스트 불러오기
 	public List<Search> listSearchKeyword(String keyword) throws Exception;
+	//해당 검색 키워드 리스트 불러오기
+	public List<Search> listSearchKeyword(String keyword, int count) throws Exception;
 	//자식 키워드 불러오기
 	public List<Keyword> listOnwerChildKeyword(Keyword keyword) throws Exception;
 	//자동완성
 	public List<String> autoComplete() throws Exception;
 	//프로필 키워드 리스트 
-	public List<Keyword> getMyKeyword(int userNo); 
+	public List<Keyword> getMyKeyword(int userNo);
+	//전체키워드 수
+	public int totalKeyword() throws Exception; 
 }

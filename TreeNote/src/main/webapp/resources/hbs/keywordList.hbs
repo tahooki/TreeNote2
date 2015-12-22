@@ -1,0 +1,36 @@
+{{#list}}
+<div class="keywordBox" style="margin-top:15px">
+<div id="{{keyword.key}}" class="keyword" style="background:{{keyword.color}};">
+	<div>
+		<div class="col-xs-6" style="padding: 0; margin:0; padding-top:2px; height:0px;">
+			{{#if parentKeyword}}
+				<span id="parentKeyword" class="parentKeyword" style=" background: {{parentKeyword.color}};"><font title="{{parentKeyword.keyword}}">{{parentKeyword.keyword}}</font>
+				<input name="key" type="hidden" value={{parentKeyword.key}}>
+				<input name="keyword" type="hidden" value="{{parentKeyword.keyword}}">
+			</span>
+			{{else}}
+				<span id="parentKeyword" style="background:white; cursor:default;">최상위</span>
+			{{/if}}
+		</div> 
+		<div class="col-xs-6 text-right" style="padding: 0; margin:0;">
+			<span id="keywordUser" class="keywordUser" style="">by {{user.name}}
+				<input type="hidden" value={{user.userNo}}>
+			</span>
+		</div>
+	</div>
+	<div>
+		<div class="col-xs-12 text-left" style="padding: 0px; margin:0px; margin-top:-5px; height:30px;">
+			<span id="keyword" class="keywordName" ><font title="{{keyword.keyword}}">{{keyword.keyword}}</font>
+				<input name="key" type="hidden" value={{keyword.key}}>
+				<input name="keyword" type="hidden" value="{{keyword.keyword}}">
+			</span>
+		</div>
+	</div>
+	<div>
+		<div class="col-xs-12 text-left" style="padding: 0; margin:0;">
+			{{#setChildKeyword childKeywordList}} {{/setChildKeyword}}
+		</div>
+	</div>
+</div>
+</div>
+{{/list}}

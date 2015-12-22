@@ -133,8 +133,10 @@ function facebookLogin() {
 
 function setListSearchKeyword(keyword) {
 	console.log(keyword);
+	$("#timeline").unbind();
 	$("#search").val(keyword);
 	jQuery.ajax({
+		
 		url : "/keyword/listSearchKeyword",
 		method : "POST",
 		dataType : "json",
@@ -199,12 +201,61 @@ function setListSearchKeyword(keyword) {
 				console.log($($(this).parent()).find("input[name='key']").val());
 				changeKeyword($($(this).parent()).find("input[name='key']").val());
 			});
+			autoSearchListKeyword(keyword);
 		}
 	})
 }
 
+function autoSearchListKeyword(keyword){
+	$("#timeline").scroll(function(){
+		var temp;
+		if($("#timeline").prop("scrollHeight")< $(document).height()){
+			temp=$("#timeline").prop("scrollHeight");
+		}else{
+			temp=$(document).height();
+		}
+		if ($("#timeline").prop("scrollHeight") < $("#timeline").scrollTop()+temp){
+			var count=$(".keywordBox").length;
+			alert("ggg")
+				$.ajax({
+					type:'post',
+					url:"/keyword/listSearchKeyword2/"+count,
+					dataType:"json",
+					data:JSON.stringify({
+						keyword:keyword
+					}),
+					headers : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					},
+					success : function(list){
+						console.log(list);
+						$.ajax({
+							url:"resources/hbs/keywordList.hbs",
+							success:function(data){
+								var source=data;
+								var template=Handlebars.compile(source);
+								var tr=template(list)
+								$(tr).appendTo("#timelinec");
+								var showKeyword = $("#timelinec .keywordBox");
+								for(var i = 0 ; i < showKeyword.length; i++){
+									$(showKeyword[i]).delay(200*i+200).show("slide",{
+										direction : "right",
+										duration : 500
+									});
+								}
+								}
+							})
+					}
+					})
+			}
+	})
+}
+
+
 function setListTimeKeyword() {
 	// circleLabel = JSON.parse(data);
+	$("#timeline").unbind();
 	$("#search").val("");
 	jQuery.ajax({
 		url : "/keyword/listTimeLineKeyword",
@@ -262,20 +313,52 @@ function setListTimeKeyword() {
 				console.log($($(this).parent()).find("input[name='key']").val());
 				changeKeyword($($(this).parent()).find("input[name='key']").val());
 			});
+			autoListKeyword();
 		}
 		
 	})
-/*		$("#timeline").scroll(function(){
-			if($(window).scrollTop()==$(document).height()-$(window).height()){
-					alert("gooooooooooooooood?");
-					
-					
-					
-					
-			}
-		})*/
 }
-
+function autoListKeyword(){
+	$("#timeline").scroll(function(){
+		var temp;
+		if($("#timeline").prop("scrollHeight")< $(document).height()){
+			temp=$("#timeline").prop("scrollHeight");
+		}else{
+			temp=$(document).height();
+		}
+		if ($("#timeline").prop("scrollHeight") < $("#timeline").scrollTop()+temp){
+			var count=$(".keywordBox").length;
+			//alert("ggg")
+				$.ajax({
+					url:"/keyword/listTimeLineKeyword2?count="+count,
+					dataType:"json",
+					headers : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					},
+					success : function(list){
+						console.log(list);
+						$.ajax({
+							url:"resources/hbs/keywordList.hbs",
+							success:function(data){
+								var source=data;
+								var template=Handlebars.compile(source);
+								var tr=template(list)
+								$(tr).appendTo("#timelinec");
+								var showKeyword = $("#timelinec .keywordBox");
+								for(var i = 0 ; i < showKeyword.length; i++){
+									$(showKeyword[i]).delay(200*i+200).show("slide",{
+										direction : "right",
+										duration : 500
+									});
+								}
+								}
+							})
+					}
+					})
+			}
+	})
+}
 
 
 function updateTitle(temp) {
@@ -302,7 +385,7 @@ function updateTitle(temp) {
 				success : function(JSONData, status) {
 					alert(status);
 					$("#carousel-example-generic").remove();
-					List();
+					treeList();
 						}
 					});
 				}

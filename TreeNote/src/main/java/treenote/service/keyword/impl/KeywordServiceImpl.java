@@ -157,6 +157,23 @@ public class KeywordServiceImpl implements KeywordService {
 		
 		return searchList;
 	}
+	@Override
+	public List<Search> listSearchKeyword(String keyword, int count) throws Exception {
+		// TODO Auto-generated method stub
+		List<Search> searchList = new ArrayList<Search>();
+		
+		List<Keyword> keywordList = keywordDao.listSearchKeyword(keyword, count);
+		for (Keyword temp : keywordList){
+			Search search = new Search();
+			search.setKeyword(keywordDao.getKeyword(temp.getKey()));
+			search.setParentKeyword(keywordDao.getKeyword(temp.getParent()));
+			search.setChildKeywordList(keywordDao.listChildKeyword(temp.getKey()));
+			search.setUser(userDao.getUser(treeDao.getTree(temp.getTreeNo()).getUserNo()));
+			searchList.add(search);
+		}
+		
+		return searchList;
+	}
 
 	@Override
 	public List<Keyword> listOnwerChildKeyword(Keyword keyword) throws Exception {
@@ -194,6 +211,23 @@ public class KeywordServiceImpl implements KeywordService {
 		}
 		return searchList;
 	}
+	@Override
+	public List<Search> listTimeLineKeyword(int userNo, int count) throws Exception {
+		// TODO Auto-generated method stub
+		List<Search> searchList = new ArrayList<Search>();
+		
+		List<Keyword> keywordList = keywordDao.listTimeLineKeyword(userNo, count);
+		for (Keyword temp : keywordList){
+			Search search = new Search();
+			search.setKeyword(keywordDao.getKeyword(temp.getKey()));
+			search.setParentKeyword(keywordDao.getKeyword(temp.getParent()));
+			search.setChildKeywordList(keywordDao.listChildKeyword(temp.getKey()));
+			search.setUser(userDao.getUser(treeDao.getTree(temp.getTreeNo()).getUserNo()));
+			searchList.add(search);
+		}
+		return searchList;
+	}
+	
 
 	@Override
 	public List<String> autoComplete() throws Exception {
@@ -205,5 +239,11 @@ public class KeywordServiceImpl implements KeywordService {
 	public List<Keyword> getMyKeyword(int userNo) {
 		// TODO Auto-generated method stub
 		return keywordDao.getMyKeyword(userNo);
+	}
+	
+	@Override
+	public int totalKeyword() throws Exception {
+		// TODO Auto-generated method stub
+		return keywordDao.totalKeyword();
 	}
 }

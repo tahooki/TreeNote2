@@ -8,10 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import treenote.domain.Keyword;
+import treenote.domain.Page;
 import treenote.domain.User;
 import treenote.service.keyword.KeywordService;
 
@@ -69,11 +73,36 @@ public class KeywordController {
 		model.addAttribute("list", keywordService.listSearchKeyword(keyword.getKeyword()));
 	}
 	
+	// 검색 키워드리스트 자동 불러오기
+	@RequestMapping(value = "listSearchKeyword2/{count}")
+	public void listSearchKeyword2(@PathVariable int count, @RequestBody Keyword keyword, HttpSession session, Model model) throws Exception {
+		System.out.println("/listTimeLineKeyword2");
+		System.out.println("gg :"+count);
+		
+		keywordService.listSearchKeyword(keyword.getKeyword(), count);
+		
+		model.addAttribute("list", keywordService.listSearchKeyword(keyword.getKeyword(),count));
+
+	}
+	
 	// 해당 키워드 리스트 불러오기
 	@RequestMapping(value = "listTimeLineKeyword")
 	public void listTimeLineKeyword(HttpSession session, Model model) throws Exception {
 		System.out.println("/listTimeLineKeyword");
+
 		model.addAttribute("list", keywordService.listTimeLineKeyword(((User)session.getAttribute("user")).getUserNo()));
+
+	}
+	// 키워드리스트 자동 불러오기
+	@RequestMapping(value = "listTimeLineKeyword2", method=RequestMethod.GET)
+	public void listTimeLineKeyword2(@RequestParam int count, HttpSession session, Model model) throws Exception {
+		System.out.println("/listTimeLineKeyword2");
+		System.out.println("gg :"+count);
+		
+		keywordService.listTimeLineKeyword(((User)session.getAttribute("user")).getUserNo(), count);
+		
+		model.addAttribute("list", keywordService.listTimeLineKeyword(((User)session.getAttribute("user")).getUserNo(),count));
+
 	}
 
 	// 자식 키워드 불러오기
