@@ -11,4 +11,6 @@ public interface ContentService {
 	public int updateContent(Content content) throws Exception;
 	//불러오기
 	public Content getContent(int keywordNo) throws Exception;
+	//불러오기
+	public Content getContentContentNo(int contentNo) throws Exception;
 }

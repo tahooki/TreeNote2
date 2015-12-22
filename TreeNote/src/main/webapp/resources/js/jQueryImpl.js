@@ -42,7 +42,7 @@ window.onload = function(){
 				dataType : "json",
 				contentType : "application/json",
 				success : function(JSONData, status) {
-					alert(status);
+					console.log("addTree : "+status);
 					
 					var temp=JSONData.tree.treeNo;
 					console.log(temp);
@@ -364,7 +364,6 @@ function autoListKeyword(){
 function updateTitle(temp) {
 	/*트리타이틀 수정*/
 	       var id=$(".item.active").find('h5').text();
-	       alert(id);
 	       
 	      $('h5').remove();
 	      $(".item.active").append('<input type="text" id="updateTitle" value="'+id+'">');
@@ -383,13 +382,23 @@ function updateTitle(temp) {
 				dataType : "json",
 				contentType : "application/json",
 				success : function(JSONData, status) {
-					alert(status);
+					console.log("updateTitle : "+status);
 					$("#carousel-example-generic").remove();
 					treeList();
 						}
 					});
 				}
-	      })
+			else if (e.keyCode == 27) {
+				//esc 누르면 취소
+				$("#carousel-example-generic").remove();
+				treeList();
+			}
+	      });
+	      $("#updateTitle").focusout(function() {
+	    	  //포커스 아웃되면 취소
+	    	  $("#carousel-example-generic").remove();
+	    	  treeList();
+	      });
 }
 
 function treeList() {
@@ -670,7 +679,6 @@ $(document).on('click','.totalReplyCount',function(e){
 	sessionStorage.setItem('endRowNum', endRowNum);
 	sessionStorage.setItem('addReplyCounting', addReplyCounting);
 	listReply();
-	alert("aa");
 });
 
 $(document).on('keyup','.comentOfcomentinput',function(e) {

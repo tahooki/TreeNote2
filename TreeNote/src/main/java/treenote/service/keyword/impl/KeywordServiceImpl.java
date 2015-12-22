@@ -88,11 +88,13 @@ public class KeywordServiceImpl implements KeywordService {
 		if(keywordDao.getUserNoKeyword(keywordNo) != keywordDao.getUserNoKeyword(keyword.getKey())){
 			content.setScrap(content.getScrap()+1);
 			contentDao.updateScrapContent(content);
-			
-			if(content.getOriginUserList() == null){
-				content.setOriginUserList(""+keywordDao.getUserNoKeyword(keyword.getKey()));
+			System.out.println("content : "+ content);
+			if(content.getOriginContentList() == null){
+				content.setOriginContentList(""+((Content)contentDao.getContent(keyword.getKey())).getContentNo());
+				System.out.println("null "+((Content)contentDao.getContent(keyword.getKey())).getContentNo());
 			}else{
-				content.setOriginUserList(content.getOriginUserList()+","+keywordDao.getUserNoKeyword(keyword.getKey()));
+				//출처 담는 부분
+				content.setOriginContentList(content.getOriginContentList()+","+((Content)contentDao.getContent(keyword.getKey())).getContentNo());
 			}
 		}
 
@@ -114,10 +116,11 @@ public class KeywordServiceImpl implements KeywordService {
 			content.setScrap(content.getScrap()+1);
 			contentDao.updateScrapContent(content);
 
-			if(content.getOriginUserList() == null){
-				content.setOriginUserList(""+keywordDao.getUserNoKeyword(keyword.getCopyNo()));
+			if(content.getOriginContentList() == null){
+				content.setOriginContentList(""+((Content)contentDao.getContent(keyword.getKey())).getContentNo());
 			}else{
-				content.setOriginUserList(content.getOriginUserList()+","+keywordDao.getUserNoKeyword(keyword.getCopyNo()));
+				//출처 담는 부분
+				content.setOriginContentList(content.getOriginContentList()+","+((Content)contentDao.getContent(keyword.getKey())).getContentNo());
 			}
 		}
 		content.setKeywordNo(keyword.getKey());

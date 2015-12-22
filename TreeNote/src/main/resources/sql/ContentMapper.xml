@@ -12,7 +12,7 @@
 		<result property="scrap" column="scrap" jdbcType="NUMERIC" />
 		<result property="regDate" column="reg_date" jdbcType="DATE" />
 		<result property="regTime" column="reg_date" jdbcType="DATE" />
-		<result property="originUserList" column="origin" jdbcType="CLOB" />
+		<result property="originContentList" column="origin" jdbcType="CLOB" />
 	</resultMap>
 	
 	
@@ -24,7 +24,7 @@
 				#{keywordNo:NUMERIC},
 				#{content:CLOB},
 				 SYSDATE,
-				 #{originUserList:CLOB} )
+				 #{originContentList:CLOB} )
 	</insert>
 	
 	<!-- 수정 !! content_no로 검색하는것에서 keyword_no로 수정됨 - by.Tahooki -->
@@ -64,5 +64,12 @@
 		WHERE keyword_no = #{value}
 	</delete>
 	
+	<!-- SQL : SELECT ONE -->
+	<select id="getContentContentNo" parameterType="int" resultMap="contentSelectMap">
+		SELECT
+		content_no, keyword_no, content, scrap, reg_date, origin
+		FROM contents
+		WHERE content_no = #{value}
+	</select>
 
 </mapper>

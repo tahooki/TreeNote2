@@ -11,7 +11,7 @@ public class Content {
 	private int scrap;
 	private Date regDate;
 	private Timestamp regTime; //작성시간 추가 됨
-	private String originUserList;
+	private String originContentList;
 	
 
 	public int getContentNo() {
@@ -62,19 +62,19 @@ public class Content {
 		this.regTime = regTime;
 	}
 
-	public String getOriginUserList() {
-		return originUserList;
+	public String getOriginContentList() {
+		return originContentList;
 	}
 
-	public void setOriginUserList(String originUserList) {
-		this.originUserList = originUserList;
+	public void setOriginContentList(String originContentList) {
+		this.originContentList = originContentList;
 	}
 
 	@Override
 	public String toString() {
 		return "Content [contentNo=" + contentNo + ", keywordNo=" + keywordNo + ", content=" + content + ", scrap="
-				+ scrap + ", regDate=" + regDate + ", regTime=" + regTime + ", originUserList=" + originUserList + "]";
+				+ scrap + ", regDate=" + regDate + ", regTime=" + regTime + ", originContentList=" + originContentList
+				+ "]";
 	}
-	
 }
 	

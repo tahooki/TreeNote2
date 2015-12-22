@@ -20,25 +20,22 @@
 div.item h5{
 	color:white;
 	font-family:Jeju Gothic;
-  font-size: x-large;
+  font-size: 30px;
 }
-div.item.active {
+div.item * {
 	color:white;
 	font-family:Jeju Gothic;
-	margin-top: 4%;
-}
-
-div.item.active h5 {
-    margin: 0 0 0 3%;
-    font-size: x-large;
+	margin-top: 10px;
+	margin-bottom:0px;
 }
 
 input#updateTitle{
 	color: black;
-    background-color: inherit;
-    margin:auto;
-    border-style: ridge;
-    text-align: center;
+  margin:auto;
+  border:0;
+  padding-top:5px;
+  border-radius:5px;
+  text-align: center;
   
 }
 

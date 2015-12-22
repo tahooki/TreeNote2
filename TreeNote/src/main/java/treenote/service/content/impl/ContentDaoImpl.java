@@ -25,7 +25,6 @@ public class ContentDaoImpl implements ContentDao {
 		System.out.println(this.getClass());
 	}
 
-	
 	@Override
 	public void addContent(Content content) throws Exception {
 		sqlSession.insert("ContentMapper.addContent", content);
@@ -50,5 +49,11 @@ public class ContentDaoImpl implements ContentDao {
 	public Content getContent(int keywordNo) throws Exception {
 		return sqlSession.selectOne("ContentMapper.getContent", keywordNo);
 	}
-	
+
+	@Override
+	public Content getContentContentNo(int contentNo) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("ContentMapper.getContentContentNo", contentNo);
+	}
+
 }

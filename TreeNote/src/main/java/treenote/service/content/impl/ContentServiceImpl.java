@@ -45,4 +45,10 @@ public class ContentServiceImpl implements ContentService {
 		return contentDao.getContent(contentNo);
 	}
 
+	@Override
+	public Content getContentContentNo(int contentNo) throws Exception {
+		// TODO Auto-generated method stub
+		return contentDao.getContentContentNo(contentNo);
+	}
+
 }

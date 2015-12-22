@@ -81,6 +81,8 @@ public class UserController {
 		User returnUser = userService.getUser2(user.getEmail());
 		// System.out.println(password);
 //		정태가 변경한 곳  && returnUser.getActivity()==1
+		System.out.println("returnUser.getActivity() : "+returnUser.getActivity());
+		System.out.println("user.getPassword().equals(returnUser.getPassword()) : "+user.getPassword().equals(returnUser.getPassword()));
 		if (user.getPassword().equals(returnUser.getPassword()) && returnUser.getActivity()==1) {
 			session.setAttribute("user", returnUser);
 			System.out.println("success login");

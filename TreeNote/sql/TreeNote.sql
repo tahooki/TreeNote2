@@ -326,10 +326,12 @@ ALTER TABLE TREES
 		)
 		ON DELETE CASCADE
 		);
+
+ALTER TABLE TREE.USERS
+   ADD CONSTRAINT UC_EMAIL UNIQUE (EMAIL) VALIDATE;		
 		
-		
-INSERT INTO "TREE"."USERS" (USER_NO, EDIT_TREE_NO, EMAIL, PASSWORD, NAME, PHONE, PHOTO, SNSUSER) VALUES (seq_users_user_no.nextval, '1000000', 'abc@naver.com', 'aaa', '홍길동', '01044557788', 'image.jpg', 'abc');
-INSERT INTO "TREE"."USERS" (USER_NO, EDIT_TREE_NO, EMAIL, PASSWORD, NAME, PHONE, PHOTO, SNSUSER) VALUES (seq_users_user_no.nextval, '1000002', 'abc@google.com', 'bbb', '홍길순', '01022331144', 'image.jpg', 'ccc');
+INSERT INTO "TREE"."USERS" (USER_NO, EDIT_TREE_NO, EMAIL, PASSWORD, NAME, PHONE, PHOTO, SNSUSER, ACTIVITY) VALUES (seq_users_user_no.nextval, '1000000', 'abc@naver.com', 'aaa', '홍길동', '01044557788', 'image.jpg', 'abc', '1');
+INSERT INTO "TREE"."USERS" (USER_NO, EDIT_TREE_NO, EMAIL, PASSWORD, NAME, PHONE, PHOTO, SNSUSER, ACTIVITY) VALUES (seq_users_user_no.nextval, '1000002', 'abc@google.com', 'bbb', '홍길순', '01022331144', 'image.jpg', 'ccc', '1');
 
 INSERT INTO "TREE"."TREES" (TREE_NO, USER_NO, ROOT_KEY, TITLE) VALUES (seq_trees_tree_no.nextval, '1000000', '1000000', 'AA');
 INSERT INTO "TREE"."TREES" (TREE_NO, USER_NO, ROOT_KEY, TITLE) VALUES (seq_trees_tree_no.nextval, '1000000', '1000003', 'BB');

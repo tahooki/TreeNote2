@@ -97,18 +97,29 @@ public class ContentController {
 		//User user = userService.getUser(userNo);
 		
 		List<User> originUserList = new ArrayList<User>();
-		if(content.getOriginUserList() != null){
-			String userNoList[] = content.getOriginUserList().split(",");
+		List<Content> originContentList = new ArrayList<Content>();
+		if(content.getOriginContentList() != null){
+			String contentNoList[] = content.getOriginContentList().split(",");
 			
-			for(int i = 0; i < userNoList.length ; i++){
-				originUserList.add(userService.getUser(Integer.parseInt(userNoList[i])));
+			for(int i = 0; i < contentNoList.length ; i++){
+				
+				if(contentService.getContentContentNo(Integer.parseInt(contentNoList[i])) == null){
+					originContentList.add(null);
+					originUserList.add(null);
+				}else{
+					Content temp = contentService.getContentContentNo(Integer.parseInt(contentNoList[i]));
+					originContentList.add(temp);
+					originUserList.add(userService.getUser(keywordDao.getUserNoKeyword(temp.getKeywordNo())));
+				}
 			}
+			System.out.println("originContentList : "+originContentList);
 			System.out.println("originUserList : "+originUserList);
 		}
 		
 		model.addAttribute("content", content);
 		model.addAttribute("user", user);
 		model.addAttribute("originUserList", originUserList);
+		model.addAttribute("originContentList", originContentList);
 		model.addAttribute("userNo", user2.getUserNo());
 	}
 	
