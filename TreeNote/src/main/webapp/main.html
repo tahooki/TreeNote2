@@ -37,12 +37,24 @@
 </style>
 <!-- 개발 부분 -->
 
-<!-- <script>
-  $(function() {
-	  jqueryImpl();
-  });
+<script>
+
+//12월 22일 추가분 by shin
+	$.ajax({
+		url:"/user/index",
+		dataType: "json",
+		contentType:"application/json",
+		success:function(data){
+			if(data.boolean){
+				
+			}else{
+				self.location="index.html";
+			}
+		},
+		async : false
+	})
   
-  </script> -->
+</script> 
 </head>
 <body style="height: 100%;">
 	<nav class="navbar navbar-fixed-top" id="navbar">
@@ -92,7 +104,7 @@
 	                        <div id="friendSearch" style="margin-left:15px; margin-top:4px">
 	                        	<p>친구검색</p>
 	                        	<input type="text" placeholder="ex) tree@note.com " style="width:80%; margin-right:10px "> 
-	                        	<button class="flistButton" type="button">검색</button>
+	                        	<button class="flistButton" type="button" >검색</button>
 	                        </div>
 	                    </div>
 				</div>
@@ -550,9 +562,16 @@
 				contentType:'application/json',
 				dataType:'json',
 				success:function(s){
-					var searchFST = searchF(s);
-					$('.modal-content.fmodal').append(searchFST);
+					if(s.boolean!==false){
+						var searchFST = searchF(s);
+						$('.modal-content.fmodal').append(searchFST);
+					}else{
+						$('.modal-content.fmodal').append("검색된 결과가 없습니다.");
+					}
 					
+				},
+				complete:function(){
+					$('#friendSearch input').val('');
 				}
 			})
 	})
