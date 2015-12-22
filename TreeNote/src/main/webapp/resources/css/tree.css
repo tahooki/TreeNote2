@@ -72,7 +72,6 @@ canvas {
 	text-overflow:ellipsis;
 	overflow:hidden;
   display:inline-block;
-  cursor:pointer;
 }
 
 
@@ -95,6 +94,7 @@ canvas {
 	height: 108px; 
 	padding:8px; 
 	border-radius: 15px;
+	cursor:pointer;
 }
 
 .keywordBox{

@@ -224,9 +224,6 @@
        </div>
 
 			<div id="reply" style="display: none;"></div>
-
-			<div id="userpage" style="display: none;"></div>
-
 			<div id="treelist" style="display: none;">
 				<div id="demo" class="showcase">
 					<section id="examples">
@@ -439,8 +436,8 @@
 			{{/if}}
 		</div> 
 		<div class="col-xs-6 text-right" style="padding: 0; margin:0;">
-			<span id="keywordUser" class="keywordUser" style="">by {{user.name}}
-				<input type="hidden" value={{user.userNo}}>
+			<span id="keywordUser" class="keywordUser">by {{user.name}}
+				<input name="userNo" type="hidden" value={{user.userNo}}>
 			</span>
 		</div>
 	</div>

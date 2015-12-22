@@ -1,15 +1,21 @@
 
 window.onload = function(){
+	$("#treeContainer").click(function(){
+		console.log($("#mypage").css("display"));
+		if($("#mypage").css("display") != "none"){
+			$("#mypage").hide("fade",500);
+		}
+	})
+
 	$("#btn_content").click(function() {
 		$("#content").toggle("drop");
 	});
 	$("#btn_mypage").click(function() {
-		$("#mypage").toggle("drop");
-		/*추가*/
-		$('#mypage').find('iframe').attr('src','/profil.html')
-	});
-	$("#btn_userpage").click(function() {
-		$("#userpage").toggle("drop");
+		/*$("#mypage").toggle("drop");
+		추가
+		$('#mypage').find('iframe').attr('src','/profil.html')*/
+		//수정됨 맨 하단에 있슴.
+		getUser(10000000);
 	});
 	$("#btn_tree").click(function() {
 		$("#treelist").toggle("drop");
@@ -106,7 +112,6 @@ window.onload = function(){
 	treeList();
 	autocom();
 	setTimeout("setListTimeKeyword()",2000);
-	
 }
 
 
@@ -186,20 +191,29 @@ function setListSearchKeyword(keyword) {
 				else{
 					showContent($($(this).parent()).find("input[name='key']").val(), $($(this).parent()).find("input[name='keyword']").val());
 				}
+				return false;
+			});
+			$(".keywordUser").click(function(){
+				getUser($($(this).parent()).find("input[name='userNo']").val());
+				return false;
 			});
 			$(".parentKeyword").click(function(){
 				showContent($($(this).parent()).find("input[name='key']").val(), $($(this).parent()).find("input[name='keyword']").val());
+				return false;
 			});
-			$(".keywordName").click(function(){
+			$(".keyword").click(function(){
 				showContent($($(this).parent()).find("input[name='key']").val(), $($(this).parent()).find("input[name='keyword']").val());
+				return false;
 			});
 			$(".timeLineAddButton").click(function() {
 				console.log($($(this).parent()).find("input[name='key']").val());
 				addKeyword($($(this).parent()).find("input[name='key']").val());
+				return false;
 			});
 			$(".timeLineCopyButton").click(function() {
 				console.log($($(this).parent()).find("input[name='key']").val());
 				changeKeyword($($(this).parent()).find("input[name='key']").val());
+				return false;
 			});
 			autoSearchListKeyword(keyword);
 		}
@@ -298,20 +312,29 @@ function setListTimeKeyword() {
 				else{
 					showContent($($(this).parent()).find("input[name='key']").val(), $($(this).parent()).find("input[name='keyword']").val());
 				}
+				return false;
+			});
+			$(".keywordUser").click(function(){
+				getUser($($(this).parent()).find("input[name='userNo']").val());
+				return false;
 			});
 			$(".parentKeyword").click(function(){
 				showContent($($(this).parent()).find("input[name='key']").val(), $($(this).parent()).find("input[name='keyword']").val());
+				return false;
 			});
-			$(".keywordName").click(function(){
+			$(".keyword").click(function(){
 				showContent($($(this).parent()).find("input[name='key']").val(), $($(this).parent()).find("input[name='keyword']").val());
+				return false;
 			});
 			$(".timeLineAddButton").click(function() {
 				console.log($($(this).parent()).find("input[name='key']").val());
 				addKeyword($($(this).parent()).find("input[name='key']").val());
+				return false;
 			});
 			$(".timeLineCopyButton").click(function() {
 				console.log($($(this).parent()).find("input[name='key']").val());
 				changeKeyword($($(this).parent()).find("input[name='key']").val());
+				return false;
 			});
 			autoListKeyword();
 		}
@@ -977,14 +1000,25 @@ function getWorldTime(tzOffset) { // 24시간제
 	}
 
 
-	function leadingZeros(n, digits) {
-	  var zero = '';
-	  n = n.toString();
+function leadingZeros(n, digits) {
+  var zero = '';
+  n = n.toString();
 
-	  if (n.length < digits) {
-	    for (i = 0; i < digits - n.length; i++)
-	      zero += '0';
-	  }
-	  return zero + n;
-	}
+  if (n.length < digits) {
+    for (i = 0; i < digits - n.length; i++)
+      zero += '0';
+  }
+  return zero + n;
+}
 /*댓글 기능 함수 끝*/
+
+function getUser(userNo){
+	console.log(userNo);
+	if($("#mypage").css("display") == "none"){
+		$('#mypage').find('iframe').attr('src','/profil.html');
+	}
+	$("#mypage").toggle("fade",500);
+	/*추가*/
+	
+}
+	

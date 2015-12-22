@@ -111,7 +111,7 @@
 					parent_keyword_no, 
 					tree_no
 				FROM keywords
-				WHERE tree_no in(SELECT tree_no FROM trees WHERE user_no = 1000023)
+				WHERE tree_no in(SELECT tree_no FROM trees WHERE user_no = #{value})
 				ORDER BY keyword_no DESC) a 
 			)
 		WHERE rn BETWEEN 1 and 10
