@@ -23,6 +23,9 @@ window.onload = function(){
 	$("#btn_friend").click(function() {
 		$("#friendlist").toggle("drop");
 	});
+	$("#btn_searchActive").click(function(){
+		setListSearchKeyword($("#search").val());
+	});
 	$("#btn_logout").on('click', function(){
 		$.ajax({
 			url:"/user/logout",
@@ -58,53 +61,56 @@ window.onload = function(){
 			 });
 	})	
 	
+	$("#btn_showtimeline").click(function(){
+		$("#timeline").toggle("fade",300);
+	});
+	
 	$("#btn_timeline").click(function(){
-		if (sessionStorage.getItem('nowTimeline') == 'timeline') {
-	        sessionStorage.setItem('nowTimeline', '');
-			//setListTimeKeyword();
-			$("#timeline").hide();
-			$("#timeLineTitleBox").hide();
-			$(".keywordBox").remove();
-			$(".timeLineBtnBox").remove();
-			$(".ui-effects-wrapper").remove();
-			
-	    }else if(sessionStorage.getItem('nowTimeline') == 'search'){
-	    	$("#timeline").show();
-	    	$(".keywordBox").remove();
-			$(".timeLineBtnBox").remove();
-			$(".ui-effects-wrapper").remove();
-	    	setListTimeKeyword();
-	    }else{
-	    	$("#timeline").show();
-	    	$(".keywordBox").remove();
-			$(".timeLineBtnBox").remove();
-			$(".ui-effects-wrapper").remove();
+		if (sessionStorage.getItem('nowTimeline') != 'timeline'){
 	    	setListTimeKeyword();
 	    }
+		return false;
+	}).hover(function(){
+		$(this).css("background","rgba(192,57,43,.7)");
+	},function(){
+		if (sessionStorage.getItem('nowTimeline') != 'timeline'){
+			$(this).css("background","rgba(192,57,43,.2)");
+		}
 	});
+
 	$("#btn_search").click(function(){
-		if (sessionStorage.getItem('nowTimeline') == 'search') {
-			sessionStorage.setItem('nowTimeline', '');
-			$("#timeline").hide();
-			$("#searchBox").hide();
-			$(".keywordBox").remove();
-			$(".timeLineBtnBox").remove();
-			$(".ui-effects-wrapper").remove();
-		}else if(sessionStorage.getItem('nowTimeline') == 'timeline'){
-			$("#timeline").show();
-			$(".keywordBox").remove();
-			$(".timeLineBtnBox").remove();
-			$(".ui-effects-wrapper").remove();
-			setListSearchKeyword();
-		}else{
-			$("#timeline").show();
-			$(".keywordBox").remove();
-			$(".timeLineBtnBox").remove();
-			$(".ui-effects-wrapper").remove();
+		if (sessionStorage.getItem('nowTimeline') != 'search') {
 			setListSearchKeyword();
 		}
-		
+		return false;
+	}).hover(function(){
+		$(this).css("background","rgba(40,128,185,.7)");
+	},function(){
+		if (sessionStorage.getItem('nowTimeline') != 'search'){
+			$(this).css("background","rgba(40,128,185,.2)");
+		}
 	});
+
+	$("#btn_clipboard").click(function(){
+		if (sessionStorage.getItem('nowTimeline') != 'clipboard') {
+			setListClipKeyword();
+		}
+		return false;
+	}).hover(function(){
+		$(this).css("background","rgba(230,126,34,.7)");
+	},function(){
+		if (sessionStorage.getItem('nowTimeline') != 'clipboard'){
+			$(this).css("background","rgba(230,126,34,.2)");
+		}
+	});
+
+	var clipBoardList = [];
+	console.log(JSON.stringify(clipBoardList));
+	sessionStorage.setItem('clipBoardList', JSON.stringify(clipBoardList));
+	
+	if (window.sessionStorage) {
+		sessionStorage.setItem('isMyTree',true);
+	}
 	
 	treeList();
 	autocom();
@@ -134,9 +140,20 @@ function facebookLogin() {
 }
 
 function setListSearchKeyword(keyword) {
+	$("#timeline").show("fade",300);
 	console.log(keyword);
+	$("#btn_timeline").css("background","rgba(192,57,43,.2)");
+	$("#btn_search").css("background","rgba(40,128,185,.7)");
+	$("#btn_clipboard").css("background","rgba(230,126,34,.2)");
+	
 	$("#timeline").unbind();
 	$("#search").val(keyword);
+	$("#timeline .keywordBox").remove();
+	$("#timeline .timeLineBtnBox").remove();
+	$("#timeline .ui-effects-wrapper").remove();
+	$("#timeLineTitleBox").hide();
+	$("#clipBoardTitleBox").hide();
+	
 	jQuery.ajax({
 		
 		url : "/keyword/listSearchKeyword",
@@ -155,64 +172,24 @@ function setListSearchKeyword(keyword) {
 		        sessionStorage.setItem('nowTimeline', 'search');
 				// alert(sessionStorage.getItem('editTreeNo'));
 		    }
-			$("#timelinec .keywordBox").remove();
-			$(".timeLineBtnBox").remove();
-			$(".ui-effects-wrapper").remove();
-			$("#timeLineTitleBox").hide();
+			
+			
 			var searchList = JSONData.list;
 			$("#keywordTop").after(setSearchList(JSONData));
 			$("#keywordBtnTop").after(setSearchBtnList(JSONData));
 			console.log(setSearchBtnList(JSONData));
 			console.log($("#keywordBtnTop").parent().html());
-			$("#searchBox").show("slide",{
-				direction : "up",
-				duration : 600
-			});
+			$("#searchBox").show("fade",500);
 			var showKeyword = $("#timelinec .keywordBox");
 			for(var i = 0 ; i < showKeyword.length; i++){
 				$(showKeyword[i]).delay(200*i+200).show("slide",{
 					direction : "right",
-					duration : 500,
-					complete : function(){
-						setBtnVisible();
-					}
+					duration : 500
 				});
 			}
-			$(".childKeyword").click(function(){
-				if($($(this).parent()).find("input[name='keyword']").val() == "없음"){
-					showContent($($(this).parent()).find("input[name='key']").val(), $($(this).parent()).find("input[name='keyword']").val());
-				}
-				else if($($(this).parent()).find("input[name='keyword']").val() == "..."){
-					showContent($($(this).parent()).find("input[name='key']").val(), $($(this).parent()).find("input[name='keyword']").val());
-				}
-				else{
-					showContent($($(this).parent()).find("input[name='key']").val(), $($(this).parent()).find("input[name='keyword']").val());
-				}
-				return false;
-			});
-			$(".keywordUser").click(function(){
-				getUser($($(this).parent()).find("input[name='userNo']").val());
-				return false;
-			});
-			$(".parentKeyword").click(function(){
-				showContent($($(this).parent()).find("input[name='key']").val(), $($(this).parent()).find("input[name='keyword']").val());
-				return false;
-			});
-			$(".keyword").click(function(){
-				showContent($($(this).parent()).find("input[name='key']").val(), $($(this).parent()).find("input[name='keyword']").val());
-				return false;
-			});
-			$(".timeLineAddButton").click(function() {
-				console.log($($(this).parent()).find("input[name='key']").val());
-				addKeyword($($(this).parent()).find("input[name='key']").val());
-				return false;
-			});
-			$(".timeLineCopyButton").click(function() {
-				console.log($($(this).parent()).find("input[name='key']").val());
-				changeKeyword($($(this).parent()).find("input[name='key']").val());
-				return false;
-			});
+			setTimelineEvent();
 			autoSearchListKeyword(keyword);
+			setBtnVisible();
 		}
 	})
 }
@@ -227,6 +204,30 @@ function autoSearchListKeyword(keyword){
 		}
 		if ($("#timeline").prop("scrollHeight") < $("#timeline").scrollTop()+temp){
 			var count=$(".keywordBox").length;
+<<<<<<< .mine
+			$.ajax({
+				type:'post',
+				url:"/keyword/listSearchKeyword2/"+count,
+				dataType:"json",
+				data:JSON.stringify({
+					keyword:keyword
+				}),
+				headers : {
+					"Accept" : "application/json",
+					"Content-Type" : "application/json"
+				},
+				success : function(JSONData, status) {
+					console.log(JSONData);
+					
+					$(setSearchList(JSONData)).appendTo("#timelinec");
+					$(setSearchBtnList(JSONData)).appendTo("#timelineb");
+					var showKeyword = $("#timelinec .keywordBox");
+					for(var i = 0 ; i < showKeyword.length; i++){
+						$(showKeyword[i]).delay(200*i+200).show("slide",{
+							direction : "right",
+							duration : 500
+						});
+=======
 			alert("ggg")
 				$.ajax({
 					type:'post',
@@ -257,17 +258,30 @@ function autoSearchListKeyword(keyword){
 								}
 							}
 						})
-					}
-				})
-			}
+					setTimelineEvent();
+					setBtnVisible();
+				}
+			})
+		}
 	})
 }
 
-
 function setListTimeKeyword() {
 	// circleLabel = JSON.parse(data);
+	$("#timeline").show("fade",300);
+	
+	$("#btn_timeline").css("background","rgba(192,57,43,.7)");
+	$("#btn_search").css("background","rgba(40,128,185,.2)");
+	$("#btn_clipboard").css("background","rgba(230,126,34,.2)");
+	
 	$("#timeline").unbind();
 	$("#search").val("");
+	
+	$("#timeline .keywordBox").remove();
+	$("#timeline .timeLineBtnBox").remove();
+	$("#timeline .ui-effects-wrapper").remove();
+	$("#searchBox").hide();
+	$("#clipBoardTitleBox").hide();
 	jQuery.ajax({
 		url : "/keyword/listTimeLineKeyword",
 		method : "GET",
@@ -282,16 +296,10 @@ function setListTimeKeyword() {
 				// alert(sessionStorage.getItem('editTreeNo'));
 		    }
 			console.log(JSONData);
-			$("#timelinec .keywordBox").remove();
-			$(".timeLineBtnBox").remove();
-			$(".ui-effects-wrapper").remove();
-			$("#searchBox").hide();
+			
 			$("#keywordTop").after(setSearchList(JSONData));
 			$("#keywordBtnTop").after(setSearchBtnList(JSONData));
-			$("#timeLineTitleBox").show("slide",{
-				direction : "up",
-				duration : 500
-			});
+			$("#timeLineTitleBox").show("fade",500);
 			var showKeyword = $("#timelinec .keywordBox");
 			for(var i = 0 ; i < showKeyword.length; i++){
 				$(showKeyword[i]).delay(200*i+200).show("slide",{
@@ -299,41 +307,9 @@ function setListTimeKeyword() {
 					duration : 500
 				});
 			}
-			$(".childKeyword").click(function(){
-				if($($(this).parent()).find("input[name='keyword']").val() == "없음"){
-					showContent($($(this).parent()).find("input[name='key']").val(), $($(this).parent()).find("input[name='keyword']").val());
-				}
-				else if($($(this).parent()).find("input[name='keyword']").val() == "..."){
-					showContent($($(this).parent()).find("input[name='key']").val(), $($(this).parent()).find("input[name='keyword']").val());
-				}
-				else{
-					showContent($($(this).parent()).find("input[name='key']").val(), $($(this).parent()).find("input[name='keyword']").val());
-				}
-				return false;
-			});
-			$(".keywordUser").click(function(){
-				getUser($($(this).parent()).find("input[name='userNo']").val());
-				return false;
-			});
-			$(".parentKeyword").click(function(){
-				showContent($($(this).parent()).find("input[name='key']").val(), $($(this).parent()).find("input[name='keyword']").val());
-				return false;
-			});
-			$(".keyword").click(function(){
-				showContent($($(this).parent()).find("input[name='key']").val(), $($(this).parent()).find("input[name='keyword']").val());
-				return false;
-			});
-			$(".timeLineAddButton").click(function() {
-				console.log($($(this).parent()).find("input[name='key']").val());
-				addKeyword($($(this).parent()).find("input[name='key']").val());
-				return false;
-			});
-			$(".timeLineCopyButton").click(function() {
-				console.log($($(this).parent()).find("input[name='key']").val());
-				changeKeyword($($(this).parent()).find("input[name='key']").val());
-				return false;
-			});
+			setTimelineEvent();
 			autoListKeyword();
+			setBtnVisible();
 		}
 		
 	})
@@ -349,37 +325,129 @@ function autoListKeyword(){
 		if ($("#timeline").prop("scrollHeight") < $("#timeline").scrollTop()+temp){
 			var count=$(".keywordBox").length;
 			//alert("ggg")
-				$.ajax({
-					url:"/keyword/listTimeLineKeyword2?count="+count,
-					dataType:"json",
-					headers : {
-						"Accept" : "application/json",
-						"Content-Type" : "application/json"
-					},
-					success : function(list){
-						console.log(list);
-						$.ajax({
-							url:"resources/hbs/keywordList.hbs",
-							success:function(data){
-								var source=data;
-								var template=Handlebars.compile(source);
-								var tr=template(list)
-								$(tr).appendTo("#timelinec");
-								var showKeyword = $("#timelinec .keywordBox");
-								for(var i = 0 ; i < showKeyword.length; i++){
-									$(showKeyword[i]).delay(200*i+200).show("slide",{
-										direction : "right",
-										duration : 500
-									});
-								}
-							}
-						})
+			$.ajax({
+				url:"/keyword/listTimeLineKeyword2?count="+count,
+				dataType:"json",
+				headers : {
+					"Accept" : "application/json",
+					"Content-Type" : "application/json"
+				},
+				success :  function(JSONData, status) {
+					console.log(JSONData);
+					
+					$(setSearchList(JSONData)).appendTo("#timelinec");
+					$(setSearchBtnList(JSONData)).appendTo("#timelineb");
+					var showKeyword = $("#timelinec .keywordBox");
+					for(var i = 0 ; i < showKeyword.length; i++){
+						$(showKeyword[i]).delay(200*i+200).show("slide",{
+							direction : "right",
+							duration : 500
+						});
 					}
-				})
-			}
+					setTimelineEvent();
+					setBtnVisible();
+				}
+			})
+		}
 	})
 }
 
+function setListClipKeyword() {
+	// circleLabel = JSON.parse(data);
+	$("#timeline").show("fade",300);
+	
+	$("#btn_timeline").css("background","rgba(192,57,43,.2)");
+	$("#btn_search").css("background","rgba(40,128,185,.2)");
+	$("#btn_clipboard").css("background","rgba(230,126,34,.7)");
+	
+	$("#timeline").unbind();
+	//console.log(JSONData);
+
+	/*if (window.sessionStorage) {
+		var clipBoardList = JSON.parse(sessionStorage.getItem('clipBoardList'));
+		clipBoardList.push(obj.part.data);8
+		sessionStorage.setItem('clipBoardList', JSON.stringify(clipBoardList));
+        // sessionStorage.setItem('editTreeNo', data.user.userNo);
+        // var position = sessionStorage.getItem('저장된 이름');
+		// alert(sessionStorage.getItem('editTreeNo'));
+    }*/
+	
+	$("#timeline .keywordBox").remove();
+	$("#timeline .timeLineBtnBox").remove();
+	$("#timeline .ui-effects-wrapper").remove();
+	$("#timeLineTitleBox").hide();
+	$("#searchBox").hide();
+	sessionStorage.setItem('nowTimeline', 'clipboard');
+	
+	keyList = sessionStorage.getItem('clipBoardList');
+	console.log(keyList);
+	jQuery.ajax({
+		url : "/keyword/listClipBoardKeyword",
+		method : "POST",
+		dataType : "json",
+		data:keyList,
+		headers : {
+			"Accept" : "application/json",
+			"Content-Type" : "application/json"
+		},
+		success : function(JSONData, status) {
+			console.log(JSONData);
+			
+			$("#keywordTop").after(setSearchList(JSONData));
+			$("#keywordBtnTop").after(setSearchBtnList(JSONData));
+			$("#clipBoardTitleBox").show("fade",500);
+			var showKeyword = $("#timelinec .keywordBox");
+			for(var i = 0 ; i < showKeyword.length; i++){
+				$(showKeyword[i]).delay(200*i+200).show("slide",{
+					direction : "right",
+					duration : 500
+				});
+			}
+			setTimelineEvent();
+			setBtnVisible();
+		}
+	})
+}
+
+function setTimelineEvent(){
+	$(".childKeyword").click(function(){
+		if($($(this).parent()).find("input[name='key']").val() == "없음"){
+			//showContent($($(this).parent()).find("input[name='key']").val(), $($(this).parent()).find("input[name='keyword']").val());
+		}
+		else if($($(this).parent()).find("input[name='key']").val() == "..."){
+			//showContent($($(this).parent()).find("input[name='key']").val(), $($(this).parent()).find("input[name='keyword']").val());
+			//더보게 만들어야하느니
+		}
+		else{
+			showContent($($(this).parent()).find("input[name='key']").val(), $($(this).parent()).find("input[name='keyword']").val());
+		}
+		return false;
+	});
+	$(".keywordUser").click(function(){
+		getUser($($(this).parent()).find("input[name='userNo']").val());
+		return false;
+	});
+	$(".parentKeyword").click(function(){
+		if($($(this).parent()).find("input[name='key']").val() != null){
+			showContent($($(this).parent()).find("input[name='key']").val(), $($(this).parent()).find("input[name='keyword']").val());
+		}
+		return false;
+	});
+	$(".keyword").click(function(){
+		showContent($($(this).parent()).find("input[name='key']").val(), $($(this).parent()).find("input[name='keyword']").val());
+		return false;
+	});
+	$(".timeLineAddButton").click(function() {
+		console.log($($(this).parent()).find("input[name='key']").val());
+		addKeyword($($(this).parent()).find("input[name='key']").val());
+		return false;
+	});
+	$(".timeLineCopyButton").click(function() {
+		console.log($($(this).parent()).find("input[name='key']").val());
+		changeKeyword($($(this).parent()).find("input[name='key']").val());
+		return false;
+	});
+}
 
 function updateTitle(temp) {
 	/*트리타이틀 수정*/
