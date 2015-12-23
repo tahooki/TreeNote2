@@ -466,10 +466,10 @@ function treeList() {
 					$(".left").click(function() {
 						var temp=$(".item.active").prev().find('input[name=treeNo]').val();
 						if(temp == null){
-							var count = $(".item").length;
+							var count = $("#carousel-example-generic .item").length;
+							alert(count)
 							temp=$($(".item")[count-1]).find('input[name=treeNo]').val();
 						}
-						//alert(temp)
 						$("#myDiagram").remove();
 						$("#timeline").before('<div id="myDiagram" style="position: relative; background: #E4E4E4; float: left; width: 100%; height: 100%"></div>');
 						setTimeout("goImpl("+temp+")",1000);
