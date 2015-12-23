@@ -579,7 +579,29 @@ function updateKeyword(keyword) { // 노드를 생성하는 부분.
 
 function removeKeyword(node) { // 노드를 생성하는 부분.
 	if(node.findTreeParentNode() == null){
-		alert("루트 키워드는 삭제가 불가능 합니다.");
+		var treeNo=node.data.treeNo;
+		console.log(treeNo);
+		if(confirm("트리를 삭제 하시겠습니까?")){
+			console.log("true")
+			$.ajax({
+				url:"/tree/removeTree/"+treeNo,
+				method:"get",
+				dataType:"json",
+				headers : {
+					"Accept" : "application/json",
+					"Content-Type" : "application/json"
+				},
+				success:function(data){
+					
+					temp=data.Tree;
+					setTimeout("treeList()",1000);
+					$("#myDiagram").remove();
+					$("#timeline").before('<div id="myDiagram" style="position: relative; background: #E4E4E4; float: left; width: 100%; height: 100%"></div>');
+					goImpl(temp)
+				}
+				
+			})
+		}
 	}else{
 		var childList = node.findTreeChildrenNodes();
 		

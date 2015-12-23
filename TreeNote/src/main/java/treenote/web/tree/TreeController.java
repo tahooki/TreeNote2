@@ -57,11 +57,23 @@ public class TreeController {
 	
 	//삭제
 	@RequestMapping(value = "removeTree/{treeNo}")
-	public void removeTree(@PathVariable int treeNo, Model model) throws Exception{
+	public void removeTree(@PathVariable int treeNo, HttpSession session, Model model) throws Exception{
 		System.out.println("/removeTree");
-		
+		User user=(User)session.getAttribute("user");
+		System.out.println("gggggggggggggg"+user.getEditTreeNo());
+		int editTreeNo=user.getEditTreeNo();
+				
 		treeService.removeTree(treeNo);
+		List<Tree> listTree=treeService.listTree(user.getUserNo());
+		listTree.get(0).getTreeNo();
+		System.out.println(listTree.get(0).getTreeNo());
+		if(editTreeNo==treeNo){
+			user.setEditTreeNo(listTree.get(0).getTreeNo());
+		}
+		System.out.println("dddddddddddddd"+user.getEditTreeNo());
 		System.out.println("삭제 성공");
+		
+		model.addAttribute("Tree", user.getEditTreeNo());
 	}
 	
 	
@@ -104,6 +116,7 @@ public class TreeController {
 	public void listTree(HttpSession session , Model model) throws Exception{
 		System.out.println("/listTree");
 		User user=(User)session.getAttribute("user");
+		
 		int editTreeNo=user.getEditTreeNo();
 		System.out.println("UserNo ::::::::::::"+treeService.listTree(user.getUserNo()));
 		List<Tree> listTree=treeService.listTree(user.getUserNo());	

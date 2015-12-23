@@ -52,7 +52,7 @@ window.onload = function(){
 					$("#myDiagram").remove();
 					$("#timeline").before('<div id="myDiagram" style="position: relative; background: #E4E4E4; float: left; width: 100%; height: 100%"></div>');
 					goImpl(temp);
-					treeList();
+					setTimeout("treeList()",1000);
 				}
 		 
 			 });
@@ -255,10 +255,10 @@ function autoSearchListKeyword(keyword){
 										duration : 500
 									});
 								}
-								}
-							})
+							}
+						})
 					}
-					})
+				})
 			}
 	})
 }
@@ -372,10 +372,10 @@ function autoListKeyword(){
 										duration : 500
 									});
 								}
-								}
-							})
+							}
+						})
 					}
-					})
+				})
 			}
 	})
 }
@@ -384,7 +384,7 @@ function autoListKeyword(){
 function updateTitle(temp) {
 	/*트리타이틀 수정*/
 	       var id=$(".item.active").find('h5').text();
-	       
+	       //alert(id);
 	      $('h5').remove();
 	      $(".item.active").append('<input type="text" id="updateTitle" value="'+id+'">');
 
@@ -428,12 +428,12 @@ function treeList() {
 		dataType : 'json',
 		ContentType : "application/json",
 		success : function(list) {
-			//console.log(list);
+			console.log(list);
 			$.ajax({
 				url : "resources/hbs/treeList2.hbs",
 				success : function(data) {
 					var source = data;
-					//console.log("gggggg ::"+source)
+					console.log("gggggg ::"+source)
 					var template = Handlebars.compile(source);
 
 					var tr = template(list);
@@ -453,15 +453,27 @@ function treeList() {
 					})
 
 			/*해당트리 펼쳐짐*/
-					$(".carousel-control").click(function() {
+					$(".right").click(function() {
 						var temp=$(".item.active").next().find('input[name=treeNo]').val();
 						if(temp == null){
 							temp = $($(".item")[0]).find('input[name=treeNo]').val();
 						}
+						//alert(temp)
 						$("#myDiagram").remove();
 						$("#timeline").before('<div id="myDiagram" style="position: relative; background: #E4E4E4; float: left; width: 100%; height: 100%"></div>');
-						setTimeout(goImpl(temp), 3000)
-						}); 
+						setTimeout("goImpl("+temp+")",1000);
+					});
+					$(".left").click(function() {
+						var temp=$(".item.active").prev().find('input[name=treeNo]').val();
+						if(temp == null){
+							var count = $(".item").length;
+							temp=$($(".item")[count-1]).find('input[name=treeNo]').val();
+						}
+						//alert(temp)
+						$("#myDiagram").remove();
+						$("#timeline").before('<div id="myDiagram" style="position: relative; background: #E4E4E4; float: left; width: 100%; height: 100%"></div>');
+						setTimeout("goImpl("+temp+")",1000);
+					});
 				}
 			});
 
