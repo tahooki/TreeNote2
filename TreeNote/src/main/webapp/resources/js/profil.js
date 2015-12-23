@@ -1,220 +1,341 @@
-
+function profilCall(){
+	
+	
 	$.ajax({
-		url:"/user/getUser",
+		url:"/user/profil",
 		contentType:"application/json",
 		dataType:'json',
 		success:function(data){
-			console.log(data.user)
-			var tr;
-			var templateSource = $("#profilTemp").html();
-			var template = Handlebars.compile(templateSource);
-			tr = template(data.user);
-			$('header .row .col-sm-4.col-md-6:first-child').prepend(tr)
-			var pUserNo = $('header .row .col-sm-4.col-md-6:first-child input[name=userNo]').val();
-		}
-	})
-	
-	
-	
-	$.getJSON('/user/listFriend', function(obj) {
-		Handlebars.registerHelper( "checkPhoto", function ( status ){
-		    if (status !=null )
-		    {
-		        return status
-		    }
-		    else
-		    {
-		        return 'resources/img/man.jpg';
-		    }
-		});
-		
-		Handlebars.registerHelper( "checkStatus2", function ( status ){
-		    if (status != 2 )
-		    {
-		        return 'display: none"'
-		    }
-		    else
-		    {
-		        return ;
-		    }
-		});
-		
-		
-	
-		
-		var tr2;
-		var templateSource2 = $("#friendlist").html();
-		var template2 = Handlebars.compile(templateSource2);
-		tr2 = template2(obj);
-		console.log(tr2);
-		$('#profilFriend').append(tr2)
-		
-	});
-	
-	
-
-    
-   
-    
-	$.ajax({
-		url:'/tree/listTree',
-		contentType:"application/json",
-		dataType:"json",
-		success:function(data){
-			var myMinitree ;
-			var miniTree = $('#myTreeList').html();
-			var miniTreeTemp = Handlebars.compile(miniTree);
-			console.log(data.subTree)
-			myMinitree = miniTreeTemp(data);
-			console.log(myMinitree)
-			$('#owl-demo').append(myMinitree);
-			
-			$("#owl-demo").owlCarousel({
-		        autoPlay: false,
-		        items : 3,
-		        itemsDesktop : [1199,3],
-		        itemsDesktopSmall : [979,3],
-		        navigation:true,
-		        pagination:false,
-		        mouseDrag:false
-		      });
-			
-			
-			
-		},
-		complete:function(){
-			$('#owl-demo .caption-content').on('mouseenter',function(){
-				var tNo = $(this).parents('.col-sm-4.portfolio-item.item').find('input').val();
+			$.get("resources/hbs/profil.hbs",function(hbs){
+				Handlebars.registerHelper( "checkPhoto", function ( status ){
+				    if (status !=null )
+				    {
+				        return status
+				    }
+				    else
+				    {
+				        return 'resources/img/man.jpg';
+				    }
+				});
 				
-				var dName = $(this).attr('id')
-				myTreelist(dName,tNo);
-				$(this).unbind();
-			})
+				Handlebars.registerHelper( "checkStatus2", function ( status ){
+				    if (status != 2 )
+				    {
+				        return 'display: none"'
+				    }
+				    else
+				    {
+				        return ;
+				    }
+				});
+				
+				var tr;
+				var template = Handlebars.compile(hbs);
+				tr = template(data);
+				$("#mypage").append(tr);
+				
+				
 
-		}
-	})
-	
-	
-	$.ajax({
-		url:'/keyword/getMyKeyword',
-		contentType:"application/json",
-		dataType:"json",
-		success:function(data){
-			console.log("aaaa::::aaaa")
-			console.log(data.keyword)
-			var kList;
-			var tempKlist = $('#myKeywordList').html();
-			var kListTemplate = Handlebars.compile(tempKlist);
-			kList = kListTemplate(data);
-			$('#keywordList').append(kList);
+				$("#owl-demo").owlCarousel({
+			        autoPlay: false,
+			        items : 3,
+			        itemsDesktop : [1199,3],
+			        itemsDesktopSmall : [979,3],
+			        navigation:true,
+			        pagination:false,
+			        mouseDrag:false
+			      });
+				
+				
+				$('#owl-demo .caption-content').on('mouseenter',function(){
+					var tNo = $(this).parents('.col-sm-4.portfolio-item.item').find('input').val();
+					
+					var dName = $(this).attr('id')
+					myTreelist(dName,tNo);
+					$(this).unbind();
+				})
+				
+				
+				$('.keyword-list').on('click',function(){
+					var keyno = $(this).find('input').val();
+					sessionStorage.setItem("keywordNo",keyno);
+					sessionStorage.setItem("keyword",$(this).text());
+					$.getJSON("/content/getContent/" +keyno, function(data) {
+						console.log("aaaaasaaasdfadsfsdf "+data.content);
+						if(data.content==null){
+							jQuery("#content").show("fade",300).find("iframe").attr("src","../../../contents/contents.html");
+							console.log("1111111 "+data.content);
+						}
+						else{
+							jQuery("#content").show("fade",300).find("iframe").attr("src","../../../contents/get.html");
+							console.log(data.content);
+						}						
+					});					
+				})
 			
-			$('.keyword-list').on('click',function(){
-				var keyno = $(this).find('input').val();
-				sessionStorage.setItem("keywordNo",keyno);
-				sessionStorage.setItem("keyword",$(this).text());
-				$.getJSON("/content/getContent/" +keyno, function(data) {
-					console.log("aaaaasaaasdfadsfsdf "+data.content);
-					if(data.content==null){
-						jQuery("#content").show("fade",300).find("iframe").attr("src","../../../contents/contents.html");
-						console.log("1111111 "+data.content);
-					}
-					else{
-						jQuery("#content").show("fade",300).find("iframe").attr("src","../../../contents/get.html");
-						console.log(data.content);
-					}						
-				});					
+				$('.scroll-top').on("mouseenter",function(){
+					$(this).find('.profilNavi').css("left","0px")
+				})
+				$('.scroll-top').on("mouseleave",function(){
+					$(this).find('.profilNavi').css("left","-25px")
+				})
+				$('.scroll-left').on("mouseenter",function(){
+					$(this).find('.profilNavi').css("left","-6px")
+				})
+				$('.scroll-left').on("mouseleave",function(){
+					$(this).find('.profilNavi').css("left","-25px")
+				})
+				
+				
+				
+				$('.scroll-top').on('click',function(){
+					$('header').css('display','none')
+					$('section').css('display','block')
+					$(this).css('display','none')
+					$('.scroll-left').css('display','block')
+					return false;
+				});
+				
+				$('.scroll-left').on('click',function(){
+					$('section').css('display','none')
+					$('header').css('display','block')
+					$(this).css('display','none')
+					$('.scroll-top').css('display','block')
+					return false;
+				})
+				
+				$('#profilImg').on('click',function(){
+					$("input[name=file]").click()
+				})
+				
+				 $('input[name=file]').on('change',function(){
+					 readURL(this)
+					 var fd = new FormData($("#profilImage")[0]); 
+					 console.log(fd)
+					 $.ajax({
+					     url: "/user/updateProfil",
+					     type: "POST",
+					         data: fd,
+					         async: false,
+					         cache: false,
+					         contentType: false,
+					         processData: false,
+					         success:  function(data){
+					             alert(data);
+					         }
+					     });
+				 })
+				 
+					
+				 
+				
+				
+				$('.owl-item').on('click',function(){
+					var myTreeNo = $(this).find('input').val();
+					$("#myDiagram").remove();
+					$("#timeline").before('<div id="myDiagram" style="position: relative; background: #E4E4E4; float: left; width: 100%; height: 100%"></div>');
+					setTimeout(goImpl(myTreeNo), 3000)
+					sessionStorage.setItem("isMyTree",true)
+				})
+			
+			
 			})
 		}
 	})
 	
-	$('.scroll-top').on("mouseenter",function(){
-		$(this).find('.profilNavi').css("left","0px")
-	})
-	$('.scroll-top').on("mouseleave",function(){
-		$(this).find('.profilNavi').css("left","-25px")
-	})
-	$('.scroll-left').on("mouseenter",function(){
-		$(this).find('.profilNavi').css("left","-6px")
-	})
-	$('.scroll-left').on("mouseleave",function(){
-		$(this).find('.profilNavi').css("left","-25px")
-	})
 	
 	
 	
-	$('.scroll-top').on('click',function(){
-		$('header').css('display','none')
-		$('section').css('display','block')
-		$(this).css('display','none')
-		$('.scroll-left').css('display','block')
-	});
-	
-	$('.scroll-left').on('click',function(){
-		$('section').css('display','none')
-		$('header').css('display','block')
-		$(this).css('display','none')
-		$('.scroll-top').css('display','block')
-	})
-	
-	function readURL(input) {
-		if (input.files && input.files[0]) {
-		    var reader = new FileReader();            
-		    reader.onload = function (e) {
-		        $('#profilImg').attr('src', e.target.result);
-		    }
-		    
-		    reader.readAsDataURL(input.files[0]);
-		}
- 	}
  
 
+
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	 
-	 $(document).on('change','input[type=file]',function(){
-		 readURL(this)
-	     var fd = new FormData($("#profilImage")[0]); 
-		 console.log(fd)
-	     $.ajax({
-	         url: "/user/updateProfil",
-	         type: "POST",
-	         data: fd,
-	         async: false,
-	         cache: false,
-	         contentType: false,
-	         processData: false,
-	         success:  function(data){
-	             alert(data);
-	         /* alert(data); if json obj. alert(JSON.stringify(data));*/
-	         }
-	     });
-	 })
-	 
-	 $(document).on('click','#profilImg',function(){
-		 $("input[type=file]").click()
-	 })
-		
-	 
+}
+
+
+function friendProfilCall(userNo){
 	
 	
-	$(document).on('click', '#owl-demo .portfolio-item',function(){
-		var myTreeNo = $(this).find('input').val();
-		$("#myDiagram").remove();
-		$("#timeline").before('<div id="myDiagram" style="position: relative; background: #E4E4E4; float: left; width: 100%; height: 100%"></div>');
-		setTimeout(parent.goImpl(myTreeNo), 3000)
-		
+	$.ajax({
+		url:"/user/profil/"+userNo,
+		contentType:"application/json",
+		dataType:'json',
+		success:function(data){
+			$.get("resources/hbs/friendProfil.hbs",function(hbs){
+				Handlebars.registerHelper( "checkPhoto", function ( status ){
+					if (status !=null )
+					{
+						return status
+					}
+					else
+					{
+						return 'resources/img/man.jpg';
+					}
+				});
+				
+				Handlebars.registerHelper( "checkStatus2", function ( status ){
+					if (status != 2 )
+					{
+						return 'display: none"'
+					}
+					else
+					{
+						return ;
+					}
+				});
+				
+				var tr;
+				var template = Handlebars.compile(hbs);
+				tr = template(data);
+				$("#mypage").append(tr);
+				
+				
+				
+				$("#owl-demo").owlCarousel({
+					autoPlay: false,
+					items : 3,
+					itemsDesktop : [1199,3],
+					itemsDesktopSmall : [979,3],
+					navigation:true,
+					pagination:false,
+					mouseDrag:false
+				});
+				
+				
+				$('#owl-demo .caption-content').on('mouseenter',function(){
+					var tNo = $(this).parents('.col-sm-4.portfolio-item.item').find('input').val();
+					
+					var dName = $(this).attr('id')
+					myTreelist(dName,tNo);
+					$(this).unbind();
+				})
+				
+				
+				$('.keyword-list').on('click',function(){
+					var keyno = $(this).find('input').val();
+					sessionStorage.setItem("keywordNo",keyno);
+					sessionStorage.setItem("keyword",$(this).text());
+					$.getJSON("/content/getContent/" +keyno, function(data) {
+						console.log("aaaaasaaasdfadsfsdf "+data.content);
+						if(data.content==null){
+							jQuery("#content").show("fade",300).find("iframe").attr("src","../../../contents/contents.html");
+							console.log("1111111 "+data.content);
+						}
+						else{
+							jQuery("#content").show("fade",300).find("iframe").attr("src","../../../contents/get.html");
+							console.log(data.content);
+						}						
+					});					
+				})
+				
+				$('.scroll-top').on("mouseenter",function(){
+					$(this).find('.profilNavi').css("left","0px")
+				})
+				$('.scroll-top').on("mouseleave",function(){
+					$(this).find('.profilNavi').css("left","-25px")
+				})
+				$('.scroll-left').on("mouseenter",function(){
+					$(this).find('.profilNavi').css("left","-6px")
+				})
+				$('.scroll-left').on("mouseleave",function(){
+					$(this).find('.profilNavi').css("left","-25px")
+				})
+				
+				
+				
+				$('.scroll-top').on('click',function(){
+					$('header').css('display','none')
+					$('section').css('display','block')
+					$(this).css('display','none')
+					$('.scroll-left').css('display','block')
+					return false;
+				});
+				
+				$('.scroll-left').on('click',function(){
+					$('section').css('display','none')
+					$('header').css('display','block')
+					$(this).css('display','none')
+					$('.scroll-top').css('display','block')
+					return false;
+				})
+				
+				$('#profilImg').on('click',function(){
+					$("input[name=file]").click()
+				})
+				
+				$('input[name=file]').on('change',function(){
+					readURL(this)
+					var fd = new FormData($("#profilImage")[0]); 
+					console.log(fd)
+					$.ajax({
+						url: "/user/updateProfil",
+						type: "POST",
+						data: fd,
+						async: false,
+						cache: false,
+						contentType: false,
+						processData: false,
+						success:  function(data){
+							alert(data);
+						}
+					});
+				})
+				
+				
+				
+				
+				
+				$('.owl-item').on('click',function(){
+					var myTreeNo = $(this).find('input').val();
+					$("#myDiagram").remove();
+					$("#timeline").before('<div id="myDiagram" style="position: relative; background: #E4E4E4; float: left; width: 100%; height: 100%"></div>');
+					setTimeout(goImpl(myTreeNo), 3000)
+					sessionStorage.setItem("isMyTree",false)
+					
+				})
+				
+				
+			})
+		}
 	})
 	
+	
+	
+	
+	
+	
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+}
+
+
+
+
+
+function readURL(input) {
+	if (input.files && input.files[0]) {
+		var reader = new FileReader();            
+		reader.onload = function (e) {
+			$('#profilImg').attr('src', e.target.result);
+		}
+		
+		reader.readAsDataURL(input.files[0]);
+	}
+}
+	 
 function myTreelist(diagramName,treeNo) {
 	// if (window.goSamples) goSamples();
 	//json data를 서버에서 호출후 map 생성
-		var jsondata = jQuery.getJSON( '/tree/getTree/'+treeNo,function(success){
-
+	var jsondata = jQuery.getJSON( '/tree/getTree/'+treeNo,function(success){
+		
 		console.log(success);
 		var gojs = go.GraphObject.make; // for conciseness in defining templates
 		
 		myDiagram = // 아직 분석 안됨.
 			gojs(go.Diagram, diagramName, // div의 이름이 "myDiagram"인 것을 찾아 설정함.
-			{
+					{
 				"toolManager.mouseWheelBehavior" : go.ToolManager.WheelZoom,
 				//마우스 속성 설정. whillzoom으로 설정해서 줌도 되게 만듬.
 				initialAutoScale : go.Diagram.Uniform, // 화면 정렬 타입
@@ -240,12 +361,12 @@ function myTreelist(diagramName,treeNo) {
 				click:function(e){
 					//서치 풀리면 show 하게 할 예정
 					if (sessionStorage.getItem('isTimeline') == 'false') {
-				        //sessionStorage.setItem('isTimeline', 'false');
+						//sessionStorage.setItem('isTimeline', 'false');
 						setListTimeKeyword();
-				    }
+					}
 					jQuery("#content").hide("fade",300);
 				}
-			});
+					});
 		
 		// Define the Node template.
 		// This uses a Spot Panel to position a button relative
@@ -279,33 +400,27 @@ function myTreelist(diagramName,treeNo) {
 				//jQuery("#content").show("fade",300);
 			}
 		},
-		new go.Binding("isShadowed", "isSelected").ofObject(),
-        {
-	          selectionAdorned: false,
-	          shadowOffset: new go.Point(0, 0),
-	          shadowBlur: 15,
-	          shadowColor: "gray",
-	    },
+		
 		// the node's outer shape, which will surround the text
 		gojs(go.Panel, "Auto", {
-				name : "PANEL"
-			}, 
-			gojs(go.Shape, "Circle", // 노드의 모양을 정함.
-			{
-				fill : "whitesmoke",
-				stroke : "black",
-				strokeWidth : 0,
-			}, // 기본색이 whitsmoke 인듯... stroke는
-			new go.Binding("fill", "color")), gojs(go.TextBlock, {	
-				font : "15pt Jeju Gothic",
-				stroke : "black",
-				editable : true,
-				margin : 2,
-				textAlign: "center",
-				isMultiline : false,
-				wrap: go.TextBlock.WrapFit
-			}, // 폰트, margin, 텍스트 박스 수정가능을 설정.
-			new go.Binding("text", "keyword"))// 노드에 표시되는 텍스트를 data에서 선택하는부분.. data의
+			name : "PANEL"
+		}, 
+		gojs(go.Shape, "Circle", // 노드의 모양을 정함.
+				{
+			fill : "whitesmoke",
+			stroke : "black",
+			strokeWidth : 0,
+				}, // 기본색이 whitsmoke 인듯... stroke는
+				new go.Binding("fill", "color")), gojs(go.TextBlock, {	
+					font : "15pt Jeju Gothic",
+					stroke : "black",
+					editable : true,
+					margin : 2,
+					textAlign: "center",
+					isMultiline : false,
+					wrap: go.TextBlock.WrapFit
+				}, // 폰트, margin, 텍스트 박스 수정가능을 설정.
+				new go.Binding("text", "keyword"))// 노드에 표시되는 텍스트를 data에서 선택하는부분.. data의
 				// property중 name이라는 것을 선택.
 		),
 		gojs(go.Picture, {
@@ -336,31 +451,31 @@ function myTreelist(diagramName,treeNo) {
 			}
 		})
 		
-	); // end Node
-
+		); // end Node
+		
 		myDiagram.linkTemplate =
-		      gojs(go.Link,  // the whole link panel
-		        new go.Binding("points").makeTwoWay(),
-		        { curve: go.Link.Bezier, toShortLength: 15 },
-		        new go.Binding("curviness", "curviness"),
-		        gojs(go.Shape,  // the link shape
-		          { stroke: "#2F4F4F", strokeWidth: 2.5 }),
-		        gojs(go.Shape,  // the arrowhead
-		          { toArrow: "kite", fill: "#2F4F4F", stroke: null, scale: 2 })
-		    );
+			gojs(go.Link,  // the whole link panel
+					new go.Binding("points").makeTwoWay(),
+					{ curve: go.Link.Bezier, toShortLength: 15 },
+					new go.Binding("curviness", "curviness"),
+					gojs(go.Shape,  // the link shape
+							{ stroke: "#2F4F4F", strokeWidth: 2.5 }),
+							gojs(go.Shape,  // the arrowhead
+									{ toArrow: "kite", fill: "#2F4F4F", stroke: null, scale: 2 })
+			);
 		
 		// create the model with a root node data
 		myDiagram.model = new go.TreeModel([ // 트리모델로 설정
-	     {
-	    	 key : 0,
-	    	 keyword : "로그아웃 되었습니다.",
-	    	 color : "#2ECC71",
-	    	 collapse : 0
-	     } // 초기 토드 추가
-	     ]);
-
+		                                     {
+		                                    	 key : 0,
+		                                    	 keyword : "로그아웃 되었습니다.",
+		                                    	 color : "#2ECC71",
+		                                    	 collapse : 0
+		                                     } // 초기 토드 추가
+		                                     ]);
+		
 		myDiagram.layoutDiagram(true);
-
+		
 		myDiagram.model = go.Model.fromJson(success.Tree)
 		
 		// console.log(myDiagram.model);
@@ -368,5 +483,3 @@ function myTreelist(diagramName,treeNo) {
 	})
 	
 }
-	 
-	 

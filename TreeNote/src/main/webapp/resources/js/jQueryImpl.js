@@ -1,4 +1,16 @@
 
+function getUser(userNo){
+	if($("#mypage").css("display") == "none"){
+		$("#mypage").toggle("fade",500);
+	}
+	$("#mypage header").remove();
+	$("#mypage section").remove();
+	friendProfilCall(userNo)
+	/*추가*/
+	
+}
+
+
 window.onload = function(){
 	$("#treeContainer").click(function(){
 		console.log($("#mypage").css("display"));
@@ -11,7 +23,12 @@ window.onload = function(){
 		$("#content").toggle("drop");
 	});
 	$("#btn_mypage").click(function() {
-		$("#mypage").toggle("fade");
+		if($("#mypage").css("display") == "none"){
+			$("#mypage").toggle("fade",500);
+		}
+		$("#mypage header").remove();
+		$("#mypage section").remove();
+		profilCall();
 		
 	});
 	$("#btn_tree").click(function() {
@@ -1052,13 +1069,5 @@ function leadingZeros(n, digits) {
 }
 /*댓글 기능 함수 끝*/
 
-function getUser(userNo){
-	console.log(userNo);
-	if($("#mypage").css("display") == "none"){
-		$('#mypage').find('iframe').attr('src','/profil.html');
-	}
-	$("#mypage").toggle("fade",500);
-	/*추가*/
-	
-}
+
 	

@@ -31,7 +31,10 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 
+import treenote.domain.Tree;
 import treenote.domain.User;
+import treenote.service.keyword.KeywordService;
+import treenote.service.tree.TreeService;
 import treenote.service.user.UserService;
 
 @Controller
@@ -42,6 +45,16 @@ public class UserController {
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
+	
+	@Autowired
+	@Qualifier("treeServiceImpl")
+	private TreeService treeService;
+	
+	@Autowired
+	@Qualifier("keywordServiceImpl")
+	private KeywordService keywordService;
+	
+	
 
 	public UserController() {
 		System.out.println(this.getClass());
@@ -384,6 +397,76 @@ public class UserController {
 		}else{
 			model.addAttribute(false);
 		}
+	}
+	
+	
+	@RequestMapping(value="profil")
+	public void profil(HttpSession session, Model model) throws Exception{
+		User user = (User)session.getAttribute("user");
+		user.setPassword(null);
+		model.addAttribute("profil", user);
+		
+		System.out.println("/listFriend");
+		Map<String, Object> map = new HashMap<>();
+		map.put("userNo1", user.getUserNo());
+		map.put("userNo2", user.getUserNo());
+		List<User> list = userService.ListFriend(map);
+		model.addAttribute("friend",list);
+		
+		System.out.println("/listTree");
+		int editTreeNo=user.getEditTreeNo();
+		List<Tree> listTree=treeService.listTree(user.getUserNo());	
+		List<Tree> sizeTree=treeService.listTree(user.getUserNo());
+		Object editTree = null;
+		for(int i=0 ; i<sizeTree.size() ; i++ ){
+			int treeNo=(listTree.get(i).getTreeNo());
+			if(treeNo==editTreeNo){
+				editTree=listTree.get(i);		
+				listTree.remove(i);
+				break;
+			}
+		}
+		model.addAttribute("Tree", editTree);
+		model.addAttribute("subTree", listTree);
+		model.addAttribute("keyword", keywordService.getMyKeyword( user.getUserNo() ));
+		
+	}
+	
+	@RequestMapping(value="profil/{userNo}")
+	public void profil(@PathVariable int userNo, HttpSession session, Model model) throws Exception{
+		User user = (User)session.getAttribute("user");
+		if(user.getUserNo()!=userNo){
+			User returnUser = userService.getUser(userNo);
+			returnUser.setPassword(null);
+			model.addAttribute("profil", returnUser);
+			
+			System.out.println("/listFriend");
+			Map<String, Object> map = new HashMap<>();
+			map.put("userNo1", returnUser.getUserNo());
+			map.put("userNo2", returnUser.getUserNo());
+			List<User> list = userService.ListFriend(map);
+			model.addAttribute("friend",list);
+			
+			System.out.println("/listTree");
+			int editTreeNo=returnUser.getEditTreeNo();
+			List<Tree> listTree=treeService.listTree(returnUser.getUserNo());	
+			List<Tree> sizeTree=treeService.listTree(returnUser.getUserNo());
+			Object editTree = null;
+			for(int i=0 ; i<sizeTree.size() ; i++ ){
+				int treeNo=(listTree.get(i).getTreeNo());
+				if(treeNo==editTreeNo){
+					editTree=listTree.get(i);		
+					listTree.remove(i);
+					break;
+				}
+			}
+			model.addAttribute("Tree", editTree);
+			model.addAttribute("subTree", listTree);
+			model.addAttribute("keyword", keywordService.getMyKeyword( returnUser.getUserNo() ));
+		}else{
+			profil(session,model);
+		}
+		
 	}
 	
 }
