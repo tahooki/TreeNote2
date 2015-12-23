@@ -60,6 +60,7 @@
 	<!-- SQL : DELETE -->
 	<delete id="deleteContent"	parameterType="int">
 		DELETE
+		content, scrap, reg_date, origin
 		FROM contents
 		WHERE keyword_no = #{value}
 	</delete>

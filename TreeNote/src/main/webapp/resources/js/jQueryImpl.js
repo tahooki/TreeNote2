@@ -522,13 +522,7 @@ function showContent(keywordNo, keyword){
 
 	$.getJSON("/content/getContent/" +keywordNo, function(data) {
 		console.log(data);
-		
-	if(data.content==null){
-		jQuery("#content").show("fade",300).find("iframe").attr("src","../../../contents/contents.html");
-		console.log("1111111 "+data.content);
-		$(".replyIn").children().hide();
-	}
-	else{
+
 		jQuery("#content").show("fade",300).find("iframe").attr("src","../../../contents/get.html");
 		console.log("22222222 "+data.content);
 		
@@ -546,7 +540,7 @@ function showContent(keywordNo, keyword){
 		$(".userPhoto").attr("src",data.user.photo);
 		getTotalReply();
 		listReply();
-	}						
+							
 	});	
 }
 
