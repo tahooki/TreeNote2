@@ -12,95 +12,46 @@
 <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 </head>
 <body>
-
-<!--  <!-- 좌우측의 공간 확보 --> 
-<!--         <div class="container"> -->
-<!--             <hr/> -->
-<!--             <div class="row"> -->
-<!--                 <div class="col-md-10"> -->
-<!--                     <table class="table table-condensed" style="width:85%; margin-left:47px;"> -->
-<!--                         <thead> -->
-<!--                             <tr > -->
-<!--                             <th width="530px" style="font-family:Jeju Gothic; font-weight:bold; border-bottom-style: dashed; border-bottom-color: gainsboro;"> -->
-<!--                                 <font style="text-align:center; font-family:Jeju Gothic; font-size: 23px; font-weight:bold;" class="keywordd"></font> -->
-<!--                                 <font style="text-align:right; font-size: 12.5px; width:100px;" id="Name">by </font> -->
-<!--                             	<font style="text-align:left; font-size: 12.5px; opacity: 0.55;" id="bcd">| </font> </th> -->
-                            	
-<!--                             </tr> -->
-                            
-<!--                         </thead> -->
-<!--                         <tbody> -->
-                                          
-<!--                             <tr> -->
-<!--                                 <td style="text-align:center">출처 -->
-                                
-<!--                                 </td> -->
-<!--                                 <td id="UserName" style="text-align:left"> -->
-                                
-<!--                                 </td> -->
-<!--                             </tr> -->
-                            
-<!--                             <tr> -->
-<!--                                 <td style="text-align:center">Date  -->
-<!--                                 </td> -->
-<!--                                 <td id="bcd" style="text-align:left"> <span style='float:right'> Scrap : 0</span> -->
-<!--                                 </td> -->
-<!--                             </tr> -->
-                            
-                            
-<!--                             <tr> -->
-<!--                                 <td colspan="2" id="abc"> -->
-                       
-<!--                                 </td> -->
-<!--                             </tr> -->
-<!--                         </tbody> -->
-                       
-<!--                     </table> -->
-
-<!--                     <table class="table table-condensed"> -->
-<!--                         <thead> -->
-<!--                             <tr> -->
-<!--                                 <td> -->
-<!--                                     <span style='float:right; margin-right:50px;' class="button"> -->
-<!--                                         <button type="button" id="modify" class="btn btn-default" onclick="location.href='update.html'">수정</button> -->
-<!--                                         <button type="button" id="delete" class="btn btn-default" >삭제</button> -->
-<!--                                     </span> -->
-<!--                                 </td> -->
-<!--                             </tr> -->
-<!--                         </thead> -->
-<!--                     </table>  -->
-
                     	
-	<div id="contentContainer">
-	 	<div id="table" style="width:90%; margin-left:27px;"> 
-			<div id="line1"	style="border-bottom-style: dashed; border-bottom-color: gainsboro; height: 42.5px; margin-top: 10px;">
-				<div id="KEYWORD" style="width: 50%; height:40px; position: relative; left: 10px; top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-					<font style="text-align: center; font-family: Jeju Gothic; font-size: 23px; font-weight: bold; width: 350px; letter-spacing: 5px;" class="keywordd"></font>&nbsp;&nbsp; 
-					<font style="text-align: right; font-family: Jeju Gothic; font-size: 15px; font-weight: bold; opacity: 0.90;" id="Name"> |&nbsp; by </font>
-				</div>
+<div id="contentContainer">
+    <div id="table" style="width:577px; margin-left:27px;"> 
+      <div id="line1" style="width:577px; border-bottom-style: dashed; border-bottom-color: gainsboro; height: 42.5px;margin-top: 10px;">
+         <div id="lineL" style="width: 340px; height:40px; position: relative;float: left;margin-left: 5px;margin-top: 2px;">
+            <div id="keywordd" style="float: left; font-family: Jeju Gothic; font-size: 23px; font-weight: bold;max-width: 203px; height:30px; letter-spacing: 5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;margin-top: 2px;" class="keywordd"></div> 
+            <div style="float: left; font-family: Jeju Gothic; font-size: 15px; font-weight: bold; opacity: 0.90;margin-top: 12px; margin-left:5px;"> | </div>
+            <div style="float: left; font-family: Jeju Gothic; font-size: 15px; font-weight: bold; opacity: 0.90;margin-top: 12px;margin-left: 3px;"> by </div>
+            <div style="float: left; font-family: Jeju Gothic; font-size: 15px; font-weight: bold; opacity: 0.90; width: 100px;margin-left: 6px;margin-top: 12px;overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" id="name"></div>
+         </div>
 
-				<div id="DATE" style="width: 180px; position: absolute; top: 22px; right: 45px;">
-					<font id="delete" style="font-size: 14px; font-family: Jeju Gothic; float: right; cursor:pointer;"> 삭제 </font> 
-					<font style="font-size: 14px; font-family: Jeju Gothic; float: right;"> &nbsp; | &nbsp;</font> 
-					<font id="update" style="font-size: 14px; font-family: Jeju Gothic; float: right; cursor:pointer;" onclick="location.href='update.html'"> 수정 </font> 
-					<font style="font-size: 14px; font-family: Jeju Gothic; float: right;"> &nbsp; | &nbsp;</font> 
-				<div id="DATE" style="width: 180px; position: absolute; top: 2px; right: 100px;">
-					<font style="text-align: left; font-family: Jeju Gothic; font-size: 13px; opacity: 0.75; float: right;" id="bcd"> </font>
-				</div>
-			</div>
-		</div>
+         <div id="line1R" style="width: 180px;float: right;margin-top: 17px;margin-right: 7px;">
+            <font id="delete" style="font-size: 14px; font-family: Jeju Gothic; float: right; margin-top:-2px; cursor:pointer;">삭제</font> 
+            <font style="font-size: 14px; font-family: Jeju Gothic; float: right;margin-right: 3px; margin-top:-2px; ">|</font> 
+            <font id="update" style="font-size: 14px; font-family: Jeju Gothic; float: right; cursor:pointer;margin-right: 5px; margin-top:-2px;" onclick="location.href='update.html'">수정</font> 
+            <font style="font-size: 14px; font-family: Jeju Gothic; float: right;margin-right: 3px; margin-top:-2px; ">|</font> 
+            
+            <div id="DATE" style="width: 85px;">
+               <font style="text-align: left; font-family: Jeju Gothic; font-size: 13px; opacity: 0.75; float: right;margin-top: -1px;margin-right: -13px;" id="bcd"></font>
+            </div>
+         </div>
+      </div>
 
-			<div id="line2"	style="position: relative; left: 9px; height: 35px; font-weight: bold; margin-top: 10px;">
-				<font style="text-align: left; font-family: Jeju Gothic; font-size: 15px; width: 100px;" id="Name">&nbsp;출 &nbsp;처  &nbsp;|</font>
-				<font id="UserName" style="text-align: left; font-family: Jeju Gothic; font-size: 14px; width: 100px; margin-left: 5px; overflow: hidden; white-space: nowrap;"></font>	
-			</div>
-			
-			<div id="abc" style="margin-top:10px"></div>
-		</div>
-	</div>
-
-
-	
+      <div id="line2" style="position: relative;height: 30px; margin-top: 10px;margin-left: 8px;">
+         <div id="line2L" style="width: 270px;  font-weight: bold; float: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+            <font style="text-align: left; font-family: Jeju Gothic; font-size: 16px; width: 100px; margin-left:1px;">출</font>
+            <font style="text-align: left; font-family: Jeju Gothic; font-size: 16px; width: 100px;margin-left: 5px;">처</font>
+            <font style="text-align: left; font-family: Jeju Gothic; font-size: 15px; width: 100px;margin-left: 1px;">|</font>
+            <font id="userName" style="text-align: left; font-family: Jeju Gothic; font-size: 15px; width: 100px;margin-left: 1px;" ></font>
+         </div>
+         
+         <div id="line2R" style="width: 250px; float: right; opacity: 0.75; font-size: 13px;">
+            <font id="scrap" style="float: right; margin-right: 15px;">스크랩수<span class="badge" id="scrapNo" style="margin-left: 5px; padding-bottom: 1.5px; padding-top: 1.5px; padding-left: 5px; padding-right: 5px;"></span></font>   
+            <font id="sourceMore" style="cursor:pointer;float: right; margin-right: 10px;">출처보기</font>
+         </div>         
+      </div>
+      
+      <div id="content" style="margin-top:10px"></div>
+   </div>
+</div>	
 
 
 
@@ -129,14 +80,17 @@
  				console.log(data.user.userNo);
  				console.log(data.userNo);
  				console.log(data.user.name);
+ 				console.log("scrap "+data.content.scrap);
 				
-				var UserNo = data.user.userNo;
-				var Name = data.user.name;
+				var userNo = data.user.userNo;
+				var name = data.user.name;
 				var regTime = new Date();
 				regTime.setTime(data.content.regTime);
 				
 			    var time = regTime.toTimeString().substring(0,8);
 			    var date = regTime.toISOString().substring(0,10);
+			    
+			    var scrap = data.content.scrap;
 			    
 			    if(data.user.userNo!=data.userNo){
 					$(".button").hide();
@@ -150,26 +104,33 @@
 					for(var i = 0; i < data.originUserList.length ; i++){					
 					console.log("55555");
 				    console.log();
-				    var sendoo = "<font class='name' title='"+data.originUserList[0].user+"'>"
-				    				+data.originUserList[0].name+" -> "+
+				    var sendoo1 = "<font class='name' style='cursor:pointer' title='"+data.originUserList[i].user+"'>"
+				    				+data.originUserList[i].name+
 				    				"</font>";
 				    				
- 				    //var UserName = data.originUserList[0].name+"님의 Content를 공유했습니다.";
-				    console.log("요기요기요기 "+UserName);
- 				    $("#UserName").append(sendoo);				  
-//					alert($(".name").attr("title"));
- 				    
+				    var sendoo2 = "<font class='name' style='cursor:pointer' title='"+data.originUserList[i].user+"'>"
+    								+data.originUserList[i].name+
+    								"</font>"+" -> ";   								   								
+    								
+					if(i==data.originUserList.length-1 || data.originUserList.length==1){
+						$("#userName").append(sendoo1);	
+					}else{
+						$("#userName").append(sendoo2);	
+					}
 				}
+				    
 			}
-			    
+				    
 			    			    
-			    $("#No").append(UserNo);
-			    $("#Name").append(Name);
-				$(data.content.content).appendTo("#abc");
+			    $("#userNo").append(userNo);
+			    $("#name").append(name);
+				$(data.content.content).appendTo("#content");
 				var DT = date.replace(/-/g,".").substring(2,date.length);
 				var Time = time.substring(0,5);
 				console.log("date "+date +"time "+time);
 				$("#bcd").append(DT+" "+ Time);
+				$("#scrapNo").text(scrap);
+				
 							
 			});
 			
