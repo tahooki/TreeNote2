@@ -11,11 +11,8 @@ window.onload = function(){
 		$("#content").toggle("drop");
 	});
 	$("#btn_mypage").click(function() {
-		/*$("#mypage").toggle("drop");
-		추가
-		$('#mypage').find('iframe').attr('src','/profil.html')*/
-		//수정됨 맨 하단에 있슴.
-		getUser(10000000);
+		$("#mypage").toggle("fade");
+		
 	});
 	$("#btn_tree").click(function() {
 		$("#treelist").toggle("drop");
