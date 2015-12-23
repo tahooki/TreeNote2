@@ -204,7 +204,6 @@ function autoSearchListKeyword(keyword){
 		}
 		if ($("#timeline").prop("scrollHeight") < $("#timeline").scrollTop()+temp){
 			var count=$(".keywordBox").length;
-<<<<<<< .mine
 			$.ajax({
 				type:'post',
 				url:"/keyword/listSearchKeyword2/"+count,
@@ -227,37 +226,7 @@ function autoSearchListKeyword(keyword){
 							direction : "right",
 							duration : 500
 						});
-=======
-			alert("ggg")
-				$.ajax({
-					type:'post',
-					url:"/keyword/listSearchKeyword2/"+count,
-					dataType:"json",
-					data:JSON.stringify({
-						keyword:keyword
-					}),
-					headers : {
-						"Accept" : "application/json",
-						"Content-Type" : "application/json"
-					},
-					success : function(list){
-						console.log(list);
-						$.ajax({
-							url:"resources/hbs/keywordList.hbs",
-							success:function(data){
-								var source=data;
-								var template=Handlebars.compile(source);
-								var tr=template(list)
-								$(tr).appendTo("#timelinec");
-								var showKeyword = $("#timelinec .keywordBox");
-								for(var i = 0 ; i < showKeyword.length; i++){
-									$(showKeyword[i]).delay(200*i+200).show("slide",{
-										direction : "right",
-										duration : 500
-									});
-								}
-							}
-						})
+					}
 					setTimelineEvent();
 					setBtnVisible();
 				}
