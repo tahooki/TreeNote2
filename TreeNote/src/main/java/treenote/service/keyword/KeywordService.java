@@ -32,4 +32,6 @@ public interface KeywordService {
 	public List<Keyword> getMyKeyword(int userNo);
 	//전체키워드 수
 	public int totalKeyword() throws Exception; 
+	//해당 유저 타임라인 키워드 리스트 불러오기
+	public List<Search> listClipBoardKeyword(String keyList) throws Exception;
 }

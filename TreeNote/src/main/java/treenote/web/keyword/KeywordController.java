@@ -73,6 +73,16 @@ public class KeywordController {
 		model.addAttribute("list", keywordService.listSearchKeyword(keyword.getKeyword()));
 	}
 	
+	
+	// 해당 키워드 리스트 불러오기
+	@RequestMapping(value = "listClipBoardKeyword")
+	public void listClipBoardKeyword(@RequestBody String keyList, Model model) throws Exception {
+		System.out.println("/listClipBoardKeyword");
+		keyList = keyList.substring(1, keyList.length()-1);
+		System.out.println(keyList);
+		model.addAttribute("list", keywordService.listClipBoardKeyword(keyList));
+	}
+	
 	// 검색 키워드리스트 자동 불러오기
 	@RequestMapping(value = "listSearchKeyword2/{count}")
 	public void listSearchKeyword2(@PathVariable int count, @RequestBody Keyword keyword, HttpSession session, Model model) throws Exception {
@@ -85,14 +95,13 @@ public class KeywordController {
 
 	}
 	
-	// 해당 키워드 리스트 불러오기
+	// 해당 타임라인 리스트 불러오기
 	@RequestMapping(value = "listTimeLineKeyword")
 	public void listTimeLineKeyword(HttpSession session, Model model) throws Exception {
 		System.out.println("/listTimeLineKeyword");
-
 		model.addAttribute("list", keywordService.listTimeLineKeyword(((User)session.getAttribute("user")).getUserNo()));
-
 	}
+	
 	// 키워드리스트 자동 불러오기
 	@RequestMapping(value = "listTimeLineKeyword2", method=RequestMethod.GET)
 	public void listTimeLineKeyword2(@RequestParam int count, HttpSession session, Model model) throws Exception {

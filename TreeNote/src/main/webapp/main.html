@@ -148,13 +148,13 @@ img.img-avatar{
 			</div>
 
 			<div class="col-xs-4 text-right" style="padding:0px;">
-				<img id="btn_mypage" src="resources/img/btn_mypage.png" width="30px" height="30px" style="margin:10px; margin-left:0px;cursor:pointer;" title="마이페이지">
-				<img id="btn_timeline" src="resources/img/btn_timeline.png" width="30px" height="30px" style="margin:10px; margin-left:0px;cursor:pointer;" title="타임라인">
-				<img id="btn_search" src="resources/img/btn_search.png" width="30px" height="30px" style="margin:10px;margin-left:0px; margin-right:0px;cursor:pointer;" title="검색"><!-- update 12/11/friday -->	
+				<img id="btn_mypage" src="resources/img/btn_mypage.png" width="30px" height="30px" style="margin:10px;cursor:pointer;" title="마이페이지">
+				<img id="btn_showtimeline" src="resources/img/btn_timeline.png" width="30px" height="30px" style="margin:10px;cursor:pointer;" title="타임라인">
+				<!-- <img id="btn" src="resources/img/btn_search.png" width="30px" height="30px" style="margin:10px;margin-left:0px; margin-right:0px;cursor:pointer;" title="검색">update 12/11/friday -->	
 				
 				<!-- 친구리스트 드롭다운 메뉴 // 12/18일 업데이트 됨 by shin-->
 				<div style="display:inline-block" id ="friendListDrop">
-					<span  class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" width="30px" height="30px" style="margin:10px; margin-left:0px;cursor:pointer;clear:both;z-index:100;">
+					<span  class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" width="30px" height="30px" style="margin:10px;cursor:pointer;clear:both;z-index:100;">
 						
 						<img id="btn_friend" src="../resources/img/btn_friend.png" style="width:30px;height:30px; cursor:pointer;" title="친구목록">
 					</span>
@@ -194,7 +194,7 @@ img.img-avatar{
 				
 <!-- 				알림창 -->
 				<div style="display:inline-block" id ="alertListDrop">
-					<span class="dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" width="30px" height="30px" style="margin:10px; margin-left:0px; cursor:pointer;clear:both;z-index:100">
+					<span class="dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" width="30px" height="30px" style="margin:10px; cursor:pointer;clear:both;z-index:100">
 						
 						<img id="btn_alam" src="../resources/img/btn_alam.png" style="width:30px;height:30px; cursor:pointer;" title="알람목록">
 					</span>
@@ -225,22 +225,48 @@ img.img-avatar{
 				style="position: relative; background: #E4E4E4; float: left; width: 100%; height: 100%"></div>
 
 			<div id="timeline">
+				
 				<div style="position: absolute; width:70px; right:150px">
-					<div id="keywordBtnTop" style="height: 55px;"></div>
+					<div id="timelineb" style="overflow: hidden;">
+						<div id="keywordBtnTop" style="height: 95px;"></div>
+					</div>
 				</div>
 				<div style="width:190px; position: absolute; right:0px;">
-					<div style="height: 15px;"></div>
+					<div style="height: 55px;"></div>
 					<div id="timeLineTitleBox" style="height: 40px; display:none;">
 						<div id="titleImageBox">
 							<div style ="width: 180px; height: 40px; margin: 0 auto; padding:5px; border-radius: 15px; background:white;">
-							<img src="/resources/img/timelinetitle.png" width="170px" height="30px"style="margin:0 auto;"></div>
+								<img src="/resources/img/timelinetitle.png" width="170px" height="30px"style="margin:0 auto;">
+							</div>
 						</div>
 					</div>
-					<div id="searchBox" style="height: 40px; display:none;">
-						<input type="text" id="search" class="form-control" style="width: 180px; border: 0; margin-right: 10px; border-radius: 5px;">
+					<div id="searchBox" style="position:relative; height: 40px; display:none;">
+						<input type="text" id="search" class="form-control" style="position:absolute; left:0px; width: 140px; height:34px; margin-top:3px; border: 0; border-radius: 5px;">
+						<div id="btn_searchActive" style="position:absolute; left:145px; width:34px; height:34px; background:rgba(40,128,185,.7); margin-top:3px; cursor: pointer; border-radius:5px;">
+							<div><img src="resources/img/btn_search.png" width="30px" height="30px" style="margin:2px;"></div>
+						</div>
+					</div>
+					<div id="clipBoardTitleBox" style="height: 40px; display:none;">
+						<div id="titleImageBox">
+							<div style ="width: 180px; height: 40px; margin: 0 auto; padding:5px; border-radius: 15px; background:rgba(230,126,34,.7); font-family: Jeju Gothic; font-size:20px;">
+								<img src="resources/img/clipboardtitle.png" width="170px" height="30px"style="margin:0 auto;">
+							</div>
+						</div>
 					</div>
 					<div id="timelinec" style="overflow: hidden;">
 						<div id="keywordTop" style="height: 0px;"></div>
+					</div>
+				</div>
+				
+				<div style="position:absolute; width: 100%; height: 40px; background:rgba(255,255,255,.8);">
+					<div id="btn_timeline" class="col-xs-4 text-center" style="width:30%; height:40px; background:rgba(192,57,43,.7); padding: 0px; cursor: pointer;">
+						<div><img src="resources/img/btn_timeline.png" width="30px" height="30px" style="margin:0 auto; margin-top:5px;"></div>
+					</div>
+					<div id="btn_search" class="col-xs-4 text-center" style="width:30%; height:40px; background:rgba(40,128,185,.2); padding: 0px; margin-left:5%; cursor: pointer;">
+						<div><img src="resources/img/btn_search.png" width="30px" height="30px" style="margin:0 auto; margin-top:5px;"></div>
+					</div>
+					<div id="btn_clipboard" class="col-xs-4 text-center" style="width:30%; height:40px; background:rgba(230,126,34,.2); padding: 0px; margin-left:5%; cursor: pointer;">
+						<div><img src="resources/img/btn_clipboard.png" width="30px" height="30px" style="margin:0 auto; margin-top:5px;"></div>
 					</div>
 				</div>
 			</div>
@@ -656,7 +682,7 @@ img.img-avatar{
 				<input name="keyword" type="hidden" value="{{parentKeyword.keyword}}">
 			</span>
 			{{else}}
-				<span id="parentKeyword" style="background:white; cursor:default;">최상위</span>
+				<span id="parentKeyword" class="parentKeyword" style="background:white; cursor:default;">최상위</span>
 			{{/if}}
 		</div> 
 		<div class="col-xs-6 text-right" style="padding: 0; margin:0;">
@@ -705,6 +731,8 @@ img.img-avatar{
 
 	function setSearchList(data){
 
+		console.log(data);
+		
 		Handlebars.registerHelper( "setChildKeyword", function ( childKeywordList ){
 			var returnString = "";
 			if(childKeywordList.length == 0){

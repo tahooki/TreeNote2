@@ -177,6 +177,24 @@ public class KeywordServiceImpl implements KeywordService {
 		
 		return searchList;
 	}
+	
+	@Override
+	public List<Search> listClipBoardKeyword(String keyList) throws Exception {
+		// TODO Auto-generated method stub
+		List<Search> searchList = new ArrayList<Search>();
+		String keywordNoList[]= keyList.split(",");
+		
+		for(int i = 0 ; i < keywordNoList.length ; i++){
+			Search search = new Search();
+			Keyword temp = keywordDao.getKeyword(Integer.parseInt(keywordNoList[i]));
+			search.setKeyword(keywordDao.getKeyword(temp.getKey()));
+			search.setParentKeyword(keywordDao.getKeyword(temp.getParent()));
+			search.setChildKeywordList(keywordDao.listChildKeyword(temp.getKey()));
+			search.setUser(userDao.getUser(treeDao.getTree(temp.getTreeNo()).getUserNo()));
+			searchList.add(search);
+		}
+		return searchList;
+	}
 
 	@Override
 	public List<Keyword> listOnwerChildKeyword(Keyword keyword) throws Exception {

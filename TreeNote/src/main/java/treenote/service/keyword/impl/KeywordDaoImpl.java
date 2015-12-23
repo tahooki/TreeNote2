@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import treenote.domain.Keyword;
 import treenote.domain.Page;
+import treenote.domain.Search;
 import treenote.service.keyword.KeywordDao;
 
 @Repository("keywordDaoImpl")
@@ -68,7 +69,6 @@ public class KeywordDaoImpl implements KeywordDao {
 	public List<Keyword> listSearchKeyword(String keyword, int count) throws Exception {
 		// TODO Auto-generated method stub
 			int total=sqlSession.selectOne("keywordMapper.totalKeyword", keyword);			
-			System.out.println("gggggggggggggggggggggggggggggggggggggggggggg: "+count);
 			Map<String, Object> map=new HashMap<>();
 			if(count<=total){
 			map.put("keyword", keyword);
@@ -93,8 +93,6 @@ public class KeywordDaoImpl implements KeywordDao {
 	public List<Keyword> listTimeLineKeyword(int userNo, int count) throws Exception {
 		// TODO Auto-generated method stub
 		//int total=sqlSession.selectOne("keywordMapper.totalKeyword");
-				
-		System.out.println("gggggggggggggggggggggggggggggggggggggggggggg: "+count);
 
 		Map<String, Integer> map=new HashMap<>();
 		map.put("userNo", userNo);
