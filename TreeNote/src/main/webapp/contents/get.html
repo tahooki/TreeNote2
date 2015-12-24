@@ -62,9 +62,12 @@
 
 
 <script type="text/javascript">
+		var conut=0;
+		var conut2=0;
 		$(function() {
-			getContent();
-			
+			$(".sourcestemp",parent.document).hide();
+			getContent(0);
+			conut=0;
 		});
 		
 		function getContent(myContentNo){
@@ -73,12 +76,11 @@
 			
 			var keyword = sessionStorage.getItem("keyword").replace(/"/g, "");
 			$("#keyword").text(keyword);
-			
-			if(myContentNo!=0 || myContentNo!=null){
-				keywordNo = myContentNo;
-				
+			console.log(myContentNo);
+			if(myContentNo !=0){
+				keywordNo = myContentNo;				
 			}
-			
+			console.log(keywordNo);
 			$.getJSON("/content/getContent/" +keywordNo, function(data) {
  				console.log("data")
  				console.log(data);
@@ -100,23 +102,34 @@
 
 				
 				if(content=="내용을 입력해주세요 !"){
-					$("<font>내용을 입력해주세요 !</font>").appendTo("#content");
+					$("#content").html("<font>내용을 입력해주세요 !</font>");
 				}else{
-					$(content).appendTo("#content");
+					$("#content").html(content);
 				} 
 				
  				$("#scriptCount").text(scrap);
  				$("#regTime").text(date+" "+time);
  				
 			    var scrap = data.content.scrap;
-			    
 			    if(data.user.userNo!=data.userNo){
 					$("#button").hide();
+				}	
+			    if(data.user.userNo==data.userNo){
+					$("#button").show();
 				}
 			    
-			    $("#sourceMore").hide();
-			    $(".sourcesList",parent.document).hide();
-		    	$(".reply",parent.document).show();
+			    if(conut==0){
+			    	$("#sourceMore").hide();
+				    $(".sourcestemp",parent.document).hide();
+			    	$(".reply",parent.document).show();			    			    	
+			    }if(conut==1){
+				    $(".sourcestemp",parent.document).show();
+				    $("#sourceMore").show();
+			    	$(".reply",parent.document).hide();
+			    	if(data.user.userNo!=data.userNo){
+						$("#sourceMore").hide();
+					}
+			    }			   
 		    	
 				if(data.originUserList.length > 0){	
 					var sources=[];
@@ -132,9 +145,9 @@
 			                          "</font>"+" -> ";                                                      
 			                        
 			            if(i==data.originUserList.length-1 || data.originUserList.length==1){
-			                $("#userName").append(sendoo1);   
+			                $(sendoo1).text("#userName");   
 			            }else{
-			                $("#userName").append(sendoo2);   
+			                $(sendoo2).text("#userName");   
 			            }
 					    
 						var sourceUserPhoto = data.originUserList[i].photo;
@@ -191,30 +204,18 @@
 					
 					 $("#sourceMore").click(function(){
 					    	console.log("sourceMore");
-					    	$(".sourcesList",parent.document).show();
-						    $(".reply",parent.document).hide();
-						    $("#sourceMore").hide();
-					    	$.get("../../resources/hbs/content/sourceTemplate.hbs", function(data){
-						    	$(".sourcesList",parent.document).show();
-						    	$(".reply",parent.document).hide();
-						    	
-								 var template = Handlebars.compile(data);
-								 var tr = template({sources : sources});
-								 
-								 $(".sourcesList",parent.document).append(tr);								 
-								 
-								 $.get("../../resources/hbs/content/sourceUserTemplate.hbs", function(data2){
-									 var template2 = Handlebars.compile(data2);
-									 var tr2 = template2({userConent : userConent});
-									 
-									 $(".sourcesList",parent.document).append(tr2);
-									 $(".cancel",parent.document).click(function(){
-										 $("#sourceMore").show();
-										 var myContentNo=$(this).find(".sourceContent").last().val();
-										 
-									 });
-								});
-							});  
+					    	conut=1;
+					    	var sourcesData = {
+					    			userConent : userConent,
+					    			sources : sources
+					    	}
+					    	if(conut2==0){
+					    		sourceView(sourcesData);
+					    	}if(conut2!=0){
+					    		 $("#sourceMore").hide();								 
+								 $(".sourcestemp",parent.document).show();	
+								 $(".reply",parent.document).hide();
+					    	}
 					    	
 					  });
 
@@ -253,6 +254,50 @@
 
 				}				
 			});
+		}
+		
+		function sourceView(sourcesData){
+			conut2++;
+			$(".sourcesList",parent.document).empty();
+			$(".sourcestemp",parent.document).show();			
+		    $(".reply",parent.document).hide();
+		    $("#sourceMore").hide();
+	    	$.get("../../resources/hbs/content/sourceTemplate.hbs", function(data){
+		    	$(".sourcesList",parent.document).show();
+		    	$(".reply",parent.document).hide();
+		    	
+				 var template = Handlebars.compile(data);
+				 var tr = template({sources : sourcesData.sources});
+				 
+				 $(".sourcesList",parent.document).append(tr);								 
+				 
+				 $.get("../../resources/hbs/content/sourceUserTemplate.hbs", function(data2){					 
+					 var template2 = Handlebars.compile(data2);
+					 var tr2 = template2({userConent : sourcesData.userConent});
+					 
+					 $(".sourcesList",parent.document).append(tr2);
+					 
+					 $(".cancel",parent.document).click(function(){
+						 $("#sourceMore").show();
+						 var myContentNo=$(this).parents().find(".sourceContent").last().val();
+						 console.log(myContentNo);
+// 						 $(".sourcestemp",parent.document).hide();	
+// 						 $(".reply",parent.document).show();
+						 getContent(myContentNo);
+						 conut=0;						 
+					 });
+					 
+					 $(".sourceContent",parent.document).click(function(){
+						 var myContentNo=$(this).val();
+						 $("#sourceMore").hide();
+						 console.log(myContentNo);						 
+						 $(".sourcestemp",parent.document).show();	
+						 $(".reply",parent.document).hide();
+						 getContent(myContentNo);	
+						 conut=1;
+					 });
+				});
+			}); 
 		}
 </script>
 </body>

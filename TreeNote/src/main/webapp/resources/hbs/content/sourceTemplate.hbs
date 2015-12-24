@@ -3,9 +3,10 @@
 	<div class="glyphicon glyphicon-remove cancel" style="cursor: pointer; float:right;font-size: 17px;margin-top: 2px;margin-right: 3px;"></div>
 </div>
 
+
 {{#each sources}}
 {{#if sourceMap.active}}
-	
+<input type="hidden" class="myContentNo" value="{{userConent.contentUserContentNo}}">	
 	<div class="media" style="width: 300px;height: auto;margin-left: 14px;margin-bottom: -10px;margin-top: 0px;">			
 		<div class="media-left">
 			<a href="#"> <img class="media-object" src="{{sourceMap.sourceUserPhoto}}" alt="..." style="width: 40px; height: 40px;margin-left: 1px;">
