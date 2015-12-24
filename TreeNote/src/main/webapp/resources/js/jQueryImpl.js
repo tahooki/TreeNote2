@@ -829,19 +829,15 @@ function replyfunction(){
 };
 
 $(document).on('mouseenter','.media-body',function(){
-	$(this).find(".update").animate({opacity:"1"});
-	$(this).find(".delete").animate({opacity:"1"});
+	$(this).find(".update, .delete").animate({opacity:"1"}, 0);
 }).on('mouseleave','.media-body',function(){
-	$(this).find(".update").animate({opacity:"0"});
-	$(this).find(".delete").animate({opacity:"0"});
+	$(this).find(".update, .delete").animate({opacity:"0"}, 0);
 }); 
 
 $(document).on('mouseenter','.media-body',function(){
-	$(this).find(".updateReplyOfReply").animate({opacity:"1"});
-	$(this).find(".deleteReplyOfReply").animate({opacity:"1"});
+	$(this).find(".updateReplyOfReply, .deleteReplyOfReply").animate({opacity:"1"}, 0);
 }).on('mouseleave','.media-body',function(){
-	$(this).find(".updateReplyOfReply").animate({opacity:"0"});
-	$(this).find(".deleteReplyOfReply").animate({opacity:"0"});
+	$(this).find(".updateReplyOfReply, .deleteReplyOfReply").animate({opacity:"0"}, 0);
 }); 
  
 $(document).on('click','.Comment',function(){

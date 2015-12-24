@@ -6,132 +6,221 @@
 
   <!-- Bootstrap -->
 <link href="../../resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
-
+<link href="../../resources/css/bootstrap.min.css" rel="stylesheet">
 <!-- jQuery를 사용하기위해 jQuery라이브러리 추가 -->
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="../../resources/js/handlebars.min.js"></script>
 </head>
 <body>
-                    	
+         	
 <div id="contentContainer">
-    <div id="table" style="width:577px; margin-left:27px;"> 
-      <div id="line1" style="width:577px; border-bottom-style: dashed; border-bottom-color: gainsboro; height: 42.5px;margin-top: 10px;">
-         <div id="lineL" style="width: 340px; height:40px; position: relative;float: left;margin-left: 5px;margin-top: 2px;">
-            <div id="keywordd" style="float: left; font-family: Jeju Gothic; font-size: 23px; font-weight: bold;max-width: 203px; height:30px; letter-spacing: 5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;margin-top: 2px;" class="keywordd"></div> 
-            <div style="float: left; font-family: Jeju Gothic; font-size: 15px; font-weight: bold; opacity: 0.90;margin-top: 12px; margin-left:5px;"> | </div>
-            <div style="float: left; font-family: Jeju Gothic; font-size: 15px; font-weight: bold; opacity: 0.90;margin-top: 12px;margin-left: 3px;"> by </div>
-            <div style="float: left; font-family: Jeju Gothic; font-size: 15px; font-weight: bold; opacity: 0.90; width: 100px;margin-left: 6px;margin-top: 12px;overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" id="name"></div>
-         </div>
+ 	<div id="table" style="width:577px; margin-left:27px;"> 
+		<div id="line1" style="width:577px; border-bottom-style: dashed; border-bottom-color: gainsboro; height: 42.5px;margin-top: 10px;">
+			<div id="lineL" style="width: 330px; height:40px; position: relative;float: left;margin-left: 6px;margin-top: 2px;">
+				<div id="keyword" title="" style="float: left; font-family: Jeju Gothic; font-size: 23px; font-weight: bold;max-width: 170px; letter-spacing: 5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;margin-top: 2px;"></div> 
+				<div style="float: left; font-family: Jeju Gothic; font-size: 15px; font-weight: bold; opacity: 0.90;margin-top: 12px;">|</div>
+				<div style="float: left; font-family: Jeju Gothic; font-size: 15px; font-weight: bold; opacity: 0.90;margin-top: 12px;margin-left: 3px;">by</div>
+				<div id="userName" title="" style="float: left; font-family: Jeju Gothic; font-size: 15px; font-weight: bold; opacity: 0.90; width: 100px;margin-left: 6px;margin-top: 12px;overflow: hidden; text-overflow: ellipsis; white-space: nowrap; cursor:pointer;"></div>
+			</div>
+			
+			<div id="line1R" style="width: 180px;float: right;margin-top: 17px;margin-right: 7px;">
+				<div id="button">
+					<font id="delete" style="font-size: 14px; font-family: Jeju Gothic; float: right; cursor:pointer;">삭제</font> 
+					<font style="font-size: 14px; font-family: Jeju Gothic; float: right;margin-right: 3px;">|</font> 
+					<font id="update" style="font-size: 14px; font-family: Jeju Gothic; float: right; cursor:pointer; margin-right: 5px;" onclick="location.href='update.html'">수정</font> 
+					<font style="font-size: 14px; font-family: Jeju Gothic; float: right;margin-right: 3px;">|</font> 
+				</div>				
+				
+				<div id="dateDiv" style="width: 85px;">
+					<font style="text-align: left; font-family: Jeju Gothic; font-size: 13px; opacity: 0.75; float: right;margin-top: 4px;margin-right: -13px;" id="regTime"></font>
+				</div>
+			</div>
+		</div>
 
-         <div id="line1R" style="width: 180px;float: right;margin-top: 17px;margin-right: 7px;">
-            <font id="delete" style="font-size: 14px; font-family: Jeju Gothic; float: right; margin-top:-2px; cursor:pointer;">삭제</font> 
-            <font style="font-size: 14px; font-family: Jeju Gothic; float: right;margin-right: 3px; margin-top:-2px; ">|</font> 
-            <font id="update" style="font-size: 14px; font-family: Jeju Gothic; float: right; cursor:pointer;margin-right: 5px; margin-top:-2px;" onclick="location.href='update.html'">수정</font> 
-            <font style="font-size: 14px; font-family: Jeju Gothic; float: right;margin-right: 3px; margin-top:-2px; ">|</font> 
-            
-            <div id="DATE" style="width: 85px;">
-               <font style="text-align: left; font-family: Jeju Gothic; font-size: 13px; opacity: 0.75; float: right;margin-top: -1px;margin-right: -13px;" id="bcd"></font>
-            </div>
-         </div>
-      </div>
+		<div id="line2" style="position: relative;height: 30px; font-weight: bold;margin-top: 5px;margin-left: 8px;">
+			<div id="line2L" style="width: 270px; float: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+				<font style="text-align: left; font-family: Jeju Gothic; font-size: 15px; width: 100px;" id="Name">출</font>
+				<font style="text-align: left; font-family: Jeju Gothic; font-size: 15px; width: 100px;margin-left: 5px;" id="Name">처</font>
+				<font id="userNameAfter" style="text-align: left; font-family: Jeju Gothic; font-size: 15px; width: 100px;margin-left: 1px;" id="Name">|</font>
+				
 
-      <div id="line2" style="position: relative;height: 30px; margin-top: 10px;margin-left: 8px;">
-         <div id="line2L" style="width: 270px;  font-weight: bold; float: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-            <font style="text-align: left; font-family: Jeju Gothic; font-size: 16px; width: 100px; margin-left:1px;">출</font>
-            <font style="text-align: left; font-family: Jeju Gothic; font-size: 16px; width: 100px;margin-left: 5px;">처</font>
-            <font style="text-align: left; font-family: Jeju Gothic; font-size: 15px; width: 100px;margin-left: 1px;">|</font>
-            <font id="userName" style="text-align: left; font-family: Jeju Gothic; font-size: 15px; width: 100px;margin-left: 1px;" ></font>
-         </div>
-         
-         <div id="line2R" style="width: 250px; float: right; opacity: 0.75; font-size: 13px;">
-            <font id="scrap" style="float: right; margin-right: 15px;">스크랩수<span class="badge" id="scrapNo" style="margin-left: 5px; padding-bottom: 1.5px; padding-top: 1.5px; padding-left: 5px; padding-right: 5px;"></span></font>   
-            <font id="sourceMore" style="cursor:pointer;float: right; margin-right: 10px;">출처보기</font>
-         </div>         
-      </div>
-      
-      <div id="content" style="margin-top:10px"></div>
-   </div>
-</div>	
+			</div>
+			
+			<div id="line2R" style="width: 250px; float: right; opacity: 0.75; font-size: 13px;">
+            	<font id="scrap" style="float: right; margin-right: 15px;">스크랩수<span class="badge" id="scrapNo" style="margin-left: 5px; padding-bottom: 1.5px; padding-top: 1.5px; padding-left: 5px; padding-right: 5px;"></span></font>   
+           		<font id="sourceMore" style="cursor:pointer;float: right; margin-right: 10px;">출처보기</font>
+         	</div> 
+			
+		</div>
+		
+		<div id="content" style="margin-top:10px"></div>
+	</div>
+
+</div>
 
 
 
-	<script type="text/javascript">
+<script type="text/javascript">
 		$(function() {
+			getContent();
 			
+		});
+		
+		function getContent(myContentNo){
 			var keywordNo = sessionStorage.getItem("keywordNo");
-//			console.log(keywordNo);
-			$(".keywordNo").text(keywordNo);
+			$("#keyword").attr("title",keywordNo);				
 			
-			var keyword = sessionStorage.getItem("keyword");
-//			console.log("111111111111111111 "+keyword);
-			var keywordd = keyword.replace(/"/g, "");
-//			console.log(keywordd);
-			$(".keywordd").text(keywordd);
-
-// 			var keywordUser = sessionStorage.getItem("keywordUser");
-// 			console.log(keywordUser);
-// 			$(".keywordUser").text(keywordUser);	
-
+			var keyword = sessionStorage.getItem("keyword").replace(/"/g, "");
+			$("#keyword").text(keyword);
+			
+			if(myContentNo!=0 || myContentNo!=null){
+				keywordNo = myContentNo;
+				
+			}
+			
 			$.getJSON("/content/getContent/" +keywordNo, function(data) {
- 				console.log(data.content.content);
- 				console.log(data.content.regTime);
+ 				console.log("data")
  				console.log(data);
- 				console.log(data.user);
- 				console.log(data.user.userNo);
- 				console.log(data.userNo);
- 				console.log(data.user.name);
+ 				
+ 				var userNo = data.user.userNo;
+ 				var userName = data.user.name;
+ 				var regTime = new Date();
+				var content = data.content.content;				
+ 				var scrap = data.content.scrap;
+ 				
+ 				regTime.setTime(data.content.regTime); 				
+ 				var time = regTime.toTimeString().substring(0,5);
+			    var date = regTime.toISOString().substring(2,10).replace(/-/g,".");
  				console.log("scrap "+data.content.scrap);
+
+				$("#userName").attr("title",userNo);
+ 				$("#userName").text(userName);
+
+
 				
-				var userNo = data.user.userNo;
-				var name = data.user.name;
-				var regTime = new Date();
-				regTime.setTime(data.content.regTime);
+				if(content=="내용을 입력해주세요 !"){
+					$("<font>내용을 입력해주세요 !</font>").appendTo("#content");
+				}else{
+					$(content).appendTo("#content");
+				} 
 				
-			    var time = regTime.toTimeString().substring(0,8);
-			    var date = regTime.toISOString().substring(0,10);
-			    
+ 				$("#scriptCount").text(scrap);
+ 				$("#regTime").text(date+" "+time);
+ 				
 			    var scrap = data.content.scrap;
 			    
 			    if(data.user.userNo!=data.userNo){
-					$(".button").hide();
+					$("#button").hide();
 				}
 			    
-//			    console.log("날짜 :: "+date+" 시간 :: "+time );
-
-//				console.log("4444444");
-//				console.log(data.originUserList);
+			    $("#sourceMore").hide();
+			    $(".sourcesList",parent.document).hide();
+		    	$(".reply",parent.document).show();
+		    	
 				if(data.originUserList.length > 0){	
-					for(var i = 0; i < data.originUserList.length ; i++){					
-					console.log("55555");
-				    console.log();
-				    var sendoo1 = "<font class='name' style='cursor:pointer' title='"+data.originUserList[i].user+"'>"
-				    				+data.originUserList[i].name+
-				    				"</font>";
-				    				
-				    var sendoo2 = "<font class='name' style='cursor:pointer' title='"+data.originUserList[i].user+"'>"
-    								+data.originUserList[i].name+
-    								"</font>"+" -> ";   								   								
-    								
-					if(i==data.originUserList.length-1 || data.originUserList.length==1){
-						$("#userName").append(sendoo1);	
-					}else{
-						$("#userName").append(sendoo2);	
+					var sources=[];
+					var sourceMap;
+					var userConent;
+					for(var i = 0; i < data.originUserList.length ; i++){	
+					    $("#sourceMore").show();
+					    var sendoo1 = "<font class='name' style='cursor:pointer' title='"+data.originUserList[i].user+"'>"
+			                          +data.originUserList[i].name+
+			                          "</font>";
+			            var sendoo2 = "<font class='name' style='cursor:pointer' title='"+data.originUserList[i].user+"'>"
+			                          +data.originUserList[i].name+
+			                          "</font>"+" -> ";                                                      
+			                        
+			            if(i==data.originUserList.length-1 || data.originUserList.length==1){
+			                $("#userName").append(sendoo1);   
+			            }else{
+			                $("#userName").append(sendoo2);   
+			            }
+					    
+						var sourceUserPhoto = data.originUserList[i].photo;
+						var sourceUserNo = data.originUserList[i].userNo;
+						var sourceUserName = data.originUserList[i].name;
+						var sourceScriptCount = data.originContentList[i].scrap;						
+						var sourceContentNo = data.originContentList[i].keywordNo;
+						
+						var tempRegTime = new Date();						
+						tempRegTime.setTime(data.originContentList[i].regTime);						
+		 				var time = tempRegTime.toTimeString().substring(0,5);
+					    var date = tempRegTime.toISOString().substring(2,10).replace(/-/g,".");
+					    var sourceRegTime =date+" "+time ;
+					    
+					    var active=false;
+					    
+					    if(sourceScriptCount==0 || sourceScriptCount==null){
+					    	active =true;
+					    }
+					    
+						sourceMap ={
+								sourceUserPhoto : sourceUserPhoto,
+								sourceUserNo : sourceUserNo,
+								sourceUserName : sourceUserName,
+								sourceScriptCount : sourceScriptCount,
+								sourceRegTime : sourceRegTime,
+								sourceContentNo : sourceContentNo,
+								active : active
+						}						
+						sources.push({"sourceMap" : sourceMap});
+						
+						var contentUserPhoto = data.user.photo;
+						var contentUserNo = data.user.userNo;
+						var contentUserName = data.user.name;
+						var contentUserScriptCount = data.content.scrap;						
+						var contentUserContentNo = data.content.keywordNo;
+						
+						var contentusertempRegTime = new Date();						
+						contentusertempRegTime.setTime(data.content.regTime);						
+		 				var contentusertime = contentusertempRegTime.toTimeString().substring(0,5);
+					    var contentuserdate = contentusertempRegTime.toISOString().substring(2,10).replace(/-/g,".");
+					    var contentusersourceRegTime =contentuserdate+" "+contentusertime ;
+					    
+					    userConent ={
+					    		contentUserPhoto : contentUserPhoto,
+					    		contentUserNo : contentUserNo,
+					    		contentUserName : contentUserName,
+					    		contentUserScriptCount : contentUserScriptCount,
+					    		contentUserContentNo : contentUserContentNo,
+					    		contentusersourceRegTime : contentusersourceRegTime
+						}					    
 					}
-				}
+					console.log({userConent : userConent});
+					
+					 $("#sourceMore").click(function(){
+					    	console.log("sourceMore");
+					    	$(".sourcesList",parent.document).show();
+						    $(".reply",parent.document).hide();
+						    $("#sourceMore").hide();
+					    	$.get("../../resources/hbs/content/sourceTemplate.hbs", function(data){
+						    	$(".sourcesList",parent.document).show();
+						    	$(".reply",parent.document).hide();
+						    	
+								 var template = Handlebars.compile(data);
+								 var tr = template({sources : sources});
+								 
+								 $(".sourcesList",parent.document).append(tr);								 
+								 
+								 $.get("../../resources/hbs/content/sourceUserTemplate.hbs", function(data2){
+									 var template2 = Handlebars.compile(data2);
+									 var tr2 = template2({userConent : userConent});
+									 
+									 $(".sourcesList",parent.document).append(tr2);
+									 $(".cancel",parent.document).click(function(){
+										 $("#sourceMore").show();
+										 var myContentNo=$(this).find(".sourceContent").last().val();
+										 
+									 });
+								});
+							});  
+					    	
+					  });
+
 				    
 			}
-				    
-			    			    
-			    $("#userNo").append(userNo);
-			    $("#name").append(name);
-				$(data.content.content).appendTo("#content");
-				var DT = date.replace(/-/g,".").substring(2,date.length);
-				var Time = time.substring(0,5);
-				console.log("date "+date +"time "+time);
-				$("#bcd").append(DT+" "+ Time);
-				$("#scrapNo").text(scrap);
-				
-							
+
 			});
 			
 		
@@ -164,9 +253,7 @@
 
 				}				
 			});
-			
-			
-		});
-	</script>
+		}
+</script>
 </body>
 </html>
