@@ -94,12 +94,10 @@
  				regTime.setTime(data.content.regTime); 				
  				var time = regTime.toTimeString().substring(0,5);
 			    var date = regTime.toISOString().substring(2,10).replace(/-/g,".");
- 				console.log("scrap "+data.content.scrap);
-
+			    
+				$("#scrapNo").text(scrap);
 				$("#userName").attr("title",userNo);
  				$("#userName").text(userName);
-
-
 				
 				if(content=="내용을 입력해주세요 !"){
 					$("#content").html("<font>내용을 입력해주세요 !</font>");
@@ -135,6 +133,7 @@
 					var sources=[];
 					var sourceMap;
 					var userConent;
+					var sendoo=[];
 					for(var i = 0; i < data.originUserList.length ; i++){	
 					    $("#sourceMore").show();
 					    var sendoo1 = "<font class='name' style='cursor:pointer' title='"+data.originUserList[i].user+"'>"
@@ -145,11 +144,11 @@
 			                          "</font>"+" -> ";                                                      
 			                        
 			            if(i==data.originUserList.length-1 || data.originUserList.length==1){
-			                $(sendoo1).text("#userName");   
+			            	sendoo.push(sendoo1);  
 			            }else{
-			                $(sendoo2).text("#userName");   
+			            	sendoo.push(sendoo2);   
 			            }
-					    
+			            
 						var sourceUserPhoto = data.originUserList[i].photo;
 						var sourceUserNo = data.originUserList[i].userNo;
 						var sourceUserName = data.originUserList[i].name;
@@ -221,7 +220,7 @@
 
 				    
 			}
-
+			$("#userNameAfter").html(sendoo);  
 			});
 			
 		
