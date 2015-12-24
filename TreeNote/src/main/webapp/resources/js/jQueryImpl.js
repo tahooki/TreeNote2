@@ -116,7 +116,7 @@ window.onload = function(){
 		return false;
 	}).hover(function(){
 		$(this).css("background","rgba(230,126,34,.7)");
-	},function(){s
+	},function(){
 		if (sessionStorage.getItem('nowTimeline') != 'clipboard'){
 			$(this).css("background","rgba(230,126,34,.2)");
 		}
