@@ -72,7 +72,8 @@ window.onload = function(){
 					$("#myDiagram").remove();
 					$("#timeline").before('<div id="myDiagram" style="position: relative; background: #E4E4E4; float: left; width: 100%; height: 100%"></div>');
 					goImpl(temp);
-					setTimeout("treeList()",1000);
+					//setTimeout("treeList()",1000);
+					treeList();
 				}
 		 
 			 });
@@ -444,24 +445,31 @@ function updateTitle(temp) {
 
 	      var data=$(".item.active");
 	      $("#updateTitle").keydown(function(e){
-			if (e.keyCode == 13) { 
-			 $.ajax({
-				url : "/tree/updateTitle",
-				method : "POST",
-				data:JSON.stringify({
-					treeNo:data.find('input[name=treeNo]').val(),
-					title:$("#updateTitle").val(),
-					userNo:data.find('input[name=userNo]').val()
-					}),
-				dataType : "json",
-				contentType : "application/json",
-				success : function(JSONData, status) {
-					console.log("updateTitle : "+status);
+			if (e.keyCode == 13) {
+				//alert($.trim($("#updateTitle").val()))
+				if($.trim($("#updateTitle").val())==""){
+					//alert("성공")
 					$("#carousel-example-generic").remove();
 					treeList();
+				}else{
+					$.ajax({
+						url : "/tree/updateTitle",
+						method : "POST",
+						data:JSON.stringify({
+							treeNo:data.find('input[name=treeNo]').val(),
+							title:$("#updateTitle").val(),
+							userNo:data.find('input[name=userNo]').val()
+						}),
+						dataType : "json",
+						contentType : "application/json",
+						success : function(JSONData, status) {
+							console.log("updateTitle : "+status);
+							$("#carousel-example-generic").remove();
+							treeList();
 						}
 					});
 				}
+			}
 			else if (e.keyCode == 27) {
 				//esc 누르면 취소
 				$("#carousel-example-generic").remove();
@@ -473,6 +481,8 @@ function updateTitle(temp) {
 	    	  $("#carousel-example-generic").remove();
 	    	  treeList();
 	      });
+	      
+	      
 }
 
 function treeList() {
@@ -521,12 +531,13 @@ function treeList() {
 						var temp=$(".item.active").prev().find('input[name=treeNo]').val();
 						if(temp == null){
 							var count = $("#carousel-example-generic .item").length;
-							alert(count)
+							//alert(count)
 							temp=$($(".item")[count-1]).find('input[name=treeNo]').val();
 						}
 						$("#myDiagram").remove();
 						$("#timeline").before('<div id="myDiagram" style="position: relative; background: #E4E4E4; float: left; width: 100%; height: 100%"></div>');
-						setTimeout("goImpl("+temp+")",1000);
+						//setTimeout("goImpl("+temp+")",1000);
+						goImpl(temp);
 					});
 				}
 			});
