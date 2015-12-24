@@ -116,7 +116,7 @@ window.onload = function(){
 		return false;
 	}).hover(function(){
 		$(this).css("background","rgba(230,126,34,.7)");
-	},function(){
+	},function(){s
 		if (sessionStorage.getItem('nowTimeline') != 'clipboard'){
 			$(this).css("background","rgba(230,126,34,.2)");
 		}
@@ -525,6 +525,7 @@ function treeList() {
 						//alert(temp)
 						$("#myDiagram").remove();
 						$("#timeline").before('<div id="myDiagram" style="position: relative; background: #E4E4E4; float: left; width: 100%; height: 100%"></div>');
+						sessionStorage.setItem('isMyTree',true);
 						setTimeout("goImpl("+temp+")",1000);
 					});
 					$(".left").click(function() {
@@ -536,7 +537,6 @@ function treeList() {
 						}
 						$("#myDiagram").remove();
 						$("#timeline").before('<div id="myDiagram" style="position: relative; background: #E4E4E4; float: left; width: 100%; height: 100%"></div>');
-						//setTimeout("goImpl("+temp+")",1000);
 						goImpl(temp);
 					});
 				}

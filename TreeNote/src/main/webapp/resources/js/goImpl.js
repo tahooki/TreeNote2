@@ -595,12 +595,10 @@ function setBtnVisible(){
 				console.log(selectedKeyword.data);
 			}
 		}
-		
-		var viewList = jQuery(".timeLineBtnBox");
-		console.log(viewList.length);
-		for(var i = 0; i < viewList.length ; i++){
-			if(selectedKeyword != null){
-				console.log("what?");
+		if(selectedKeyword != null){
+			var viewList = jQuery(".timeLineBtnBox");
+			console.log(viewList.length);
+			for(var i = 0; i < viewList.length ; i++){
 				console.log("keyword treeNo : "+selectedKeyword.treeNo+" input treeNo :" + jQuery(viewList[i]).find("input[name='treeNo']").val());
 				if(selectedKeyword.treeNo == jQuery(viewList[i]).find("input[name='treeNo']").val()){
 					jQuery(viewList[i]).find(".timeLineAddButton").hide();
@@ -617,15 +615,16 @@ function setBtnVisible(){
 					console.log(jQuery(viewList[i]).find(".timeLineAddButton").show());
 					console.log("keyword treeNo : "+selectedKeyword.treeNo+" input treeNo :" + jQuery(viewList[i]).find("input[name='treeNo']").val());
 				}
+			
 			}
-		}
-		var timeLineBtnList = $(".timeLineBtnBox");
-		console.log(timeLineBtnList);
-		for(var i = 0; i < timeLineBtnList.length ; i++){
-			$(timeLineBtnList[i]).delay(200*i+200).show("slide",{
-				direction : "right",
-				duration : 500
-			});
+			var timeLineBtnList = $(".timeLineBtnBox");
+			console.log(timeLineBtnList);
+			for(var i = 0; i < timeLineBtnList.length ; i++){
+				$(timeLineBtnList[i]).delay(200*i+200).show("slide",{
+					direction : "right",
+					duration : 500
+				});
+			}
 		}
 	}
 }

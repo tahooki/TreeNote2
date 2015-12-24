@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import treenote.domain.Tree;
 import treenote.domain.User;
+import treenote.service.tree.TreeDao;
 import treenote.service.tree.TreeService;
 import treenote.service.user.UserService;
 
@@ -25,6 +26,10 @@ public class TreeController {
 	@Autowired
 	@Qualifier("treeServiceImpl")
 	private TreeService treeService;
+	
+	@Autowired
+	@Qualifier("treeDaoImpl")
+	private TreeDao treeDao;
 	
 	@Autowired
 	@Qualifier("userServiceImpl")
@@ -101,13 +106,15 @@ public class TreeController {
 		System.out.println("/getTree2"+treeNo);
 		
 		User user = (User)session.getAttribute("user");
+		
 		System.out.println(treeService.getTree(user.getEditTreeNo()));
 		System.out.println(user.getEditTreeNo());
 		
-		user.setEditTreeNo(treeNo);			
-		userService.updateEditTreeNo(user);
+		if(user.getUserNo() == ((Tree)treeDao.getTree(treeNo)).getUserNo()){
+			user.setEditTreeNo(treeNo);			
+			userService.updateEditTreeNo(user);
+		}
 		model.addAttribute("Tree", treeService.getTree(treeNo));
-		
 	}
 	
 	
