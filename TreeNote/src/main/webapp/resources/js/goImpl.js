@@ -206,11 +206,11 @@ function goImpl(treeNo) {
 						if(clipBoardList[i] == obj.part.data.key)
 							isCopyed = true;
 					}
-					if(!isCopyed)
+					if(!isCopyed){
 						clipBoardList.push(obj.part.data.key);
-	    			console.log(clipBoardList);
-					sessionStorage.setItem('clipBoardList', JSON.stringify(clipBoardList));
-					setListClipKeyword();
+						sessionStorage.setItem('clipBoardList', JSON.stringify(clipBoardList));
+						setListClipKeyword();
+					}
 			    }
 			}
 		})
@@ -580,47 +580,53 @@ function listOnwerChildKeyword(node){
 }
 
 function setBtnVisible(){
-	var nodes = myDiagram.nodes;
-	var selectedKeyword;
-	console.log(nodes);
-	while(nodes.hasNext()){
-		if(nodes.value.isSelected){
-			selectedKeyword=nodes.value.data;
-			console.log(selectedKeyword);
-			console.log(selectedKeyword.data);
-		}
+	if (window.sessionStorage) {
+		isMyTree = sessionStorage.getItem('isMyTree');
+		console.log("isMyTree : "+isMyTree);
 	}
-	
-	var viewList = jQuery(".timeLineBtnBox");
-	console.log(viewList.length);
-	for(var i = 0; i < viewList.length ; i++){
-		if(selectedKeyword != null){
-			console.log("what?");
-			console.log("keyword treeNo : "+selectedKeyword.treeNo+" input treeNo :" + jQuery(viewList[i]).find("input[name='treeNo']").val());
-			if(selectedKeyword.treeNo == jQuery(viewList[i]).find("input[name='treeNo']").val()){
-				jQuery(viewList[i]).find(".timeLineAddButton").hide();
-				jQuery(viewList[i]).find(".timeLineCopyButton").hide()
-				console.log("keyword treeNo : "+selectedKeyword.treeNo+" input treeNo :" + jQuery(viewList[i]).find("input[name='treeNo']").val());
-			}
-			else if(selectedKeyword.keyword == jQuery(viewList[i]).find("input[name='keyword']").val()){
-				console.log(jQuery(viewList[i]).find(".timeLineAddButton").hide()); 
-				console.log(jQuery(viewList[i]).find(".timeLineCopyButton").show());
-				console.log("keyword treeNo : "+selectedKeyword.treeNo+" input treeNo :" + jQuery(viewList[i]).find("input[name='treeNo']").val());
-			}
-			else{
-				console.log(jQuery(viewList[i]).find(".timeLineCopyButton").hide());
-				console.log(jQuery(viewList[i]).find(".timeLineAddButton").show());
-				console.log("keyword treeNo : "+selectedKeyword.treeNo+" input treeNo :" + jQuery(viewList[i]).find("input[name='treeNo']").val());
+	if(isMyTree == "true"){
+		var nodes = myDiagram.nodes;
+		var selectedKeyword;
+		console.log(nodes);
+		while(nodes.hasNext()){
+			if(nodes.value.isSelected){
+				selectedKeyword=nodes.value.data;
+				console.log(selectedKeyword);
+				console.log(selectedKeyword.data);
 			}
 		}
-	}
-	var timeLineBtnList = $(".timeLineBtnBox");
-	console.log(timeLineBtnList);
-	for(var i = 0; i < timeLineBtnList.length ; i++){
-		$(timeLineBtnList[i]).delay(200*i+200).show("slide",{
-			direction : "right",
-			duration : 500
-		});
+		
+		var viewList = jQuery(".timeLineBtnBox");
+		console.log(viewList.length);
+		for(var i = 0; i < viewList.length ; i++){
+			if(selectedKeyword != null){
+				console.log("what?");
+				console.log("keyword treeNo : "+selectedKeyword.treeNo+" input treeNo :" + jQuery(viewList[i]).find("input[name='treeNo']").val());
+				if(selectedKeyword.treeNo == jQuery(viewList[i]).find("input[name='treeNo']").val()){
+					jQuery(viewList[i]).find(".timeLineAddButton").hide();
+					jQuery(viewList[i]).find(".timeLineCopyButton").hide()
+					console.log("keyword treeNo : "+selectedKeyword.treeNo+" input treeNo :" + jQuery(viewList[i]).find("input[name='treeNo']").val());
+				}
+				else if(selectedKeyword.keyword == jQuery(viewList[i]).find("input[name='keyword']").val()){
+					console.log(jQuery(viewList[i]).find(".timeLineAddButton").hide()); 
+					console.log(jQuery(viewList[i]).find(".timeLineCopyButton").show());
+					console.log("keyword treeNo : "+selectedKeyword.treeNo+" input treeNo :" + jQuery(viewList[i]).find("input[name='treeNo']").val());
+				}
+				else{
+					console.log(jQuery(viewList[i]).find(".timeLineCopyButton").hide());
+					console.log(jQuery(viewList[i]).find(".timeLineAddButton").show());
+					console.log("keyword treeNo : "+selectedKeyword.treeNo+" input treeNo :" + jQuery(viewList[i]).find("input[name='treeNo']").val());
+				}
+			}
+		}
+		var timeLineBtnList = $(".timeLineBtnBox");
+		console.log(timeLineBtnList);
+		for(var i = 0; i < timeLineBtnList.length ; i++){
+			$(timeLineBtnList[i]).delay(200*i+200).show("slide",{
+				direction : "right",
+				duration : 500
+			});
+		}
 	}
 }
 
