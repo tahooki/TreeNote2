@@ -33,6 +33,7 @@ public class ContentDaoImpl implements ContentDao {
 	@Override
 	public int removeContent(int contentNo) throws Exception {
 		return sqlSession.delete("ContentMapper.deleteContent", contentNo);
+
 	}
 
 	@Override

@@ -60,10 +60,10 @@
 	<!-- SQL : DELETE -->
 	<delete id="deleteContent"	parameterType="int">
 		DELETE
-		content, scrap, reg_date, origin
 		FROM contents
 		WHERE keyword_no = #{value}
 	</delete>
+	
 	
 	<!-- SQL : SELECT ONE -->
 	<select id="getContentContentNo" parameterType="int" resultMap="contentSelectMap">

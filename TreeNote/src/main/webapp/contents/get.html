@@ -17,32 +17,33 @@
 <div id="contentContainer">
  	<div id="table" style="width:577px; margin-left:27px;"> 
 		<div id="line1" style="width:577px; border-bottom-style: dashed; border-bottom-color: gainsboro; height: 42.5px;margin-top: 10px;">
-			<div id="lineL" style="width: 330px; height:40px; position: relative;float: left;margin-left: 6px;margin-top: 2px;">
-				<div id="keyword" title="" style="float: left; font-family: Jeju Gothic; font-size: 23px; font-weight: bold;max-width: 170px; letter-spacing: 5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;margin-top: 2px;"></div> 
-				<div style="float: left; font-family: Jeju Gothic; font-size: 15px; font-weight: bold; opacity: 0.90;margin-top: 12px;">|</div>
+			<div id="lineL" style="width: 340px; height:40px; position: relative;float: left;margin-left: 5px;margin-top: 2px;">
+				<div id="keyword" title="" style="float: left; font-family: Jeju Gothic; font-size: 23px; font-weight: bold;max-width: 203px; height:30px; letter-spacing: 5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;margin-top: 2px;" ></div> 
+				<div style="float: left; font-family: Jeju Gothic; font-size: 15px; font-weight: bold; opacity: 0.90;margin-top: 12px; margin-left:5px;">|</div>
 				<div style="float: left; font-family: Jeju Gothic; font-size: 15px; font-weight: bold; opacity: 0.90;margin-top: 12px;margin-left: 3px;">by</div>
-				<div id="userName" title="" style="float: left; font-family: Jeju Gothic; font-size: 15px; font-weight: bold; opacity: 0.90; width: 100px;margin-left: 6px;margin-top: 12px;overflow: hidden; text-overflow: ellipsis; white-space: nowrap; cursor:pointer;"></div>
+				<div id="userName"  title="" style="float: left; font-family: Jeju Gothic; font-size: 15px; font-weight: bold; opacity: 0.90; width: 100px;margin-left: 6px;margin-top: 12px;overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></div>
 			</div>
 			
 			<div id="line1R" style="width: 180px;float: right;margin-top: 17px;margin-right: 7px;">
 				<div id="button">
-					<font id="delete" style="font-size: 14px; font-family: Jeju Gothic; float: right; cursor:pointer;">삭제</font> 
-					<font style="font-size: 14px; font-family: Jeju Gothic; float: right;margin-right: 3px;">|</font> 
-					<font id="update" style="font-size: 14px; font-family: Jeju Gothic; float: right; cursor:pointer; margin-right: 5px;" onclick="location.href='update.html'">수정</font> 
-					<font style="font-size: 14px; font-family: Jeju Gothic; float: right;margin-right: 3px;">|</font> 
+					<font id="delete" style="font-size: 14px; font-family: Jeju Gothic; float: right; margin-top:-2px; cursor:pointer;">삭제</font> 
+					<font style="font-size: 14px; font-family: Jeju Gothic; float: right;margin-right: 3px; margin-top:-2px;">|</font> 
+					<font id="update" style="font-size: 14px; font-family: Jeju Gothic; float: right; cursor:pointer; margin-right: 5px; margin-top:-2px;" onclick="location.href='update.html'">수정</font> 
+					<font style="font-size: 14px; font-family: Jeju Gothic; float: right;margin-right: 3px; margin-top:-2px;">|</font> 
 				</div>				
 				
 				<div id="dateDiv" style="width: 85px;">
-					<font style="text-align: left; font-family: Jeju Gothic; font-size: 13px; opacity: 0.75; float: right;margin-top: 4px;margin-right: -13px;" id="regTime"></font>
+					<font id="regTime" style="text-align: left; font-family: Jeju Gothic; font-size: 13px; opacity: 0.75; float: right;margin-top: -1px;margin-right: -13px;" ></font>
 				</div>
 			</div>
 		</div>
 
-		<div id="line2" style="position: relative;height: 30px; font-weight: bold;margin-top: 5px;margin-left: 8px;">
-			<div id="line2L" style="width: 270px; float: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-				<font style="text-align: left; font-family: Jeju Gothic; font-size: 15px; width: 100px;" id="Name">출</font>
-				<font style="text-align: left; font-family: Jeju Gothic; font-size: 15px; width: 100px;margin-left: 5px;" id="Name">처</font>
-				<font id="userNameAfter" style="text-align: left; font-family: Jeju Gothic; font-size: 15px; width: 100px;margin-left: 1px;" id="Name">|</font>
+		<div id="line2" style="position: relative;height: 30px; margin-top: 10px;margin-left: 8px;">
+			<div id="line2L" style="width: 270px; font-weight: bold; float: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+				<font style="text-align: left; font-family: Jeju Gothic; font-size: 16px; width: 100px; margin-left:1px;" >출</font>
+				<font style="text-align: left; font-family: Jeju Gothic; font-size: 16px; width: 100px;margin-left: 5px;" >처</font>
+				<font id="userNameAfter" style="text-align: left; font-family: Jeju Gothic; font-size: 15px; width: 100px;margin-left: 1px;">|</font>
+				<font id="name" style="text-align: left; font-family: Jeju Gothic; font-size: 15px; width: 100px;margin-left: 1px;" ></font>
 				
 
 			</div>
@@ -61,11 +62,12 @@
 
 
 
+
 <script type="text/javascript">
 		var conut=0;
 		var conut2=0;
 		$(function() {
-			$(".sourcesList",parent.document).hide();
+			$(".sourcestemp",parent.document).hide();
 			getContent(0);
 			conut=0;
 		});
@@ -118,13 +120,11 @@
 			    
 			    if(conut==0){
 			    	$("#sourceMore").hide();
-				    $(".sourcesList",parent.document).hide();
-			    	$(".reply",parent.document).show();		
-			    	console.log("sourcesList 1");
+				    $(".sourcestemp",parent.document).hide();
+			    	$(".reply",parent.document).show();			    			    	
 			    }if(conut==1){
-				    $(".sourcesList",parent.document).show();
+				    $(".sourcestemp",parent.document).show();
 				    $("#sourceMore").show();
-				    console.log("sourcesList 2");
 			    	$(".reply",parent.document).hide();
 			    	if(data.user.userNo!=data.userNo){
 						$("#sourceMore").hide();
@@ -214,7 +214,7 @@
 					    		sourceView(sourcesData);
 					    	}if(conut2!=0){
 					    		 $("#sourceMore").hide();								 
-								 $(".sourcesList",parent.document).show();	
+								 $(".sourcestemp",parent.document).show();	
 								 $(".reply",parent.document).hide();
 					    	}
 					    	

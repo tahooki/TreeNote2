@@ -22,6 +22,7 @@ import treenote.domain.Keyword;
 import treenote.domain.Photo;
 import treenote.domain.Tree;
 import treenote.domain.User;
+import treenote.service.content.ContentDao;
 import treenote.service.content.ContentService;
 import treenote.service.keyword.KeywordDao;
 import treenote.service.keyword.KeywordService;
@@ -37,6 +38,10 @@ public class ContentController {
 	@Autowired
 	@Qualifier("contentServiceImpl")
 	private ContentService contentService;
+	
+	@Autowired
+	@Qualifier("contentDaoImpl")
+	private ContentDao contentDao;
 
 	@Autowired
 	@Qualifier("userServiceImpl")
@@ -65,9 +70,17 @@ public class ContentController {
 	@RequestMapping(value = "removeContent/{keywordNo}")
 	public void removeContent(@PathVariable int keywordNo, Model model) throws Exception{
 		System.out.println("/removeContent");
-		
+		System.out.println("remove No: "+keywordNo);
 		contentService.removeContent(keywordNo);
+
 		System.out.println("remove success!!!!!!");
+		
+		Content content = new Content();
+		content.setKeywordNo(keywordNo);
+		content.setScrap(0);
+		content.setContent("내용을 입력해주세요 !");
+		contentDao.addContent(content);
+		System.out.println("contentNo "+content);
 	}
 	
 	//내용수정
