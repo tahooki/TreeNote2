@@ -219,6 +219,7 @@ public class UserController {
 			List<User> list = userService.ListFriend(map2);
 			model.addAttribute("friend",list);
 		}
+		model.addAttribute("userNo",user.getUserNo());
 		
 	}
 	
@@ -384,6 +385,7 @@ public class UserController {
 	public void index(HttpSession session,Model model)throws Exception{
 		if(session.getAttribute("user")!=null){
 			model.addAttribute(true);
+			model.addAttribute("userNo",((User)session.getAttribute("user")).getUserNo() );
 		}else{
 			model.addAttribute(false);
 		}

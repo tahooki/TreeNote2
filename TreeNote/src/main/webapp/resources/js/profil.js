@@ -134,8 +134,8 @@ function profilCall(){
 					var myTreeNo = $(this).find('input').val();
 					$("#myDiagram").remove();
 					$("#timeline").before('<div id="myDiagram" style="position: relative; background: #E4E4E4; float: left; width: 100%; height: 100%"></div>');
-					setTimeout(goImpl(myTreeNo), 3000)
 					sessionStorage.setItem("isMyTree",true)
+					goImpl(myTreeNo)
 				})
 			
 			
@@ -290,8 +290,8 @@ function friendProfilCall(userNo){
 					var myTreeNo = $(this).find('input').val();
 					$("#myDiagram").remove();
 					$("#timeline").before('<div id="myDiagram" style="position: relative; background: #E4E4E4; float: left; width: 100%; height: 100%"></div>');
-					setTimeout(goImpl(myTreeNo), 3000)
 					sessionStorage.setItem("isMyTree",false)
+					goImpl(myTreeNo)
 					
 				})
 				
@@ -483,3 +483,8 @@ function myTreelist(diagramName,treeNo) {
 	})
 	
 }
+
+
+
+
+

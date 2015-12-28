@@ -87,19 +87,26 @@ img.img-avatar{
 }
 
 
-</style>
 
+
+
+
+
+</style>
+<script src="https://cdn.socket.io/socket.io-1.3.7.js"></script>
 
 <script>
-
+var socket;	
 //12월 22일 추가분 by shin
 	$.ajax({
 		url:"/user/index",
 		dataType: "json",
 		contentType:"application/json",
 		success:function(data){
+			console.log(data)
 			if(data.boolean){
-				
+				console.log(data.userNo)
+				socket = io.connect('localhost:5050',{query: 'userNo='+data.userNo})
 			}else{
 				self.location="index.html";
 			}
@@ -149,8 +156,8 @@ img.img-avatar{
 	                        <div class="dropdown-header list-group-item-success" style="margin-top:0px">
 	                           Friend List
 	                        </div>
-	                        <div class="list-group lg-alt" style="margin-bottom: 0px;">
-	                        	<p id="friendListDropdown" style="display:none"></p>
+	                        <div id="friendListDropdown" class="list-group lg-alt" style="margin-bottom: 0px;">
+	                        	
 	                        	
 	                        </div>
 	                        <hr style="margin-top:5px;margin-bottom:5px">
@@ -189,8 +196,7 @@ img.img-avatar{
 	                        <div class="dropdown-header list-group-item-success" style="margin-top:0px">
 	                           Alert List
 	                        </div>
-	                        <div class="list-group lg-alt" style="margin-bottom: 0px;">
-	                        	<p id ="alertDropdown" style="display:none"></p> 
+	                        <div id ="alertDropdown" class="list-group lg-alt" style="margin-bottom: 0px;">
 <!-- 	                            <div class="view-more">View more</div> -->
 	                        </div>
 	                    </div>
@@ -339,7 +345,12 @@ img.img-avatar{
 		</div>
 
 		<!-- style="width: 200px; height: 100%; border: 2px solid #00FF00; background: #efefef; float: right; display: none; -->
-
+		<p class="alert-drop" style="position: absolute;display:none; border: solid 2px black; border-radius:4px; width:150px;height:50px;
+			margin:auto;margin-top:10px;opacity:0.5; background-color: white;color: black;z-index:10000;font-size:15px">
+			ㅇㅇㅇ 회원님이 친구요청을 하였습니다.
+		</p>
+		
+		
 	</div>
 
 	<div id="dialog" title="Basic dialog"
@@ -350,6 +361,8 @@ img.img-avatar{
 	</div>
 	<!-- /container -->
 	<input id="inputText" type="text" class="form-control" style="display: none; width: auto; border-radius: 5px; border:0; padding-left:1px; font-family: Jeju Gothic;">
+	
+	
 
 
 <!-- 프로필 관련 자바스크립트 파일 -->
@@ -435,9 +448,11 @@ img.img-avatar{
 <!-- update 12/11/friday -->
 <!-- //핸들바 이용 서버에서 가져온 친구 정보 입력 -->
 <script type="text/javascript">
-	var countAlert = 0;
-	var countFriend = 0;
-	
+var countAlert = 0;
+var countFriend = 0;
+
+function friendListFn(){
+	var arg = arguments[0];
 	$.getJSON('/user/listFriend', function(obj) {
 		Handlebars.registerHelper( "checkStatus", function ( status ){
 		    if (status != 1 )
@@ -470,7 +485,8 @@ img.img-avatar{
 		        return ;
 		    }
 		});
-		
+		countAlert=0;
+		coutnFriend=0;
 		
 		for(var i in obj.friend){
 			if(obj.friend[i].requestStatus ==1){
@@ -479,7 +495,7 @@ img.img-avatar{
 				countFriend++;
 			}
 		}
-		
+		$('span.label.label-danger').remove()
 		$('#btn_friend').before('<span class="label label-danger" style="position: absolute;display: inline;border-radius: .25em;vertical-align: top;opacity: .5;top: 6px;margin-left: 20px">'+countFriend+'</span>');
 		$('#btn_alam').before('<span class="label label-danger" style="position: absolute;display: inline;border-radius: .25em;vertical-align: top;opacity: .5;top: 6px;margin-left: 20px">'+countAlert+'</span>');
 		
@@ -489,16 +505,44 @@ img.img-avatar{
 		var template2 = Handlebars.compile(templateSource2);
 		tr2 = template2(obj);
 		//console.log(tr2);
-		$('#friendListDropdown').before(tr2)
+		$('#friendListDropdown').empty();
+		$('#friendListDropdown').append(tr2);
+		
 
 		var tr;
 		var templateSource = $("#alertList").html();
 		var template = Handlebars.compile(templateSource);
 		tr = template(obj);
 		//console.log(tr);
-		$('#alertDropdown').before(tr)
+		$('#alertDropdown').empty()
+		$('#alertDropdown').append(tr)
+		
+		console.log(arg)
+		if(arg!=null){
+			var fff
+			var ff = new Array();
+			console.log("///////")
+			console.log(arguments[0])
+			ff = $('#alertDropdown .list-group-item .pull-left input[value='+arg+']')
+			console.log(ff)
+// 			for(var i=0;i<ff.length;i++){
+// 				if(ff[i].value==arg){
+// 					fff = ff[i];
+// 					fff = fff
+// 					alert('aaaa')
+// 				}
+// 				console.log(ff[i].value)
+// 			}
+			console.log(ff.val()+"::::::");
+			console.log(ff.parents('.list-group-item').find('.list-group-item-heading').text())
+			
+		}
+		
 	});
-	
+}
+
+	friendListFn();
+
 	//친구 수락 
 	console.log("click event start")
 	$(document).on('click', '.acceptFriend', function(){
@@ -511,6 +555,18 @@ img.img-avatar{
 				$('#btn_friend').prev().text(++countFriend)
 				$('#btn_alam').prev().text(--countAlert);
 				$('#friendListDrop').find('.userNoLink[value='+acceptFriendNo+']').parents('.list-group-item').css('display','');
+			}
+		})
+		
+	})
+	$(document).on('click', '.declineFriend', function(){
+		var accFriend = $(this);
+		var acceptFriendNo = accFriend.parents('.list-group-item').find('.userNoLink').val();
+		var acceptFriendHtml = accFriend.parents('.list-group-item')
+		$.getJSON('/user/declineFriend/'+acceptFriendNo,function(data){
+			if(data){
+				acceptFriendHtml.remove()
+				$('#btn_alam').prev().text(--countAlert);
 			}
 		})
 		
@@ -529,6 +585,7 @@ img.img-avatar{
 			}
 		})
 	})
+	
 	
 </script>
 
@@ -647,11 +704,12 @@ img.img-avatar{
 	<input id="requestUserNo" type="text" value="{{searchFriend.userNo}}" hidden>
 
 </script>
-	
+
 <script>	
 	
+	
 	$('#friendSearch').click(function(){return false;});
-	$('#mypage').click(function(){return false;});
+	$('#mypage').click(function(){return false});
 	$('#friendSearch input').on('keypress',function(e){
 		if(e.keyCode==13){
 			$('#friendSearch button').click();
@@ -695,12 +753,18 @@ img.img-avatar{
 			contentType:'application/json',
 			dataType:'json',
 			success:function(s){
-				alert('친구 요청 성공')
+				socket.emit('addFriend',{userNo:s.userNo,friendNo:requestNo})
 			}
 		})
 	}
 	
-	
+	socket.on('addFriend',function(data){
+		if(data!=undefined){
+			friendListFn(data);
+			$('.alert-drop').toggle('drop').delay(5000).toggle('fade')
+			
+		}
+	})
 	
 
 </script>
