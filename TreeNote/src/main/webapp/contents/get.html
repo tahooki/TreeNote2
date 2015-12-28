@@ -67,7 +67,7 @@
 		var conut=0;
 		var conut2=0;
 		$(function() {
-			$(".sourcestemp",parent.document).hide();
+			$(".sourcesList",parent.document).hide();
 			getContent(0);
 			conut=0;
 		});
@@ -120,10 +120,10 @@
 			    
 			    if(conut==0){
 			    	$("#sourceMore").hide();
-				    $(".sourcestemp",parent.document).hide();
+				    $(".sourcesList",parent.document).hide();
 			    	$(".reply",parent.document).show();			    			    	
 			    }if(conut==1){
-				    $(".sourcestemp",parent.document).show();
+				    $(".sourcesList",parent.document).show();
 				    $("#sourceMore").show();
 			    	$(".reply",parent.document).hide();
 			    	if(data.user.userNo!=data.userNo){
@@ -214,7 +214,7 @@
 					    		sourceView(sourcesData);
 					    	}if(conut2!=0){
 					    		 $("#sourceMore").hide();								 
-								 $(".sourcestemp",parent.document).show();	
+								 $(".sourcesList",parent.document).show();	
 								 $(".reply",parent.document).hide();
 					    	}
 					    	
@@ -292,7 +292,7 @@
 						 var myContentNo=$(this).val();
 						 $("#sourceMore").hide();
 						 console.log(myContentNo);						 
-						 $(".sourcestemp",parent.document).show();	
+						 $(".sourcesList",parent.document).show();	
 						 $(".reply",parent.document).hide();
 						 getContent(myContentNo);	
 						 conut=1;
