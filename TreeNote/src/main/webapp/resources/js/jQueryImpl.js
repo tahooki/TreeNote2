@@ -122,6 +122,8 @@ window.onload = function(){
 		}
 	});
 
+	$("#timeline").mCustomScrollbar();
+	
 	var clipBoardList = [];
 	console.log(JSON.stringify(clipBoardList));
 	sessionStorage.setItem('clipBoardList', JSON.stringify(clipBoardList));
