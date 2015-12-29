@@ -106,9 +106,10 @@ function profilCall(){
 				
 				$('#profilImg').on('click',function(){
 					$("input[name=file]").click()
+					return false;
 				})
 				
-				 $('input[name=file]').on('change',function(){
+				 $('input[type=file]').on('change',function(){
 					 readURL(this)
 					 var fd = new FormData($("#profilImage")[0]); 
 					 console.log(fd)
@@ -263,27 +264,6 @@ function friendProfilCall(userNo){
 				$('#profilImg').on('click',function(){
 					$("input[name=file]").click()
 				})
-				
-				$('input[name=file]').on('change',function(){
-					readURL(this)
-					var fd = new FormData($("#profilImage")[0]); 
-					console.log(fd)
-					$.ajax({
-						url: "/user/updateProfil",
-						type: "POST",
-						data: fd,
-						async: false,
-						cache: false,
-						contentType: false,
-						processData: false,
-						success:  function(data){
-							alert(data);
-						}
-					});
-				})
-				
-				
-				
 				
 				
 				$('.owl-item').on('click',function(){

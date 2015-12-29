@@ -266,11 +266,12 @@ $('#signUpForm p input[name=passwordCheck]').on('focusin',function(){
 
 //회원가입 버튼 
 $('#signUpButton').on('click',function(){
-	
+	var formdata = getFormData($('#signUpForm'))
 	if(checkEmail&&checkPassword&&checkName){
 		$("#signUpForm").ajaxSubmit({
 			method:'post',
 			url:'/user/addUser',
+			data:formdata,
 			success : function(data) {		
 				//정태가 추가한 부분				
 				alertEmail()

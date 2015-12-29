@@ -94,11 +94,9 @@
 		UPDATE USERS
 		<set>
 			EMAIL = #{email:VARCHAR},
-			<if test="#{password}!=null">PASSWORD=#{password},</if>
 			NAME = #{name:VARCHAR},
 			PHONE = #{phone:VARCHAR},
-			PHOTO =
-			#{photo:VARCHAR},
+			PHOTO =	#{photo:VARCHAR},
 			SNSUSER = #{snsUser:VARCHAR}
 		</set>
 		<where>

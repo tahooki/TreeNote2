@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int updateUser(User user) throws Exception {
 		// TODO Auto-generated method stub
-		return 0;
+		return userDao.updateUser(user);
 	}
 
 	@Override

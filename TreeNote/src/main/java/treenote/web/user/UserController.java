@@ -22,15 +22,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.amazonaws.AmazonClientException;
-import com.amazonaws.AmazonServiceException;
-import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.CannedAccessControlList;
-import com.amazonaws.services.s3.model.PutObjectRequest;
-
 import treenote.domain.Tree;
 import treenote.domain.User;
 import treenote.service.keyword.KeywordService;
@@ -129,8 +120,7 @@ public class UserController {
 	// 유저 가입
 	//////test
 	@RequestMapping(value="/addUser", method=RequestMethod.POST)
-    public @ResponseBody void addUser(@ModelAttribute User user, Model model,
-            @RequestParam("file") MultipartFile file, HttpSession session) throws Exception{
+    public @ResponseBody void addUser(@ModelAttribute User user, Model model, HttpSession session) throws Exception{
 		System.out.println(user);
 		userService.addUser(user);
     }
@@ -149,7 +139,7 @@ public class UserController {
 				// 파일 기본경로
 				String defaultPath = session.getServletContext().getRealPath("/");;
 				// 파일 기본경로 _ 상세경로
-				String path = defaultPath + "user";
+				String path = defaultPath ;
 				File filedir = new File(path);
 				System.out.println("path:::::::::::" + path);
 				// 디렉토리 존재하지 않을경우 디렉토리 생성
@@ -162,7 +152,7 @@ public class UserController {
 				///////////////// 서버에 파일쓰기 /////////////////
 				file.transferTo(new File(path + realname));
 				
-				user.setPhoto(path +realname);
+				user.setPhoto(realname);
 				userService.updateUser(user);
 			} else {
 				
