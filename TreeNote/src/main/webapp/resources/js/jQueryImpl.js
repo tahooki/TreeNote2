@@ -990,7 +990,15 @@ $(document).on('click','.updateReplyOfReply',function() {
 }); 
  
 $(document).on('click','.comentplus',function(){	
-	$(this).parents(".media").find(".comentOfcomentinsert").toggle();		
+	var comentOfcomentinsertDisplay = $(this).parents(".media").find(".comentOfcomentinsert").css("display")
+	console.log("comentOfcomentinsertDisplay : "+comentOfcomentinsertDisplay);
+	$(".comentOfcomentinsert").hide();
+	if(comentOfcomentinsertDisplay=="block"){
+		$(this).parents(".media").find(".comentOfcomentinsert").hide();
+	}if(comentOfcomentinsertDisplay=="none"){
+		$(this).parents(".media").find(".comentOfcomentinsert").show();
+	}
+	
 });
 
 function compareDate(regTime){
