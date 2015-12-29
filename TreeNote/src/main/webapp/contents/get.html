@@ -41,9 +41,8 @@
 		<div id="line2" style="position: relative;height: 30px; margin-top: 10px;margin-left: 8px;">
 			<div id="line2L" style="width: 270px; font-weight: bold; float: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
 				<font style="text-align: left; font-family: Jeju Gothic; font-size: 16px; width: 100px; margin-left:1px;" >출</font>
-				<font style="text-align: left; font-family: Jeju Gothic; font-size: 16px; width: 100px;margin-left: 5px;" >처</font>
-				<font id="userNameAfter" style="text-align: left; font-family: Jeju Gothic; font-size: 15px; width: 100px;margin-left: 1px;">|</font>
-				<font id="name" style="text-align: left; font-family: Jeju Gothic; font-size: 15px; width: 100px;margin-left: 1px;" ></font>
+				<font style="text-align: left; font-family: Jeju Gothic; font-size: 16px; width: 100px;margin-left: 5px;" >처 | </font>
+				<font id="userNameAfter" style="text-align: left; font-family: Jeju Gothic; font-size: 15px; width: 100px;margin-left: 1px;"></font>
 				
 
 			</div>
@@ -67,9 +66,10 @@
 		var conut=0;
 		var conut2=0;
 		$(function() {
-			$(".sourcesList",parent.document).hide();
+			$(".sourcest",parent.document).hide();
 			getContent(0);
 			conut=0;
+			//$(".sourcesList",parent.document).scroll(/* function({}) */).css("width","5px");
 		});
 		
 		function getContent(myContentNo){
@@ -120,109 +120,124 @@
 			    
 			    if(conut==0){
 			    	$("#sourceMore").hide();
-				    $(".sourcesList",parent.document).hide();
+				    $(".sourcest",parent.document).hide();
 			    	$(".reply",parent.document).show();			    			    	
 			    }if(conut==1){
-				    $(".sourcesList",parent.document).show();
+				    $(".sourcest",parent.document).show();
 				    $("#sourceMore").show();
 			    	$(".reply",parent.document).hide();
 			    	if(data.user.userNo!=data.userNo){
 						$("#sourceMore").hide();
 					}
-			    }			   
-		    	
+			    }		
+				
 				if(data.originUserList.length > 0){	
 					var sources=[];
 					var sourceMap;
 					var userConent;
+					var sendoo1;
+					var sendoo2;
 					var sendoo=[];
+					var active=false;
 					for(var i = 0; i < data.originUserList.length ; i++){	
 					    $("#sourceMore").show();
-					    var sendoo1 = "<font class='name' style='cursor:pointer' title='"+data.originUserList[i].user+"'>"
-			                          +data.originUserList[i].name+
+					    if(data.originUserList != null){
+						    sendoo1 = "<font class='name' style='cursor:pointer' title='"+data.originUserList[i].user+"'>"
+				                          +data.originUserList[i].name+
+				                          "</font>";
+				            sendoo2 = "<font class='name' style='cursor:pointer' title='"+data.originUserList[i].user+"'>"
+				                          +data.originUserList[i].name+
+				                          "</font>"+" -> ";                                                      
+				                        
+				            if(i==data.originUserList.length-1 || data.originUserList.length==1){
+				            	sendoo.push(sendoo1);  
+				            }else{
+				            	sendoo.push(sendoo2);   
+				            }
+				            
+							var sourceUserPhoto = data.originUserList[i].photo;
+							var sourceUserNo = data.originUserList[i].userNo;
+							var sourceUserName = data.originUserList[i].name;
+							var sourceScriptCount = data.originContentList[i].scrap;						
+							var sourceContentNo = data.originContentList[i].keywordNo;
+							
+							var tempRegTime = new Date();						
+							tempRegTime.setTime(data.originContentList[i].regTime);						
+							var time = tempRegTime.toTimeString().substring(0,5);
+							var date = tempRegTime.toISOString().substring(2,10).replace(/-/g,".");
+							var sourceRegTime =date+" "+time ;
+						    
+							sourceMap ={
+									sourceUserPhoto : sourceUserPhoto,
+									sourceUserNo : sourceUserNo,
+									sourceUserName : sourceUserName,
+									sourceScriptCount : sourceScriptCount,
+									sourceRegTime : sourceRegTime,
+									sourceContentNo : sourceContentNo,
+									active : active
+							}						
+							sources.push({"sourceMap" : sourceMap});
+							
+					    }else{
+					    	sendoo1 = "<font class='name' style='cursor:pointer'>"
+			                          +"내용삭제"+
 			                          "</font>";
-			            var sendoo2 = "<font class='name' style='cursor:pointer' title='"+data.originUserList[i].user+"'>"
-			                          +data.originUserList[i].name+
-			                          "</font>"+" -> ";                                                      
-			                        
-			            if(i==data.originUserList.length-1 || data.originUserList.length==1){
-			            	sendoo.push(sendoo1);  
-			            }else{
-			            	sendoo.push(sendoo2);   
-			            }
-			            
-						var sourceUserPhoto = data.originUserList[i].photo;
-						var sourceUserNo = data.originUserList[i].userNo;
-						var sourceUserName = data.originUserList[i].name;
-						var sourceScriptCount = data.originContentList[i].scrap;						
-						var sourceContentNo = data.originContentList[i].keywordNo;
-						
-						var tempRegTime = new Date();						
-						tempRegTime.setTime(data.originContentList[i].regTime);						
-		 				var time = tempRegTime.toTimeString().substring(0,5);
-					    var date = tempRegTime.toISOString().substring(2,10).replace(/-/g,".");
-					    var sourceRegTime =date+" "+time ;
+				            sendoo2 = "<font class='name' style='cursor:pointer' >"
+				                       +"내용삭제"+
+				                       "</font>"+" -> ";                                                      
+				                        
+				            if(i==data.originUserList.length-1 || data.originUserList.length==1){
+				            	sendoo.push(sendoo1);  
+				            }else{
+				            	sendoo.push(sendoo2);   
+				            }
+				            
+						    active =true;
+							sourceMap ={
+									active : active
+							}						
+							sources.push({"sourceMap" : sourceMap});	
+					    }					    
+					}	
 					    
-					    var active=false;
-					    
-					    if(sourceScriptCount==0 || sourceScriptCount==null){
-					    	active =true;
-					    }
-					    
-						sourceMap ={
-								sourceUserPhoto : sourceUserPhoto,
-								sourceUserNo : sourceUserNo,
-								sourceUserName : sourceUserName,
-								sourceScriptCount : sourceScriptCount,
-								sourceRegTime : sourceRegTime,
-								sourceContentNo : sourceContentNo,
-								active : active
-						}						
-						sources.push({"sourceMap" : sourceMap});
-						
-						var contentUserPhoto = data.user.photo;
-						var contentUserNo = data.user.userNo;
-						var contentUserName = data.user.name;
-						var contentUserScriptCount = data.content.scrap;						
-						var contentUserContentNo = data.content.keywordNo;
-						
-						var contentusertempRegTime = new Date();						
-						contentusertempRegTime.setTime(data.content.regTime);						
-		 				var contentusertime = contentusertempRegTime.toTimeString().substring(0,5);
-					    var contentuserdate = contentusertempRegTime.toISOString().substring(2,10).replace(/-/g,".");
-					    var contentusersourceRegTime =contentuserdate+" "+contentusertime ;
-					    
-					    userConent ={
-					    		contentUserPhoto : contentUserPhoto,
-					    		contentUserNo : contentUserNo,
-					    		contentUserName : contentUserName,
-					    		contentUserScriptCount : contentUserScriptCount,
-					    		contentUserContentNo : contentUserContentNo,
-					    		contentusersourceRegTime : contentusersourceRegTime
-						}					    
-					}
-					console.log({userConent : userConent});
-					
-					 $("#sourceMore").click(function(){
-					    	console.log("sourceMore");
-					    	conut=1;
-					    	var sourcesData = {
-					    			userConent : userConent,
-					    			sources : sources
-					    	}
-					    	if(conut2==0){
-					    		sourceView(sourcesData);
-					    	}if(conut2!=0){
-					    		 $("#sourceMore").hide();								 
-								 $(".sourcesList",parent.document).show();	
-								 $(".reply",parent.document).hide();
-					    	}
-					    	
-					  });
-
-				    
-			}
-			$("#userNameAfter").html(sendoo);  
+				}
+				var contentUserPhoto = data.user.photo;
+				var contentUserNo = data.user.userNo;
+				var contentUserName = data.user.name;
+				var contentUserScriptCount = data.content.scrap;						
+				var contentUserContentNo = data.content.keywordNo;
+				
+				var contentusertempRegTime = new Date();						
+				contentusertempRegTime.setTime(data.content.regTime);						
+ 				var contentusertime = contentusertempRegTime.toTimeString().substring(0,5);
+			    var contentuserdate = contentusertempRegTime.toISOString().substring(2,10).replace(/-/g,".");
+			    var contentusersourceRegTime =contentuserdate+" "+contentusertime ;
+			    
+			    userConent ={
+			    		contentUserPhoto : contentUserPhoto,
+			    		contentUserNo : contentUserNo,
+			    		contentUserName : contentUserName,
+			    		contentUserScriptCount : contentUserScriptCount,
+			    		contentUserContentNo : contentUserContentNo,
+			    		contentusersourceRegTime : contentusersourceRegTime
+				}
+			    $("#sourceMore").click(function(){
+			    	console.log("sourceMore");
+			    	conut=1;
+			    	var sourcesData = {
+			    			userConent : userConent,
+			    			sources : sources
+			    	}
+			    	if(conut2==0){
+			    		sourceView(sourcesData);
+			    	}if(conut2!=0){
+			    		 $("#sourceMore").hide();								 
+						 $(".sourcest",parent.document).show();	
+						 $(".reply",parent.document).hide();
+			    	}					    	
+				});				    
+				$("#userNameAfter").html(sendoo);  		
+			
 			});
 			
 		

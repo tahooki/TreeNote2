@@ -1,51 +1,35 @@
-<div style="margin-left: 15px;margin-right: 15px;width: auto;border-bottom-style: dashed;border-bottom-color: darkgray;margin-bottom: 10px;padding-top: 7px; padding-bottom: 1.5px;">
-	<font>출처 리스트</font>
-	<div class="glyphicon glyphicon-remove cancel" style="cursor: pointer; float:right;font-size: 17px;margin-top: 2px;margin-right: 3px;"></div>
-</div>
-
 
 {{#each sources}}
 {{#if sourceMap.active}}
-<input type="hidden" class="myContentNo" value="{{userConent.contentUserContentNo}}">	
-	<div class="media" style="width: 300px;height: auto;margin-left: 14px;margin-bottom: -10px;margin-top: 0px;">			
-		<div class="media-left">
-			<a href="#"> <img class="media-object" src="{{sourceMap.sourceUserPhoto}}" alt="..." style="width: 40px; height: 40px;margin-left: 1px;">
-			</a>
-		</div>
-		<div class="media-body" style="height: 50px;width: 240px;">
-			<div class="userName" style="margin-bottom: 1.5px; width: 180px; float: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" value="{{sourceMap.sourceUserNo}}">
-				<font style="font-size: 12.5px; display: inline; cursor: pointer;" class="userNameFont">{{sourceMap.sourceUserName}}</font>					
-			</div>							
-			<ul class="list-inline" style="float: left; padding-top: 1px;">
-				<li class="source"><font class="sourceFont" style="font-size: 12px;">내용이 삭제되었습니다</font></li>				
-			</ul>
-		</div>		
+<input type="hidden" class="myContentNo" value="{{userConent.contentUserContentNo}}">		
+	<div class="media" style="width: 196px; height: 40px; margin-left: 61px; margin-bottom: -10px; margin-top: 0px;border-radius: 14px; f;font-size: 14px;padding-left: 26px; padding-top: 9px; background-color: #F1F1F1;">
+		내용이 삭제되었습니다.
 	</div>
-	<img alt="#" src="resources/img/arrow_down2.png" style="width: 25px;height: 25px;margin-left: 146px;margin-top: -20px;margin-bottom: -16px;">
+	<img alt="#" src="resources/img/arrow_down2.png" style="width: 25px;height: 25px;margin-left: 146px;margin-top: -10px;margin-bottom: -16px;">
 
 {{else}}
 	
-	<div class="media" style="width: 300px;height: auto;margin-left: 14px;margin-bottom: -10px;margin-top: 0px;">			
+	<div class="media" style="width: auto;height: auto;margin-left: 14px;margin-bottom: -10px;margin-top: 0px;">			
 		<div class="media-left">
 			<a href="#"> <img class="media-object" src="{{sourceMap.sourceUserPhoto}}" alt="..." style="width: 40px; height: 40px;margin-left: 1px;">
 			</a>
 		</div>
 		
-		<div class="media-body" style="height: 50px;width: 240px;">
+		<div class="media-body" style="height: 50px;width: auto;">
 			<div class="userName" style="margin-bottom: 1.5px; width: 180px; float: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" value="{{sourceMap.sourceUserNo}}">
 				<font style="font-size: 12.5px; display: inline; cursor: pointer;" class="userNameFont">{{sourceMap.sourceUserName}}</font>					
 			</div>	
 									
 			<ul class="list-inline" style="float: left; padding-top: 1px;">
 				<li class="source"><font class="sourceFont" style="font-size: 12px;">스크랩 수<span class="badge" style="margin-left: 5px;padding-bottom: 1.5px; padding-top: 1.5px; padding-left: 5px; padding-right: 5px;overflow: hidden; text-overflow: ellipsis; white-space: nowrap;max-width: 25px;font-size: 12px;margin-bottom: -2px;">{{sourceMap.sourceScriptCount}}</span></font></li>
-				<li class="regTime" style="  margin-left: 20px;"><font class="regTimeFont" style="font-size: 12px; ">{{sourceMap.sourceRegTime}}</font></li>
+				<li class="regTime" style="  margin-left: 7px;"><font class="regTimeFont" style="font-size: 12px; ">{{sourceMap.sourceRegTime}}</font></li>
 			</ul>
 			
 			<button type="button" class="btn btn-default btn-xs sourceContent" style="margin-top: 1px;margin-left: 8px;" value="{{sourceMap.sourceContentNo}}"><font>내용<br>보기</font></button>
 		</div>		
 	</div> 
 	
-	<img alt="#" src="resources/img/arrow_down2.png" style="width: 25px;height: 25px;margin-left: 146px;margin-top: -20px;margin-bottom: -16px;">
+	<img alt="#" src="resources/img/arrow_down2.png" style="width: 25px;height: 25px;margin-left: 146px;margin-top: -10px;margin-bottom: -16px;">
 
 {{/if}}
 {{/each}}

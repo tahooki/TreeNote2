@@ -322,9 +322,15 @@ var socket;
        			<!-- 댓글 입력란 끝 -->
        		</div>
 <!--        		출처 리스트 시작  -->
-       		<div class="col-xs-4 sourcest" style="height:100%; padding:10px; padding-left:0px;">  	       		    			
-       			<div class="sourcesList" style="width: 100%; height: 100%; display: block; background: white; overflow-y:auto;">
-       			
+       		<div class="col-xs-4 sourcest " style="height:100%; padding:10px; padding-left:0px; overflow: hidden;">  	       		    			
+       			<div class="sourcesListTemp pre-scrollable" style="width: 100%; height: 100%; display: block; background: white;">
+	       			<div style="margin-left: 15px;margin-right: 15px;width: auto; height :31.5px; border-bottom-style: dashed;border-bottom-color: darkgray;margin-bottom: 10px;padding-top: 7px; padding-bottom: 1.5px;">
+						<font>출처 리스트</font>
+						<div class="glyphicon glyphicon-remove cancel" style="cursor: pointer; float:right;font-size: 17px;margin-top: 2px;margin-right: 3px;"></div>
+					</div>
+					<div class="sourcesList" style="width: auto; height:288px; overflow-y:auto;">
+					
+					</div>
        			</div>
        		</div>
 <!--        		출처 리스트 끝  -->
@@ -363,12 +369,6 @@ var socket;
 	<script src="resources/js/profil/contact_me.js"></script>
 	<script src="resources/js/profil/freelancer.js"></script>
     <script src="resources/js/profil/owl.carousel.js"></script>
-
-
-
-
-
-
 
 <!-- //핸들바 js파일 추가 -->
 <script type="text/javascript" src="../resources/js/handlebars.min.js"></script>
@@ -759,7 +759,6 @@ function friendListFn(){
 </script>
 
 <script type="text/javascript" src="resources/js/profil.js"></script>
-
 
 </body>
 </html>
