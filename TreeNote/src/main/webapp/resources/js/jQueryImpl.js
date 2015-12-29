@@ -12,6 +12,7 @@ function getUser(userNo){
 
 
 window.onload = function(){
+	
 	$("#treeContainer").click(function(){
 		console.log($("#mypage").css("display"));
 		if($("#mypage").css("display") != "none"){
@@ -86,6 +87,7 @@ window.onload = function(){
 	$("#btn_timeline").click(function(){
 		if (sessionStorage.getItem('nowTimeline') != 'timeline'){
 	    	setListTimeKeyword();
+	    	
 	    }
 		return false;
 	}).hover(function(){
@@ -122,8 +124,7 @@ window.onload = function(){
 		}
 	});
 
-	
-	
+
 	var clipBoardList = [];
 	console.log(JSON.stringify(clipBoardList));
 	sessionStorage.setItem('clipBoardList', JSON.stringify(clipBoardList));
@@ -131,6 +132,7 @@ window.onload = function(){
 	if (window.sessionStorage) {
 		sessionStorage.setItem('isMyTree',true);
 	}
+
 	
 	treeList();
 	autocom();
@@ -296,9 +298,11 @@ function setListTimeKeyword() {
 					duration : 500
 				});
 			}
+
 			setTimelineEvent();
 			autoListKeyword();
 			setBtnVisible();
+			
 		}
 		
 	})
@@ -333,6 +337,7 @@ function autoListKeyword(){
 							duration : 500
 						});
 					}
+
 					setTimelineEvent();
 					setBtnVisible();
 				}
@@ -528,7 +533,8 @@ function treeList() {
 						$("#myDiagram").remove();
 						$("#timeline").before('<div id="myDiagram" style="position: relative; background: #E4E4E4; float: left; width: 100%; height: 100%"></div>');
 						sessionStorage.setItem('isMyTree',true);
-						setTimeout("goImpl("+temp+")",1000);
+						//setTimeout("goImpl("+temp+")",1000);
+						goImpl(temp);
 					});
 					$(".left").click(function() {
 						var temp=$(".item.active").prev().find('input[name=treeNo]').val();
@@ -539,6 +545,7 @@ function treeList() {
 						}
 						$("#myDiagram").remove();
 						$("#timeline").before('<div id="myDiagram" style="position: relative; background: #E4E4E4; float: left; width: 100%; height: 100%"></div>');
+						sessionStorage.setItem('isMyTree',true);
 						goImpl(temp);
 					});
 				}

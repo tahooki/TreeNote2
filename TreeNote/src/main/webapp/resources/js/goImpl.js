@@ -402,7 +402,7 @@ function updateKeyword(keyword) { // 노드를 생성하는 부분.
 	})
 }
 
-function removeKeyword(node) { // 노드를 생성하는 부분.
+function removeKeyword(node) { // 노드를 삭제하는 부분.
 	if(node.findTreeParentNode() == null){
 		var treeNo=node.data.treeNo;
 		console.log(treeNo);

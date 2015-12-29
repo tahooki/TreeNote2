@@ -16,11 +16,16 @@ canvas {
   z-index:100;
   overflow-y: auto;
 }
-#timeline::-webkit-scrollbar { 
-  /* This is the magic bit */
-  display: none;
+
+::-webkit-scrollbar
+{
+	width: 5px;
 }
 
+::-webkit-scrollbar-thumb
+{
+	background-color: #CCC;
+}
 
 #titleImageBox{
 	width: 180px; 

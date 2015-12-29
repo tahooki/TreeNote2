@@ -13,10 +13,8 @@
 
 <!-- 트리 리스트 -->
 <link rel="stylesheet" href="resources/css/treeList.css">
-
 <link rel="stylesheet" href="resources/css/jquery-ui.min.css">
 <link rel="stylesheet" href="resources/css/bootstrap.css">
-<!-- <link rel="stylesheet" href="resources/css/bootstrap.min.css"> -->
 
 <!-- 댓글 리스트 -->
 <link href="resources/css/font-awesome.min.css" rel="stylesheet">
@@ -63,9 +61,9 @@
 	margin-left: 0px !important;
 }
 
-.panel-body::-webkit-scrollbar {
+/* .panel-body::-webkit-scrollbar {
 	display: none;
-}
+} */
 
 img.img-avatar{
 	top:10px;
@@ -106,15 +104,16 @@ var socket;
 			console.log(data)
 			if(data.boolean){
 				console.log(data.userNo)
-				socket = io.connect('localhost:5050',{query: 'userNo='+data.userNo})
+				//socket = io.connect('localhost:5050',{query: 'userNo='+data.userNo})
 			}else{
 				self.location="index.html";
 			}
 		},
 		async : false
 	})
-  
+	
 </script> 
+
 </head>
 <body style="height: 100%;">
 	<nav class="navbar navbar-fixed-top" id="navbar">
@@ -217,8 +216,11 @@ var socket;
 			<div id="myDiagram"
 				style="position: relative; background: #E4E4E4; float: left; width: 100%; height: 100%"></div>
 
+		
 			<div id="timeline">
-				
+			<div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>
+   			<div class="viewport">
+        	<div class="overview">
 				<div style="position: absolute; width:190px; right:30px">
 					<div id="timelineb" style="overflow: hidden;">
 						<div id="keywordBtnTop" style="height: 95px;"></div>
@@ -263,6 +265,9 @@ var socket;
 					</div>
 				</div>
 			</div>
+			</div>
+			</div>
+
 			<div id="mypage" style="display: none; padding-top: 0px; width: 100%; height: 350px; left: 0px;background-color: #18BC9C;border-top: solid 1px rgb(5, 138, 112);;overflow:hidden;">
 <!-----------------------------------프로필 ---------------------------------->
 
@@ -326,22 +331,6 @@ var socket;
        </div>
 
 			<div id="reply" style="display: none;"></div>
-			<div id="treelist" style="display: none;">
-				<div id="demo" class="showcase">
-					<section id="examples">
-						<!-- content -->
-						<h3 id="userNo">TreeTitle</h3>
-						<h3 id="treeTitle"></h3>
-						<div id="content-9" class="content vertical-images">
-							<ul id="treeList">
-								<h2 id="count">TreeList:</h2>
-								<li id="list"></li>
-							</ul>
-						</div>
-					</section>
-				</div>
-			</div>
-
 		</div>
 
 		<!-- style="width: 200px; height: 100%; border: 2px solid #00FF00; background: #efefef; float: right; display: none; -->

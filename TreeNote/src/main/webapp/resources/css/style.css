@@ -3,7 +3,7 @@
 @import url(http://fonts.googleapis.com/css?family=Lobster+Two:700italic,700);
 @import url(http://fonts.googleapis.com/css?family=Oswald:300);
 
-body{
+/* body{
 	background-color: #222;
 	color: #eee;
 	font-size: 20px;
@@ -11,7 +11,7 @@ body{
 	margin: 0;
 	padding: 0;
 	min-width: 480px;
-}
+} */
 
 a{
 	color: inherit;
@@ -106,7 +106,7 @@ img{
 
 .callbacks, .callbacks + p, #examples, .content, .disable-destroy, .show-hide, .dialog, .all-themes-switch, .scrollTo{ -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; }
 
-nav, .callbacks, .disable-destroy, .show-hide, .dialog, .all-themes-switch, .scrollTo{ background: #111; }
+/* nav, .callbacks, .disable-destroy, .show-hide, .dialog, .all-themes-switch, .scrollTo{ background: #111; } */
 
 nav ul li, .callbacks ul li, .disable-destroy ul li, .show-hide ul li, .dialog ul li, .all-themes-switch ul li, .scrollTo ul li{
 	float: left;
