@@ -268,7 +268,7 @@ $('#signUpForm p input[name=passwordCheck]').on('focusin',function(){
 $('#signUpButton').on('click',function(){
 	var formdata = getFormData($('#signUpForm'))
 	if(checkEmail&&checkPassword&&checkName){
-		$("#signUpForm").ajaxSubmit({
+		$.ajax({
 			method:'post',
 			url:'/user/addUser',
 			data:formdata,
