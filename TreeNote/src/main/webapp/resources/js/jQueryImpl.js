@@ -275,7 +275,7 @@ function setListTimeKeyword() {
 			}
 
 			setTimelineEvent();
-			sessionStorage.setItem("timeLineScrollHeight",900);
+			sessionStorage.setItem("timeLineScrollHeight",1700);
 			autoListKeyword();
 			setBtnVisible();
 			
@@ -287,11 +287,10 @@ function autoListKeyword(){
 	$("#timeline").scroll(function(){
 		var scrollHeight = Number(sessionStorage.getItem("timeLineScrollHeight"));
 		if (scrollHeight < $("#timeline").scrollTop()+$(document).height()){
-			scrollHeight += 861;
+			console.log("gggg:"+$("#timeline").scrollTop());
+			scrollHeight += 1000;
 			sessionStorage.setItem("timeLineScrollHeight",scrollHeight);
-			//console.log("???? : "+ $("#timeline").prop("scrollHeight") +" ???? : "+ $("#timeline").scrollTop() +" ?????? : "+ $(document).height());
 			var count=$(".keywordBox").length;
-			//alert("ggg")
 			console.log("1")
 			$.ajax({
 				url:"/keyword/listTimeLineKeyword2?count="+count,
@@ -300,6 +299,7 @@ function autoListKeyword(){
 					"Accept" : "application/json",
 					"Content-Type" : "application/json"
 				},
+				async:false,
 				success :  function(JSONData, status) {
 					console.log(JSONData);
 					

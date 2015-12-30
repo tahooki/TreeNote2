@@ -62,7 +62,7 @@ public class KeywordDaoImpl implements KeywordDao {
 		Map<String, Object> map=new HashMap<>();
 		map.put("keyword", keyword);
 		map.put("startNum", 1);
-		map.put("endNum", 7);
+		map.put("endNum", 15);
 		return sqlSession.selectList("keywordMapper.listSearchKeyword", map);
 	}
 	@Override
@@ -73,7 +73,7 @@ public class KeywordDaoImpl implements KeywordDao {
 			if(count<=total){
 			map.put("keyword", keyword);
 			map.put("startNum", count+1);
-			map.put("endNum", count+7);
+			map.put("endNum", count+15);
 			}else{
 				map.put("keyword", keyword);
 				map.put("startNum", count+1);
@@ -97,7 +97,7 @@ public class KeywordDaoImpl implements KeywordDao {
 		Map<String, Integer> map=new HashMap<>();
 		map.put("userNo", userNo);
 		map.put("startNum", count+1);
-		map.put("endNum", count+7);
+		map.put("endNum", count+15);
 				
 		return sqlSession.selectList("keywordMapper.listTimelineKeyword", map);
 	}
@@ -112,7 +112,7 @@ public class KeywordDaoImpl implements KeywordDao {
 		Map<String, Integer> map=new HashMap<>();
 		map.put("userNo", userNo);
 		map.put("startNum", 1);
-		map.put("endNum", 7);
+		map.put("endNum", 15);
 				
 		return sqlSession.selectList("keywordMapper.listTimelineKeyword", map);
 	}
