@@ -244,6 +244,7 @@ function goImpl(treeNo) {
 		
 		// console.log(myDiagram.model);
 		allExpanded();
+		console.log("what"+createInput());
 		myDiagram.toolManager.textEditingTool.defaultTextEditor = createInput();
 	})
 }
@@ -487,7 +488,37 @@ function allExpanded() {
 }
 
 function createInput() {
-	var customText = document.getElementById("inputText");
+	var customText = document.createElement("input");
+	
+	console.log("?????"+customText);
+	
+	console.log($(customText));
+	$(customText).addClass("form-control");
+	$(customText).removeClass("start");
+	
+/*	$(customText).css("border-radius","5px");
+	$(customText).css("border","0px");
+	$(customText).css("outline","none");
+	*/
+	jQuery.ajax({
+		url : "/keyword/autoComplete",
+		method : "GET",
+		dataType : "json",
+		headers : {
+			"Accept" : "application/json",
+			"Content-Type" : "application/json"
+		},
+		success : function(JSONData, status) {
+			$(customText).autocomplete({
+				source : JSONData.autoComplete,
+				select : function( event, ui ) {
+					setListSearchKeyword(ui.item.value);
+					$(this).blur();
+				}
+			});
+		}
+	});
+	
 	customText.onActivate = function() {
 		customText.style.visibility = "";
 		var startingValue = customText.textEditingTool.textBlock.text;
