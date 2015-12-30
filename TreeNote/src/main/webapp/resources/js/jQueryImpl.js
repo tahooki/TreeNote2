@@ -620,6 +620,7 @@ function showContent(keywordNo, keyword){
 		sessionStorage.setItem('endRowNum', 4);
 		sessionStorage.setItem('contentNo', data.content.contentNo);
 		sessionStorage.setItem('replyUserNo', data.user.userNo);
+		sessionStorage.setItem('userNo', data.userNo);
 		
 		$(".userPhoto").attr("src",data.user.photo);
 		getTotalReply();
@@ -634,6 +635,7 @@ function inputText() {
 } 
 
 /*댓글 기능 함수 시작*/
+var replyActivity = false;
 function getTotalReply() {	
 	$.getJSON("/reply/getTotalReply/"+sessionStorage.getItem('contentNo'), function(data){ 
 		//console.log(data.totalReplyCount);
@@ -669,17 +671,31 @@ function listReply(){
 						$.get("../resources/hbs/reply/replyListTemplate.hbs", function(data){     
 							var tr;	
 							var template = Handlebars.compile(data);									
-							
+							console.log("console.log(JSONData);");
 							console.log(JSONData);
 							var list = JSONData.replyList; 
 							
 							console.log(list);
-							for(var i=0; i<list.length; i++){				
+							for(var i=0; i<list.length; i++){
+								var replyActivity = false;
+								if(JSONData.replyList[i].userNo==sessionStorage.getItem('userNo')){
+									replyActivity = true;
+								}else{
+									replyActivity = false;
+								}
+								JSONData.replyList[i].deleteChildReply=replyActivity;
 								JSONData.replyList[i].regTime = compareDate(JSONData.replyList[i].regTime);
 								JSONData.replyList[i].reply = JSONData.replyList[i].reply.replace(" ","&nbsp;");
 								var sizeList = JSONData.replyList[i].replyOfReply;
 								if(sizeList != null){
 									for(var j=0; j<sizeList.length; j++){
+										var replyOFReplyActivity = false;
+										if(JSONData.replyList[i].replyOfReply[j].userNo==sessionStorage.getItem('userNo')){
+											replyOFReplyActivity = true;
+										}else{
+											replyOFReplyActivity = false;
+										}
+										JSONData.replyList[i].replyOfReply[j].deleteChildReply=replyOFReplyActivity;
 										JSONData.replyList[i].replyOfReply[j].regTime = 
 											compareDate(JSONData.replyList[i].replyOfReply[j].regTime);
 										JSONData.replyList[i].replyOfReply[j].reply = 
@@ -687,7 +703,9 @@ function listReply(){
 									}
 								}									
 							}	
-							if(list.length>0){
+							if(list.length>0){								
+								console.log("JSONData");
+								console.log(JSONData);
 								tr = template(JSONData);
 								$("#boardReply").append(tr);  
 								replyfunction();
@@ -706,10 +724,6 @@ $(document).on('keyup','input:text[name=reply]',function(e) {
 	if (e.keyCode == 13) {
 		var reply = $(this).val();
 		var parentReplyNo = 0;
-		//$("input:hidden[name=contentNo]").val();
-//		var contentNo = page.replyValueNo;
-		//var userNo = $("input:hidden[name=userNo]").val();		
-//		var userNo = page.replyUserNo;
 		
 		$.ajax( 
 				{
@@ -787,12 +801,7 @@ $(document).on('keyup','.comentOfcomentinput',function(e) {
 	//console.log("AA");
 	if (e.keyCode == 13) {
 		var reply = it.val();
-		//console.log(reply);
 		var parentReplyNo = it.parent().find(".replyNo").val();
-//		var contentNo = page.replyValueNo;
-//		var userNo = page.replyUserNo;
-//		console.log(contentNo);
-//		console.log(parentReplyNo);
 		
 		$.ajax( 
 				{
@@ -849,41 +858,40 @@ function replyfunction(){
 	$(".updateReplyOfReply").animate({opacity:"0"}, 0);
 };
 
-$(document).on('mouseenter','.media-body',function(){
-	$(this).find(".update, .delete").animate({opacity:"1"}, 0);
-}).on('mouseleave','.media-body',function(){
-	$(this).find(".update, .delete").animate({opacity:"0"}, 0);
-}); 
-
-$(document).on('mouseenter','.media-body',function(){
-	$(this).find(".updateReplyOfReply, .deleteReplyOfReply").animate({opacity:"1"}, 0);
-}).on('mouseleave','.media-body',function(){
-	$(this).find(".updateReplyOfReply, .deleteReplyOfReply").animate({opacity:"0"}, 0);
-}); 
- 
 $(document).on('click','.Comment',function(){
 	$(this).css("white-space","initial");  
 });
- 
+
 $(document).on('click','.replyofreply',function(){
 	$(this).css("white-space","initial"); 
 	$(this).children().css("white-space","initial");	 
 });
 
- $(document).on('click','.delete',function(){
-	var no= $(this).parent().find(".replyNo").val();
-	console.log(no);
-	var thi =$(this);
-	$.getJSON('/reply/removeReply/'+no, function(){	
-		thi.parents(".media").remove();	
-	});
-	$.getJSON("/reply/getTotalReply/"+page.replyValueNo, function(data){ 
-		//console.log(data.totalReplyCount);
-		$(".totalReplyCount").text(data.totalReplyCount+" 개")
-	});
+$(document).on('click','.comentplus',function(){	
+	var comentOfcomentinsertDisplay = $(this).parents(".media").find(".comentOfcomentinsert").css("display")
+	console.log("comentOfcomentinsertDisplay : "+comentOfcomentinsertDisplay);
+	$(".comentOfcomentinsert").hide();
+	if(comentOfcomentinsertDisplay=="block"){
+		$(this).parents(".media").find(".comentOfcomentinsert").hide();
+	}if(comentOfcomentinsertDisplay=="none"){
+		$(this).parents(".media").find(".comentOfcomentinsert").show();
+	}
+	
 });
- 
- $(document).on('click','.deleteReplyOfReply',function() {
+
+$(document).on('mouseenter','.media-body',function(){
+	$(this).find(".updateReplyOfReply, .deleteReplyOfReply").animate({opacity:"1"}, 0);
+}).on('mouseleave','.media-body',function(){
+	$(this).find(".updateReplyOfReply, .deleteReplyOfReply").animate({opacity:"0"}, 0);
+});
+
+$(document).on('mouseenter','.media-body',function(){
+	$(this).find(".update, .delete").animate({opacity:"1"}, 0);
+}).on('mouseleave','.media-body',function(){
+	$(this).find(".update, .delete").animate({opacity:"0"}, 0);
+});
+
+$(document).on('click','.deleteReplyOfReply',function() {
 	var no= $(this).parent().find(".replyNo").val();
 	console.log(no);
 	var thi =$(this); 
@@ -896,6 +904,19 @@ $(document).on('click','.replyofreply',function(){
 	$.getJSON("/reply/getTotalReplyOfReply/"+parentReplyNo, function(data){ 
 		//console.log(data.totalReplyCount);
 		it.text(data.totalReplyOfReplyCount+" 개");
+	});
+});
+
+$(document).on('click','.delete',function(){
+	var no= $(this).parent().find(".replyNo").val();
+	console.log(no);
+	var thi =$(this);
+	$.getJSON('/reply/removeReply/'+no, function(){	
+		thi.parents(".media").remove();	
+	});
+	$.getJSON("/reply/getTotalReply/"+page.replyValueNo, function(data){ 
+		//console.log(data.totalReplyCount);
+		$(".totalReplyCount").text(data.totalReplyCount+" 개")
 	});
 });
 		 
@@ -989,18 +1010,8 @@ $(document).on('click','.updateReplyOfReply',function() {
 		}						
 	});						
 }); 
- 
-$(document).on('click','.comentplus',function(){	
-	var comentOfcomentinsertDisplay = $(this).parents(".media").find(".comentOfcomentinsert").css("display")
-	console.log("comentOfcomentinsertDisplay : "+comentOfcomentinsertDisplay);
-	$(".comentOfcomentinsert").hide();
-	if(comentOfcomentinsertDisplay=="block"){
-		$(this).parents(".media").find(".comentOfcomentinsert").hide();
-	}if(comentOfcomentinsertDisplay=="none"){
-		$(this).parents(".media").find(".comentOfcomentinsert").show();
-	}
-	
-});
+
+
 
 function compareDate(regTime){
 	var thisDate = getWorldTime(+9);
@@ -1092,6 +1103,7 @@ function leadingZeros(n, digits) {
   }
   return zero + n;
 }
+
 /*댓글 기능 함수 끝*/
 
 

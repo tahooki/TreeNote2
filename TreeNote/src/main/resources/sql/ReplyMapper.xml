@@ -45,11 +45,9 @@
 		reply_no IN (SELECT reply_no FROM replys
 			where 
 			reply_no =#{replyNo}
-			<if test="parentReplyNo !=0 ">			
-			<if test="deleteChildReply == true">
+			<if test="parentReplyNo !=0 ">
 				OR par_reply_no=#{parentReplyNo}
-			</if>
-		</if>		
+			</if>	
 		)
 													
   	</delete> 

@@ -7,10 +7,12 @@
 					alt="..." style="width: 40px; height: 40px;">
 				</a>
 			</div>
+			<input type="hidden" class="userNo" value="{{userNo}}">  
 			<div class="media-body" style="height: 50px;">
-								
+				{{#if deleteChildReply }}				
 				<div  class="glyphicon glyphicon-trash delete" style=" font-size: 12px; float: right;  padding-right : 18px;"></div>
 				<div class="glyphicon glyphicon-pencil update"  style="font-size: 12px; float: right;  padding-right : 6px;"></div>
+				{{/if}}
 				<input class="replyNo" type="hidden" value="{{replyNo}}">
 				
 	
@@ -40,10 +42,12 @@
 						alt="..." style="width: 33px; height: 33px;">
 					</a>
 				</div>
+				<input type="hidden" class="userNo" value="{{userNo}}">
 				<div class="media-body" style="height: auto; width: 180px;">
-										
+					{{#if deleteChildReply}}					
 					<div  class="glyphicon glyphicon-trash deleteReplyOfReply" style="font-size: 12px; float: right;  padding-right : 0px;"></div>
 					<div class="glyphicon glyphicon-pencil updateReplyOfReply"  style="font-size: 12px; float: right;  padding-right : 6px;"></div>
+					{{/if}}
 					<input class="replyNo" type="hidden" value="{{replyNo}}">
 					
 					<p class="Comment"
