@@ -72,7 +72,6 @@ public class ContentController {
 		System.out.println("/removeContent");
 		System.out.println("remove No: "+keywordNo);
 		contentService.removeContent(keywordNo);
-
 		System.out.println("remove success!!!!!!");
 		
 		Content content = new Content();

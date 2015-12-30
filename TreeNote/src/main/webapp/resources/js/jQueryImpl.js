@@ -102,7 +102,6 @@ window.onload = function(){
 		}
 	});
 
-
 	var clipBoardList = [];
 	console.log(JSON.stringify(clipBoardList));
 	sessionStorage.setItem('clipBoardList', JSON.stringify(clipBoardList));

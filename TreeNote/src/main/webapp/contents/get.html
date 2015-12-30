@@ -32,8 +32,8 @@
 					<font style="font-size: 14px; font-family: Jeju Gothic; float: right;margin-right: 3px; margin-top:-2px;">|</font> 
 				</div>				
 				
-				<div id="dateDiv" style="width: 85px;">
-					<font id="regTime" style="text-align: left; font-family: Jeju Gothic; font-size: 13px; opacity: 0.75; float: right;margin-top: -1px;margin-right: -13px;" ></font>
+				<div id="dateDiv" style="width: 85px; float: right;margin-top: 1px;margin-right: 5px;">
+					<font id="regTime" style="text-align: left; font-family: Jeju Gothic; font-size: 13px; opacity: 0.75; float: right;" ></font>
 				</div>
 			</div>
 		</div>
@@ -43,8 +43,6 @@
 				<font style="text-align: left; font-family: Jeju Gothic; font-size: 16px; width: 100px; margin-left:1px;" >출</font>
 				<font style="text-align: left; font-family: Jeju Gothic; font-size: 16px; width: 100px;margin-left: 5px;" >처 | </font>
 				<font id="userNameAfter" style="text-align: left; font-family: Jeju Gothic; font-size: 15px; width: 100px;margin-left: 1px;"></font>
-				
-
 			</div>
 			
 			<div id="line2R" style="width: 250px; float: right; opacity: 0.75; font-size: 13px;">
@@ -113,9 +111,11 @@
 			    var scrap = data.content.scrap;
 			    if(data.user.userNo!=data.userNo){
 					$("#button").hide();
+					$("body").css("background", "#EEE");
 				}	
 			    if(data.user.userNo==data.userNo){
 					$("#button").show();
+					$("body").css("background", "white");
 				}
 			    
 			    if(conut==0){
@@ -132,6 +132,7 @@
 			    }		
 				
 				if(data.originUserList.length > 0){	
+			    	$("#line2L").show();
 					var sources=[];
 					var sourceMap;
 					var userConent;
@@ -139,9 +140,9 @@
 					var sendoo2;
 					var sendoo=[];
 					var active=false;
-					for(var i = 0; i < data.originUserList.length ; i++){	
-					    $("#sourceMore").show();
-					    if(data.originUserList != null){
+					for(var i = 0; i < data.originUserList.length ; i++){
+					 $("#sourceMore").show();
+					 if(data.originUserList != null){
 						    sendoo1 = "<font class='name' style='cursor:pointer' title='"+data.originUserList[i].user+"'>"
 				                          +data.originUserList[i].name+
 				                          "</font>";
@@ -197,10 +198,8 @@
 									active : active
 							}						
 							sources.push({"sourceMap" : sourceMap});	
-					    }					    
-					}	
-					    
-				}
+					    }//if(data.originUserList != null) else end
+								    
 				var contentUserPhoto = data.user.photo;
 				var contentUserNo = data.user.userNo;
 				var contentUserName = data.user.name;
@@ -236,11 +235,12 @@
 						 $(".reply",parent.document).hide();
 			    	}					    	
 				});				    
-				$("#userNameAfter").html(sendoo);  		
-			
-			});
-			
-		
+			    
+			$("#userNameAfter").html(sendoo);  			
+			}//for문 end
+		}else{
+    		$("#line2L").hide();
+		}//if(data.originUserList.length > 0) else end			
 			
 			$("#delete").click(function(){
 				var answer = confirm("내용을 삭제하시겠습니까?");
@@ -249,7 +249,7 @@
 							
 					var content = $("iframe").contents().find("#se2_iframe").contents().find("html").html(); 
 				
-					$.ajax( 
+					$.ajax(
 					{
 						url : "/content/removeContent/" +keywordNo,
 						method : "POST" ,
@@ -266,11 +266,10 @@
 							parent.location.href='../main.html';
 						}
 					});
-				}else{
-
 				}				
-			});
-		}
+			});//delete end
+			});//getJson end
+		};//function getContent(myContentNo) end
 		
 		function sourceView(sourcesData){
 			conut2++;
@@ -314,7 +313,8 @@
 					 });
 				});
 			}); 
-		}
+		};
+		
 </script>
 </body>
 </html>
