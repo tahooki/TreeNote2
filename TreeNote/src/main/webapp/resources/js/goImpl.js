@@ -196,7 +196,7 @@ function goImpl(treeNo) {
 			name: "button4",
 			alignment : go.Spot.TopLeft,
 			maxSize : new go.Size(20, 20),
-			source : "resources/img/btn_delete.png",
+			source : "resources/img/btn_changecolor.png",
 			visible : false,
 			click : function(e, obj) {
 				// openDialog();
@@ -215,7 +215,6 @@ function goImpl(treeNo) {
 			visible : false,
 			click : function(e, obj) {
 				// openDialog();
-				console.log("짜잔데스");
 				if (window.sessionStorage) {
 					var clipBoardList = JSON.parse(sessionStorage.getItem('clipBoardList'));
 					var isCopyed = false;
