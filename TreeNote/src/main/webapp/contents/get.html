@@ -39,13 +39,13 @@
 		</div>
 
 		<div id="line2" style="position: relative;height: 30px; margin-top: 10px;margin-left: 8px;">
-			<div id="line2L" style="width: 270px; font-weight: bold; float: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+			<div id="line2L" style="width: 350px; font-weight: bold; float: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
 				<font style="text-align: left; font-family: Jeju Gothic; font-size: 16px; width: 100px; margin-left:1px;" >출</font>
 				<font style="text-align: left; font-family: Jeju Gothic; font-size: 16px; width: 100px;margin-left: 5px;" >처 | </font>
 				<font id="userNameAfter" style="text-align: left; font-family: Jeju Gothic; font-size: 15px; width: 100px;margin-left: 1px;"></font>
 			</div>
 			
-			<div id="line2R" style="width: 250px; float: right; opacity: 0.75; font-size: 13px;">
+			<div id="line2R" style="width: 200px; float: right; opacity: 0.75; font-size: 13px;">
             	<font id="scrap" style="float: right; margin-right: 15px;">스크랩수<span class="badge" id="scrapNo" style="margin-left: 5px; padding-bottom: 1.5px; padding-top: 1.5px; padding-left: 5px; padding-right: 5px;"></span></font>   
            		<font id="sourceMore" style="cursor:pointer;float: right; margin-right: 10px;">출처보기</font>
          	</div> 
@@ -138,6 +138,7 @@
 					var userConent;
 					var sendoo1;
 					var sendoo2;
+					var sendoo3;
 					var sendoo=[];
 					var active=false;
 					for(var i = 0; i < data.originUserList.length ; i++){
@@ -146,16 +147,8 @@
 						    sendoo1 = "<font class='name' style='cursor:pointer' title='"+data.originUserList[i].userNo+"'>"
 				                          +data.originUserList[i].name+
 				                          "</font>";
-				            sendoo2 = "<font class='name' style='cursor:pointer' title='"+data.originUserList[i].userNo+"'>"
-				                          +data.originUserList[i].name+
-				                          "</font>"+" -> ";                                                      
-				                        
-				            if(i==data.originUserList.length-1 || data.originUserList.length==1){
-				            	sendoo.push(sendoo1);  
-				            }else{
-				            	sendoo.push(sendoo2);   
-				            }
-				            
+				            sendoo2="";              
+				            sendoo3 = " -> ";    
 							var sourceUserPhoto = data.originUserList[i].photo;
 							var sourceUserNo = data.originUserList[i].userNo;
 							var sourceUserName = data.originUserList[i].name;
@@ -181,26 +174,16 @@
 							sources.push({"sourceMap" : sourceMap});
 							
 					    }if(data.originUserList[i]==null){
-					    	sendoo1 = "<font class='name' style='color: #A4A5A9; font-weight : 100;'>"
-			                          +"내용삭제"+
-			                          "</font>";
-				            sendoo2 = "<font class='name' style='color: #A4A5A9; font-weight : 100;' >"
-				                       +"내용삭제"+
-				                       "</font>"+" -> ";                                                      
-				                        
-				            if(i==data.originUserList.length-1 || data.originUserList.length==1){
-				            	sendoo.push(sendoo1);  
-				            }else{
-				            	sendoo.push(sendoo2);   
-				            }
-				            
+					    	
 						    active =true;
 							sourceMap ={
 									active : active
 							}						
 							sources.push({"sourceMap" : sourceMap});	
 					    }//if(data.originUserList != null) else end
-								    
+				
+			   
+					    
 				var contentUserPhoto = data.user.photo;
 				var contentUserNo = data.user.userNo;
 				var contentUserName = data.user.name;
@@ -236,7 +219,26 @@
 						 $(".reply",parent.document).hide();
 			    	}					    	
 				});				    
-			    
+
+             
+            if(data.originUserList[i]==null){
+            	if(i==data.originUserList.length-1 || data.originUserList.length==1){            
+            		sendoo.push(sendoo2);
+                }else{
+                	sendoo.push(sendoo3); 
+                }            	 
+        	}else{    		
+        		if(i==data.originUserList.length-1 || data.originUserList.length==1){            
+        			sendoo.push(sendoo1);
+                }else{
+                	if(data.originUserList[i+1] !=null){
+                		sendoo.push(sendoo1);
+                    	sendoo.push(sendoo3);  
+                	}else{
+                		sendoo.push(sendoo1);	
+                	}               	
+                }  
+        	} 
 			$("#userNameAfter").html(sendoo);  			
 			}//for문 end
 		}else{
