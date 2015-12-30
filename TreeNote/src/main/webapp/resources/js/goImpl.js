@@ -251,7 +251,7 @@ function goImpl(treeNo) {
 
 
 function newKeyword(parentdata) { // 노드를 생성하는 부분.
-	var colors = ["#2ECC71","#3498DB","#9B59B6","#F1C40F","#E67E22","#E74C3C"];
+	//var colors = ["#2ECC71","#3498DB","#9B59B6","#F1C40F","#E67E22","#E74C3C"]; // colors[Math.floor(Math.random() * 6)]
 	jQuery.ajax( 
 	{
 		url : "/keyword/newKeyword" ,
@@ -264,7 +264,7 @@ function newKeyword(parentdata) { // 노드를 생성하는 부분.
 			copyNo : 0,
 			parent : parentdata.key,
 			collapse : 0,
-			color : colors[Math.floor(Math.random() * 6)]
+			color : go.Brush.randomColor()
 		}),
 		headers : {
 			"Accept" : "application/json",
