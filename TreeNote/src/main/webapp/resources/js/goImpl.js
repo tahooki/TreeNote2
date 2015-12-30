@@ -522,6 +522,7 @@ function createInput() {
 	customText.onActivate = function() {
 		customText.style.visibility = "";
 		var startingValue = customText.textEditingTool.textBlock.text;
+		console.log("??????"+startingValue);
 		customText.value = startingValue;
 		
 		var loc = customText.textEditingTool.textBlock.getDocumentPoint(go.Spot.TopLeft);
@@ -561,6 +562,12 @@ function createInput() {
 				tool.diagram.focus();
 		}
 	}, false);
+	customText.addEventListener("focusout", function(){
+		selectKeyword.data.keyword = customText.value;
+		setListSearchKeyword(selectKeyword.data.keyword);
+		updateKeyword(selectKeyword.data);
+		//customText.textEditingTool.textBlock.text = selectKeyword.data.keyword;
+	});
 	return customText;
 }
 
@@ -648,11 +655,19 @@ function setBtnVisible(){
 			
 			}
 			var timeLineBtnList = $(".timeLineBtnBox");
+			var nowScrollTop = $("#timeline").scrollTop()-95;
 			for(var i = 0; i < timeLineBtnList.length ; i++){
-				$(timeLineBtnList[i]).delay(200*i+200).show("slide",{
-					direction : "right",
-					duration : 500
-				});
+				if(i < nowScrollTop/123){
+					$(timeLineBtnList[i]).delay(100).show("slide",{
+						direction : "right",
+						duration : 500
+					});
+				}else{
+					$(timeLineBtnList[i]).delay(200*(i-(nowScrollTop/123))+200).show("slide",{
+						direction : "right",
+						duration : 500
+					});
+				}
 			}
 		}
 	}
@@ -661,9 +676,9 @@ function setBtnVisible(){
 function setBtnUnVisible(){
 	var viewList = jQuery(".timeLineBtnBox");
 	for(var i = 0; i < viewList.length ; i++){
-		console.log(jQuery(viewList[i]).dequeue());
+		jQuery(viewList[i]).dequeue();
 	}
 	for(var i = 0; i < viewList.length ; i++){
-		console.log(jQuery(viewList[i]).hide());
+		jQuery(viewList[i]).hide();
 	}
 }
