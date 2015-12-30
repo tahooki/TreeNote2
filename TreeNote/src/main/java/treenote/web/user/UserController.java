@@ -231,6 +231,7 @@ public class UserController {
 //			List<User> list = userService.ListFriend(map2);
 //			model.addAttribute("friend",list);
 			model.addAttribute("boolean",true);
+			model.addAttribute("userNo",user.getUserNo());
 		}else{
 			model.addAttribute("boolean",false);
 		}

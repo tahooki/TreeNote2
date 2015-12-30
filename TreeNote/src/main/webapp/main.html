@@ -504,28 +504,24 @@ function friendListFn(){
 		//console.log(tr);
 		$('#alertDropdown').empty()
 		$('#alertDropdown').append(tr)
-		
 		console.log(arg)
-		if(arg!=null){
-			var fff
-			var ff = new Array();
-			console.log("///////")
-			console.log(arguments[0])
-			ff = $('#alertDropdown .list-group-item .pull-left input[value='+arg+']')
-			console.log(ff)
-// 			for(var i=0;i<ff.length;i++){
-// 				if(ff[i].value==arg){
-// 					fff = ff[i];
-// 					fff = fff
-// 					alert('aaaa')
-// 				}
-// 				console.log(ff[i].value)
-// 			}
-			console.log(ff.val()+"::::::");
-			var rfn = ff.parents('.list-group-item').find('.list-group-item-heading').text();
-			console.log(ff.parents('.list-group-item').find('.list-group-item-heading').text())
-			$('.alert-drop').empty()
-			$('.alert-drop').append('<strong style="color:blue">'+rfn+'</strong> 회원 님이 <br/>친구요청을 했습니다.')
+		if(arg!=undefined){
+			
+			if(arg.friendNo==true){
+				var ff = new Array();
+				ff = $('#alertDropdown .list-group-item .pull-left input[value='+arg.userNo+']')
+				var rfn = ff.parents('.list-group-item').find('.list-group-item-heading').text();
+				console.log(ff.parents('.list-group-item').find('.list-group-item-heading').text())
+				$('.alert-drop').empty()
+				$('.alert-drop').append('<strong style="color:blue">'+rfn+'</strong> 회원 님이 <br/>친구요청을 했습니다.')
+			}else if(arg.userNo==true){
+				var ff = new Array();
+				ff = $('#friendListDropdown .list-group-item .pull-left input[value='+arg.friendNo+']')
+				var rfn = ff.parents('.list-group-item').find('.list-group-item-heading').text();
+				console.log(ff.parents('.list-group-item').find('.list-group-item-heading').text())
+				$('.alert-drop').empty()
+				$('.alert-drop').append('<strong style="color:blue">'+rfn+'</strong> 회원 님이 <br/>친구요청 수락 했습니다.')
+			}
 		}
 		
 	});
@@ -541,6 +537,7 @@ function friendListFn(){
 		var acceptFriendHtml = accFriend.parents('.list-group-item')
 		$.getJSON('/user/acceptFriend/'+acceptFriendNo,function(data){
 			if(data){
+				socket.emit('acceptFriend',{friendNo:acceptFriendNo,userNo:data.userNo})
 				acceptFriendHtml.remove()
 				$('#btn_friend').prev().text(++countFriend)
 				$('#btn_alam').prev().text(--countAlert);
@@ -759,6 +756,15 @@ function friendListFn(){
 	
 	socket.on('addFriend',function(data){
 		if(data!=undefined){
+			friendListFn(data);
+			$('.alert-drop').toggle('drop').delay(5000).toggle('fade')
+			
+		}
+	})
+	
+	socket.on('acceptFriend',function(data){
+		if(data!=undefined){
+			console.log(data)
 			friendListFn(data);
 			$('.alert-drop').toggle('drop').delay(5000).toggle('fade')
 			
