@@ -101,7 +101,6 @@ window.onload = function(){
 			$(this).css("background","rgba(230,126,34,.2)");
 		}
 	});
-
 	var clipBoardList = [];
 	console.log(JSON.stringify(clipBoardList));
 	sessionStorage.setItem('clipBoardList', JSON.stringify(clipBoardList));
@@ -187,6 +186,7 @@ function setListSearchKeyword(keyword) {
 				});
 			}
 			setTimelineEvent();
+			sessionStorage.setItem("timeLineScrollHeight",900);
 			autoSearchListKeyword(keyword);
 			setBtnVisible();
 			
@@ -196,13 +196,10 @@ function setListSearchKeyword(keyword) {
 
 function autoSearchListKeyword(keyword){
 	$("#timeline").scroll(function(){
-		var temp;
-		if($("#timeline").prop("scrollHeight")< $(document).height()){
-			temp=$("#timeline").prop("scrollHeight");
-		}else{
-			temp=$(document).height();
-		}
-		if ($("#timeline").prop("scrollHeight") < $("#timeline").scrollTop()+temp){
+		var scrollHeight = Number(sessionStorage.getItem("timeLineScrollHeight"));
+		if (scrollHeight < $("#timeline").scrollTop()+$(document).height()){
+			scrollHeight += 861;
+			sessionStorage.setItem("timeLineScrollHeight",scrollHeight);
 			var count=$(".keywordBox").length;
 			$.ajax({
 				type:'post',
@@ -278,6 +275,7 @@ function setListTimeKeyword() {
 			}
 
 			setTimelineEvent();
+			sessionStorage.setItem("timeLineScrollHeight",900);
 			autoListKeyword();
 			setBtnVisible();
 			
@@ -286,15 +284,12 @@ function setListTimeKeyword() {
 	})
 }
 function autoListKeyword(){
-	console.log("??????????????????????");
 	$("#timeline").scroll(function(){
-		var temp;
-		if($("#timeline").prop("scrollHeight")< $(document).height()){
-			temp=$("#timeline").prop("scrollHeight");
-		}else{
-			temp=$(document).height();
-		}
-		if ($("#timeline").prop("scrollHeight") < $("#timeline").scrollTop()+temp){
+		var scrollHeight = Number(sessionStorage.getItem("timeLineScrollHeight"));
+		if (scrollHeight < $("#timeline").scrollTop()+$(document).height()){
+			scrollHeight += 861;
+			sessionStorage.setItem("timeLineScrollHeight",scrollHeight);
+			//console.log("???? : "+ $("#timeline").prop("scrollHeight") +" ???? : "+ $("#timeline").scrollTop() +" ?????? : "+ $(document).height());
 			var count=$(".keywordBox").length;
 			//alert("ggg")
 			$.ajax({
@@ -510,7 +505,6 @@ function treeList() {
 				url : "resources/hbs/treeList2.hbs",
 				success : function(data) {
 					var source = data;
-					console.log("gggggg ::"+source)
 					var template = Handlebars.compile(source);
 
 					var tr = template(list);

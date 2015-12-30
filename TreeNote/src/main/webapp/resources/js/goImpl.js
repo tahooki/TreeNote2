@@ -617,7 +617,6 @@ function setBtnVisible(){
 			
 			}
 			var timeLineBtnList = $(".timeLineBtnBox");
-			console.log(timeLineBtnList);
 			for(var i = 0; i < timeLineBtnList.length ; i++){
 				$(timeLineBtnList[i]).delay(200*i+200).show("slide",{
 					direction : "right",
