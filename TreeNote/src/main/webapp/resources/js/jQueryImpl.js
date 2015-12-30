@@ -190,6 +190,7 @@ function setListSearchKeyword(keyword) {
 			setTimelineEvent();
 			autoSearchListKeyword(keyword);
 			setBtnVisible();
+			
 		}
 	})
 }
@@ -286,6 +287,7 @@ function setListTimeKeyword() {
 	})
 }
 function autoListKeyword(){
+	console.log("??????????????????????");
 	$("#timeline").scroll(function(){
 		var temp;
 		if($("#timeline").prop("scrollHeight")< $(document).height()){
@@ -382,7 +384,8 @@ function setListClipKeyword() {
 }
 
 function setTimelineEvent(){
-	$(".childKeyword").click(function(){
+	
+	$(".childKeyword").unbind().click(function(){
 		if($($(this).parent()).find("input[name='key']").val() == "없음"){
 			//showContent($($(this).parent()).find("input[name='key']").val(), $($(this).parent()).find("input[name='keyword']").val());
 		}
@@ -395,26 +398,26 @@ function setTimelineEvent(){
 		}
 		return false;
 	});
-	$(".keywordUser").click(function(){
+	$(".keywordUser").unbind().click(function(){
 		getUser($($(this).parent()).find("input[name='userNo']").val());
 		return false;
 	});
-	$(".parentKeyword").click(function(){
+	$(".parentKeyword").unbind().click(function(){
 		if($($(this).parent()).find("input[name='key']").val() != null){
 			showContent($($(this).parent()).find("input[name='key']").val(), $($(this).parent()).find("input[name='keyword']").val());
 		}
 		return false;
 	});
-	$(".keyword").click(function(){
-		showContent($($(this).parent()).find("input[name='key']").val(), $($(this).parent()).find("input[name='keyword']").val());
+	$(".keyword").unbind().click(function(){
+		showContent($(this).find(".keywordName input[name='key']").val(), $(this).find(".keywordName input[name='keyword']").val());
 		return false;
 	});
-	$(".timeLineAddButton").click(function() {
+	$(".timeLineAddButton").unbind().click(function() {
 		console.log($($(this).parent()).find("input[name='key']").val());
 		addKeyword($($(this).parent()).find("input[name='key']").val());
 		return false;
 	});
-	$(".timeLineCopyButton").click(function() {
+	$(".timeLineCopyButton").unbind().click(function() {
 		console.log($($(this).parent()).find("input[name='key']").val());
 		changeKeyword($($(this).parent()).find("input[name='key']").val());
 		return false;

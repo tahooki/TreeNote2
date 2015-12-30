@@ -597,29 +597,22 @@ function setBtnVisible(){
 		while(nodes.hasNext()){
 			if(nodes.value.isSelected){
 				selectedKeyword=nodes.value.data;
-				console.log(selectedKeyword);
-				console.log(selectedKeyword.data);
 			}
 		}
 		if(selectedKeyword != null){
 			var viewList = jQuery(".timeLineBtnBox");
-			console.log(viewList.length);
 			for(var i = 0; i < viewList.length ; i++){
-				console.log("keyword treeNo : "+selectedKeyword.treeNo+" input treeNo :" + jQuery(viewList[i]).find("input[name='treeNo']").val());
 				if(selectedKeyword.treeNo == jQuery(viewList[i]).find("input[name='treeNo']").val()){
 					jQuery(viewList[i]).find(".timeLineAddButton").hide();
-					jQuery(viewList[i]).find(".timeLineCopyButton").hide()
-					console.log("keyword treeNo : "+selectedKeyword.treeNo+" input treeNo :" + jQuery(viewList[i]).find("input[name='treeNo']").val());
+					jQuery(viewList[i]).find(".timeLineCopyButton").hide();
 				}
 				else if(selectedKeyword.keyword == jQuery(viewList[i]).find("input[name='keyword']").val()){
-					console.log(jQuery(viewList[i]).find(".timeLineAddButton").hide()); 
-					console.log(jQuery(viewList[i]).find(".timeLineCopyButton").show());
-					console.log("keyword treeNo : "+selectedKeyword.treeNo+" input treeNo :" + jQuery(viewList[i]).find("input[name='treeNo']").val());
+					jQuery(viewList[i]).find(".timeLineAddButton").hide(); 
+					jQuery(viewList[i]).find(".timeLineCopyButton").show();
 				}
 				else{
-					console.log(jQuery(viewList[i]).find(".timeLineCopyButton").hide());
-					console.log(jQuery(viewList[i]).find(".timeLineAddButton").show());
-					console.log("keyword treeNo : "+selectedKeyword.treeNo+" input treeNo :" + jQuery(viewList[i]).find("input[name='treeNo']").val());
+					jQuery(viewList[i]).find(".timeLineCopyButton").hide();
+					jQuery(viewList[i]).find(".timeLineAddButton").show();
 				}
 			
 			}

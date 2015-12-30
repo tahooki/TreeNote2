@@ -19,8 +19,8 @@
 <!-- 댓글 리스트 -->
 <link href="resources/css/font-awesome.min.css" rel="stylesheet">
 <link href="resources/css/styles.css" rel="stylesheet">
-<!-- 개발 부분 -->
 
+<!-- 개발 부분 -->
 <script src="resources/js/goImpl.js"></script>
 <script src="resources/js/jQueryImpl.js"></script>
 <link rel="stylesheet" href="resources/css/tree.css">
@@ -586,12 +586,12 @@ function friendListFn(){
 	<div>
 		<div class="col-xs-6" style="padding: 0; margin:0; padding-top:2px; height:0px;">
 			{{#if parentKeyword}}
-				<span id="parentKeyword" class="parentKeyword" style=" background: {{parentKeyword.color}};"><font title="{{parentKeyword.keyword}}">{{parentKeyword.keyword}}</font>
+				<span id="parentKeyword" class="parentKeyword" style=" background: rgba(255,255,255,.6); color:#5A5A5A;"><font title="{{parentKeyword.keyword}}">{{parentKeyword.keyword}}</font>
 				<input name="key" type="hidden" value={{parentKeyword.key}}>
 				<input name="keyword" type="hidden" value="{{parentKeyword.keyword}}">
-			</span>
+			</span><img src="/resources/img/rightdown.png" width="13px" height="13px" style="margin-bottop:5px;">
 			{{else}}
-				<span id="parentKeyword" class="parentKeyword" style="background:white; cursor:default;">최상위</span>
+				<span id="parentKeyword" class="parentKeyword" style="background:rgba(255,255,255,.6); cursor:default;">최상위</span><img src="/resources/img/rightdown.png" width="15px" height="15px">
 			{{/if}}
 		</div> 
 		<div class="col-xs-6 text-right" style="padding: 0; margin:0;">
@@ -645,20 +645,20 @@ function friendListFn(){
 		Handlebars.registerHelper( "setChildKeyword", function ( childKeywordList ){
 			var returnString = "";
 			if(childKeywordList.length == 0){
-				returnString = '<span id="childkeyword" class="childKeyword" style="background:white; color:gray; cursor:default;">없음<input type="hidden" name="key" value="없음"></span>';
+				returnString = '<span id="childkeyword" class="childKeyword" style="background:rgba(255,255,255,.4); color:gray; cursor:default;">없음<input type="hidden" name="key" value="없음"></span>';
 				return returnString;
 			}
 			else{
 				for(var i = 0 ; i < childKeywordList.length ; i++){	
 			    if (i < 5)
 			    {
-			    	returnString += '<span class="childKeyword" style="background: '+childKeywordList[i].color+';"><font title="'+childKeywordList[i].keyword+'">'
+			    	returnString += '<span class="childKeyword" style="background:rgba(255,255,255,.4); color:gray;"><font title="'+childKeywordList[i].keyword+'">'
 			    						+	childKeywordList[i].keyword	+	'</font><input type="hidden" name="key" value="'+childKeywordList[i].key+'">'
 			    						+ '<input type="hidden" name="keyword" value="'+childKeywordList[i].keyword+'"></span>';
 			    }
 			    else if(i == 5)
 			    {
-			    	returnString += '<span class="childKeyword" style="background:white; width:14px;">...'
+			    	returnString += '<span class="childKeyword" style="background:rgba(255,255,255,.4); width:14px;">...'
 				    	+'<input type="hidden" name="key" value="..."></span>';
 			    }
 			    console.log("childKeywordList : "+childKeywordList.length+"i : "+i+"");
