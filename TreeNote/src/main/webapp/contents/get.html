@@ -142,11 +142,11 @@
 					var active=false;
 					for(var i = 0; i < data.originUserList.length ; i++){
 					 $("#sourceMore").show();
-					 if(data.originUserList != null){
-						    sendoo1 = "<font class='name' style='cursor:pointer' title='"+data.originUserList[i].user+"'>"
+					 if(data.originUserList[i] != null){
+						    sendoo1 = "<font class='name' style='cursor:pointer' title='"+data.originUserList[i].userNo+"'>"
 				                          +data.originUserList[i].name+
 				                          "</font>";
-				            sendoo2 = "<font class='name' style='cursor:pointer' title='"+data.originUserList[i].user+"'>"
+				            sendoo2 = "<font class='name' style='cursor:pointer' title='"+data.originUserList[i].userNo+"'>"
 				                          +data.originUserList[i].name+
 				                          "</font>"+" -> ";                                                      
 				                        
@@ -179,11 +179,11 @@
 							}						
 							sources.push({"sourceMap" : sourceMap});
 							
-					    }else{
-					    	sendoo1 = "<font class='name' style='cursor:pointer'>"
+					    }if(data.originUserList[i]==null){
+					    	sendoo1 = "<font class='name' style='color: #A4A5A9;'>"
 			                          +"내용삭제"+
 			                          "</font>";
-				            sendoo2 = "<font class='name' style='cursor:pointer' >"
+				            sendoo2 = "<font class='name' style='color: #A4A5A9;' >"
 				                       +"내용삭제"+
 				                       "</font>"+" -> ";                                                      
 				                        
