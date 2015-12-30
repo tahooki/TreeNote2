@@ -559,6 +559,11 @@ function friendListFn(){
 		
 	})
 	
+	$(document).on('click','#friendListDropdown .img-avatar',function(){
+		var funo = $(this).prev().val();
+		console.log(funo+"::::::")
+		getUser(funo);
+	})
 	
 	$(document).on('click','.deletFriend', function(){
 		var delFriend = $(this);
