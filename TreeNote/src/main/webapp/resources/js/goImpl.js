@@ -658,7 +658,7 @@ function setBtnVisible(){
 			var nowScrollTop = $("#timeline").scrollTop()-95;
 			for(var i = 0; i < timeLineBtnList.length ; i++){
 				if(i < nowScrollTop/123){
-					$(timeLineBtnList[i]).delay(100).show("slide",{
+					$(timeLineBtnList[i]).show("slide",{
 						direction : "right",
 						duration : 500
 					});
@@ -669,16 +669,18 @@ function setBtnVisible(){
 					});
 				}
 			}
+
 		}
 	}
 }
 
 function setBtnUnVisible(){
+
 	var viewList = jQuery(".timeLineBtnBox");
-	for(var i = 0; i < viewList.length ; i++){
-		jQuery(viewList[i]).dequeue();
-	}
 	for(var i = 0; i < viewList.length ; i++){
 		jQuery(viewList[i]).hide();
 	}
+	/*for(var i = 0; i < viewList.length ; i++){
+		jQuery(viewList[i]).show();
+	}*/
 }

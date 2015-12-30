@@ -218,8 +218,8 @@ function autoSearchListKeyword(keyword){
 					$(setSearchList(JSONData)).appendTo("#timelinec");
 					$(setSearchBtnList(JSONData)).appendTo("#timelineb");
 					var showKeyword = $("#timelinec .keywordBox");
-					for(var i = 0 ; i < showKeyword.length; i++){
-						$(showKeyword[i]).delay(200*i+200).show("slide",{
+					for(var i = count ; i < showKeyword.length; i++){
+						$(showKeyword[i]).delay(200*(i-count)+200).show("slide",{
 							direction : "right",
 							duration : 500
 						});
@@ -306,8 +306,8 @@ function autoListKeyword(){
 					$(setSearchList(JSONData)).appendTo("#timelinec");
 					$(setSearchBtnList(JSONData)).appendTo("#timelineb");
 					var showKeyword = $("#timelinec .keywordBox");
-					for(var i = 0 ; i < showKeyword.length; i++){
-						$(showKeyword[i]).delay(200*i+200).show("slide",{
+					for(var i = count ; i < showKeyword.length; i++){
+						$(showKeyword[i]).delay(200*(i-count)+200).show("slide",{
 							direction : "right",
 							duration : 500
 						});
