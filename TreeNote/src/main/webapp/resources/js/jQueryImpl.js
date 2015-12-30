@@ -292,6 +292,7 @@ function autoListKeyword(){
 			//console.log("???? : "+ $("#timeline").prop("scrollHeight") +" ???? : "+ $("#timeline").scrollTop() +" ?????? : "+ $(document).height());
 			var count=$(".keywordBox").length;
 			//alert("ggg")
+			console.log("1")
 			$.ajax({
 				url:"/keyword/listTimeLineKeyword2?count="+count,
 				dataType:"json",
