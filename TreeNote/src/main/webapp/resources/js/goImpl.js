@@ -402,7 +402,7 @@ function updateKeyword(keyword) { // 노드를 생성하는 부분.
 	})
 }
 
-function removeKeyword(node) { // 노드를 삭제하는 부분.
+function removeKeyword(node) { // 트리,노드를 삭제하는 부분.
 	if(node.findTreeParentNode() == null){
 		var treeNo=node.data.treeNo;
 		console.log(treeNo);
@@ -417,12 +417,18 @@ function removeKeyword(node) { // 노드를 삭제하는 부분.
 					"Content-Type" : "application/json"
 				},
 				success:function(data){
-					
 					temp=data.Tree;
-					setTimeout("treeList()",1000);
+					//setTimeout("treeList()",1000);
+					console.log(temp);
+					if(temp==undefined){
+						console.log("1");
+						addTree();
+					}else{
+					treeList();
 					$("#myDiagram").remove();
 					$("#timeline").before('<div id="myDiagram" style="position: relative; background: #E4E4E4; float: left; width: 100%; height: 100%"></div>');
 					goImpl(temp)
+					}
 				}
 				
 			})

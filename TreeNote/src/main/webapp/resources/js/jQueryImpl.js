@@ -53,31 +53,9 @@ window.onload = function(){
 			}
 		})
 	})
-	
+	/*트리추가 부분*/
 	$("#btn_treeadd").click(function(){
-		var data=$(".item.active")
-		//console.log(data)
-		$.ajax({
-			url : "/tree/addTree",
-				method : "POST",
-				data:JSON.stringify({
-					userNo:data.find('input[name=userNo]').val()
-				}),
-				dataType : "json",
-				contentType : "application/json",
-				success : function(JSONData, status) {
-					console.log("addTree : "+status);
-					
-					var temp=JSONData.tree.treeNo;
-					console.log(temp);
-					$("#myDiagram").remove();
-					$("#timeline").before('<div id="myDiagram" style="position: relative; background: #E4E4E4; float: left; width: 100%; height: 100%"></div>');
-					goImpl(temp);
-					//setTimeout("treeList()",1000);
-					treeList();
-				}
-		 
-			 });
+		addTree();
 	})	
 	
 	$("#btn_showtimeline").click(function(){
@@ -441,6 +419,32 @@ function setTimelineEvent(){
 		changeKeyword($($(this).parent()).find("input[name='key']").val());
 		return false;
 	});
+}
+
+function addTree(){
+	var data=$(".item.active")
+	//console.log(data)
+	$.ajax({
+		url : "/tree/addTree",
+			method : "POST",
+			data:JSON.stringify({
+				userNo:data.find('input[name=userNo]').val()
+			}),
+			dataType : "json",
+			contentType : "application/json",
+			success : function(JSONData, status) {
+				console.log("addTree : "+status);
+				
+				var temp=JSONData.tree.treeNo;
+				console.log(temp);
+				$("#myDiagram").remove();
+				$("#timeline").before('<div id="myDiagram" style="position: relative; background: #E4E4E4; float: left; width: 100%; height: 100%"></div>');
+				goImpl(temp);
+				setTimeout("treeList()",1000);
+				//treeList();
+			}
+	 
+		 });
 }
 
 function updateTitle(temp) {

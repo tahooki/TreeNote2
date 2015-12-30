@@ -70,8 +70,7 @@ public class TreeController {
 				
 		treeService.removeTree(treeNo);
 		List<Tree> listTree=treeService.listTree(user.getUserNo());
-		listTree.get(0).getTreeNo();
-		System.out.println(listTree.get(0).getTreeNo());
+
 		if(editTreeNo==treeNo){
 			user.setEditTreeNo(listTree.get(0).getTreeNo());
 		}
