@@ -100,7 +100,7 @@ var socket;
 			console.log(data)
 			if(data.boolean){
 				console.log(data.userNo)
-				//socket = io.connect('localhost:5050',{query: 'userNo='+data.userNo})
+				socket = io.connect('192.168.0.7:5050',{query: 'userNo='+data.userNo})
 			}else{
 				self.location="index.html";
 			}
