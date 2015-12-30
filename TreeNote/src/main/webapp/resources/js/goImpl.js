@@ -75,8 +75,9 @@ function goImpl(treeNo) {
 					part.findObject("button1").visible = part.isSelected;
 					part.findObject("button2").visible = part.isSelected;
 					part.findObject("button3").visible = part.isSelected;
-				}else{
 					part.findObject("button4").visible = part.isSelected;
+				}else{
+					part.findObject("button5").visible = part.isSelected;
 				}
 				
 				if(part.isSelected){
@@ -107,6 +108,7 @@ function goImpl(treeNo) {
 			}, 
 			gojs(go.Shape, "Circle", // 노드의 모양을 정함.
 			{
+				name : "circle",
 				fill : "whitesmoke",
 				stroke : "black",
 				strokeWidth : 0,
@@ -192,6 +194,21 @@ function goImpl(treeNo) {
 		}),
 		gojs(go.Picture, {
 			name: "button4",
+			alignment : go.Spot.TopLeft,
+			maxSize : new go.Size(20, 20),
+			source : "resources/img/btn_delete.png",
+			visible : false,
+			click : function(e, obj) {
+				// openDialog();
+				color = go.Brush.randomColor();
+				obj.part.data.color = color;
+				console.log(obj.part.findObject("PANEL"));
+				obj.part.findObject("circle").fill = color;
+				updateKeyword(obj.part.data);
+			}
+		}),
+		gojs(go.Picture, {
+			name: "button5",
 			alignment : go.Spot.TopRight,
 			maxSize : new go.Size(20, 20),
 			source : "resources/img/btn_addclipboard.png",
