@@ -108,8 +108,6 @@ window.onload = function(){
 	if (window.sessionStorage) {
 		sessionStorage.setItem('isMyTree',true);
 	}
-
-	
 	treeList();
 	autocom();
 	setTimeout("setListTimeKeyword()",2000);
@@ -234,8 +232,8 @@ function autoSearchListKeyword(keyword){
 
 function setListTimeKeyword() {
 	// circleLabel = JSON.parse(data);
+
 	$("#timeline").show("fade",300);
-	
 	$("#btn_timeline").css("background","rgba(192,57,43,.7)");
 	$("#btn_search").css("background","rgba(40,128,185,.2)");
 	$("#btn_clipboard").css("background","rgba(230,126,34,.2)");
@@ -257,6 +255,7 @@ function setListTimeKeyword() {
 			"Content-Type" : "application/json"
 		},
 		success : function(JSONData, status) {
+			
 			if (window.sessionStorage) {
 		        sessionStorage.setItem('nowTimeline', 'timeline');
 				// alert(sessionStorage.getItem('editTreeNo'));
@@ -502,6 +501,7 @@ function treeList() {
 		ContentType : "application/json",
 		success : function(list) {
 			console.log(list);
+	
 			$.ajax({
 				url : "resources/hbs/treeList2.hbs",
 				success : function(data) {
@@ -536,6 +536,7 @@ function treeList() {
 						sessionStorage.setItem('isMyTree',true);
 						//setTimeout("goImpl("+temp+")",1000);
 						goImpl(temp);
+
 					});
 					$(".left").click(function() {
 						var temp=$(".item.active").prev().find('input[name=treeNo]').val();
@@ -548,6 +549,7 @@ function treeList() {
 						$("#timeline").before('<div id="myDiagram" style="position: relative; background: #E4E4E4; float: left; width: 100%; height: 100%"></div>');
 						sessionStorage.setItem('isMyTree',true);
 						goImpl(temp);
+
 					});
 				}
 			});

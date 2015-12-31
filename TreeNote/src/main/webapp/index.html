@@ -236,7 +236,7 @@ $("#loginbutton").click(function() {
 	
 	
 })
-
+/*전역*/
 var checkEmail =false;
 var checkPassword = false;
 var checkName = false;
@@ -313,7 +313,7 @@ $('#signUpButton').on('click',function(){
 
 
 //중복 이메일 체크 
-$('#signUpForm p input[name=email]').on('focusout',function(){
+ $('#signUpForm p input[name=email]').on('focusout',function(){
 	var temp = $('#signUpForm p input[name=email]').val()
 	var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
 	$('#appendmessage').remove();
@@ -343,7 +343,7 @@ $('#signUpForm p input[name=email]').on('focusout',function(){
 	  $('#signUpForm p input[name=email]').after('<p id="appendmessage" class="signin button" style="color:red;" >올바른 양식이 아닙니다..</p>')
   } 
 	
-	
+
 
 })
 //정태가 추가한 부분 시작

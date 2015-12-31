@@ -479,10 +479,23 @@ function removeKeyword(node) { // 트리,노드를 삭제하는 부분.
 			success : function(JSONData , status) {
 				console.log("remove data :: "+keyword);
 				myDiagram.model.removeNodeData(keyword);
-				$("#timeline").show();
-				setListTimeKeyword();
+				//$("#timeline").hide();
+				//setListTimeKeyword();
 			}
 		})
+		
+		var selectedKeyword;
+		var nodes = myDiagram.nodes;
+		while(nodes.hasNext()){
+			if(nodes.value.isSelected){
+				selectedKeyword=nodes.value;
+				console.log(selectedKeyword);
+				console.log(selectedKeyword.data);
+			}
+		}
+		if(selectedKeyword==node){
+			setListTimeKeyword();
+		}
 	}
 }
 

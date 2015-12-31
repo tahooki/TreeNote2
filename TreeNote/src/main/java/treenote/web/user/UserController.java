@@ -123,6 +123,12 @@ public class UserController {
     public @ResponseBody void addUser(@ModelAttribute User user, Model model, HttpSession session) throws Exception{
 		System.out.println(user);
 		userService.addUser(user);
+		int userNo=userService.getUser2(user.getEmail()).getUserNo();
+		Tree tree = new Tree();
+		tree.setUserNo(userNo);
+		user.setUserNo(userNo);
+		user.setEditTreeNo(treeService.addTree(tree));	
+		userService.updateEditTreeNo(user);
     }
 	
 	

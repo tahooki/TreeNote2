@@ -89,7 +89,7 @@ public class TreeController {
 		System.out.println(treeService.getTree(user.getEditTreeNo()));
 		System.out.println(user.getEditTreeNo());
 		if(user.getEditTreeNo() == 0){
-			System.out.println("??");
+			//System.out.println("??");
 			Tree tree = new Tree();
 			tree.setUserNo(user.getUserNo());
 			user.setEditTreeNo(treeService.addTree(tree));			
