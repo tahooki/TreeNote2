@@ -726,9 +726,17 @@ $(document).on('click','.userPhoto',function() {
 
 $(document).on('click','.userName',function() {
 	getUser($(this).attr("title"));
+	console.log($("#iframeContent").contents().find('.name').attr("title"));
 	return false;
 });
 
+$(document).on('mouseenter','#iframeContent',function() {
+	console.log("iframeContent");
+	$(this).contents().find('.name').click(function(){
+		getUser($(this).attr("title"));
+	})
+	return false;
+});
 
 $(document).on('keyup','input:text[name=reply]',function(e) {
 	if (e.keyCode == 13) {
