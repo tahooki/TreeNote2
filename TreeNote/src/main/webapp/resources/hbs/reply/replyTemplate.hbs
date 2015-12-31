@@ -1,11 +1,10 @@
 <div class="media"
 		style="width: 315px; height: auto; padding-left: 7px; margin-top: 7px;">
 			<div class="media-left">
-				<a href="#"> <img class="media-object" src="{{userPhoto}}"
+				<a href="#"> <img title="{{userNo}}" class="media-object userPhoto" src="{{userPhoto}}"
 					alt="..." style="width: 40px; height: 40px;">
 				</a>
 			</div>
-			<input type="hidden" class="userNo" value="{{userNo}}">
 			<div class="media-body" style="height: auto;">
 	
 				<div  class="glyphicon glyphicon-trash delete" style="font-size: 12px; float: right;  padding-right : 18px;"></div>
@@ -14,7 +13,7 @@
 	
 				<div class="Comment"
 					style="width: 210px; float: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-					<font style="font-size: 12.5px; display: inline; font-weight: bold;" class="userName">{{userName}}</font>
+					<font title="{{userNo}}" style="cursor: pointer; font-size: 12.5px; display: inline; font-weight: bold;" class="userName">{{userName}}</font>
 					<font style="font-size: 12.5px; display: inline; margin-left: 5px;" class="CommentFont">{{{reply}}}</font>
 				</div>							
 				<ul class="list-inline" style="float: left; padding-top: 2px;">
@@ -31,8 +30,8 @@
 		<div class="media"
 			style="height: auto; margin-top: 0px; margin-left: 37px; border-left-style: groove; border-left-color: whitesmoke;">
 			<div style="height: auto;">
-				<div class="media-left" style="height: 30px; padding-left: 7px;">
-					<a href="#"> <img class="media-object" src="{{userPhoto}}"
+				<div class="media-left userPhoto" style="height: 30px; padding-left: 7px;">
+					<a href="#"> <img title="{{userNo}}" class="media-object" src="{{userPhoto}}"
 						alt="..." style="width: 33px; height: 33px;">
 					</a>
 				</div>

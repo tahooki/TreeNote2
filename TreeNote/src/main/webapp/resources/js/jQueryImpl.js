@@ -711,13 +711,23 @@ function listReply(){
 								replyfunction();
 							}else{
 								//alert("댓글이 없습니다.");
-							} 
+							} 							
 							
 						});		
 					}				
 			});
 	});	
 }
+
+$(document).on('click','.userPhoto',function() {
+	getUser($(this).attr("title"));
+	return false;
+});
+
+$(document).on('click','.userName',function() {
+	getUser($(this).attr("title"));
+	return false;
+});
 
 
 $(document).on('keyup','input:text[name=reply]',function(e) {
@@ -1010,8 +1020,6 @@ $(document).on('click','.updateReplyOfReply',function() {
 		}						
 	});						
 }); 
-
-
 
 function compareDate(regTime){
 	var thisDate = getWorldTime(+9);

@@ -3,11 +3,10 @@
 			<div style="height: auto;">
 				<div class="media-left"
 					style="height: 30px; padding-left: 7px; padding-top: 0px;">
-					<a href="#"> <img class="media-object" src="{{userPhoto}}"
+					<a href="#"> <img title="{{userNo}}" class="media-object userPhoto" src="{{userPhoto}}"
 						alt="..." style="width: 33px; height: 33px;">
 					</a>
 				</div>
-				<input type="hidden" class="userNo" value="{{userNo}}">
 				<div class="media-body" style="height: auto; width: 180px;">
 										
 					<div  class="glyphicon glyphicon-trash deleteReplyOfReply" style="font-size: 12px; float: right;  padding-right : 0px;"></div>
@@ -16,8 +15,8 @@
 					
 					<p class="Comment"
 						style="width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; height: auto; margin-top: -2px; word-break: break-all;">
-						<font size="2px" class="userName"
-							style="width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11.5px; font-weight: bold;">{{userName}}</font>
+						<font size="2px" title="{{userNo}}" class="userName"
+							style="cursor: pointer; width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11.5px; font-weight: bold;">{{userName}}</font>
 						<font size="2px" class="replyofreply"
 							style="margin-left: 3px; width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11.5px;">{{{reply}}}</font>
 					</p>
