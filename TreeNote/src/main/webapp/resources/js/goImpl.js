@@ -2,6 +2,7 @@ var selectKeyword;
 function goImpl(treeNo) {
 	// if (window.goSamples) goSamples();
 	//json data를 서버에서 호출후 map 생성
+	setBtnUnVisible();
 	console.log(arguments[0]);
 	
 	if(arguments.length==1){
