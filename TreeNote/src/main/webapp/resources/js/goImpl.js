@@ -12,45 +12,56 @@ function goImpl(treeNo) {
 	}
 	console.log(":L:::"+temp);
 	
-		var jsondata = jQuery.getJSON(temp ,function(success){
+	var isMyTree = sessionStorage.getItem('isMyTree');
+	
+	if(isMyTree == "true"){
+		$("#othertree").hide();
+	}else{
+		$("#otherTreeUser").text("a");
+		$("#otherTreeTitle").text("b");
+		$("#othertree").show();
+	}
+	
+	var jsondata = jQuery.getJSON(temp ,function(success){
 
-		console.log(success);
-		var gojs = go.GraphObject.make; // for conciseness in defining templates
-		
-		myDiagram = // 아직 분석 안됨.
-			gojs(go.Diagram, "myDiagram", // div의 이름이 "myDiagram"인 것을 찾아 설정함.
-			{
-				"toolManager.mouseWheelBehavior" : go.ToolManager.WheelZoom,
-				//마우스 속성 설정. whillzoom으로 설정해서 줌도 되게 만듬.
-				initialAutoScale : go.Diagram.Uniform, // 화면 정렬 타입
-				// contentAlignment: go.Spot.Center, // 화면을 가운데로 적용해서 움직이지 않게 함.
-				initialContentAlignment : go.Spot.Center, // 안에 들어있는 노드를 가운데로 정렬시킴
-				layout : gojs(go.ForceDirectedLayout), // layout 종류.
-				// moving and copying nodes also moves and copies their subtrees
-				"commandHandler.copiesTree" : true, // for the copy command
-				"commandHandler.deletesTree" : true, // for the delete command
-				"draggingTool.dragsTree" : true, // dragging for both move and copy
-				hasHorizontalScrollbar : false,
-				hasVerticalScrollbar : false,
-				allowCopy : false,
-				allowUndo : false,
-				allowDelete : false,
-				
-				
-				mouseOver:function(e){
-					//잠시 폐쇠
-					//console.log("canvase mouseOver :: "+e);
-					//myDiagram.model.removeNodeData(myDiagram.model.findNodeDataForKey(0));
-				},
-				click:function(e){
-					//서치 풀리면 show 하게 할 예정
-					if (sessionStorage.getItem('isTimeline') == 'false') {
-				        //sessionStorage.setItem('isTimeline', 'false');
-						setListTimeKeyword();
-				    }
-					jQuery("#content").hide("fade",300);
-				}
-			});
+	console.log(success);
+	var gojs = go.GraphObject.make; // for conciseness in defining templates
+	
+	myDiagram = // 아직 분석 안됨.
+		gojs(go.Diagram, "myDiagram", // div의 이름이 "myDiagram"인 것을 찾아 설정함.
+		{
+			"toolManager.mouseWheelBehavior" : go.ToolManager.WheelZoom,
+			//마우스 속성 설정. whillzoom으로 설정해서 줌도 되게 만듬.
+			initialAutoScale : go.Diagram.Uniform, // 화면 정렬 타입
+			// contentAlignment: go.Spot.Center, // 화면을 가운데로 적용해서 움직이지 않게 함.
+			initialContentAlignment : go.Spot.Center, // 안에 들어있는 노드를 가운데로 정렬시킴
+			layout : gojs(go.ForceDirectedLayout), // layout 종류.
+			// moving and copying nodes also moves and copies their subtrees
+			"commandHandler.copiesTree" : true, // for the copy command
+			"commandHandler.deletesTree" : true, // for the delete command
+			"draggingTool.dragsTree" : true, // dragging for both move and copy
+			hasHorizontalScrollbar : false,
+			hasVerticalScrollbar : false,
+			allowCopy : false,
+			allowUndo : false,
+			allowDelete : false,
+			
+			
+			mouseOver:function(e){
+				//잠시 폐쇠
+				//console.log("canvase mouseOver :: "+e);
+				//myDiagram.model.removeNodeData(myDiagram.model.findNodeDataForKey(0));
+			},
+			click:function(e){
+				//서치 풀리면 show 하게 할 예정
+				if (sessionStorage.getItem('isTimeline') == 'false') {
+			        //sessionStorage.setItem('isTimeline', 'false');
+					setListTimeKeyword();
+			    }
+				jQuery("#content").hide("fade",300);
+				setBtnUnVisible();
+			}
+		});
 		
 		// Define the Node template.
 		// This uses a Spot Panel to position a button relative
@@ -67,11 +78,6 @@ function goImpl(treeNo) {
 			selectionChanged:function(part){
 				selectKeyword = part;
 				
-				var isMyTree;
-				if (window.sessionStorage) {
-					isMyTree = sessionStorage.getItem('isMyTree');
-					console.log("isMyTree : "+isMyTree);
-				}
 				if(isMyTree == "true"){
 					part.findObject("button1").visible = part.isSelected;
 					part.findObject("button2").visible = part.isSelected;
@@ -83,8 +89,6 @@ function goImpl(treeNo) {
 				
 				if(part.isSelected){
 					setBtnVisible();
-				}else{
-					setBtnUnVisible();
 				}
 				
 			},
@@ -687,15 +691,29 @@ function setBtnVisible(){
 			var timeLineBtnList = $(".timeLineBtnBox");
 			var nowScrollTop = $("#timeline").scrollTop()-95;
 			for(var i = 0; i < timeLineBtnList.length ; i++){
+				console.log("for :: "+$(timeLineBtnList[i]).attr("id"));
+				if($(timeLineBtnList[i]).css("display") == "none")
 				if(i < nowScrollTop/123){
 					$(timeLineBtnList[i]).show("slide",{
 						direction : "right",
-						duration : 500
+						duration : 500,
+						complate : function(){
+							console.log("btn : "+i);
+						}
+					}).show("slide",{
+						direction : "right",
+						duration : 1,
 					});
 				}else{
 					$(timeLineBtnList[i]).delay(200*(i-(nowScrollTop/123))+200).show("slide",{
 						direction : "right",
-						duration : 500
+						duration : 500,
+						complete : function(){
+							console.log("btn : "+i);
+						}
+					}).show("slide",{
+						direction : "right",
+						duration : 1,
 					});
 				}
 			}
@@ -708,7 +726,8 @@ function setBtnUnVisible(){
 
 	var viewList = jQuery(".timeLineBtnBox");
 	for(var i = 0; i < viewList.length ; i++){
-		jQuery(viewList[i]).hide();
+		jQuery(viewList[i]).dequeue().stop(false,true).hide();
+		//jQuery(viewList[i]).dequeue().stop(false,true).css("display","none");
 	}
 	/*for(var i = 0; i < viewList.length ; i++){
 		jQuery(viewList[i]).show();

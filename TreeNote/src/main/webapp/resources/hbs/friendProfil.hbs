@@ -4,7 +4,7 @@
 					<input type="text" name="userNo" value="{{profil.userNo}}" style="display:none">
 					<img id="profilImg" class="img-responsive" src="{{#if profil.photo}}{{profil.photo}}{{else}}resources/img/profile.png{{/if}}" alt="프로필 이미지" data-toggle="tooltip" title="수정을 원하시면 클릭해주세요!" style="cursor:pointer; height: 150px;">
 					<div class="intro-text">
-						<span class="name">{{#if profil.name}}{{profil.name}}{{else}}이 름{{/if}}</span> 
+						<span id="proName" class="name">{{#if profil.name}}{{profil.name}}{{else}}이 름{{/if}}</span> 
 						<span class="skills">{{#if profil.email}}{{profil.email}}{{else}}이메일{{/if}}</span><br>
 					</div>
 					
@@ -70,7 +70,7 @@
 			              <div id="owl-demo" class="owl-carousel" style="height:100%">
 			                <!-- 내 트리리스트 들어갈 장소 -->
 							<div class="item" style="height:100%;">
-								<p style="position: absolute;width: 100%;z-index: 100;text-align: center;margin-top:0px;">{{Tree.title}}</p>
+							<div class="protreetitle" style="position: absolute;width: 100%;z-index: 100;text-align: center;margin-top:0px; font-family:Jeju Gothic; font-size:25px; color:white;">{{Tree.title}}</div>
 								<div class="col-sm-4 portfolio-item item ">
 									<input type="text" value="{{Tree.treeNo}}" hidden>
 									<a href="#portfolioModal4" class="portfolio-link" data-toggle="modal">
@@ -83,7 +83,7 @@
 							</div>
 							{{#each subTree}}
 							<div class="item" style="height:100%;">
-								<p style="position: absolute;width: 100%;z-index: 100;text-align: center;margin-top:0px;">{{title}}</p>
+								<div class="protreetitle" style="position: absolute;width: 100%;z-index: 100;text-align: center;margin-top:0px; font-family:Jeju Gothic; font-size:25px; color:white;">{{title}}</div>
 								<div class="col-sm-4 portfolio-item item ">
 									<input type="text" value="{{treeNo}}" hidden>
 									<a href="#portfolioModal4" class="portfolio-link" data-toggle="modal">

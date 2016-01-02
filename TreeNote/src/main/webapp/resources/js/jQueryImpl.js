@@ -5,7 +5,12 @@ function getUser(userNo){
 	}
 	$("#mypage header").remove();
 	$("#mypage section").remove();
-	friendProfilCall(userNo)
+	if(window.sessionStorage.getItem("userNo") == userNo){
+		profilCall();
+	}else{
+		friendProfilCall(userNo)
+	}
+	
 	/*추가*/
 	
 }
@@ -101,6 +106,16 @@ window.onload = function(){
 			$(this).css("background","rgba(230,126,34,.2)");
 		}
 	});
+	
+	$("#btn_otherTreeClose").click(function(){
+		$("#myDiagram").remove();
+		$("#timeline").before('<div id="myDiagram" style="position: relative; background: #E4E4E4; float: left; width: 100%; height: 100%"></div>');
+		sessionStorage.setItem('isMyTree',true);
+		//setTimeout("goImpl("+temp+")",1000);
+		goImpl();
+	});
+	
+	
 	var clipBoardList = [];
 	console.log(JSON.stringify(clipBoardList));
 	sessionStorage.setItem('clipBoardList', JSON.stringify(clipBoardList));
