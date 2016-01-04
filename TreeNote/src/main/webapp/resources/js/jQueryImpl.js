@@ -528,7 +528,7 @@ function treeList() {
 					$(".col-xs-7").remove();
 					$("#carousel-example-generic").remove();
 					$(tr).appendTo(".templist");
-					
+										
 					$("h5 .editTitle").click(function(){
 						var temp=$(".item.active").find('input[name=treeNo]').val();
 						updateTitle(temp);
