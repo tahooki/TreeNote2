@@ -622,6 +622,7 @@ function showContent(keywordNo, keyword){
 	sessionStorage.setItem("keyword",keyword);					
 
 	$.getJSON("/content/getContent/" +keywordNo, function(data) {
+		console.log("GEtdata");
 		console.log(data);
 
 		jQuery("#content").show("fade",300).find("iframe").attr("src","../../../contents/get.html");
@@ -637,9 +638,11 @@ function showContent(keywordNo, keyword){
 		sessionStorage.setItem('endRowNum', 4);
 		sessionStorage.setItem('contentNo', data.content.contentNo);
 		sessionStorage.setItem('replyUserNo', data.user.userNo);
-		sessionStorage.setItem('userNo', data.userNo);
+		sessionStorage.setItem('userNo', data.user.userNo);
+		sessionStorage.setItem("photo",data.user.photo);
 		
 		$(".userPhoto").attr("src",data.user.photo);
+		$(".userPhoto").attr("title",data.user.userNo);
 		getTotalReply();
 		listReply();
 							
@@ -722,9 +725,16 @@ function listReply(){
 							}	
 							if(list.length>0){								
 								console.log("JSONData");
-								console.log(JSONData);
+								console.log(JSONData);								
 								tr = template(JSONData);
 								$("#boardReply").append(tr);  
+								console.log("comentOfcomentinsert");
+								var tempUserNo = sessionStorage.getItem('userNo');
+								var tempUserPhoto = sessionStorage.getItem("photo");
+								console.log(tempUserNo);
+								console.log(tempUserPhoto);
+								$(".comentOfcomentinput").parent().parent().find(".userPhoto").attr("title",tempUserNo);
+								$(".comentOfcomentinput").parent().parent().find(".userPhoto").attr("src",tempUserPhoto);
 								replyfunction();
 							}else{
 								//alert("댓글이 없습니다.");
