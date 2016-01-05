@@ -30,10 +30,10 @@
 							<div  class="list-group-item " href="" style="margin:0px;border:0px;{{#checkStatus2 requestStatus}} {{/checkStatus2}};color: #000000;text-align: left">
 								<div class="pull-left"> 
 									<input type="text" class="userNoLink" value="{{userNo}}" hidden>
-									<img class="img-avatar" src="resources/img/profile.png" alt="" alt="" style="width:40px; height:40px; cursor:pointer">
+									<img class="img-avatar" src="{{#checkPhoto photo}}{{/checkPhoto}}"  alt="" style="width:40px; height:40px; cursor:pointer">
 								</div>
 							     <div class="pull-right" >
-							        <img class="img-avatar deletFriend" src="../resources/img/minus3.png" alt="" alt="" style="width:40px; height:40px; cursor:pointer">
+							        <img class="img-avatar deletFriend" src="../resources/img/minus3.png"  alt="" style="width:40px; height:40px; cursor:pointer">
 							    </div>
 							    <div class="media-body" >
 							        <div class="list-group-item-heading" style="margin-left:7px">{{name}} </div>

@@ -14,7 +14,7 @@ function profilCall(){
 				    }
 				    else
 				    {
-				        return 'resources/img/man.jpg';
+				        return 'resources/img/profile.png';
 				    }
 				});
 				
@@ -178,7 +178,7 @@ function friendProfilCall(userNo){
 					}
 					else
 					{
-						return 'resources/img/man.jpg';
+						return 'resources/img/profile.png';
 					}
 				});
 				
