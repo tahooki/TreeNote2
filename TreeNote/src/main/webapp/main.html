@@ -593,7 +593,7 @@ function friendListFn(){
 		
 	})
 	
-	$(document).on('click','#friendListDropdown .img-avatar',function(){
+	$(document).on('click','#friendListDropdown .pull-left .img-avatar',function(){
 		var funo = $(this).prev().val();
 		console.log(funo+"::::::")
 		getUser(funo);
@@ -791,6 +791,7 @@ function friendListFn(){
 				socket.emit('addFriend',{userNo:s.userNo,friendNo:requestNo})
 			}
 		})
+		$('.modal-backdrop').click()
 	}
 	
 	socket.on('addFriend',function(data){
