@@ -135,8 +135,15 @@ function profilCall(){
 					var myTreeNo = $(this).find('input').val();
 					$("#myDiagram").remove();
 					$("#timeline").before('<div id="myDiagram" style="position: relative; background: #E4E4E4; float: left; width: 100%; height: 100%"></div>');
-					sessionStorage.setItem("isMyTree",true);
-					goImpl(myTreeNo);
+					sessionStorage.setItem("isMyTree",true)
+					goImpl(myTreeNo)
+				})
+				
+				
+				$('#profilFriend .pull-left .img-avatar').on('click',function(){
+					var funo = $(this).prev().val();
+					console.log(funo+"::::::")
+					getUser(funo);
 				})
 			
 			
@@ -270,13 +277,18 @@ function friendProfilCall(userNo){
 					var myTreeNo = $(this).find('input').val();
 					$("#myDiagram").remove();
 					$("#timeline").before('<div id="myDiagram" style="position: relative; background: #E4E4E4; float: left; width: 100%; height: 100%"></div>');
-					sessionStorage.setItem("isMyTree",false);
-					goImpl(myTreeNo);
+					sessionStorage.setItem("isMyTree",false)
+					goImpl(myTreeNo)
 					
 					$("#otherTreeUser").text("by "+$("#proName").text());
 					$("#otherTreeTitle").text($(this).find(".protreetitle").text());
 				})
 				
+				$('#profilFriend .pull-left .img-avatar').on('click',function(){
+					var funo = $(this).prev().val();
+					console.log(funo+"::::::")
+					getUser(funo);
+				})
 				
 			})
 		}
