@@ -11,6 +11,11 @@
 <style type="text/css">
 	/* body { margin: 10px; } */
 </style>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript">
+$.noConflict();
+</script>
+
 <script type="text/javascript" src="../resources/js/jindo.min.js" charset="utf-8"></script>
 <script type="text/javascript" src="../resources/js/jindo_component.js" charset="utf-8"></script>
 <script type="text/javascript" src="../resources/js/SE2B_Configuration_Service.js" charset="utf-8"></script>	<!-- 설정 파일 -->
@@ -22,7 +27,9 @@
 </head>
 <body>
 
-
+<style>
+#daum-dic-icon{ width: 21px; height: 21px; background: url("/resources/img/btn_daum.png") no-repeat; vertical-align: top; }
+</style>
 
 <span id="rev"></span>
 
@@ -215,10 +222,9 @@
                     <!-- //배경색 -->
 				</li>
 
-				<li class="husky_seditor_ui_superscript"><button type="button" title="윗첨자" class="se2_sup"><span class="_buttonRound">윗첨자</span></button></li>
-
-				<li class="husky_seditor_ui_subscript"><button type="button" title="아래첨자" class="se2_sub"><span class="_buttonRound">아래첨자</span></button></li>
-</ul><ul>
+				
+</ul>
+<ul>
 				<li class="husky_seditor_ui_justifyleft"><button type="button" title="왼쪽정렬" class="se2_left"><span class="_buttonRound">왼쪽정렬</span></button></li>
 
 				<li class="husky_seditor_ui_justifycenter"><button type="button" title="가운데정렬" class="se2_center"><span class="_buttonRound">가운데정렬</span></button></li>
@@ -551,6 +557,9 @@
 					<!--//@lazyload_html-->
 				</li>
 </ul>
+				<ul class="se2_multy" style="position: absolute;right: 51px;" >
+					<li class="daum-dic"><button type="button" class="ico_btn"><img alt="" src="/resources/img/btn_daum.png" style="margin-top:3px"><span class="se2_mntxt">사전<span class="se2_new"></span></span></button></li>
+				</ul>
 				<ul class="se2_multy">
 					<li class="se2_mn husky_seditor_ui_photo_attach"><button type="button" class="se2_photo ico_btn"><span class="se2_icon"></span><span class="se2_mntxt">사진<span class="se2_new"></span></span></button></li>
 				</ul>
@@ -593,8 +602,7 @@
 		<hr>
 		<!-- 입력 -->
 		<div class="se2_input_area husky_seditor_editing_area_container">
-			
-			
+		
 			<iframe src="about:blank" id="se2_iframe" name="se2_iframe" class="se2_input_wysiwyg" width="400" height="300" title="글쓰기 영역 : 도구 모음은 ALT+F10을, 도움말은 ALT+0을 누르세요." frameborder="0" style="display:block;"></iframe>
 			<textarea name="" rows="10" cols="100" title="HTML 편집 모드" class="se2_input_syntax se2_input_htmlsrc" style="display:none;outline-style:none;resize:none"> </textarea>
 			<textarea name="" rows="10" cols="100" title="TEXT 편집 모드" class="se2_input_syntax se2_input_text" style="display:none;outline-style:none;resize:none;"> </textarea> 
@@ -794,6 +802,19 @@
 </div>
 <!-- SE2 Markup End -->
 
-
+<script type="text/javascript">
+	jQuery('.daum-dic').click(function(){
+		event.preventDefault();
+	    window.open("http://dic.daum.net/", "popupWindow", "width=400,height=500,scrollbars=yes");
+// 		/* console.log(jQuery('#se2_iframe').contents().find('#daum-dic-main'))
+// 		if(jQuery('#se2_iframe').contents().find('#daum-dic-main')==undefined ){
+// 			jQuery('#se2_iframe').contents().find('body').append('<iframe id="daum-dic-main" src="http://dic.daum.net/" style="width:300px;height: 250px;float:right"></iframe>')
+// 		}else if(jQuery('#se2_iframe').contents().find('#daum-dic-main').css('display')!=none){
+// 			jQuery('#se2_iframe').contents().find('#daum-dic-main').css('display','none');
+// 		}else{
+// 			jQuery('#se2_iframe').contents().find('#daum-dic-main').css('display','block');
+// 		} */
+	})
+</script>
 </body>
 </html>
