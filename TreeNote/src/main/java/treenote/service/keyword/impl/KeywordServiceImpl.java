@@ -108,19 +108,20 @@ public class KeywordServiceImpl implements KeywordService {
 	public int changeKeyword(Keyword keyword) throws Exception {
 		// TODO Auto-generated method stub 
 		// content 복사
-		contentDao.removeContent(keyword.getKey());
+		
 		Content content = contentDao.getContent(keyword.getCopyNo());
 		Keyword copyKeyword = keywordDao.getKeyword(keyword.getCopyNo()); 
 		
 		if(keywordDao.getUserNoKeyword(keyword.getKey()) != keywordDao.getUserNoKeyword(keyword.getCopyNo())){
+			contentDao.removeContent(keyword.getKey());
 			content.setScrap(content.getScrap()+1);
 			contentDao.updateScrapContent(content);
-
+			
 			if(content.getOriginContentList() == null){
 				content.setOriginContentList(""+((Content)contentDao.getContent(keyword.getKey())).getContentNo());
 			}else{
 				//출처 담는 부분
-				content.setOriginContentList(content.getOriginContentList()+","+((Content)contentDao.getContent(keyword.getKey())).getContentNo());
+				content.setOriginContentList(content.getOriginContentList()+","+((Content)contentDao.getContent(keyword.getCopyNo())).getContentNo());
 			}
 		}
 		content.setKeywordNo(keyword.getKey());
