@@ -810,7 +810,9 @@ $(document).on('keyup','input:text[name=reply]',function(e) {
 					success : function(JSONData , status) {
 						console.log(JSONData);
 						JSONData.reply.regTime = compareDate(JSONData.reply.regTime);
-						
+						if(JSONData.reply.userPhoto == null){
+							JSONData.reply.userPhoto = "resources/img/profile.png";
+						}
 						JSONData.reply.reply.replace(" ","&nbsp;");
 						var addReplyCounting = sessionStorage.getItem("addReplyCounting");
 						addReplyCounting++;
