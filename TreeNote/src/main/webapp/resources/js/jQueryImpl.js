@@ -650,7 +650,12 @@ function showContent(keywordNo, keyword){
 		sessionStorage.setItem('userNo', data.user.userNo);
 		sessionStorage.setItem("photo",data.user.photo);
 		
-		$(".userPhoto").attr("src",data.user.photo);
+		if(data.user.photo == null){
+			$(".userPhoto").attr("src","resources/img/profile.png");
+		}else{
+			$(".userPhoto").attr("src",data.user.photo);
+		}	
+		
 		$(".userPhoto").attr("title",data.user.userNo);								
 	});
 }
@@ -713,8 +718,8 @@ function listReply(){
 								JSONData.replyList[i].regTime = compareDate(JSONData.replyList[i].regTime);
 								JSONData.replyList[i].reply = JSONData.replyList[i].reply.replace(" ","&nbsp;");
 								
-								if(JSONData.replyList[i].photo == null){
-									JSONData.replyList[i].photo = "resources/img/profile.png";
+								if(JSONData.replyList[i].userPhoto == null){
+									JSONData.replyList[i].userPhoto = "resources/img/profile.png";
 								}
 								var sizeList = JSONData.replyList[i].replyOfReply;
 								if(sizeList != null){
@@ -725,8 +730,8 @@ function listReply(){
 										}else{
 											replyOFReplyActivity = false;
 										}
-										if(JSONData.replyList[i].replyOfReply[j].photo == null){
-											JSONData.replyList[i].replyOfReply[j].photo = "resources/img/profile.png";
+										if(JSONData.replyList[i].replyOfReply[j].userPhoto == null){
+											JSONData.replyList[i].replyOfReply[j].userPhoto = "resources/img/profile.png";
 										}
 										JSONData.replyList[i].replyOfReply[j].deleteChildReply=replyOFReplyActivity;
 										JSONData.replyList[i].replyOfReply[j].regTime = 
@@ -747,10 +752,9 @@ function listReply(){
 								console.log(tempUserNo);
 								console.log(tempUserPhoto);
 								
-								if(tempUserPhoto == null){
+								if(tempUserPhoto == "null"){
 									tempUserPhoto = "resources/img/profile.png";
-								}
-								
+								}								
 								$(".comentOfcomentinput").parent().parent().find(".userPhoto").attr("title",tempUserNo);
 								$(".comentOfcomentinput").parent().parent().find(".userPhoto").attr("src",tempUserPhoto);
 								replyfunction();
