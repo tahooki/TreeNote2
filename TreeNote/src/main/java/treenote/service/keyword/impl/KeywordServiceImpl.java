@@ -131,6 +131,7 @@ public class KeywordServiceImpl implements KeywordService {
 		
 		copyKeyword.setKey(keyword.getKey());
 		copyKeyword.setParent(keyword.getParent());
+		copyKeyword.setTreeNo((keyword.getTreeNo()));
 		return keywordDao.updateKeyword(copyKeyword);
 	}
 
