@@ -638,16 +638,21 @@ function showContent(keywordNo, keyword){
 		sessionStorage.setItem('startRowNum', 1);
 		sessionStorage.setItem('endRowNum', 4);
 		sessionStorage.setItem('contentNo', data.content.contentNo);
+	
+		getTotalReply();
+		listReply();
+							
+	});	
+	$.getJSON("/user/getUser" , function(data) {
+				
+		
 		sessionStorage.setItem('replyUserNo', data.user.userNo);
 		sessionStorage.setItem('userNo', data.user.userNo);
 		sessionStorage.setItem("photo",data.user.photo);
 		
 		$(".userPhoto").attr("src",data.user.photo);
-		$(".userPhoto").attr("title",data.user.userNo);
-		getTotalReply();
-		listReply();
-							
-	});	
+		$(".userPhoto").attr("title",data.user.userNo);								
+	});
 }
 
 function inputText() {
@@ -707,6 +712,10 @@ function listReply(){
 								JSONData.replyList[i].deleteChildReply=replyActivity;
 								JSONData.replyList[i].regTime = compareDate(JSONData.replyList[i].regTime);
 								JSONData.replyList[i].reply = JSONData.replyList[i].reply.replace(" ","&nbsp;");
+								
+								if(JSONData.replyList[i].photo == null){
+									JSONData.replyList[i].photo = "resources/img/profile.png";
+								}
 								var sizeList = JSONData.replyList[i].replyOfReply;
 								if(sizeList != null){
 									for(var j=0; j<sizeList.length; j++){
@@ -715,6 +724,9 @@ function listReply(){
 											replyOFReplyActivity = true;
 										}else{
 											replyOFReplyActivity = false;
+										}
+										if(JSONData.replyList[i].replyOfReply[j].photo == null){
+											JSONData.replyList[i].replyOfReply[j].photo = "resources/img/profile.png";
 										}
 										JSONData.replyList[i].replyOfReply[j].deleteChildReply=replyOFReplyActivity;
 										JSONData.replyList[i].replyOfReply[j].regTime = 
@@ -734,6 +746,11 @@ function listReply(){
 								var tempUserPhoto = sessionStorage.getItem("photo");
 								console.log(tempUserNo);
 								console.log(tempUserPhoto);
+								
+								if(tempUserPhoto == null){
+									tempUserPhoto = "resources/img/profile.png";
+								}
+								
 								$(".comentOfcomentinput").parent().parent().find(".userPhoto").attr("title",tempUserNo);
 								$(".comentOfcomentinput").parent().parent().find(".userPhoto").attr("src",tempUserPhoto);
 								replyfunction();
