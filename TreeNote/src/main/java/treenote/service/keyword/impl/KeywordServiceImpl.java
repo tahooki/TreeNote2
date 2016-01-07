@@ -82,6 +82,7 @@ public class KeywordServiceImpl implements KeywordService {
 		addKeyword.setKey(keywordNo);
 		addKeyword.setParent(keyword.getParent());
 		addKeyword.setTreeNo(keyword.getTreeNo());
+		addKeyword.setCollapse(0);
 		keywordDao.addKeyword(addKeyword);
 		//content 복사
 		Content content = contentDao.getContent(keyword.getKey());
@@ -118,7 +119,7 @@ public class KeywordServiceImpl implements KeywordService {
 			contentDao.updateScrapContent(content);
 			
 			if(content.getOriginContentList() == null){
-				content.setOriginContentList(""+((Content)contentDao.getContent(keyword.getKey())).getContentNo());
+				content.setOriginContentList(""+((Content)contentDao.getContent(keyword.getCopyNo())).getContentNo());
 			}else{
 				//출처 담는 부분
 				content.setOriginContentList(content.getOriginContentList()+","+((Content)contentDao.getContent(keyword.getCopyNo())).getContentNo());
@@ -202,17 +203,32 @@ public class KeywordServiceImpl implements KeywordService {
 		// TODO Auto-generated method stub
 
 		List<Keyword> OnwerList = keywordDao.listChildKeyword(keyword.getCopyNo());
+		System.out.println("으아아"+OnwerList);
 		for (Keyword onwerKeyword : OnwerList) {
+			Content content = contentDao.getContent(onwerKeyword.getKey());
+			
+			content.setScrap(content.getScrap()+1);
+			contentDao.updateScrapContent(content);
+			
+			if(content.getOriginContentList() == null){
+				content.setOriginContentList(""+((Content)contentDao.getContent(onwerKeyword.getKey())).getContentNo());
+			}else{
+				//출처 담는 부분
+				content.setOriginContentList(content.getOriginContentList()+","+((Content)contentDao.getContent(onwerKeyword.getKey())).getContentNo());
+			}
+			
 			onwerKeyword.setKey(keywordDao.getKeywrodNo());
 			onwerKeyword.setTreeNo(keyword.getTreeNo());
 			onwerKeyword.setParent(keyword.getKey());
 			keywordDao.addKeyword(onwerKeyword);
-			Content content = contentDao.getContent(onwerKeyword.getKey());
+			
+			
 			if(content != null){
-				content.setKeywordNo(keyword.getKey());
+				content.setKeywordNo(onwerKeyword.getKey());
 				content.setScrap(0);
 				contentDao.addContent(content);
 			}
+			System.out.println("listOnwerChildKeyword : "+content);
 		}
 		return keywordDao.listChildKeyword(keyword.getKey());
 	}

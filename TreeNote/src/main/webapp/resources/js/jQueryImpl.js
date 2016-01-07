@@ -107,6 +107,13 @@ window.onload = function(){
 		}
 	});
 	
+	$("#search").keydown(function(event) {
+		if (event.which == 13) {
+			setListSearchKeyword($("#search").val());
+			$(this).blur();
+		}
+	});
+	
 	$("#btn_otherTreeClose").click(function(){
 		$("#myDiagram").remove();
 		$("#timeline").before('<div id="myDiagram" style="position: relative; background: #E4E4E4; float: left; width: 100%; height: 100%"></div>');
@@ -603,12 +610,6 @@ function autocom() {
 				source : availableTags,
 				select: function( event, ui ) {
 					setListSearchKeyword(ui.item.value);
-					$(this).blur();
-				}
-			});
-			$("#search").keydown(function(event) {
-				if (event.which == 13) {
-					setListSearchKeyword($("#search").val());
 					$(this).blur();
 				}
 			});

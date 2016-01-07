@@ -582,7 +582,7 @@ function createInput() {
 			tool.acceptText(go.TextEditingTool.Enter);
 			//console.log(tool.diagram.nodeTemplate.findMainElement().data);
 			selectKeyword.data.keyword = customText.value;
-			setListSearchKeyword(selectKeyword.data.keyword);
+			//setListSearchKeyword(selectKeyword.data.keyword);
 			updateKeyword(selectKeyword.data);
 			e.preventDefault();
 			return false;
