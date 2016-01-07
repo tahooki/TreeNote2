@@ -161,7 +161,9 @@
 							var date = tempRegTime.toISOString().substring(2,10).replace(/-/g,".");
 							var sourceRegTime =date+" "+time ;
 							active =false;
-							
+							if(sourceUserPhoto == null){
+								sourceUserPhoto = "resources/img/profile.png";
+							}
 							sourceMap ={
 									sourceUserPhoto : sourceUserPhoto,
 									sourceUserNo : sourceUserNo,
@@ -195,6 +197,10 @@
  				var contentusertime = contentusertempRegTime.toTimeString().substring(0,5);
 			    var contentuserdate = contentusertempRegTime.toISOString().substring(2,10).replace(/-/g,".");
 			    var contentusersourceRegTime =contentuserdate+" "+contentusertime ;
+			    
+			    if(contentUserPhoto == null){
+			    	contentUserPhoto = "resources/img/profile.png";
+				}
 			    
 			    userConent ={
 			    		contentUserPhoto : contentUserPhoto,
